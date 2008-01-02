@@ -16,11 +16,20 @@
 # Exec[assert_lsbdistcodename] on the specific resource
 class assert_lsbdistcodename {
 
+	$true_exec = $operatingsystem ? {
+		openbsd => '/usr/bin/true',
+		default => '/bin/true'
+	}
+
+	$false_exec = $operatingsystem ? {
+		openbsd => '/usr/bin/false',
+		default => '/bin/false'
+	}
+
 	case $lsbdistcodename {
 		'': {
 			err("Please install lsb_release or set facter_lsbdistcodename in the environment of $fqdn")
-			# exec { "/bin/false # assert_lsbdistcodename": alias => assert_lsbdistcodename }
-			exec { "/bin/true # assert_lsbdistcodename": alias => assert_lsbdistcodename }
+			exec { "${true_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
 		}
 		'n/a': {
 			case $operatingsystem {
@@ -31,11 +40,11 @@ class assert_lsbdistcodename {
 					err("lsb_release was unable to report your distcodename; please set facter_lsbdistcodename in the environment of $fqdn")
 				}
 			}
-			exec { "/bin/false # assert_lsbdistcodename": alias => assert_lsbdistcodename }
+			exec { "${false_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
 		}
 		default: {
-			exec { "/bin/true # assert_lsbdistcodename": alias => assert_lsbdistcodename }
-			exec { "/bin/true # require_lsbdistcodename": alias => require_lsbdistcodename }
+			exec { "${true_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
+			exec { "${true_exec} # require_lsbdistcodename": alias => require_lsbdistcodename }
 		}
 	}
 
