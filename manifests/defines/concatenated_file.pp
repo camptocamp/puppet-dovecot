@@ -20,7 +20,7 @@ define concatenated_file (
 	$header = '',
 	# a file with content to append
 	$footer = '',
-	$mode = 0644, $owner = root, $group = root
+	$mode = 0644, $owner = root, $group = 0
 	)
 {
 
