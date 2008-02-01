@@ -29,7 +29,7 @@ class assert_lsbdistcodename {
 	case $lsbdistcodename {
 		'': {
 			err("Please install lsb_release or set facter_lsbdistcodename in the environment of $fqdn")
-			exec { "${false_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
+			exec { "${true_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
 		}
 		'n/a': {
 			case $operatingsystem {
