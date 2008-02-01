@@ -40,7 +40,7 @@ class assert_lsbdistcodename {
 					err("lsb_release was unable to report your distcodename; please set facter_lsbdistcodename in the environment of $fqdn")
 				}
 			}
-			exec { "${true_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
+			exec { "${false_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
 		}
 		default: {
 			exec { "${true_exec} # assert_lsbdistcodename": alias => assert_lsbdistcodename }
