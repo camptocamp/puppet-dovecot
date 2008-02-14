@@ -18,7 +18,7 @@ define modules_dir (
 			"/var/lib/puppet/modules/${name}":
 				# workaround
 				#source => [ "puppet://$servername/${name}/modules_dir", "puppet://$servername/common/empty"],
-				source => "puppet://$servername/dist/empty",
+				source => "puppet://$servername/common/empty",
 				checksum => mtime,
 				recurse => true, purge => true, force => true,
 				mode => $mode, owner => $owner, group => $group;
