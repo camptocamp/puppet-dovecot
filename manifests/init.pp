@@ -1,10 +1,17 @@
-#######################################
-# common module
-# Puzzle ITC - haerry+puppet(at)puzzle.ch
-# GPLv3
-#######################################
+# common/manifests/init.pp - Define common infrastructure for modules
+# Copyright (C) 2007 David Schmitt <david@schmitt.edv-bus.at>
+# See LICENSE for the full license granted to you.
 
+file {
+	# Module programmers can use /var/lib/puppet/modules/$modulename to save
+	# module-local data, e.g. for constructing config files
+	"/var/lib/puppet/modules":
+		ensure => directory,
+		source => "puppet://$servername/common/modules/",
+		ignore => ".svn",
+		recurse => true, purge => true, force => true,
+		mode => 0755, owner => root, group => 0;
+}
 
-# modules_dir { "common": }
-# test
-class common {}
+import "defines/*.pp"
+import "classes/*.pp"
