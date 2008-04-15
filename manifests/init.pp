@@ -6,4 +6,5 @@
 
 
 # modules_dir { "common": }
+# test
 class common {}
