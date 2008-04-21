@@ -31,13 +31,13 @@ define line($file, $line, $ensure = 'present') {
 	case $ensure {
 		default : { err ( "unknown ensure value '${ensure}'" ) }
 		present: {
-			exec { "/bin/echo '${line}' >> '${file}'":
-				unless => "${grep} -qFx '${line}' '${file}'"
+			exec { "echo '${line}' >> '${file}'":
+				unless => "grep -qFx '${line}' '${file}'"
 			}
 		}
 		absent: {
-			exec { "/usr/bin/perl -ni -e 'print unless /^\\Q${line}\\E\$/' '${file}'":
-				onlyif => "${grep} -qFx '${line}' '${file}'"
+			exec { "perl -ni -e 'print unless /^\\Q${line}\\E\$/' '${file}'":
+				onlyif => "grep -qFx '${line}' '${file}'"
 			}
 		}
 	}
