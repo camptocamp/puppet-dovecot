@@ -57,11 +57,12 @@ define concatenated_file (
 	}
 
 	# use >| to force clobbering the target file
-	exec { "/usr/bin/find ${dir_real} -maxdepth 1 -type f ! -name '*puppettmp' -print0 | sort -z | xargs -0 cat ${additional_cmd} >| ${name}":
-		refreshonly => true,
-		subscribe => File[$dir_real],
-		before => File[$name],
-		alias => [ "concat_${name}", "concat_${dir_real}"] ,
+    exec { "concat_${name}":
+        command => "/usr/bin/find ${dir_real} -maxdepth 1 -type f ! -name '*puppettmp' -print0 | sort -z | xargs -0 cat ${additional_cmd} >| ${name}",
+        refreshonly => true,
+        subscribe => [ File[$dir_real] ],
+        before => File[$name],
+        alias => [ "concat_${dir_real}"] ,
 	}
 }
 
