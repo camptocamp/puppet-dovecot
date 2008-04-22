@@ -16,7 +16,7 @@ define modules_dir (
 	} else {
 		file {
 			"/var/lib/puppet/modules/${name}":
-				source => "puppet://$servername/common/empty",
+				source => "puppet://$server/common/empty",
 				checksum => mtime,
 				recurse => true, purge => true, force => true,
 				mode => $mode, owner => $owner, group => $group;
