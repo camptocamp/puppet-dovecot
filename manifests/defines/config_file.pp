@@ -38,16 +38,16 @@ define config_file ($content = '', $source = '', $ensure = 'present') {
 		checksum => md5,
 	}
 
-    case $source {
-        '': { }
-        default: { File[$name] { source => $source } }
-    }
+	case $source {
+		'': { }
+		default: { File[$name] { source => $source } }
+	}
 
-    case $content {
-        '': { }
-        default: { File[$name] { content => $content } }
-    }
-
+	case $content {
+		'': { }
+		default: { File[$name] { content => $content } }
+	}
+				
 }
 
 
