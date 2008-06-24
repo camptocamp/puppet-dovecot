@@ -24,10 +24,6 @@
 #
 #
 define line($file, $line, $ensure = 'present') {
-	$grep = $operatingsystem ? {
-		openbsd => '/usr/bin/grep',
-		default => '/bin/grep',
-	}
 	case $ensure {
 		default : { err ( "unknown ensure value '${ensure}'" ) }
 		present: {
