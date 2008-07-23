@@ -1,4 +1,7 @@
 # Copyright (c) 2008, Luke Kanies, luke@madstop.com
+# forked by Puzzle ITC
+# Marcel Härry haerry+puppet(at)puzzle.ch
+# Simon Josi josi+puppet(at)puzzle.ch
 # 
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -16,6 +19,7 @@
 define svnrepo($path) {
     exec { "create-svn-$name":
         command => "/usr/bin/svnadmin create $path/$name",
-        creates => "$path/$name"
+        creates => "$path/$name",
+        require => Package['subversion'],
     }
 }

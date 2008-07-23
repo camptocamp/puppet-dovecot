@@ -1,4 +1,8 @@
 # Copyright (c) 2008, Luke Kanies, luke@madstop.com
+# forked by Puzzle ITC
+# Marcel Härry haerry+puppet(at)puzzle.ch
+# Simon Josi josi+puppet(at)puzzle.ch
+#
 # 
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -36,12 +40,12 @@ define svnserve($source, $path, $user = false, $password = false) {
     exec { "svnco-$name":
         command => $svncmd,
         cwd => $path,
-        require => File[$path],
+        require => [ File[$path], Package['subversion'] ],
         creates => "$path/.svn"
     }
     exec { "svnupdate-$name":
         command => "/usr/bin/svn update",
-        require => Exec["svnco-$name"],
+        require => [ Exec["svnco-$name"], Package['subversion'] ],
         onlyif => '/usr/bin/svn status -u --non-interactive | /bin/grep "\*"',
         cwd => $path
     }
