@@ -7,8 +7,6 @@
 
 class dovecot {
 
-	$ldap_suffix = dn_from_domain( $domain )
-
 	user { dovecot: 
 		allowdupe => false,
 		comment => "Dovecot mail server",
@@ -32,10 +30,28 @@ class dovecot {
 
 	file { 
 		"/etc/dovecot/dovecot.conf":
-			source => "puppet://$servername/dovecot/dovecot.conf",
 			mode => 0644, owner => root, group => root,
 			require => Package[dovecot-common],
 			notify => Service[dovecot];
+	}
+
+	service { dovecot:
+		ensure => running,
+		pattern => dovecot,
+		require => [ Package["dovecot-imapd"], Package["dovecot-pop3d"] ]
+	}
+
+}
+
+class dovecot::ldap inherits dovecot
+{
+	$ldap_suffix = dn_from_domain( $domain )
+
+	File["/etc/dovecot/dovecot.conf"] {
+		source => "puppet://$servername/dovecot/dovecot.ldap.conf",
+	}
+
+	file {
 		"/etc/dovecot/dovecot-ldap.conf":
 			content => template("dovecot/dovecot-ldap.conf"),
 			mode => 0600, owner => root, group => root,
@@ -43,10 +59,13 @@ class dovecot {
 			notify => Service[dovecot],
 	}
 
-	service { dovecot:
-		ensure => running,
-		pattern => dovecot,
-		require => [ Package["dovecot-imapd"], Package["dovecot-pop3d"] ]
+}
+
+class dovecot::pam inherits dovecot
+{
+
+	File["/etc/dovecot/dovecot.conf"] {
+		source => "puppet://$servername/dovecot/dovecot.pam.conf",
 	}
 
 }
