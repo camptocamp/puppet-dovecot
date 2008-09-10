@@ -16,7 +16,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 # Create a new subversion repository.
-define svnrepo($path='absent') {
+define subversion::svnrepo($path='absent') {
     case $path {
         absent: {
             include subversion::basics
