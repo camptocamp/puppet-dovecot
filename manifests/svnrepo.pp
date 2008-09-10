@@ -16,10 +16,17 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 # Create a new subversion repository.
-define svnrepo($path) {
+define svnrepo($path='absent') {
+    case $path {
+        absent: {
+            include subversion::basics
+            $create_path = "/srv/svn/${name}"
+        }
+        default: { $create_path = "${path}/${name}" }
+    }
     exec { "create-svn-$name":
-        command => "/usr/bin/svnadmin create $path/$name",
-        creates => "$path/$name",
+        command => "/usr/bin/svnadmin create $create_path"
+        creates => "$create_path"
         require => Package['subversion'],
     }
 }
