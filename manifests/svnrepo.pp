@@ -35,6 +35,13 @@ define subversion::svnrepo(
         before => File["${create_path}"],
         require => Package['subversion'],
     }
+    case $path {
+        absent: { 
+            Exec["create-svn-$name"]{
+                require +> File['/srv/svn'],
+            }
+        }
+    }
     file{"${create_path}":
         ensure => directory,
         recurse => true,
