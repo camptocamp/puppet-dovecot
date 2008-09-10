@@ -57,7 +57,7 @@ define subversion::svnrepo(
     } 
     if $group {
         File["${create_path}"]{
-            owner => $group,
+            group => $group,
         }
     } 
     if $mode {
