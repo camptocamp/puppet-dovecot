@@ -22,6 +22,8 @@ define subversion::svnrepo(
     $group='false',
     $mode='false'
 ) {
+    include subversion
+
     case $path {
         absent: {
             include subversion::basics
