@@ -33,12 +33,16 @@ define subversion::svnrepo(
         command => "/usr/bin/svnadmin create $create_path",
         creates => "$create_path",
         before => File["${create_path}"],
-        require => [ Package['subversion'] ],
     }
     case $path {
         absent: { 
             Exec["create-svn-$name"]{
-                require +> File['/srv/svn'],
+                require +> [ Package['subversion'], File['/srv/svn'] ],
+            }
+        }
+        default: {
+            Exec["create-svn-$name"]{
+                require +> Package['subversion'],
             }
         }
     }
