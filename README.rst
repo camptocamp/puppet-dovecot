@@ -2,7 +2,7 @@ The subversion module provides a ``subversion`` class and a
 ``working-copy`` definition. It has only been tested on Debian Etch.
 
 **subversion** (*class*)
-  Installs the ``subversion`` package. On Debian systems and its derivats i
+  Installs the ``subversion`` package. On Debian systems and its derivats 
   the ``subversion-tools`` package is installed as well.
 
   Example::
@@ -12,7 +12,7 @@ The subversion module provides a ``subversion`` class and a
     }
 
 **subversion::xmlstarlet** (*class*)
-  Installs the ''xmlstarlet'' package, which is required for the ``working-copy``
+  Installs the ``xmlstarlet`` package, which is required for the ``working-copy``
   definition.
 
 
