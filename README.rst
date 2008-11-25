@@ -2,15 +2,21 @@ The subversion module provides a ``subversion`` class and a
 ``working-copy`` definition. It has only been tested on Debian Etch.
 
 **subversion** (*class*)
-  Installs the ``subversion`` and ``subversion-tools`` packages, as
-  well as ``xmlstarlet``, which is required for the ``working-copy``
-  definition.
+  Installs the ``subversion`` package. On Debian systems and its derivats i
+  the ``subversion-tools`` package is installed as well.
 
   Example::
 
     node svn.example.internal {
       include subversion
     }
+
+**subversion::xmlstarlet** (*class*)
+  Installs the ''xmlstarlet'' package, which is required for the ``working-copy``
+  definition.
+
+**subversion::basics** (*class*)
+  Some basic directory setups for a server, which might get used on ``subversion::svnrepo``
 
 **subversion::working-copy** (*definition*)
   Checks out a copy of the named subversion project into the specified
@@ -49,3 +55,45 @@ The subversion module provides a ``subversion`` class and a
         svn_ssh => "ssh -i /root/.ssh/puppet.rsa.key",
         require => User["search"];
     }
+
+**subversion::svnrepo** (*definition*)
+
+  Creates a subversion repository. It automatically includes 
+  the subversion class.
+
+  - ``$name``: The name of the subversion repository. This will be used
+    as the directory name.
+  - ``$path``: The path of the parent directory of the subversion repository
+    Default is set to absent, which means that ``subversion::basics`` gets
+    included and the parent directory is set to: ``/srv/svn/``
+  - ``$owner``: The owner of the repository. Default is to false, which means
+    that puppet defaults are used.
+  - ``$group``: The group of the repository. Default is to false, which means
+    that puppet defaults are used.
+  - ``$mode``: The mode of the repository directory. Default is to false, which means
+    that puppet defaults are used.
+
+  Example::
+
+    subversion::svnrepo{'puppet-modules': }
+
+**subversion::svnserve** (*definition*)
+
+  Serve subversion-based code from a local location.  The job of this
+  module is to check the data out from subversion and keep it up to
+  date, especially useful for providing data to your Puppet server.
+
+  - ``$source``: From where to check the repository out
+  - ``$path``: Where to place the checked out repository
+  - ``$user``: User which might be used to access the repository.
+    Default is set to false, which means that no user will be used.
+  - ``$password``: The password for the above user. Default to false.
+
+  Example usage::
+    svnserve { dist:
+        source => "https://reductivelabs.com/svn",
+        path => "/dist",
+        user => "puppet",
+        password => "mypassword"
+    }
+

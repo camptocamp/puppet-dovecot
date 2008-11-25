@@ -1,6 +1,6 @@
 # manifests/basics.pp
 
-# some basics directory setups for a server
+# some basic directory setups for a server
 class subversion::basics {
     file{'/srv/svn':
         ensure => directory,
