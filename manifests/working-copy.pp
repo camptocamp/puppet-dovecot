@@ -1,5 +1,5 @@
 define subversion::working-copy($repo_base, $path, $branch = "trunk", $svn_ssh = false, $owner = "root", $group = "root") {
-  include subversion
+  include subversion::xmlstarlet
 
   file { $path:
     ensure => directory,

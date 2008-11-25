@@ -29,11 +29,8 @@ class subversion {
 }
 
 class subversion::base {
-    package{
-        'subversion':
-            ensure => present;
-        'xmlstarlet': 
-            ensure => present;
+    package{'subversion':
+        ensure => present,
     }
 }
 class subversion::debian inherits subversion::base {
