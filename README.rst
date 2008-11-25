@@ -1,7 +1,7 @@
 The subversion module provides a ``subversion`` class and a
 ``working-copy`` definition. It has only been tested on Debian Etch.
 
-**``subversion``** (*class*)
+**subversion** (*class*)
   Installs the ``subversion`` and ``subversion-tools`` packages, as
   well as ``xmlstarlet``, which is required for the ``working-copy``
   definition.
@@ -12,7 +12,7 @@ The subversion module provides a ``subversion`` class and a
       include subversion
     }
 
-**``subversion::working-copy``** (*definition*)
+**subversion::working-copy** (*definition*)
   Checks out a copy of the named subversion project into the specified
   directory. Keeps the working copy in sync with the repository. The
   URL that is used to check out the working copy is constructed from
