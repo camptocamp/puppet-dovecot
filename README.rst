@@ -15,8 +15,10 @@ The subversion module provides a ``subversion`` class and a
   Installs the ''xmlstarlet'' package, which is required for the ``working-copy``
   definition.
 
+
 **subversion::basics** (*class*)
   Some basic directory setups for a server, which might get used on ``subversion::svnrepo``
+
 
 **subversion::working-copy** (*definition*)
   Checks out a copy of the named subversion project into the specified
@@ -57,7 +59,6 @@ The subversion module provides a ``subversion`` class and a
     }
 
 **subversion::svnrepo** (*definition*)
-
   Creates a subversion repository. It automatically includes 
   the subversion class.
 
@@ -78,7 +79,6 @@ The subversion module provides a ``subversion`` class and a
     subversion::svnrepo{'puppet-modules': }
 
 **subversion::svnserve** (*definition*)
-
   Serve subversion-based code from a local location.  The job of this
   module is to check the data out from subversion and keep it up to
   date, especially useful for providing data to your Puppet server.
@@ -89,7 +89,7 @@ The subversion module provides a ``subversion`` class and a
     Default is set to false, which means that no user will be used.
   - ``$password``: The password for the above user. Default to false.
 
-  Example usage::
+  Example::
     svnserve { dist:
         source => "https://reductivelabs.com/svn",
         path => "/dist",
