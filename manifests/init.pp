@@ -22,11 +22,22 @@
 # modules_dir { \"subversion\": }
 
 class subversion {
-    include subversion::base
+    case $operatingsystem {
+        debian,ubuntu: { include subversion::debian }
+        default: { include subversion::base }
+    }
 }
 
 class subversion::base {
-    package{'subversion':
-        ensure => present,
+    package{
+        'subversion':
+            ensure => present;
+        'xmlstarlet': 
+            ensure => present;
+    }
+}
+class subversion::debian inherits subversion::base {
+    package {'subversion-tools': 
+        ensure => present;
     }
 }
