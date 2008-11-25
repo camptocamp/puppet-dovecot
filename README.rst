@@ -90,7 +90,8 @@ The subversion module provides a ``subversion`` class and a
   - ``$password``: The password for the above user. Default to false.
 
   Example::
-    svnserve { dist:
+
+    subversion::svnserve{ dist:
         source => "https://reductivelabs.com/svn",
         path => "/dist",
         user => "puppet",
