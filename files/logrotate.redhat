@@ -1,0 +1,18 @@
+/var/log/mysqld.log /var/log/mysql-queries.log /var/log/mysql-slow-queries.log {
+    daily
+    rotate 7
+    missingok
+    create 640 mysql mysql
+    compress
+    sharedscripts
+    postrotate
+        test -x /usr/bin/mysqladmin || exit 0
+
+        MYADMIN="/usr/bin/mysqladmin"
+        if [ -z "`$MYADMIN ping 2>/dev/null`" ]; then
+          exit 1
+        else
+          $MYADMIN flush-logs
+        fi
+    endscript
+}
