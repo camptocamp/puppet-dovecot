@@ -24,6 +24,7 @@ class mysql::server {
     owner => root,
     group => root,
     mode => 644,
+    seltype => "mysqld_etc_t",
     require => Package["mysql-server"],
   }
 
