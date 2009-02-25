@@ -44,6 +44,9 @@ class debian inherits os {
     "cvs": ensure => present;
     "gettext": ensure => present;
     "python-dev": ensure => present;
+    "ngrep": ensure => present;
+    "ipython": ensure => present;
+    "python-mode": ensure => present;
   }
 
 
