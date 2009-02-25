@@ -1,0 +1,2 @@
+# file managed by puppet
+deb http://dev.camptocamp.com/packages gutsy puppet sysadmin openerp-client ocsinventory
