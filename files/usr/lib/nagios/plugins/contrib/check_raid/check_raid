@@ -1,0 +1,90 @@
+#!/bin/bash
+# Functions used in main part.
+export PATH="$PATH:/usr/sbin:/sbin:/usr/local/sbin"
+
+# this function attempts to find RAID hardware
+detectRAID() {
+  # first one, the simpliest :
+  sudo dmidecode -t baseboard | grep -i 'lsi logic' 2>&1>/dev/null
+  if [ $? == 0 ]; then 
+    return 1
+  fi
+  # now we have the others dell PERC 5i (which are really messy...)
+  lspci | egrep -i "raid.+(lsi logic)|(dell)" 2>&1>/dev/null
+  if [ $? == 0 ]; then
+    return 2
+  fi
+  mdadm=`which mdadm`
+  if [ $? == 0 ] && [ -x $mdadm ]; then
+    return 3
+  fi
+  # cheap dell MPT controller
+  lspci | egrep -i "(lsi logic)|(dell).*fusion-mpt" 2>&1>/dev/null
+  if [ $? == 0 ]; then
+    return 4
+  fi
+  # HP/compaq smart array
+  lspci | egrep -i "raid.+(compaq|hewlett).*Smart Array" 2>&1>/dev/null
+  if [ $? == 0 ]; then
+    return 5
+  fi
+  
+# intel sata
+  pciID=`lspci | grep -i sata | awk '{print $1}'`
+  if [ -n $pciID ] && [ -e "/sys/devices/pci0000:00/0000:$pciID" ]; then
+    j=0;k=0
+    for i in /sys/devices/pci0000:00/0000:$pciID/host0/target*/0:0* ; do
+      state=`cat $i/state`
+      if [ $state == 'running' ]; then
+        j=`expr $j + 1`
+      fi
+      k=`expr $k + 1`
+    done
+    if [ $k == $j ]; then
+      echo "RAID IS OK: $j / $j disks running";
+      exit 0
+    else
+      echo "RAID IS WARNING: $j hdd are running, should be $k"
+      exit 1
+    fi
+  fi
+
+  return 999
+}
+# MAIN
+which dmidecode 2>&1>/dev/null
+if [ $? == 0 ]; then
+  # check dmidecode version (check if "-t" option is available
+  sudo dmidecode -h | grep -i 'type' 2>&1>/dev/null
+  if [ $? == "1" ]; then
+    echo 'Please upgrade your dmidecode to 2.8 at least !';
+    exit 3
+  fi
+  # now we check RAID hardware.
+  detectRAID
+  case $? in
+    1)
+      sudo /usr/lib/nagios/plugins/contrib/check_raid/check_lsi_megaraid
+    ;;
+    2)
+      sudo /usr/lib/nagios/plugins/contrib/check_raid/check_megaraid_sas
+    ;;
+    3)
+      sudo /usr/lib/nagios/plugins/contrib/check_raid/check_md_raid
+    ;;
+    4)
+      sudo /usr/lib/nagios/plugins/contrib/check_raid/check_fusion_mpt
+    ;;
+    5)
+      sudo /usr/bin/arrayprobe
+    ;;
+    *)
+      echo "Unknown device !"
+      exit 3
+    ;;
+  esac
+else
+  echo "dmidecode doesn't seem to be installed !"
+  exit 3
+fi
+
