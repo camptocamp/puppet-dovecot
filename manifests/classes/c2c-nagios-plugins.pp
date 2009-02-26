@@ -1,6 +1,8 @@
 class c2c::nagios::plugins {
   
-  if ! defined(Package["nagios-plugins"]) {
+  if defined(Package["nagios-plugins"]) {
+    notice "package nagios-plugins is already defined"
+  } else {
     package {"nagios-plugins": ensure => present }
   }
 
