@@ -1,0 +1,8 @@
+# Hack to run puppetmasterd directly from a git checkout
+export RUBYLIB="/opt/puppet-dev-0.24.x/lib/"
+
+PORT=18141
+START="yes"
+DAEMON_OPTS='--confdir /etc/puppetmaster'
+SERVERTYPE="mongrel"
+PUPPETMASTERS=4
