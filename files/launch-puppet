@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/sbin/puppetd --onetime --no-daemonize --logdest syslog --server sa.camptocamp.com > /dev/null 2>&1
