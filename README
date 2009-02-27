@@ -1,0 +1,16 @@
+apt puppet module
+#################
+
+Manages apt configuration under Debian or Ubuntu.
+
+Classes:
+  * apt
+
+Definitions:
+  * apt::conf
+
+
+apt::conf{"99unattended-upgrade":
+  ensure  => present,
+  content => "APT::Periodic::Unattended-Upgrade \"1\";\n",
+}
