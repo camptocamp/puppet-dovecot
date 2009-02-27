@@ -9,8 +9,16 @@ Classes:
 Definitions:
   * apt::conf
 
-
 apt::conf{"99unattended-upgrade":
   ensure  => present,
   content => "APT::Periodic::Unattended-Upgrade \"1\";\n",
 }
+
+  * apt::key
+
+apt::key {"blah-key":
+  source  => "http://dev.camptocamp.com/packages/debian/pub.key",
+  keyid   => "A37E4CF5",
+  before  => Exec["apt-get_update"],
+}
+
