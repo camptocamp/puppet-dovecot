@@ -1,5 +1,5 @@
 class apt {
-  apt::config {"10periodic":
+  apt::conf {"10periodic":
     ensure => present,
     source => "puppet:///apt/10periodic",
   }
