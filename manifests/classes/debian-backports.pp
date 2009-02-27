@@ -1,6 +1,6 @@
 class os::debian::backports {
 
-  file {"/etc/apt/sources.list.d/backports.list":
+  apt::sources_list{"backports":
     ensure  => present,
     content => $lsbdistcodename ? {
       "gutsy" => "deb http://archive.ubuntu.com/ubuntu gutsy-backports main universe multiverse restricted\n",
@@ -8,8 +8,6 @@ class os::debian::backports {
       "etch"  => "deb http://www.backports.org/debian etch-backports main contrib non-free\n",
       "lenny" => "deb http://www.backports.org/debian lenny-backports main contrib non-free\n",
     },
-    before  => Exec["apt-get_update"],
-    notify  => Exec["apt-get_update"],
   }
 
   common::concatfilepart {"${lsbdistcodename}-backports":
@@ -20,12 +18,10 @@ class os::debian::backports {
 
   case $lsbdistid {
     "Debian" : {
-      os::apt_key_add { "backports-key for $lsbdistid":
+      apt::key {"16BA136C":
+        ensure => present,
         source  => "http://backports.org/debian/archive.key",
-        keyid   => "16BA136C",
-        before  => Exec["apt-get_update"],
       }
     }
-  } 
-
+  }
 }
