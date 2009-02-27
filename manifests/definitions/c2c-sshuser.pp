@@ -1,4 +1,4 @@
-define c2c::sshuser ($ensure=present, uid, comment, email, type, key, groups) {
+define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $groups) {
   user {$name:
     ensure     => $ensure,
     comment    => $comment,
