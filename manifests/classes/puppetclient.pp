@@ -1,7 +1,26 @@
 class puppet::client {
-  package {["puppet", "facter", "lsb-release"]:
-    ensure => latest, 
+  package {"facter":
+    ensure => $facter_version,
+    require => Exec["update apt cache if necessary"],
   }
+
+  package {"puppet":
+    ensure => $puppet_client_version,
+    require => [Package["facter"], Exec["update apt cache if necessary"]],
+  }
+
+  package {"lsb-release":
+    ensure => present,
+  }
+
+    # Augeas support
+  package {"libaugeas-ruby1.8":
+    ensure => present,
+  }
+  
+  package {"augeas-tools":
+    ensure => present,
+  }            
 
   # Puppet client freeze after an upgrade... issue requiring investigation.
   exec { "puppetclient-restart":
@@ -11,8 +30,9 @@ class puppet::client {
   }
   
   service { "puppet":
-    ensure => running,
-    #subscribe => File["/etc/puppet/puppet.conf"],
+    ensure => stopped,
+    enable => false,
+    pattern => "ruby /usr/sbin/puppetd -w 0",
   }
 
   file {"/etc/puppet/puppetd.conf": ensure => absent }
@@ -41,4 +61,25 @@ class puppet::client {
     ensure => absent,
   }
 
+  exec {"update apt cache if necessary":
+    command => "true",
+    unless  => "apt-cache policy puppet | grep -q ${puppet_client_version} && apt-cache policy facter | grep -q ${facter_version}",
+    notify  => Exec["apt-get_update"],
+  }
+
+  file{"/usr/local/bin/launch-puppet":
+    ensure => present,
+    mode => 755,
+    source => "puppet:///puppet/launch-puppet"
+  }
+
+  # Run puppetd with cron instead of having it hanging around and eating so
+  # much memory.
+  cron { "puppetd":
+    ensure  => present,
+    command => "/usr/local/bin/launch-puppet",
+    user    => 'root',
+    minute  => ip_to_cron(2),
+    require => File["/usr/local/bin/launch-puppet"],
+  }         
 }

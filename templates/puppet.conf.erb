@@ -1,3 +1,6 @@
+[main]
+  ssldir=/var/lib/puppet/ssl
+
 [puppetd]
   server=<%= puppet_server %>
   reportserver=<%= puppet_reportserver %>
@@ -5,5 +8,7 @@
   configtimeout=3600
   factsync=true
   pluginsync=true
+  plugindest=/var/lib/puppet/lib
+  libdir=/var/lib/puppet/lib
   pidfile=/var/run/puppet/puppetd.pid
-  ssldir=/var/lib/puppet/ssl
+  environment=production

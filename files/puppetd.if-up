@@ -1,2 +1,4 @@
 #!/bin/sh
-/usr/local/bin/launch-puppet
+if (ping -c1 -W10 sa.camptocamp.com &>/dev/null); then
+  /usr/local/bin/launch-puppet
+fi
