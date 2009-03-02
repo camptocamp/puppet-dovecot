@@ -70,7 +70,7 @@ class puppet::client {
   file{"/usr/local/bin/launch-puppet":
     ensure => present,
     mode => 755,
-    source => "puppet:///puppet/launch-puppet"
+    content => template("puppet/launch-puppet.erb"),
   }
 
   # Run puppetd with cron instead of having it hanging around and eating so
