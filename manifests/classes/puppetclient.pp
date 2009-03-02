@@ -1,11 +1,17 @@
 class puppet::client {
   package {"facter":
-    ensure => $facter_version,
+    ensure  => $facter_version ? {
+      ""      => latest,
+      default => $facter_version,
+    },
     require => Exec["update apt cache if necessary"],
   }
 
   package {"puppet":
-    ensure => $puppet_client_version,
+    ensure  => $puppet_client_version ? {
+      ""      => latest,
+      default => $puppet_client_version,
+    },
     require => [Package["facter"], Exec["update apt cache if necessary"]],
   }
 
