@@ -32,9 +32,16 @@ class puppet::master {
   }
 
   # Configuration
-  file {"/etc/default/puppetmaster":
-    ensure  => present,
-    source  => "puppet:///puppet/puppetmaster.default",
+  #file {"/etc/default/puppetmaster":
+  #  ensure  => present,
+  #  source  => "puppet:///puppet/puppetmaster.default",
+  #  notify  => Service["puppetmaster"],
+  #}
+
+  service {"puppetmaster":
+    ensure  => running,
+    enable  => true,
+    require => Package["puppetmaster"],
   }
 
   # Database
