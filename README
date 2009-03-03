@@ -12,11 +12,11 @@ Usage
 node 'central-backup-server' {
 
   # backup server settings  
-  $rdiff-backup-max-threads = 10
-  $rdiff-backup-logs-dir = "/var/log/rdiff-backup"
-  $rdiff-backup-smtp-server = "localhost"
-  $rdiff-backup-mail-from = "backupserver@domain.com"
-  $rdiff-backup-mail-to = "backupmanager@domain.com"
+  $rdiff_backup_max_threads = 10
+  $rdiff_backup_logs_dir = "/var/log/rdiff-backup"
+  $rdiff_backup_smtp_server = "localhost"
+  $rdiff_backup_mail_from = "backupserver@domain.com"
+  $rdiff_backup_mail_to = "backupmanager@domain.com"
 
   # copy and modify one of these classes to install another version
   include rdiff-backup::server::v1-2-5
