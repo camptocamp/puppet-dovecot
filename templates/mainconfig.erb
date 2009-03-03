@@ -1,0 +1,12 @@
+# file managed by puppet
+#
+# main configuration used by script multithreaded-rdiff-backup.py
+#
+
+[mainconfig]
+max_threads = <%= rdiff-backup-max-threads %>
+logs_dir = <%= rdiff-backup-logs-dir %>
+smtp_server = <%= rdiff-backup-smtp-server %>
+mail_from = <%= rdiff-backup-mail-from %>
+mail_to = <%= rdiff-backup-mail-to %>
+

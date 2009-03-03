@@ -1,0 +1,52 @@
+Introduction/Notes
+==================
+
+This module provide a simple way to manage a central backup 
+server based on rdiff-backup.
+
+This module is under development !
+
+Usage
+=================
+
+node 'central-backup-server' {
+
+  # backup server settings  
+  $rdiff-backup-max-threads = 10
+  $rdiff-backup-logs-dir = "/var/log/rdiff-backup"
+  $rdiff-backup-smtp-server = "localhost"
+  $rdiff-backup-mail-from = "backupserver@domain.com"
+  $rdiff-backup-mail-to = "backupmanager@domain.com"
+
+  # copy and modify one of these classes to install another version
+  include rdiff-backup::server::v1-2-5
+  include rdiff-backup::server::v1-3-0
+
+  # args = rdiff-backup arguments (http://www.nongnu.org/rdiff-backup/rdiff-backup.1.html)
+  rdiff-backup::conf{$fqdn:
+    ensure  => present,
+    version => "1.2.5", 
+    source  => "/",
+    destination => "/backup/${fqdn}",
+    args => "--print-statistics --include '/etc' --exclude '/'",
+    retention => "5D",
+  }
+
+  # collect exported ressources
+  Rdiff-backup::Conf <<||>>
+
+}
+
+node 'one-client-to-backup' {
+  
+  include rdiff-backup::client # install default package of your distribution
+
+  @@rdiff-backup::conf{$fqdn:
+    ensure => present,
+    version => "1.2.5", # a fine improvement will be to get rdiff-backup version with a fact
+    source => "root@${fqdn}::/",
+    destination => "/backup/${fqdn}",
+    args => "--print-statistics --exclude '/prod' --exclude '/dev' --exclude '/mnt' --exclude '/media',
+  }
+
+}
