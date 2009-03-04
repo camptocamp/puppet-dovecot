@@ -1,4 +1,4 @@
-define c2c::sshuser::sadb ($ensure=present) {
+define c2c::sshuser::sadb ($ensure=present, $groups = "") {
 
   $firstname = url_get("${sadb}/user/${name}/firstname")
   $lastname  = url_get("${sadb}/user/${name}/lastname")
@@ -9,6 +9,7 @@ define c2c::sshuser::sadb ($ensure=present) {
     uid        => url_get("${sadb}/user/${name}/uid_number"),
     managehome => true,
     shell      => "/bin/bash",
+    groups     => $groups,
     require    => Class["c2c::skel"],
   }
 
