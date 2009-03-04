@@ -104,8 +104,14 @@ def date():
     return time.strftime("%d %B %Y", time.localtime())
 
 def readMainConfig():
+    mainConfig = "/etc/multithreaded-rdiff-backup.conf"
+
+    if not os.path.exists(mainConfig):
+        print "Main configuration %s not found !" % mainConfig
+        sys.exit(1)
     config = ConfigParser.ConfigParser()
-    config.read("/etc/rdiff-backup-multithreading.conf")
+
+    config.read("/etc/multithreaded-rdiff-backup.conf")
     return dict(config.items('mainconfig'))
 
 def formatResult(backupDict):
@@ -137,6 +143,10 @@ if __name__=="__main__":
 
     mainConf = readMainConfig()
     backupDict = getBackupDict()
+
+    if not backupDict:
+        print "No backup configuration in '/etc/rdiff-backup.d' !"
+        sys.exit(1)
 
      # start threads together
     while moreBackupToRun(backupDict): 

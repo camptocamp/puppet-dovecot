@@ -6,11 +6,23 @@ class rdiff-backup::server {
     group  => root,
   }
 
+  if defined (Package["curl"]) {
+    notice "package curl is already defined"
+  } else {
+    package {"curl":
+      ensure => present,
+    }
+  }
+
   package {"librsync-dev":
     ensure => present,
   }
 
   file {"/opt/rdiff-backup":
+    ensure => directory,
+  }
+
+  file {"/srv/rdiff-backup":
     ensure => directory,
   }
 
@@ -36,11 +48,11 @@ class rdiff-backup::server {
   # cron to start multi-thread script
   cron {"start multithreaded backup script":
     ensure  => present,
-    command => "python /usr/local/sbin/multithreaded-rdiff-backup.py",
+    command => "/usr/bin/python /usr/local/sbin/multithreaded-rdiff-backup.py",
     minute  => "0",
     hour    => "1",
     user    => "root",
-    require => File["puppet:///rdiff-backup/usr/local/sbin/multithreaded-rdiff-backup.py"],
+    require => File["/usr/local/sbin/multithreaded-rdiff-backup.py"],
   }
 
 }
