@@ -49,6 +49,5 @@ class java::v6 {
   file {"/etc/profile.d/java_home":
     ensure => present,
     content => template("java/java-home.erb"),
-    require => File["/etc/profile.d"],
   }
 }
