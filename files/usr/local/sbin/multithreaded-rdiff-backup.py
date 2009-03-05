@@ -163,5 +163,5 @@ if __name__=="__main__":
 
     # send an email resume
     title = "rdiff-backup result (%s/%s) - %s" %(result['success'], nb, date())
-    Email(title, result['msg'], "rdiff-backup@camptocamp.com", "mathieu.bornoz@camptocamp.com").send()
+    Email(title, result['msg'], mainConf['mail_from'], mainConf['mail_to']).send()
     
