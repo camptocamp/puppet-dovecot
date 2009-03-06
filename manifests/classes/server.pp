@@ -43,13 +43,14 @@ class mysql::server {
         RedHat => "set log-slow-queries /var/log/mysql-slow-queries.log",
         default => "set set log-slow-queries /var/log/mysql/mysql-slow.log",
       },
-      #"ins log-slow-admin-statements after log-slow-queries", # not implemented in puppet yet
+      #"ins log-slow-admin-statements after log-slow-queries", # BUG: not implemented in puppet yet
       $operatingsystem ? {
         RedHat => "set socket /var/lib/mysql/mysql.sock",
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
-    #require => File["/etc/mysql/my.cnf"], BUG: augeas changes file ownership
+    require => File["/etc/mysql/my.cnf"],
+    notify => Service["mysql"],
   }
 
   # by default, replication is disabled
@@ -63,7 +64,8 @@ class mysql::server {
       "rm master-password",
       "rm report-host"
     ],
-    #require => File["/etc/mysql/my.cnf"], BUG: augeas changes file ownership
+    require => File["/etc/mysql/my.cnf"],
+    notify => Service["mysql"],
   }
 
   augeas { "my.cnf/mysqld_safe":
@@ -75,7 +77,8 @@ class mysql::server {
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
-    #require => File["/etc/mysql/my.cnf"], BUG: augeas changes file ownership
+    require => File["/etc/mysql/my.cnf"],
+    notify => Service["mysql"],
   }
 
   # force use of system defaults
@@ -104,7 +107,8 @@ class mysql::server {
      "rm myisamchk/read_buffer",
      "rm myisamchk/write_buffer"
     ],
-    #require => File["/etc/mysql/my.cnf"], BUG: augeas changes file ownership
+    require => File["/etc/mysql/my.cnf"],
+    notify => Service["mysql"],
   }
 
   augeas { "my.cnf/client":
@@ -115,20 +119,18 @@ class mysql::server {
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
-    #require => File["/etc/mysql/my.cnf"], BUG: augeas changes file ownership
+    require => File["/etc/mysql/my.cnf"],
   }
 
   service { "mysql":
     ensure      => running,
+    enable      => true,
     name        => $operatingsystem ? {
       RedHat => "mysqld",
       default => "mysql",
     },
     require   => Package["mysql-server"],
-    subscribe   => File["/etc/mysql/my.cnf"],
-    # don't subscribe to augeas until this bug is fixed:
-    # http://thread.gmane.org/gmane.comp.sysutils.augeas.devel/985/focus=9718
-    #subscribe   => [File["/etc/mysql/my.cnf"], Augeas["my.cnf/mysqld"]],
+    #subscribe   => File["/etc/mysql/my.cnf"], # BUG: see augeas issue #26
   }
 
   exec { "Set MySQL server root password":
