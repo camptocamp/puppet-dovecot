@@ -19,8 +19,10 @@ class puppet::master::mongrel inherits puppet::master {
   }
 
   # Init scripts
-  File["/etc/default/puppetmaster"] {
+  file {"/etc/default/puppetmaster":
+    ensure  => present,
     source => "puppet:///puppet/puppetmaster-mongrel.default",
+    notify  => Service["puppetmaster"],
   }
 
   file {"/etc/init.d/apache2-puppetmaster":
