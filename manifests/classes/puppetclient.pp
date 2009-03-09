@@ -19,15 +19,6 @@ class puppet::client {
     ensure => present,
   }
 
-    # Augeas support
-  package {"libaugeas-ruby1.8":
-    ensure => present,
-  }
-  
-  package {"augeas-tools":
-    ensure => present,
-  }            
-
   # Puppet client freeze after an upgrade... issue requiring investigation.
   exec { "puppetclient-restart":
     command     => 'kill -9 $(pidof ruby); /usr/sbin/puppetd', # Ugly...
