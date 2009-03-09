@@ -28,8 +28,14 @@ class mysql::server {
     require => Package["mysql-server"],
   }
 
+  file { "/usr/share/augeas/lenses/contrib/mysql.aug":
+    ensure => present,
+    source => "puppet:///mysql/mysql.aug",
+  }
+
   augeas { "my.cnf/mysqld":
     context => "$mycnfctx/mysqld/",
+    load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
       "set pid-file /var/run/mysqld/mysqld.pid",
       "set old_passwords 0",
@@ -56,6 +62,7 @@ class mysql::server {
   # by default, replication is disabled
   augeas { "my.cnf/replication":
     context => "$mycnfctx/mysqld/",
+    load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
       "rm log-bin",
       "rm server-id",
@@ -70,6 +77,7 @@ class mysql::server {
 
   augeas { "my.cnf/mysqld_safe":
     context => "$mycnfctx/mysqld_safe/",
+    load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
       "set pid-file /var/run/mysqld/mysqld.pid",
       $operatingsystem ? {
@@ -84,6 +92,7 @@ class mysql::server {
   # force use of system defaults
   augeas { "my.cnf/performance":
     context => "$mycnfctx/",
+    load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
      "rm mysqld/key_buffer",
      "rm mysqld/max_allowed_packet",
@@ -113,6 +122,7 @@ class mysql::server {
 
   augeas { "my.cnf/client":
     context => "$mycnfctx/client/",
+    load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
       $operatingsystem ? {
         RedHat => "set socket /var/lib/mysql/mysql.sock",
