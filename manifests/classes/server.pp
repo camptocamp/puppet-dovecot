@@ -169,6 +169,15 @@ class mysql::server {
     mode    => 755,
   }
 
+  file { "/var/lib/mysql":
+    ensure  => directory,
+    owner   => "mysql",
+    group   => "mysql",
+    mode    => 755,
+    seltype => "mysqld_db_t",
+    require => Package["mysql-server"],
+  }
+
   file { "/var/backups/mysql":
     ensure  => directory,
     owner   => "root",
