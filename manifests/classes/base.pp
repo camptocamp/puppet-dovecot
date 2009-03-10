@@ -1,6 +1,6 @@
 class postgresql::base {
 
-  package { ["libpq-dev", "phppgadmin"]:
+  package {"libpq-dev":
     ensure => installed
   }
 
@@ -10,11 +10,7 @@ class postgresql::base {
 
   user { "postgres":
     ensure  => present,
-    gid     => "postgres",
-    groups  => "ssl-cert",
-    comment => "PostgreSQL administrator,,,",
-    home    => "/var/lib/postgresql",
-    shell   => "/bin/bash"
+    require => Package["ssl-cert"],
   }
 
   file { "/var/backups/pgsql":
@@ -22,7 +18,7 @@ class postgresql::base {
     owner   => "postgres",
     group   => "postgres",
     mode    => 755,
-    require => [User["postgres"], Group["postgres"]],
+    require => [Package["postgresql"], User["postgres"]],
   }
 
   file { "/usr/local/bin/pgsql-backup.sh":
@@ -39,7 +35,14 @@ class postgresql::base {
     user    => "postgres",
     hour    => 2,
     minute  => 0,
-    require => File["/usr/local/bin/pgsql-backup.sh"],
+    require => [User["postgres"], File["/usr/local/bin/pgsql-backup.sh"]],
+  }
+
+  exec {"force UTF8 as default encoding" : 
+    command   => "echo \"UPDATE pg_database SET datistemplate = FALSE where datname = 'template1';drop database template1;create database template1 with template = template0 encoding = 'UTF8';UPDATE pg_database SET datistemplate = TRUE where datname = 'template1';\" |psql",
+    unless    => "psql -l |grep template1 |grep -q UTF8",
+    user      => postgres,
+    require   => [Package["postgresql"], User["postgres"]],
   }
 
 }

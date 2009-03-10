@@ -2,14 +2,20 @@ class postgresql::v8-1 inherits postgresql::base {
 
   case $lsbdistcodename {
     etch: {
-      package { "postgresql-8.1":
-        ensure => installed
+      package {"postgresql-8.1":
+        ensure => installed,
+        alias  => "postgresql",
+      }
+
+      package {"postgresql-common":
+        ensure => installed,
       }
       
       service { "postgresql-8.1":
         ensure    => running,
         hasstatus => true,
-        require   => Package["postgresql-8.1"]
+        require   => Package["postgresql-8.1"],
+        alias     => "postgresql",
       }
     }
     default: {
