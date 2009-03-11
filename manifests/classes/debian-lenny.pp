@@ -8,7 +8,8 @@ class os::debian-lenny inherits debian {
     source => "puppet:///os/etc/apt/sources.list.d/sources.list-debian-lenny",
   }
 
-  apt::sources_list{"2c":
+
+  apt::sources_list{"c2c":
     source => "puppet:///os/etc/apt/sources.list.d/sources.list-c2c-lenny",
   }
 

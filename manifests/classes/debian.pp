@@ -102,5 +102,10 @@ class debian inherits os {
     command     => "sysctl -p",
     refreshonly => true,
   }
+
+  # remove a bad file create by apt::sources_list{"2c" !
+  file {"/etc/apt/sources.list.d/2c.list":
+    ensure => absent,
+  }
 }
 
