@@ -4,7 +4,11 @@ syslog puppet module
 This module configures syslog-ng both as a client or as a server.
 
 # Syslog client
-include syslog
+include syslog-ng
 
 # Syslog server
-include syslog::server
+include syslog-ng::server
+
+Attributes:
+
+  $syslog_server

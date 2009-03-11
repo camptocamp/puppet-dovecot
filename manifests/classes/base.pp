@@ -1,4 +1,4 @@
-class syslog {
+class syslog-ng {
   package {"syslog-ng":
     ensure => installed,
   }
@@ -11,7 +11,7 @@ class syslog {
 
   file {"/etc/syslog-ng/syslog-ng.conf":
     ensure => present,
-    content => template("syslog/syslog-ng.client.conf.erb"),
+    content => template("syslog-ng/syslog-ng.client.conf.erb"),
     require   => Package["syslog-ng"],
   }
 }

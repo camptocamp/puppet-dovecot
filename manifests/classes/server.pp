@@ -1,11 +1,11 @@
-class syslog::server inherits syslog {
+class syslog-ng::server inherits syslog-ng {
   package {"logrotate":
     ensure => installed,
   }
 
   File["/etc/syslog-ng/syslog-ng.conf"] {
     ensure  => present,
-    content => template("syslog/syslog-ng.server.conf.erb"),
+    content => template("syslog-ng/syslog-ng.server.conf.erb"),
   }
 
   # Log repository
@@ -21,7 +21,7 @@ class syslog::server inherits syslog {
   # Log rotation
   file {"/etc/logrotate.d/logserver":
     ensure  => present,
-    content => template("syslog/logserver.logrotate.erb"),
+    content => template("syslog-ng/logserver.logrotate.erb"),
     require => Package["logrotate"],
   }
 }
