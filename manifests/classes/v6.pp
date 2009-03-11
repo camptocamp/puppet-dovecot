@@ -14,6 +14,16 @@ class java::v6 {
           ensure  => present,
           require => Package["sun-java6-bin"];
       }
+    
+      case $architecture {
+        amd64: {
+          os::backported_package {"sun-java6-plugin":
+            ensure  => present,
+            require => Package["sun-java6-bin"],
+          }
+        }
+      }
+
     }
     'lenny' : {
       package { "sun-java6-bin":
@@ -27,16 +37,6 @@ class java::v6 {
         require => Package["sun-java6-bin"],
       }
     } 
-  }
-
-
-  case $architecture {
-    amd64: {
-      os::backported_package {"sun-java6-plugin":
-        ensure  => present,
-        require => Package["sun-java6-bin"],
-      }
-    }
   }
 
   # Thanks to Java strange licensing
