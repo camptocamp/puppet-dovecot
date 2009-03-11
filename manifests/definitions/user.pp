@@ -1,11 +1,6 @@
 define postgresql::user($ensure, $password = false, $superuser = false, 
                         $createdb = false, $createrole = false) {
 
-  $passwordtext = $password ? {
-    false   => "",
-    default => "PASSWORD '$password' ",
-  }
-
   $pgpass = $password ? {
     false   => "",
     default => "$password",
@@ -32,7 +27,10 @@ define postgresql::user($ensure, $password = false, $superuser = false,
       # The createuser command always prompts for the password.
       # User with '-' like www-data must be inside double quotes
       exec { "Create postgres user $name":
-        command => "psql -c \"CREATE USER \\\"$name\\\" $passwordtext\" ",
+        command => $password ? {
+          false => "psql -c \"CREATE USER \\\"$name\\\" \" ",
+          default => "psql -c \"CREATE USER \\\"$name\\\" PASSWORD $password\" ",
+        },
         user    => "postgres",
         unless  => "psql -c '\\du' | grep '^  *$name'",
         require => User["postgres"],
@@ -59,12 +57,14 @@ define postgresql::user($ensure, $password = false, $superuser = false,
         require => [User["postgres"], Exec["Create postgres user $name"]],
       }
 
-      # change only if its not the same password
-      exec { "Change password for postgres user $name":
-        command => "psql -c 'ALTER USER \"$name\" $passwordtext' ",
-        user    => "postgres",
-        unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo 'localhost:5432:template1:$name:$pgpass' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql -h localhost -c '\\q' -U $name template1 && rm -f \$TMPFILE",
-        require => [User["postgres"], Exec["Create postgres user $name"]],
+      if $password { 
+        # change only if its not the same password
+        exec { "Change password for postgres user $name":
+          command => "psql -c \"ALTER USER \\\"$name\\\" PASSWORD '$password' \"",
+          user    => "postgres",
+          unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo 'localhost:5432:template1:$name:$pgpass' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql -h localhost -c '\\q' -U $name template1 && rm -f \$TMPFILE",
+          require => [User["postgres"], Exec["Create postgres user $name"]],
+        }
       }
 
     }
