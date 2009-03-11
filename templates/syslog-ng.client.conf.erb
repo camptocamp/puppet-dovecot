@@ -344,7 +344,7 @@ log {
 #
 
 destination d_remote {
-        udp("logserver.camptocamp.com", port(514));
+        udp("<%= syslog_server %>", port(514));
 };
 
 log {
