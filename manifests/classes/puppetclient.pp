@@ -60,7 +60,10 @@ class puppet::client {
 
   exec {"update apt cache if necessary":
     command => "true",
-    unless  => "apt-cache policy puppet | grep -q ${puppet_client_version} && apt-cache policy facter | grep -q ${facter_version}",
+    unless  => $puppet_client_version ? {
+      ""      => "true",
+      default => "apt-cache policy puppet | grep -q ${puppet_client_version} && apt-cache policy facter | grep -q ${facter_version}",
+    },
     notify  => Exec["apt-get_update"],
   }
 
