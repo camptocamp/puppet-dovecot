@@ -29,7 +29,7 @@ define postgresql::user($ensure, $password = false, $superuser = false,
       exec { "Create postgres user $name":
         command => $password ? {
           false => "psql -c \"CREATE USER \\\"$name\\\" \" ",
-          default => "psql -c \"CREATE USER \\\"$name\\\" PASSWORD $password\" ",
+          default => "psql -c \"CREATE USER \\\"$name\\\" PASSWORD '$password'\" ",
         },
         user    => "postgres",
         unless  => "psql -c '\\du' | grep '^  *$name'",
