@@ -4,10 +4,6 @@ class postgresql::base {
     ensure => installed
   }
 
-  group { "postgres":
-    ensure => present,
-  }
-
   user { "postgres":
     ensure  => present,
     require => Package["ssl-cert"],
