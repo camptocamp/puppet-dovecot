@@ -1,6 +1,7 @@
 class mysql::server {
-  $user     = "root"
-  $password = generate("/usr/bin/pwgen", 8, 1)
+
+  if $mysql_user {} else { $mysql_user = "root" }
+  if $mysql_password {} else { $mysql_password = generate("/usr/bin/pwgen", 8, 1) }
 
   if $mysqldump_retention {} else { $mysqldump_retention = "week" }
 
@@ -147,13 +148,13 @@ class mysql::server {
 
   exec { "Set MySQL server root password":
     unless      => "test -f /root/.my.cnf",
-    command     => "mysqladmin -u${user} password ${password}",
+    command     => "mysqladmin -u${mysql_user} password ${mysql_password}",
     notify      => Exec["Generate my.cnf"],
     require     => [Package["mysql-server"], Service["mysql"]]
   }
 
   exec { "Generate my.cnf":
-    command     => "echo -e \"[mysql]\nuser=${user}\npassword=${password}\n[mysqladmin]\nuser=${user}\npassword=${password}\n[mysqldump]\nuser=${user}\npassword=${password}\n\" > /root/.my.cnf",
+    command     => "echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
     refreshonly => true,
     creates     => "/root/.my.cnf",
   }
