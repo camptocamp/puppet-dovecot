@@ -1,19 +1,15 @@
-define mysql::rights($database, $user, $password, $ensure=true) {
-  case $ensure {
-    present:{
-      exec {"Set rigths for db ${database}":
-        command => "mysql -e \"GRANT ALL PRIVILEGES on ${database}.* TO ${user}@localhost IDENTIFIED BY '${password}';\"",
-        unless  => "mysql --database=${database} --user=${user} --password=${password} -A -e 'exit'",
-        require => Exec["Set MySQL server root password"],
-      }
-    }
-   
-    absent:{
-      exec {"unsert rights for db ${database}":
-        command => "mysql -e \"REVOKE ALL PRIVILEGES on ${database}.* FROM ${user}@localhost;\"",
-        onlyif  => "mysql --database=${database} --user=${user} --password=${password} -A -e 'exit'",
-        require => Exec["Set MySQL server root password"],
-      }
-    }
+define mysql::rights($database, $user, $password, $host="localhost", $ensure="present") {
+
+  mysql_user { "${user}@${host}":
+    ensure => $ensure,
+    password_hash => mysql_password($password),
+    require => File["/root/.my.cnf"],
   }
+
+  mysql_grant { "${user}@${host}/${database}":
+    ensure => $ensure,
+    privileges => "all",
+    require => File["/root/.my.cnf"],
+  }
+
 }
