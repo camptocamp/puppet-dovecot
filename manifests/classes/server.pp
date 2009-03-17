@@ -1,8 +1,5 @@
 class mysql::server {
 
-  if $mysql_user {} else { $mysql_user = "root" }
-  if $mysql_password {} else { $mysql_password = generate("/usr/bin/pwgen", 8, 1) }
-
   if $mysqldump_retention {} else { $mysqldump_retention = "week" }
 
   $mycnf = $operatingsystem ? {
@@ -146,7 +143,40 @@ class mysql::server {
     #subscribe   => File["/etc/mysql/my.cnf"], # BUG: see augeas issue #26
   }
 
-  exec { "Set MySQL server root password":
+
+  if $mysql_user {} else { $mysql_user = "root" }
+
+  if $mysql_password {
+
+    mysql_user { "${mysql_user}@localhost":
+      ensure => present,
+      password_hash => mysql_password($mysql_password),
+      require => Exec["Generate my.cnf"],
+    }
+
+    file { "/root/.my.cnf":
+      ensure => present,
+      owner => root,
+      group => root,
+      mode  => 600,
+      content => template("mysql/my.cnf.erb"),
+      require => Exec["Initialize MySQL server root password"],
+    }
+
+  } else {
+
+    $mysql_password = generate("/usr/bin/pwgen", 8, 1)
+
+    file { "/root/.my.cnf":
+      owner => root,
+      group => root,
+      mode  => 600,
+      require => Exec["Initialize MySQL server root password"],
+    }
+
+  }
+
+  exec { "Initialize MySQL server root password":
     unless      => "test -f /root/.my.cnf",
     command     => "mysqladmin -u${mysql_user} password ${mysql_password}",
     notify      => Exec["Generate my.cnf"],
@@ -157,12 +187,6 @@ class mysql::server {
     command     => "echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
     refreshonly => true,
     creates     => "/root/.my.cnf",
-  }
-
-  file { "/root/.my.cnf":
-    owner => root,
-    group => root,
-    mode  => 600,
   }
 
   file { "/var/backups":
