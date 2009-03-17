@@ -2,6 +2,8 @@ class mysql::server {
   $user     = "root"
   $password = generate("/usr/bin/pwgen", 8, 1)
 
+  if $mysqldump_retention {} else { $mysqldump_retention = "week" }
+
   $mycnf = $operatingsystem ? {
     RedHat => "/etc/my.cnf",
     default => "/etc/mysql/my.cnf",
@@ -195,7 +197,7 @@ class mysql::server {
   }
 
   cron { "mysql-backup":
-    command => "/usr/local/bin/mysql-backup.sh week",
+    command => "/usr/local/bin/mysql-backup.sh ${mysqldump_retention}",
     user    => "root",
     hour    => 2,
     minute  => 0,
