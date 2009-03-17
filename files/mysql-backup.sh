@@ -21,12 +21,13 @@ MYDIR="/var/lib/mysql"
 BKPDIR="/var/backups/mysql"
 
 # Installed ?
-if [ -e /usr/bin/mysqladmin ]; then
+if [ -e /usr/bin/mysqladmin ] && [ -e /usr/bin/mysqldump ]; then
   # used ?
   if [ -d /var/lib/mysql ] && [ -n "$(find /var/lib/mysql -maxdepth 1 -type d ! -iname mysql ! -iname test )" ]; then
     # Running ?
-    if /usr/bin/mysqladmin -uroot ping > /dev/null 2>&1; then
-      /usr/bin/mysqldump --all-database |gzip > $BKPDIR/mysql-$DAY.sql.gz
+    if /usr/bin/mysqladmin -s ping > /dev/null; then
+      /usr/bin/mysqldump --all-database --extended-insert > $BKPDIR/mysql-$DAY.sql && nice -n 19 gzip -9 $BKPDIR/mysql-$DAY.sql
+      exit $?
     else
       echo 'mysqld not running'
       exit 1
@@ -36,6 +37,6 @@ if [ -e /usr/bin/mysqladmin ]; then
     exit 0
   fi
 else
-  # not installed ? no problem...
-  exit 0
+  echo "mysqladmin/mysqldump missing. Are you sure this cron must run ?"
+  exit 1
 fi
