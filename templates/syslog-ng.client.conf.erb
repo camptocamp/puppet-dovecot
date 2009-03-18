@@ -344,7 +344,7 @@ log {
 #
 
 destination d_remote {
-        udp("<%= syslog_server %>", port(514));
+        tcp("<%= syslog_server %>", port(514));
 };
 
 log {
