@@ -1,6 +1,11 @@
 [main]
   ssldir=/var/lib/puppet/ssl
 
+<% if has_variable?("puppetmaster_ssldir") %>
+[puppetca]
+  ssldir=<%= puppetmaster_ssldir %>
+<% end %>
+
 [puppetd]
   server=<%= puppet_server %>
   reportserver=<%= puppet_reportserver %>
