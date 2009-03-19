@@ -47,6 +47,8 @@ class debian inherits os {
     "ngrep": ensure => present;
     "ipython": ensure => present;
     "python-mode": ensure => present;
+    "locate": ensure => present;
+    "iotop": ensure => present;
   }
 
 
