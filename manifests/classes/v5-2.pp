@@ -24,6 +24,7 @@ class mapserver::v5-2 {
       "libecw",
       "libgdal-doc",
       "libapache2-mod-fcgid",
+      "python-gdal",
     ]: ensure => present,
   }
 
