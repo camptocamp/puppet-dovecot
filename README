@@ -35,6 +35,22 @@ node 'central-backup-server' {
   # collect exported ressources
   Rdiff-backup::Conf <<||>>
 
+  # collect public keys
+  Sshkey <<||>>
+
+  file {"/root/.ssh/your_private_key_id_rsa": # the key used in --remote-schema below
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => 600,
+    content => "-----BEGIN RSA PRIVATE KEY-----
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+...
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+-----END RSA PRIVATE KEY-----\n",
+  }
+ 
 }
 
 node 'one-client-to-backup' {
@@ -46,7 +62,25 @@ node 'one-client-to-backup' {
     version => "1.2.5", # a fine improvement will be to get rdiff-backup version with a fact
     source => "root@${fqdn}::/",
     destination => "/backup/${fqdn}",
-    args => "--print-statistics --exclude '/prod' --exclude '/dev' --exclude '/mnt' --exclude '/media',
+    args => "--remote-schema 'ssh -t -i /root/.ssh/your_private_key_id_rsa %s' --print-statistics --exclude '/proc' --exclude '/dev' --exclude '/mnt' --exclude '/media',
+  }
+
+  # export public key of this node
+  @@sshkey {"$fqdn": type => rsa, key => $sshrsakey }
+
+  # use ssh-keygen to generate SSH keys without passphrase and put the public key here
+  ssh_authorized_key {"multithreaded-rdiff-backup":
+    ensure => present,
+    type => "ssh-rsa",
+    key => "AAAA ... BIwAAAQEA0PPAW==", # your public SSH key
+    user => root,
+    options => [
+      "from=\"124.44.55.66\"", # IP of your central backup server
+      "command=\"rdiff-backup --server\"",
+      "no-pty",
+      "no-port-forwarding",
+      "no-X11-forwarding",
+    ],
   }
 
 }
