@@ -63,6 +63,7 @@ node 'one-client-to-backup' {
     source => "root@${fqdn}::/",
     destination => "/backup/${fqdn}",
     args => "--remote-schema 'ssh -t -i /root/.ssh/your_private_key_id_rsa %s' --print-statistics --exclude '/proc' --exclude '/dev' --exclude '/mnt' --exclude '/media',
+    retention => "30D",
   }
 
   # export public key of this node
