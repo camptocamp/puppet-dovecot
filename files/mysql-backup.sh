@@ -1,4 +1,5 @@
 #!/bin/sh
+# file managed by puppet
 
 case "$1" in
   week)
@@ -26,7 +27,7 @@ if [ -e /usr/bin/mysqladmin ] && [ -e /usr/bin/mysqldump ]; then
   if [ -d /var/lib/mysql ] && [ -n "$(find /var/lib/mysql -maxdepth 1 -type d ! -iname mysql ! -iname test )" ]; then
     # Running ?
     if /usr/bin/mysqladmin -s ping > /dev/null; then
-      /usr/bin/mysqldump --all-database --extended-insert > $BKPDIR/mysql-$DAY.sql && nice -n 19 gzip -9 $BKPDIR/mysql-$DAY.sql
+      /usr/bin/mysqldump --all-database --extended-insert > $BKPDIR/mysql.sql && nice -n 19 gzip -9 $BKPDIR/mysql.sql && mv -f $BKPDIR/mysql.sql.gz $BKPDIR/mysql-$DAY.sql.gz
       exit $?
     else
       echo 'mysqld not running'
