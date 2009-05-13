@@ -19,8 +19,13 @@ node 'central-backup-server' {
   $rdiff_backup_mail_to = "backupmanager@domain.com"
 
   # copy and modify one of these classes to install another version
-  include rdiff-backup::server::v1-2-5
-  include rdiff-backup::server::v1-3-0
+  rdiff-backup::server::install { ["0.13.4","1.1.15","1.1.5"]: 
+    ensure => present
+  }
+  # we want to remove one version? ok:
+  rdiff-backup::server::install {"1.2.5":
+    ensure => absent,
+  }
 
   # args = rdiff-backup arguments (http://www.nongnu.org/rdiff-backup/rdiff-backup.1.html)
   rdiff-backup::conf{$fqdn:
