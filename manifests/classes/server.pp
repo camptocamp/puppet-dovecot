@@ -140,7 +140,6 @@ class mysql::server {
       default => "mysql",
     },
     require   => Package["mysql-server"],
-    #subscribe   => File["/etc/mysql/my.cnf"], # BUG: see augeas issue #26
   }
 
 
@@ -184,7 +183,7 @@ class mysql::server {
   }
 
   exec { "Generate my.cnf":
-    command     => "echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
+    command     => "echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqlshow]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
     refreshonly => true,
     creates     => "/root/.my.cnf",
   }
