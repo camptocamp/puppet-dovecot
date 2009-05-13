@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# file managed by puppet
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
 import os
