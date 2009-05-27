@@ -50,4 +50,10 @@ class java::v6 {
     ensure => present,
     content => template("java/java-home.erb"),
   }
+
+  # Update java alternatives
+  # See ticket #11173
+  exec {"update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java":
+    unless => 'test $(readlink /etc/alternatives/java) == "/usr/lib/jvm/java-6-sun/jre/bin/java"'
+  }
 }
