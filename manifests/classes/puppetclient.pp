@@ -62,10 +62,21 @@ class puppet::client {
     command => "true",
     unless  => $puppet_client_version ? {
       ""      => "true",
-      default => "apt-cache policy puppet | grep -q ${puppet_client_version} && apt-cache policy facter | grep -q ${facter_version}",
+      default => "apt-cache policy puppet | grep -q ${puppet_client_version}",
     },
     notify  => Exec["apt-get_update"],
   }
+
+  exec {"update apt cache if facter is not yet available":
+    command => "true",
+    unless  => $facter_version ? {
+      ""      => "true",
+      default => "apt-cache policy facter | grep -q ${facter_version}",
+    },
+    before  => Exec["update apt cache if necessary"],
+    notify  => Exec["apt-get_update"],
+  }
+
 
   file{"/usr/local/bin/launch-puppet":
     ensure => present,
