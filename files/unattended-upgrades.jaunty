@@ -1,0 +1,10 @@
+// allowed (origin, archive) pairs
+Unattended-Upgrade::Allowed-Origins {
+        "Ubuntu jaunty-security";
+        "Ubuntu jaunty-updates";
+        "Medibuntu jaunty";
+};
+
+// never update the packages in this list
+Unattended-Upgrade::Package-Blacklist {
+};

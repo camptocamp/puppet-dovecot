@@ -1,0 +1,10 @@
+// allowed (origin, archive) pairs
+Unattended-Upgrade::Allowed-Origins {
+        "Ubuntu intrepid-security";
+        "Ubuntu intrepid-updates";
+        "Medibuntu intrepid";
+};
+
+// never update the packages in this list
+Unattended-Upgrade::Package-Blacklist {
+};
