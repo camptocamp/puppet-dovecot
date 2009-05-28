@@ -1,4 +1,4 @@
 // allowed (origin, archive) pairs
 Unattended-Upgrade::Allowed-Origins {
-        "Debian stable";
+        "Debian etch";
 };
