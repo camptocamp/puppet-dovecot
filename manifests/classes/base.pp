@@ -10,9 +10,9 @@ class syslog-ng {
   }
 
   file {"/etc/syslog-ng/syslog-ng.conf":
-    ensure => present,
+    ensure  => present,
     content => template("syslog-ng/syslog-ng.client.conf.erb"),
-    require   => Package["syslog-ng"],
-    notify => Service["syslog-ng"],
+    require => Package["syslog-ng"],
+    notify  => Service["syslog-ng"],
   }
 }
