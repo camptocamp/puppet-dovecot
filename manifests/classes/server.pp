@@ -5,7 +5,9 @@ class syslog-ng::server inherits syslog-ng {
 
   File["/etc/syslog-ng/syslog-ng.conf"] {
     ensure  => present,
-    content => template("syslog-ng/syslog-ng.server.conf.erb"),
+    content => template("syslog-ng/syslog-ng.server-options.conf.erb",
+      "syslog-ng/syslog-ng.debian.conf.erb",
+      "syslog-ng/syslog-ng.server-sourcedest.conf.erb"),
   }
 
   # Log repository

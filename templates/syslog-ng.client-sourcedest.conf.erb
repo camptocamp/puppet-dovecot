@@ -1,0 +1,12 @@
+#
+# Remote Logging
+#
+
+destination d_remote {
+        tcp("<%= syslog_server %>", port(514));
+};
+
+log {
+        source(s_all);
+        destination(d_remote);
+};

@@ -11,7 +11,9 @@ class syslog-ng {
 
   file {"/etc/syslog-ng/syslog-ng.conf":
     ensure  => present,
-    content => template("syslog-ng/syslog-ng.client.conf.erb"),
+    content => template("syslog-ng/syslog-ng.client-options.conf.erb",
+      "syslog-ng/syslog-ng.debian.conf.erb",
+      "syslog-ng/syslog-ng.client-sourcedest.conf.erb"),
     require => Package["syslog-ng"],
     notify  => Service["syslog-ng"],
   }
