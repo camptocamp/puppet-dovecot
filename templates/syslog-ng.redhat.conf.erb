@@ -1,0 +1,105 @@
+options { dir_perm(0755); perm(0644); chain_hostnames(no);
+          keep_hostname(yes); };
+
+source local {
+	unix-stream("/dev/log");
+	udp(ip(0.0.0.0) port(514));
+	internal();
+};
+
+# *.info;mail.none;authpriv.none;cron.none		/var/log/messages
+
+filter f_1 {
+	not facility(cron);
+};
+
+filter f_2 {
+	level(info..emerg);
+};
+
+filter f_3 {
+	not facility(mail);
+};
+
+filter f_4 {
+	not facility(authpriv);
+};
+
+destination d_1 { 
+	file("/var/log/messages" create_dirs(yes));
+};
+
+log { source(local); filter(f_1); filter(f_2); filter(f_3); filter(f_4); destination(d_1); };
+
+# authpriv.*						/var/log/secure
+
+filter f_5 {
+	facility(authpriv) and level(debug..emerg);
+};
+
+destination d_2 { 
+	file("/var/log/secure" create_dirs(yes));
+};
+
+log { source(local); filter(f_5); destination(d_2); };
+
+# mail.*							-/var/log/maillog
+
+filter f_6 {
+	facility(mail) and level(debug..emerg);
+};
+
+destination d_3 { 
+	usertty("-/var/log/maillog");
+};
+
+log { source(local); filter(f_6); destination(d_3); };
+
+# cron.*							/var/log/cron
+
+filter f_7 {
+	facility(cron) and level(debug..emerg);
+};
+
+destination d_4 { 
+	file("/var/log/cron" create_dirs(yes));
+};
+
+log { source(local); filter(f_7); destination(d_4); };
+
+# *.emerg							*
+
+filter f_8 {
+	level(emerg);
+};
+
+destination d_5 { 
+	usertty("*");
+};
+
+log { source(local); filter(f_8); destination(d_5); };
+
+# uucp,news.crit						/var/log/spooler
+
+filter f_9 {
+	facility(uucp,news) and level(crit..emerg);
+};
+
+destination d_6 { 
+	file("/var/log/spooler" create_dirs(yes));
+};
+
+log { source(local); filter(f_9); destination(d_6); };
+
+# local7.*						/var/log/boot.log
+
+filter f_10 {
+	facility(local7) and level(debug..emerg);
+};
+
+destination d_7 { 
+	file("/var/log/boot.log" create_dirs(yes));
+};
+
+log { source(local); filter(f_10); destination(d_7); };
+

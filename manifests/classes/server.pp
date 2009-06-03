@@ -5,8 +5,9 @@ class syslog-ng::server inherits syslog-ng {
 
   File["/etc/syslog-ng/syslog-ng.conf"] {
     ensure  => present,
-    content => template("syslog-ng/syslog-ng.server-options.conf.erb",
-      "syslog-ng/syslog-ng.debian.conf.erb",
+    content => template(
+      "syslog-ng/syslog-ng.server-options.conf.erb",
+      $ostmpl,
       "syslog-ng/syslog-ng.server-sourcedest.conf.erb"),
   }
 
@@ -17,6 +18,10 @@ class syslog-ng::server inherits syslog-ng {
 
   file {"/srv/syslog/logs":
     ensure  => directory,
+    seltype => $operatingsystem ? {
+      RedHat => "var_log_t",
+      default => undef,
+    },
     require => File["/srv/syslog"],
   }
 
