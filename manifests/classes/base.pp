@@ -19,6 +19,7 @@ class syslog-ng {
   file {"/etc/syslog-ng/syslog-ng.conf":
     ensure  => present,
     content => template(
+      "syslog-ng/syslog-ng.header.conf.erb",
       "syslog-ng/syslog-ng.client-options.conf.erb",
       $ostmpl,
       "syslog-ng/syslog-ng.client-sourcedest.conf.erb"),

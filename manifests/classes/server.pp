@@ -6,6 +6,7 @@ class syslog-ng::server inherits syslog-ng {
   File["/etc/syslog-ng/syslog-ng.conf"] {
     ensure  => present,
     content => template(
+      "syslog-ng/syslog-ng.header.conf.erb",
       "syslog-ng/syslog-ng.server-options.conf.erb",
       $ostmpl,
       "syslog-ng/syslog-ng.server-sourcedest.conf.erb"),
