@@ -24,6 +24,11 @@ class c2c::sysadmin-in-charge-new {
     user      => "root",
   }
 
+  c2c::ssh_authorized_key{"christian.kaenzig@camptocamp.com on root":
+    sadb_user => "ckaenzig",
+    user      => "root",
+  }
+
   file {"/root/.bash_logout":
     ensure => present,
     mode   => 600,
