@@ -10,7 +10,7 @@ class c2c::skel {
   }
 
   file { "/etc/skel/.bashrc":
-    source  => "puppet:///c2c/etc/skel/.bashrc",
+    content => template("c2c/etc/skel/.bashrc"),
     ensure => present,
   }
 
