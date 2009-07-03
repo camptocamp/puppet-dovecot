@@ -16,6 +16,10 @@ class mapfish::base {
         ensure => present,
       }
 
+      package {"python-virtualenv":
+        ensure => present,
+      }
+
       package {"maven2":
         ensure  => present,
         require => Package["sun-java6-jdk"],
