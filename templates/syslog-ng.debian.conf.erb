@@ -78,7 +78,8 @@ filter f_debug { level(debug) and not facility(auth, authpriv, news, mail); };
 # authpriv, cron, daemon, mail, and news facilities
 filter f_messages {
         level(info,notice,warn)
-            and not facility(auth,authpriv,cron,daemon,mail,news);
+            and not facility(auth,authpriv,cron,daemon,mail,news)
+            and not match("squid");
 };
 
 # messages with priority emerg
