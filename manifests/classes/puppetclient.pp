@@ -5,7 +5,7 @@ class puppet::client {
       ""      => latest,
       default => $facter_version,
     },
-    require => Exec["update pkg cache if necessary"],
+    require => [Exec["update pkg cache if necessary"], Package["lsb-release"]],
     tag     => "install-puppet",
   }
 
