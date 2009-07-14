@@ -1,10 +1,11 @@
 class puppet::client {
+
   package {"facter":
     ensure  => $facter_version ? {
       ""      => latest,
       default => $facter_version,
     },
-    require => Exec["update apt cache if necessary"],
+    require => Exec["update pkg cache if necessary"],
   }
 
   package {"puppet":
@@ -12,10 +13,16 @@ class puppet::client {
       ""      => latest,
       default => $puppet_client_version,
     },
-    require => [Package["facter"], Exec["update apt cache if necessary"]],
+    require => [Package["facter"], Exec["update pkg cache if necessary"]],
   }
 
   package {"lsb-release":
+    name => $operatingsystem ? {
+      Debian => "lsb-release",
+      Ubuntu => "lsb-release",
+      Redhat => "redhat-lsb",
+      fedora => "redhat-lsb",
+    },
     ensure => present,
   }
 
@@ -27,9 +34,19 @@ class puppet::client {
   }
   
   service { "puppet":
-    ensure => stopped,
-    enable => false,
-    pattern => "ruby /usr/sbin/puppetd -w 0",
+    ensure    => stopped,
+    enable    => false,
+    hasstatus => false,
+    pattern   => $operatingsystem ? {
+      Debian => "ruby /usr/sbin/puppetd -w 0",
+      Ubuntu => "ruby /usr/sbin/puppetd -w 0",
+      RedHat => "/usr/bin/ruby /usr/sbin/puppetd$",
+    }
+  }
+
+  user { "puppet":
+    ensure => present,
+    require => Package["puppet"],
   }
 
   file {"/etc/puppet/puppetd.conf": ensure => absent }
@@ -37,44 +54,57 @@ class puppet::client {
   file {"/etc/puppet/puppet.conf":
     ensure => present,
     content => template("puppet/puppet.conf.erb"),
+    require => Package["puppet"],
   }
 
   file {"/var/run/puppet/":
     ensure => directory,
-    before => Package["puppet"],
     owner  => "puppet",
     group  => "puppet",
   }
 
-  # Starts puppet client only when we have network 
-  file {"/etc/network/if-up.d/puppetd":
-    ensure => present,
-    mode   => 655,
-    source => "puppet:///puppet/puppetd.if-up",
-  }
-  
-  # stop puppet client as soon as we cut networking
-  file {"/etc/network/if-down.d/puppetd":
-    ensure => absent,
-  }
+  case $operatingsystem {
 
-  exec {"update apt cache if necessary":
-    command => "true",
-    unless  => $puppet_client_version ? {
-      ""      => "true",
-      default => "apt-cache policy puppet | grep -q ${puppet_client_version}",
-    },
-    notify  => Exec["apt-get_update"],
-  }
+    Debian: {
+      # Starts puppet client only when we have network
+      file {"/etc/network/if-up.d/puppetd":
+        ensure => present,
+        mode   => 655,
+        source => "puppet:///puppet/puppetd.if-up",
+      }
 
-  exec {"update apt cache if facter is not yet available":
-    command => "true",
-    unless  => $facter_version ? {
-      ""      => "true",
-      default => "apt-cache policy facter | grep -q ${facter_version}",
-    },
-    before  => Exec["update apt cache if necessary"],
-    notify  => Exec["apt-get_update"],
+      # stop puppet client as soon as we cut networking
+      file {"/etc/network/if-down.d/puppetd":
+        ensure => absent,
+      }
+
+      exec {"update pkg cache if necessary":
+        command => "true",
+        unless  => $puppet_client_version ? {
+          ""      => "true",
+          default => "apt-cache policy puppet | grep -q ${puppet_client_version}",
+        },
+        notify  => Exec["apt-get_update"],
+      }
+
+      exec {"update pkg cache if facter is not yet available":
+        command => "true",
+        unless  => $facter_version ? {
+          ""      => "true",
+          default => "apt-cache policy facter | grep -q ${facter_version}",
+        },
+        before  => Exec["update pkg cache if necessary"],
+        notify  => Exec["apt-get_update"],
+      }
+    }
+
+    RedHat: {
+      # fake command just to satisfy dependencies
+      exec {"update pkg cache if necessary":
+        command => "true",
+        onlyif => "false",
+      }
+    }
   }
 
 
@@ -90,6 +120,7 @@ class puppet::client {
     ensure  => present,
     command => "/usr/local/bin/launch-puppet",
     user    => 'root',
+    environment => "MAILTO=root",
     minute  => ip_to_cron(2),
     require => File["/usr/local/bin/launch-puppet"],
   }         
