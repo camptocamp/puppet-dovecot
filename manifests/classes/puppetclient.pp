@@ -121,7 +121,16 @@ class puppet::client {
     command => "/usr/local/bin/launch-puppet",
     user    => 'root',
     environment => "MAILTO=root",
-    minute  => ip_to_cron(2),
+    minute  => $puppet_run_minutes ? {
+      ""      => ip_to_cron(2),
+      "*"     => undef,
+      default => $puppet_run_minutes,
+    },
+    hour    => $puppet_run_hours ? {
+      ""      => undef,
+      "*"     => undef,
+      default => $puppet_run_minutes,
+    },
     require => File["/usr/local/bin/launch-puppet"],
   }         
 }
