@@ -26,13 +26,6 @@ class puppet::client {
     ensure => present,
   }
 
-  # Puppet client freeze after an upgrade... issue requiring investigation.
-  exec { "puppetclient-restart":
-    command     => 'kill -9 $(pidof ruby); /usr/sbin/puppetd', # Ugly...
-    #subscribe   => Package["puppet"],
-    refreshonly => true,
-  }
-  
   service { "puppet":
     ensure    => stopped,
     enable    => false,
