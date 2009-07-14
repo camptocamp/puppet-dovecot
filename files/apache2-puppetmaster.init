@@ -1,4 +1,5 @@
 #! /bin/sh
+# file managed by puppet
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/sbin/apache2

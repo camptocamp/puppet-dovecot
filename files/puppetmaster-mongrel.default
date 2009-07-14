@@ -1,3 +1,5 @@
+# file managed by puppet
+
 # Hack to run puppetmasterd directly from a git checkout
 export RUBYLIB="/opt/puppet-dev-0.24.x/lib/"
 
