@@ -6,6 +6,7 @@ class puppet::client {
       default => $facter_version,
     },
     require => Exec["update pkg cache if necessary"],
+    tag     => "install-puppet",
   }
 
   package {"puppet":
@@ -14,6 +15,7 @@ class puppet::client {
       default => $puppet_client_version,
     },
     require => [Package["facter"], Exec["update pkg cache if necessary"]],
+    tag     => "install-puppet",
   }
 
   package {"lsb-release":
@@ -30,6 +32,7 @@ class puppet::client {
     ensure    => stopped,
     enable    => false,
     hasstatus => false,
+    tag       => "install-puppet",
     pattern   => $operatingsystem ? {
       Debian => "ruby /usr/sbin/puppetd -w 0",
       Ubuntu => "ruby /usr/sbin/puppetd -w 0",
@@ -48,6 +51,7 @@ class puppet::client {
     ensure => present,
     content => template("puppet/puppet.conf.erb"),
     require => Package["puppet"],
+    tag     => "install-puppet",
   }
 
   file {"/var/run/puppet/":
@@ -105,6 +109,7 @@ class puppet::client {
     ensure => present,
     mode => 755,
     content => template("puppet/launch-puppet.erb"),
+    tag     => "install-puppet",
   }
 
   # Run puppetd with cron instead of having it hanging around and eating so
@@ -125,5 +130,6 @@ class puppet::client {
       default => $puppet_run_minutes,
     },
     require => File["/usr/local/bin/launch-puppet"],
+    tag     => "install-puppet",
   }         
 }
