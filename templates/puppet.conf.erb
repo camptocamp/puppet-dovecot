@@ -1,3 +1,4 @@
+# file managed by puppet
 [main]
   ssldir=/var/lib/puppet/ssl
 
@@ -17,3 +18,5 @@
   libdir=/var/lib/puppet/lib
   pidfile=/var/run/puppet/puppetd.pid
   environment=production
+  diff_args=-u
+
