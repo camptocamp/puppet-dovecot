@@ -1,12 +1,10 @@
-class puppet::master {
-  include mysql::server
+class puppet::master inherits puppet::master::base {
 
   package {
     "puppetmaster": ensure => present;
 #    "rails": ensure => present;
     "libdbd-sqlite3-ruby": ensure => present;
     "rdoc": ensure => present;
-    "pwgen": ensure => present;
     "python-mysqldb": ensure => present;
     "libdbd-mysql-ruby": ensure => present;
   }
@@ -44,15 +42,4 @@ class puppet::master {
     require => Package["puppetmaster"],
   }
 
-  # Database
-  mysql::database{"puppet":
-    ensure => present,
-  }
-
-  mysql::rights{"Set rights for puppet database":
-    ensure   => present,
-    database => "puppet",
-    user     => "puppet",
-    password => "puppet"
-  }
 }
