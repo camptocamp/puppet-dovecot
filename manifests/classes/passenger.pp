@@ -33,7 +33,7 @@ class ruby::passenger::apache inherits ruby::passenger {
     command     => "${passenger_root}/bin/passenger-install-apache2-module --auto",
     subscribe   => Package["passenger"],
     refreshonly => true,
-    require     => Package[["passenger", "apache-dev"]],
+    require     => [Package[["passenger", "apache-dev"]], Class["buildenv::cpp"]],
   }
 
   file { "passenger.load":
