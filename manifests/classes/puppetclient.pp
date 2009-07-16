@@ -127,7 +127,7 @@ class puppet::client {
     hour    => $puppet_run_hours ? {
       ""      => undef,
       "*"     => undef,
-      default => $puppet_run_minutes,
+      default => $puppet_run_hours,
     },
     require => File["/usr/local/bin/launch-puppet"],
     tag     => "install-puppet",
