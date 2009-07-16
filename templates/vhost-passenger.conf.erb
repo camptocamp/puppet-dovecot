@@ -1,0 +1,43 @@
+Listen 8140
+<VirtualHost *:8140>
+
+  ServerName <%= puppet_server %>
+
+  LogLevel warn
+  ErrorLog <%= log_location %>/error.log
+  CustomLog <%= log_location %>/access.log combined
+
+  SSLEngine on
+  SSLProtocol -ALL +SSLv3 +TLSv1
+  SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
+
+  SSLCertificateFile      <%= puppetmaster_ssldir %>/certs/<%= puppet_server %>.pem
+  SSLCertificateKeyFile   <%= puppetmaster_ssldir %>/private_keys/<%= puppet_server %>.pem
+  SSLCertificateChainFile <%= puppetmaster_ssldir %>/ca/ca_crt.pem
+  SSLCACertificateFile    <%= puppetmaster_ssldir %>/ca/ca_crt.pem
+  # If Apache complains about invalid signatures on the CRL, you can try disabling
+  # CRL checking by commenting the next line, but this is not recommended.
+  SSLCARevocationFile     <%= puppetmaster_ssldir %>/ca/ca_crl.pem
+  SSLVerifyClient optional
+  SSLVerifyDepth  1
+  SSLOptions +StdEnvVars
+
+  # you probably want to tune these settings
+  PassengerHighPerformance on
+  PassengerMaxPoolSize 12
+  PassengerPoolIdleTime 1500
+  # PassengerMaxRequests 1000
+  PassengerStatThrottleRate 120
+  RackAutoDetect Off
+  RailsAutoDetect Off
+
+  DocumentRoot <%= rack_location %>/public/
+  RackBaseURI /
+  <Directory <%= rack_location %>>
+    Options None
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+</VirtualHost>
