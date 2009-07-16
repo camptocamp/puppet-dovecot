@@ -3,7 +3,9 @@
 
 class ruby::passenger {
 
-  $passenger_version = "2.2.4"
+  if ( ! $passenger_version ) {
+    $passenger_version = "2.2.4"
+  }
   $passenger_root = $operatingsystem ? {
     RedHat => "/usr/lib/ruby/gems/1.8/gems/passenger-${passenger_version}",
     # Debian => TODO
@@ -28,7 +30,7 @@ class ruby::passenger::apache inherits ruby::passenger {
   }
 
   exec { "install passenger":
-    command     => "passenger-install-apache2-module --auto",
+    command     => "${passenger_root}/bin/passenger-install-apache2-module --auto",
     subscribe   => Package["passenger"],
     refreshonly => true,
     require     => Package[["passenger", "apache-dev"]],
