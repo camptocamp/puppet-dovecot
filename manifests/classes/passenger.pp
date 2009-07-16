@@ -4,7 +4,7 @@
 class ruby::passenger {
 
   if ( ! $passenger_version ) {
-    $passenger_version = "2.2.4"
+    $passenger_version = "2.2.2"
   }
   $passenger_root = $operatingsystem ? {
     RedHat => "/usr/lib/ruby/gems/1.8/gems/passenger-${passenger_version}",
