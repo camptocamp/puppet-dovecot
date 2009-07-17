@@ -79,16 +79,6 @@ class puppet::master::passenger inherits puppet::master::base {
     require  => Package["ruby-dev"],
   }
 
-  #package { "rack":
-  #  ensure => $operatingsystem ? {
-  #    RedHat  => "0.4.0-2.el5",
-  #    default => present,
-  #  },
-  #  name => $operatingsystem ? {
-  #    RedHat  => "rubygem-rack",
-  #  },
-  #}
-
   # can't be bothered to tune selinux now...
   if $operatingsystem == "RedHat" {
     selboolean { "httpd_disable_trans":
