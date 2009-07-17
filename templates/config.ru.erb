@@ -4,7 +4,7 @@
 # if puppet is not in your RUBYLIB:
 # $:.push('/opt/puppet/lib')
 <% if has_variable?("puppet_location") %>
-$:.push('<%= puppet_location %>')
+$:.insert(0, '<%= puppet_location %>')
 <% end %>
 
 $0 = "puppetmasterd"
