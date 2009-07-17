@@ -17,7 +17,7 @@ Listen 8140
   SSLCACertificateFile    <%= puppetmaster_ssldir %>/ca/ca_crt.pem
   # If Apache complains about invalid signatures on the CRL, you can try disabling
   # CRL checking by commenting the next line, but this is not recommended.
-  SSLCARevocationFile     <%= puppetmaster_ssldir %>/ca/ca_crl.pem
+  # SSLCARevocationFile     <%= puppetmaster_ssldir %>/ca/ca_crl.pem
   SSLVerifyClient optional
   SSLVerifyDepth  1
   SSLOptions +StdEnvVars
