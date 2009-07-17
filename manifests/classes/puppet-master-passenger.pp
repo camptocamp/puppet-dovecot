@@ -30,6 +30,10 @@ class puppet::master::passenger inherits puppet::master::base {
     $rack_version = "1.0.0"
   }
 
+  if ( ! $activerecord_version ) {
+    $activerecord_version = "2.3.2"
+  }
+
   # other useful variables:
   # $puppetmaster_confdir: will be passed to "puppetmasterd --confdir "
   # $puppet_location: lookup path for puppet/lib
@@ -61,6 +65,12 @@ class puppet::master::passenger inherits puppet::master::base {
     group   => "root",
     require => [File["${rack_location}/public"], Apache::Vhost-ssl["puppetmasterd"]],
     notify  => Exec["apache-graceful"],
+  }
+
+  package { "activerecord":
+    ensure   => $activerecord_version,
+    provider => "gem",
+    require  => Package["ruby-dev"],
   }
 
   package { "rack":
