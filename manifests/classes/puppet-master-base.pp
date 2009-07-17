@@ -4,7 +4,14 @@ class puppet::master::base {
   package { [
     "pwgen", # used in mysql class
     "python-docutils", # used by puppetdoc -m pdf
-    "rdoc"]: ensure => present,
+    ]: ensure => present,
+  }
+
+  package { "rdoc":
+    ensure => present,
+    name   => $operatingsystem ? {
+      RedHat => "ruby-rdoc",
+    },
   }
 
   # Database
