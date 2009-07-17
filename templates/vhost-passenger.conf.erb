@@ -31,6 +31,10 @@ Listen 8140
   RackAutoDetect Off
   RailsAutoDetect Off
 
+<% if has_variable?("passenger_tempdir") %>
+  PassengerTempDir <%= passenger_tempdir %>
+<% end %>
+
   DocumentRoot <%= rack_location %>/public/
   RackBaseURI /
   <Directory <%= rack_location %>>

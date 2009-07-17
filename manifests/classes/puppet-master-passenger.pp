@@ -79,13 +79,15 @@ class puppet::master::passenger inherits puppet::master::base {
     require  => Package["ruby-dev"],
   }
 
-  # can't be bothered to tune selinux now...
+  # puppetmaster is completely selinux unfriendly (in fact it's selinux which
+  # is unfriendly with everyone else...)
   if $operatingsystem == "RedHat" {
     selboolean { "httpd_disable_trans":
       value      => "on",
       persistent => true,
       notify     => Service["apache"],
     }
+
   }
 
   # enable mpm-worker
