@@ -4,7 +4,6 @@ class puppet::master inherits puppet::master::base {
     "puppetmaster": ensure => present;
     "libdbd-sqlite3-ruby": ensure => present;
     "python-mysqldb": ensure => present;
-    "libdbd-mysql-ruby": ensure => present;
   }
 
   # Custom functions

@@ -7,6 +7,14 @@ class puppet::master::base {
     ]: ensure => present,
   }
 
+  package { "ruby-mysql":
+    ensure => present,
+    name   => $operatingsystem ? {
+      Debian => "libdbd-mysql-ruby",
+      RedHat => "ruby-mysql",
+    },
+  }
+
   package { "rdoc":
     ensure => present,
     name   => $operatingsystem ? {
