@@ -1,8 +1,10 @@
 class puppet::master::base {
   include mysql::server
 
-  package {
-    "pwgen": ensure => present;
+  package { [
+    "pwgen", # used in mysql class
+    "python-docutils", # used by puppetdoc -m pdf
+    "rdoc"]: ensure => present,
   }
 
   # Database

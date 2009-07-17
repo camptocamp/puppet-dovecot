@@ -2,9 +2,7 @@ class puppet::master inherits puppet::master::base {
 
   package {
     "puppetmaster": ensure => present;
-#    "rails": ensure => present;
     "libdbd-sqlite3-ruby": ensure => present;
-    "rdoc": ensure => present;
     "python-mysqldb": ensure => present;
     "libdbd-mysql-ruby": ensure => present;
   }
