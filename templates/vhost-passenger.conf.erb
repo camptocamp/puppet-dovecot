@@ -1,3 +1,17 @@
+
+# you probably want to tune these settings
+PassengerHighPerformance on
+PassengerMaxPoolSize 12
+PassengerPoolIdleTime 1500
+# PassengerMaxRequests 1000
+PassengerStatThrottleRate 120
+RackAutoDetect Off
+RailsAutoDetect Off
+
+<% if has_variable?("passenger_tempdir") %>
+PassengerTempDir <%= passenger_tempdir %>
+<% end %>
+
 Listen 8140
 <VirtualHost *:8140>
 
@@ -21,19 +35,6 @@ Listen 8140
   SSLVerifyClient optional
   SSLVerifyDepth  1
   SSLOptions +StdEnvVars
-
-  # you probably want to tune these settings
-  PassengerHighPerformance on
-  PassengerMaxPoolSize 12
-  PassengerPoolIdleTime 1500
-  # PassengerMaxRequests 1000
-  PassengerStatThrottleRate 120
-  RackAutoDetect Off
-  RailsAutoDetect Off
-
-<% if has_variable?("passenger_tempdir") %>
-  PassengerTempDir <%= passenger_tempdir %>
-<% end %>
 
   DocumentRoot <%= rack_location %>/public/
   RackBaseURI /
