@@ -53,7 +53,7 @@ class java::v6 {
 
   # Update java alternatives
   # See ticket #11173
-  exec {"update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java":
+  exec {"update-java-alternatives --set java-6-sun":
     unless => 'test $(readlink /etc/alternatives/java) == "/usr/lib/jvm/java-6-sun/jre/bin/java"',
     require => Package["sun-java6-bin"],
   }
