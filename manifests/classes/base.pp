@@ -6,7 +6,6 @@ class postgresql::base {
 
   user { "postgres":
     ensure  => present,
-    require => Package["ssl-cert"],
   }
 
   file { "/var/backups/pgsql":
