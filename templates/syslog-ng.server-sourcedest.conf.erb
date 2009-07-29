@@ -8,7 +8,7 @@ source s_all {
         internal();
         # standard Linux log source (this is the default place for the syslog()
         # function to send logs to)
-        unix-stream("/dev/log");
+        unix-stream("/dev/log" max-connections(50));
         # messages from the kernel
         file("/proc/kmsg" log_prefix("kernel: "));
         # use the following line if you want to receive remote UDP logging messages
