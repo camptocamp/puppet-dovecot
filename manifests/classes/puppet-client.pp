@@ -47,6 +47,10 @@ class puppet::client {
 
   file {"/etc/puppet/puppetd.conf": ensure => absent }
 
+  if ( ! $puppet_environment ) {
+    $puppet_environment = "production"
+  }
+
   file {"/etc/puppet/puppet.conf":
     ensure => present,
     content => template("puppet/puppet.conf.erb"),
