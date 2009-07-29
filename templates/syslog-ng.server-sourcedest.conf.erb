@@ -17,7 +17,7 @@ source s_all {
 
 source s_remote {
         udp();
-        tcp();
+        tcp(max-connections(50));
 };
 
 
