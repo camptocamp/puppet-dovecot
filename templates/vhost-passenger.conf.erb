@@ -15,7 +15,7 @@ PassengerTempDir <%= passenger_tempdir %>
 Listen 8140
 <VirtualHost *:8140>
 
-  ServerName <%= puppet_server %>
+  ServerName puppetmasterd
 
   LogLevel warn
   ErrorLog <%= log_location %>/error.log
