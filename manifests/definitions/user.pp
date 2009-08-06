@@ -1,4 +1,4 @@
-define postgresql::user($ensure, $password = false, $superuser = false, 
+define postgresql::user($ensure, $password = false, $superuser = false,
                         $createdb = false, $createrole = false,
                         $hostname = '/var/run/postgresql', $port = '5432', $user = 'postgres') {
 
@@ -61,12 +61,17 @@ define postgresql::user($ensure, $password = false, $superuser = false,
         require => [User["postgres"], Exec["Create postgres user $name"]],
       }
 
-      if $password { 
+      if $password {
+        $host = $hostname ? {
+          '/var/run/postgresql' => "localhost",
+          default               => $hostname,
+        }
+
         # change only if it's not the same password
         exec { "Change password for postgres user $name":
           command => "psql ${connection} -c \"ALTER USER \\\"$name\\\" PASSWORD '$password' \"",
           user    => "postgres",
-          unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo 'localhost:${port}:template1:$name:$pgpass' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql ${connection} -c '\\q' -U $name template1 && rm -f \$TMPFILE",
+          unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo '${host}:${port}:template1:${name}:${pgpass}' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql -h ${host} -p ${port} -U ${name} -c '\q' template1 && rm -f \$TMPFILE",
           require => [User["postgres"], Exec["Create postgres user $name"]],
         }
       }
@@ -80,7 +85,7 @@ define postgresql::user($ensure, $password = false, $superuser = false,
         onlyif  => "psql ${connection} -c '\\du' | grep '$name  *|'"
       }
     }
-  
+
     default: {
       fail "Invalid 'ensure' value '$ensure' for postgres::user"
       }
