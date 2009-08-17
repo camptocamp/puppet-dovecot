@@ -5,6 +5,8 @@
 # forked by Puzzle ITC
 # Marcel Härry haerry+puppet(at)puzzle.ch
 # Simon Josi josi+puppet(at)puzzle.ch
+# forked by Camptocamp SA
+# Marc Fournier, marc.fournier(at)camptocamp.com
 # 
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -21,6 +23,15 @@
 
 # modules_dir { \"subversion\": }
 
+#
+# == Class: subversion
+#
+# Installs subversion and configures the client to NOT store repository
+# passwords in users home directories. This can still be overriden by editing
+# ~/.subversion/config
+#
+# For more details, have a look at: http://svnbook.red-bean.com/nightly/en/svn.advanced.confarea.html#svn.advanced.confarea.opts.config
+#
 class subversion {
     case $operatingsystem {
         debian,ubuntu: { include subversion::debian }
@@ -31,6 +42,18 @@ class subversion {
 class subversion::base {
     package{'subversion':
         ensure => present,
+    }
+
+    file { "/usr/share/augeas/lenses/contrib/subversion.aug":
+        ensure => present,
+        source => "puppet:///subversion/subversion.aug",
+    }
+
+    augeas { "avoid svn password saving":
+        load_path => "/usr/share/augeas/lenses/contrib/",
+        context   => "/files/etc/subversion/config/auth/",
+        require   => File["/usr/share/augeas/lenses/contrib/subversion.aug"],
+        changes   => "set store-password no",
     }
 }
 class subversion::debian inherits subversion::base {
