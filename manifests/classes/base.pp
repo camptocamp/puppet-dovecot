@@ -24,6 +24,10 @@ class mapfish::base {
         ensure  => present,
         require => Package["sun-java6-jdk"],
       }
+
+      package {"libgeos-dev":
+        ensure => present,
+      }
     }
   }
 
