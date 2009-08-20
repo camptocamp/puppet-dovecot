@@ -1,4 +1,4 @@
-define postgresql::user($ensure, $password = false, $superuser = false,
+define postgresql::user($ensure = present, $password = false, $superuser = false,
                         $createdb = false, $createrole = false,
                         $hostname = '/var/run/postgresql', $port = '5432', $user = 'postgres') {
 
