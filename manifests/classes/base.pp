@@ -9,7 +9,7 @@ class postgresql::base {
     require => Package["postgresql"],
   }
 
-  file { "/var/backups/pgsql":
+  file { ["/var/backups/pgsql", "/var/lib/postgresql"]:
     ensure  => directory,
     owner   => "postgres",
     group   => "postgres",
