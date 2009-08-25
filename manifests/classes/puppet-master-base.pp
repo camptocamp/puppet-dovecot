@@ -19,6 +19,7 @@ class puppet::master::base {
     ensure => present,
     name   => $operatingsystem ? {
       RedHat => "ruby-rdoc",
+      default => "rdoc",
     },
   }
 
