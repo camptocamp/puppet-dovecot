@@ -21,7 +21,6 @@ class debian inherits os {
     "vim": ensure => present;
     "lynx": ensure => present;
     "bzip2": ensure => present;
-    "make": ensure => present;
     "patch": ensure => present;
     "file": ensure => present;
     "less": ensure => present;
@@ -31,8 +30,6 @@ class debian inherits os {
     "subversion-tools": ensure => present;
     "elinks": ensure => present;
     "psmisc": ensure => present;
-    "gcc": ensure => present;
-    "libc6-dev": ensure => present;
     "nmap": ensure => present;
     "cadaver": ensure => present;
     "iptraf": ensure => present;
