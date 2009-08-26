@@ -6,7 +6,6 @@ class debian inherits os {
     "lsof": ensure => present;
     "cron-apt": ensure => present; # Keeps a fresh apt database
     "tiobench": ensure => present; # Useful for doing IO benchmarks
-    "rubygems": ensure => present; # Ruby packaging tool
     "smartmontools": ensure => present; # SMART monitoring
     "at" : ensure => present; # usefull for reboots...
     "emacs21-nox" : ensure => present; # for fredj and sypasche
