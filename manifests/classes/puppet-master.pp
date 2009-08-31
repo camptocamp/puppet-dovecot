@@ -1,7 +1,6 @@
 class puppet::master inherits puppet::master::base {
 
   package {
-    "puppetmaster": ensure => present;
     "libdbd-sqlite3-ruby": ensure => present;
     "python-mysqldb": ensure => present;
   }
