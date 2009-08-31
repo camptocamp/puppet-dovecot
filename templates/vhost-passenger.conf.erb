@@ -36,6 +36,11 @@ Listen 8140
   SSLVerifyDepth  1
   SSLOptions +StdEnvVars
 
+  # Compatibility settings for Puppet < 0.25
+  RequestHeader set X-SSL-Subject %{SSL_CLIENT_S_DN}e
+  RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
+  RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
+
   DocumentRoot <%= rack_location %>/public/
   RackBaseURI /
   <Directory <%= rack_location %>>
