@@ -34,6 +34,14 @@ class puppet::master::passenger inherits puppet::master::base {
     $activerecord_version = "2.3.2"
   }
 
+  # Puppet 0.24.x compatibility mode
+  if ( $puppetmaster_passenger_0_24 ) {
+    notice "Activate Puppet 0.24.x compatibility mode"
+    $rack_config_template = "puppet/config-0.24.ru.erb"
+  } else {
+    $rack_config_template = "puppet/config.ru.erb"
+  }
+
   # other useful variables:
   # $puppetmaster_confdir: will be passed to "puppetmasterd --confdir "
   # $puppet_location: lookup path for puppet/lib
@@ -59,7 +67,7 @@ class puppet::master::passenger inherits puppet::master::base {
 
   file { "${rack_location}/config.ru":
     ensure  => present,
-    content => template("puppet/config.ru.erb"),
+    content => template($rack_config_template),
     mode    => 0644,
     owner   => "puppet",
     group   => "root",
