@@ -108,5 +108,14 @@ class debian inherits os {
   file {"/etc/apt/sources.list.d/2c.list":
     ensure => absent,
   }
+
+  file {"/etc/adduser.conf":
+    ensure => present,
+    owner => root,
+    group => root,
+    mode => 644,
+    content => template("os/etc/adduser.conf.erb"),
+  }
+
 }
 
