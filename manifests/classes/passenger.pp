@@ -8,7 +8,7 @@ class ruby::passenger {
   }
   $passenger_root = $operatingsystem ? {
     RedHat => "/usr/lib/ruby/gems/1.8/gems/passenger-${passenger_version}",
-    # Debian => TODO
+    debian => "/var/lib/gems/1.8/gems/passenger-${passenger_version}",
   }
 
   package { "passenger":
@@ -20,6 +20,7 @@ class ruby::passenger {
 }
 
 class ruby::passenger::apache inherits ruby::passenger {
+  include buildenv::cpp
 
   package { "apache-dev":
     ensure => present,
