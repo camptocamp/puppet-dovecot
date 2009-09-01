@@ -2,7 +2,10 @@ class puppet::master::base {
   include mysql::server
 
   package { [
-    "puppetmaster",
+    $operatingsystem ? {
+      Debian => "puppetmaster",
+      RedHat => "puppet-server",
+    },
     "pwgen", # used in mysql class
     "python-docutils", # used by puppetdoc -m pdf
     ]: ensure => present,
