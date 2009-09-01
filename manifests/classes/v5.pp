@@ -1,4 +1,7 @@
 class mapserver::v5 {
+
+  include mapserver::epsg::legacy
+
   $mapserver_packages_release = "20080225"
 
   if defined (Apt::Sources_list["sig-etch-c2c"]) {
@@ -40,15 +43,4 @@ class mapserver::v5 {
     ]: ensure => present,
   }
   
-  # HACK: proj fixes
-  case $lsbdistcodename {
-    'etch' : {
-      file {"/usr/share/proj/epsg":
-        ensure  => present,
-        source  => "puppet:///mapserver/epsg.C2C",
-        require => Package["proj"],
-      }
-    }
-  }
-
 }
