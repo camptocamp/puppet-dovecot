@@ -17,11 +17,7 @@ class postgresql::administration {
   common::concatfilepart { "sudoers.postgresql":
     ensure => present,
     file => "/etc/sudoers",
-    content => "
-# This part comes from modules/postgresql/manifests/classes/administration.pp
-%postgresql-admin ALL=(root) /etc/init.d/postgresql-*
-%postgresql-admin ALL=(root) /bin/su postgres, /bin/su - postgres
-",
+    content => template("postgresql/sudoers.postgresql.erb"),
     require => Group["postgresql-admin"],
   }
 
