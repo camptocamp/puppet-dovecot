@@ -32,8 +32,8 @@ class ruby::passenger::apache inherits ruby::passenger {
 
   exec { "install passenger":
     command     => "${passenger_root}/bin/passenger-install-apache2-module --auto",
+    creates     => "${passenger_root}/ext/apache2/mod_passenger.so",
     subscribe   => Package["passenger"],
-    refreshonly => true,
     require     => [Package["passenger"], Package["apache-dev"], Class["buildenv::cpp"]],
   }
 
