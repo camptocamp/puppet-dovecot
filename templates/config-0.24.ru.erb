@@ -11,7 +11,7 @@ require 'puppet/network/http_server/rack'
 Puppet.settings.handlearg('confdir', '<%= puppetmaster_confdir %>')
 <% end %>
 Puppet.parse_config
-Puppet::Util::Log.level = :notice
+Puppet::Util::Log.level = :info
 Puppet::Util::Log.newdestination(:syslog)
 # A temporary solution, to at least make the master work for now.
 Puppet::Node::Facts.terminus_class = :yaml
