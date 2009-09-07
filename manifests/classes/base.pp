@@ -21,6 +21,7 @@ class tilecache::base {
     [
       "tilecache", 
       "python-imaging", 
+      "python-image-merge",
       "libapache2-mod-python",
       "jpegoptim",
       "jpeginfo",
