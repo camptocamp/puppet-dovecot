@@ -147,10 +147,12 @@ class mysql::server {
 
   if $mysql_password {
 
-    mysql_user { "${mysql_user}@localhost":
-      ensure => present,
-      password_hash => mysql_password($mysql_password),
-      require => Exec["Generate my.cnf"],
+    if $mysql_exists == "true" {
+      mysql_user { "${mysql_user}@localhost":
+        ensure => present,
+        password_hash => mysql_password($mysql_password),
+        require => Exec["Generate my.cnf"],
+      }
     }
 
     file { "/root/.my.cnf":
