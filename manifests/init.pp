@@ -16,7 +16,7 @@ class os {
       case $lsbdistcodename {
         lenny: {
           include os::debian-lenny
-#          include os::debian::backports
+          include os::debian::backports
         }
 
         etch: {
