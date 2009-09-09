@@ -10,6 +10,6 @@ Cmnd_Alias POSTGRESQL_ADMIN = <%= sudo_postgresql_admin_cmnd %>
 <% else -%>
 Cmnd_Alias POSTGRESQL_ADMIN = /etc/init.d/postgresql-*, /bin/su postgres, /bin/su - postgres
 <% end -%>
-POSTGRESQL_ADMIN ALL=(root) POSTGRESQL_ADMIN
+POSTGRESQL_ADMIN ALL=(postgres) ALL : ALL=(root) POSTGRESQL_ADMIN
 ##
 
