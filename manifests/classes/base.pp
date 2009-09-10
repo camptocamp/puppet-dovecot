@@ -21,7 +21,6 @@ class tilecache::base {
     [
       "tilecache", 
       "python-imaging", 
-      "python-image-merge",
       "libapache2-mod-python",
       "jpegoptim",
       "jpeginfo",
@@ -30,6 +29,15 @@ class tilecache::base {
     ]:
     ensure  => present,
   }
+
+  case $architecture {
+    amd64: {
+      package {"python-image-merge":
+        ensure => present,
+      }
+    }
+  }
+
 
   case $lsbdistcodename {
     'etch' : {
