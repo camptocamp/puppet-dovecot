@@ -1,5 +1,22 @@
 class cartoweb3::base {
 
+  package {
+    [ 
+      "php5-common",
+      "php5-cli",
+      "php5-gd",
+      "libapache2-mod-php5",
+      "php5-pgsql",
+      "php5-curl",
+      "php5-sqlite",
+      "php5-mysql"
+    ]: ensure => present,
+  }
+
+  package {"php5-json":
+    ensure => absent,
+  }
+
   file {"/usr/local/bin/cartoweb3-clean.sh":
     ensure => present,
     mode   => 755,
@@ -22,4 +39,5 @@ class cartoweb3::base {
     minute  => 0,
     require => [ File["/usr/local/bin/cartoweb3-clean.sh"], User["www-data"] ],
   }
+
 }
