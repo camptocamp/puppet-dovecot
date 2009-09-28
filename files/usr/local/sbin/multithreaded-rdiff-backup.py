@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# file managed by puppet
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
 import os
@@ -45,6 +44,10 @@ class Backup(Thread):
         self.today = today
     
     def run(self):
+
+	if self.enable.lower == "false":
+	  return
+
         logFile = "/var/log/rdiff-backup/%s-%s.log" %(self.host, self.today)
 
         # starts rdiff-backup
@@ -121,12 +124,14 @@ def formatResult(backupDict):
     # wait until the thread terminates
     for host, thread in backupDict.items():
         config = ConfigParser.ConfigParser()
-        config.read(host)
+	      config.read(host)
         dispHost = "[%s]" % config.get('hostconfig', 'host')
         thread.join() 
         if thread.getStatus():
-            # adds in the top of results
-            result['msg'] = "%s Failed !\n" %dispHost + result['msg']
+            if config.get('hostconfig', 'enable').lower() == "false":
+		            result['msg'] = "%s disable\n" %dispHost + result['msg']
+            else:
+            	  result['msg'] = "%s Failed !\n" %dispHost + result['msg']
         else :
             stats = _REGEX.search(thread.getOutput())
             dispTime = "Time: %s" %stats.group('time')
