@@ -19,6 +19,13 @@ ARGV << "--confdir=<%= puppetmaster_confdir %>"
 
 ARGV << "--rack"
 require 'puppet/application/puppetmasterd'
+
+# some log level configuration
+# Puppet::Util::Log.level = :debug
+
+# put all logs in syslog
+# Puppet::Util::Log.newdestination(:syslog)
+
 # we're usually running inside a Rack::Builder.new {} block,
 # therefore we need to call run *here*.
 run Puppet::Application[:puppetmasterd].run
