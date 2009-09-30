@@ -30,6 +30,9 @@ class mapserver::v5-2 {
 
   case $lsbdistcodename {
     'etch' : {
+
+      include mapserver::epsg::legacy
+
       package {
         [
           "cgi-mapserver-5.2",
@@ -41,12 +44,6 @@ class mapserver::v5-2 {
         ]: ensure => present,
       }
       
-      file {"/usr/share/proj/epsg":
-        ensure  => present,
-        source  => "puppet:///mapserver/epsg.C2C",
-        require => Package["proj"],
-      }
-      
       common::concatfilepart { "sig-packages":
         ensure => present,
         file   => "/etc/apt/preferences",
@@ -55,6 +52,20 @@ class mapserver::v5-2 {
     }
 
     'lenny' : {
+
+      case $epsg_file {
+        /^puppet:.*/: {
+          $custom_epsg = $epsg_file
+          include mapserver::epsg::custom
+        }
+        "tuned","minimal": {
+          include mapserver::epsg::minimal
+        }
+        default: {
+          include mapserver::epsg
+        }
+      }
+
       package {
         [
           "cgi-mapserver",
