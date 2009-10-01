@@ -19,10 +19,3 @@ class mapserver::epsg::minimal inherits mapserver::epsg {
     source  => "puppet:///mapserver/epsg.minimal",
   }
 }
-
-class mapserver::epsg::custom inherits mapserver::epsg {
-
-  File["/usr/share/proj/epsg"] {
-    source  => $custom_epsg,
-  }
-}

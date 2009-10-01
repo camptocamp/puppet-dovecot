@@ -54,10 +54,6 @@ class mapserver::v5-2 {
     'lenny' : {
 
       case $epsg_file {
-        /^puppet:.*/: {
-          $custom_epsg = $epsg_file
-          include mapserver::epsg::custom
-        }
         "tuned","minimal": {
           include mapserver::epsg::minimal
         }
