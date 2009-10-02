@@ -21,6 +21,8 @@ Listen 8140
   ErrorLog <%= log_location %>/error.log
   CustomLog <%= log_location %>/access.log "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %{SSL_CLIENT_S_DN}e %{SSL_CLIENT_VERIFY}e"
 
+  Timeout <%= puppetmaster_timeout %>
+
   SSLEngine on
   SSLProtocol -ALL +SSLv3 +TLSv1
   SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP

@@ -34,6 +34,14 @@ class puppet::master::passenger inherits puppet::master::base {
     $activerecord_version = "2.3.2"
   }
 
+  # Increase apache's default timeout. If puppetmaster needs more time to
+  # compile the catalog, it will fail with a "Broken pipe" error and inflict a
+  # high load on the server.
+  # workaround for puppet issue #2691
+  if ( ! $puppetmaster_timeout ) {
+    $puppetmaster_timeout = "600"
+  }
+
   # Puppet 0.24.x compatibility mode
   if ( $puppetmaster_passenger_0_24 ) {
     notice "Activate Puppet 0.24.x compatibility mode"
