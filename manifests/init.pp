@@ -150,6 +150,8 @@ class pacemaker::apache {
 }
 
 
+/*
+
 == Definition: pacemaker::iptables
 
 A helper which allows setting iptables rules for pacemaker.
