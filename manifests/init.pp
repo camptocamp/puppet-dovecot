@@ -38,5 +38,9 @@ class python::dev {
       RedHat => "python-devel",
     },
   }
+
+  package {"ipython":
+    ensure => present,
+  }
 }
 
