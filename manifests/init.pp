@@ -64,16 +64,26 @@ class pacemaker {
         gpgcheck => 1,
       }
 
-      package { "pacemaker.${architecture}": ensure => present }
+      package { "pacemaker.${architecture}":
+        ensure  => present,
+        alias   => "pacemaker",
+        require => Package["heartbeat"],
+      }
+
+      package { "heartbeat.${architecture}":
+        ensure => present,
+        alias  => "heartbeat",
+      }
 
     }
 
     Debian: {
-      package { "pacemaker": ensure => present }
+      package { ["pacemaker", "heartbeat"]:
+        ensure => present
+      }
     }
   }
 
-  package { "heartbeat": ensure => present }
 
 
   file { "/etc/ha.d/authkeys":
