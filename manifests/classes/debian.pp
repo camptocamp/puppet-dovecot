@@ -45,6 +45,7 @@ class debian inherits os {
     "python-mode": ensure => present;
     "locate": ensure => absent;
     "iotop": ensure => present;
+    "xfsprogs": ensure => present;
   }
 
 
