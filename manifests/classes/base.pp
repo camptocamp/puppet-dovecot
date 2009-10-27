@@ -58,12 +58,4 @@ class tilecache::base {
     ensure => present,
   }
 
-  file {"/var/cache/tilecache":
-    ensure => directory,
-    ensure => absent,
-    force => true,
-    owner => "www-data",
-    group => "www-data",
-    mode => 2775,
-  }
 }
