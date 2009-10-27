@@ -1,4 +1,4 @@
-class os::debian-etch inherits debian {
+class os::debian-etch inherits os::debian {
   file { "/etc/apt/sources.list":
     ensure => absent,
     before => Exec["apt-get_update"],

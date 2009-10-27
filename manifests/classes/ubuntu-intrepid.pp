@@ -1,4 +1,4 @@
-class os::ubuntu-hardy inherits ubuntu {
+class os::ubuntu-intrepid inherits ubuntu {
   # CLEANING
   file { "/etc/apt/sources.list":
     ensure => absent,

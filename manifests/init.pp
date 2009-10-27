@@ -11,41 +11,42 @@ class os {
   }
 
   case $operatingsystem {
-    debian,Ubuntu: {
-
+    debian: {
       case $lsbdistcodename {
-        lenny: {
-          include os::debian-lenny
-#          include os::debian::backports
-        }
-
-        etch: {
-          include os::debian-etch
-          include os::debian::backports
-        }
-
+        lenny,
+        etch,
         sarge: {
-          include os::debian-sarge
-          include os::debian::backports
-        }
-        
-        gutsy: {
-          include os::ubuntu-gutsy
-          include os::debian::backports
-        }
-
-        hardy: {
-          include os::ubuntu-hardy
+          include "os::debian-${lsbdistcodename}"
           include os::debian::backports
         }
 
         default: {
-          fail "Unsupported version '${lsbdistcodename}' for Operating System ${operatingsystem}"
+          fail "Unsupported Debian version '${lsbdistcodename}' in 'os' module"
         }
       }
     }
+
+    ubuntu: {
+      case $lsbdistcodename {
+        dapper,
+        edgy,
+        feisty,
+        gutsy,
+        hardy,
+        intrepid,
+        jaunty: {
+          include "os::ubuntu-${lsbdistcodename}"
+          include os::debian::backports
+        }
+
+        default: {
+          fail "Unsupported Ubuntu version ${lsbdistcodename} in 'os' module"
+        }
+      }
+    }
+
     default: {
-      fail "Unsupported operatingsystem ${operatingsystem} in 'os' module"
+      fail "Unsupported OS ${operatingsystem} in 'os' module"
     }
   }
 }

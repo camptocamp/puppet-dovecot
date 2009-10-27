@@ -1,10 +1,10 @@
-class debian inherits os {
+class os::debian {
   #
   # Default packages
   #
   package {
     "lsof": ensure => present;
-    "cron-apt": ensure => present; # Keeps a fresh apt database
+    "cron-apt": ensure => purged; # Keeps a fresh apt database
     "tiobench": ensure => present; # Useful for doing IO benchmarks
     "rubygems": ensure => present; # Ruby packaging tool
     "smartmontools": ensure => present; # SMART monitoring
@@ -47,23 +47,42 @@ class debian inherits os {
     "ngrep": ensure => present;
     "ipython": ensure => present;
     "python-mode": ensure => present;
+    "pwgen": ensure => present;
   }
-
+  
+  # Disable PC Speaker
+  line {"disable pc speaker":
+    line   => 'blacklist pcspkr',
+    file   => '/etc/modprobe.d/blacklist',
+    ensure => present,
+  }
 
   #
   # Locales
   #
 
   package {"locales-all":
-    ensure => present,
+    ensure => absent,
   }
 
-#  file {"/etc/locale.gen":
-#    ensure  => present,
-#    source  => "puppet:///os/locale.gen",
-#    notify  => Exec["locale-gen"],
-#    require => Package["locales"],
-#  }
+  package {"locales":
+    ensure => present,
+    require => File["/etc/locale.gen"],
+    notify => Exec["locale-gen"],
+  }
+
+  file {"/etc/locale.gen":
+    ensure  => present,
+    source  => "puppet:///os/locale.gen",
+    notify => Exec["locale-gen"],
+  }
+  exec {"locale-gen":
+    refreshonly => true,
+    command => "locale-gen",
+    timeout => 20,
+    require => [Package["locales"], File["/etc/locale.gen"]],
+  }
+
 
   # BUG: Smells hacky ?
   file {"/usr/share/locale/locale.alias":
@@ -71,11 +90,12 @@ class debian inherits os {
     source => "puppet:///os/locale.alias",
   }
 
-#  exec {"locale-gen":
-#    refreshonly => true,
-#    timeout     => 20,
-#    require     => [ File["/usr/share/locale/locale.alias"], Package["locales"] ],
-#  }
+  # $LANG
+  file { "/etc/environment":
+    ensure => present,
+    mode   => 644,
+    source => "puppet:///os/etc/environment",
+  }
 
   file {"/etc/profile.d":
     ensure => directory
@@ -107,5 +127,17 @@ class debian inherits os {
   file {"/etc/apt/sources.list.d/2c.list":
     ensure => absent,
   }
-}
 
+  # fix 14573
+  package {"debian-archive-keyring":
+    ensure => latest,
+  }
+
+  # fixes rt#14979
+  cron {"Keeps a fresh apt database":
+    command  => "/usr/bin/apt-get update -q=2",
+    ensure   => present,
+    hour     => 4,
+    minute   => ip_to_cron(1),
+  }
+}
