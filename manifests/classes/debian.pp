@@ -6,7 +6,6 @@ class os::debian {
     "lsof": ensure => present;
     "cron-apt": ensure => purged; # Keeps a fresh apt database
     "tiobench": ensure => present; # Useful for doing IO benchmarks
-    "rubygems": ensure => present; # Ruby packaging tool
     "smartmontools": ensure => present; # SMART monitoring
     "at" : ensure => present; # usefull for reboots...
     "emacs21-nox" : ensure => present; # for fredj and sypasche
@@ -22,7 +21,6 @@ class os::debian {
     "vim": ensure => present;
     "lynx": ensure => present;
     "bzip2": ensure => present;
-    "make": ensure => present;
     "patch": ensure => present;
     "file": ensure => present;
     "less": ensure => present;
@@ -32,8 +30,6 @@ class os::debian {
     "subversion-tools": ensure => present;
     "elinks": ensure => present;
     "psmisc": ensure => present;
-    "gcc": ensure => present;
-    "libc6-dev": ensure => present;
     "nmap": ensure => present;
     "cadaver": ensure => present;
     "iptraf": ensure => present;
@@ -48,6 +44,9 @@ class os::debian {
     "ipython": ensure => present;
     "python-mode": ensure => present;
     "pwgen": ensure => present;
+    "locate": ensure => absent;
+    "iotop": ensure => present;
+    "xfsprogs": ensure => present;
   }
   
   # Disable PC Speaker
@@ -126,6 +125,14 @@ class os::debian {
   # remove a bad file create by apt::sources_list{"2c" !
   file {"/etc/apt/sources.list.d/2c.list":
     ensure => absent,
+  }
+
+  file {"/etc/adduser.conf":
+    ensure => present,
+    owner => root,
+    group => root,
+    mode => 644,
+    content => template("os/etc/adduser.conf.erb"),
   }
 
   # fix 14573
