@@ -31,6 +31,14 @@ class tilecache::base {
     ensure  => present,
   }
 
+  case $architecture {
+    amd64: {
+      package {"python-image-merge":
+        ensure => present,
+      }
+    }
+  }
+
   case $lsbdistcodename {
     'etch' : {
       apache::module {"mod_python":
@@ -52,6 +60,8 @@ class tilecache::base {
 
   file {"/var/cache/tilecache":
     ensure => directory,
+    ensure => absent,
+    force => true,
     owner => "www-data",
     group => "www-data",
     mode => 2775,
