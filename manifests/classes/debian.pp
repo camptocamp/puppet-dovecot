@@ -45,7 +45,6 @@ class os::debian {
     "python-mode": ensure => present;
     "pwgen": ensure => present;
     "locate": ensure => absent;
-    "iotop": ensure => present;
     "xfsprogs": ensure => present;
   }
   

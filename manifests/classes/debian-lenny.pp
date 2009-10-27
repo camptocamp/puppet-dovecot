@@ -47,7 +47,7 @@ class os::debian-lenny inherits debian {
     ensure => present,
   }
 
-  package {"bash-completion":
+  package {["bash-completion", "iotop"]:
     ensure => present,
   }
 
