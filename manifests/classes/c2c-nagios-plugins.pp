@@ -78,6 +78,14 @@ class c2c::nagios::plugins {
     owner => root,
   }
 
+  file {"/usr/lib/nagios/plugins/contrib/check_raid/tw_cli":
+    ensure => present,
+    source => "puppet:///c2c/usr/lib/nagios/plugins/contrib/check_raid/tw_cli",
+    require => File["/usr/lib/nagios/plugins/contrib/check_raid"],
+    mode => 0755,
+    owner => root,
+  }
+
   file {"/usr/lib/nagios/plugins/contrib/check_ubc.pl":
     ensure => present,
     source => "puppet:///c2c/usr/lib/nagios/plugins/contrib/check_ubc.pl",

@@ -9,9 +9,14 @@ class c2c::skel {
     ensure  => present,
   }
 
-  file { "/etc/skel/.bashrc":
-    source  => "puppet:///c2c/etc/skel/.bashrc",
-    ensure => present,
+#  file { "/etc/skel/.bashrc":
+#    source  => "puppet:///c2c/etc/skel/.bashrc",
+#    ensure => present,
+#  }
+
+  file {"/etc/skel/.bashrc":
+    content => template("c2c/dot_bashrc.erb"),
+    ensure  => present,
   }
 
   file { "/etc/skel/.screenrc":

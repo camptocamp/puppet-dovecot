@@ -28,13 +28,19 @@ detectRAID() {
   if [ $? == 0 ]; then
     return 5
   fi
+
+  # 3Ware
+  lspci | egrep -qi "3ware.+raid"
+  if [ $? == 0 ]; then
+    return 6
+  fi
   
 # intel sata
   pciID=`lspci | grep -i sata | awk '{print $1}'`
   if [ -n $pciID ] && [ -e "/sys/devices/pci0000:00/0000:$pciID" ]; then
     j=0;k=0
-    for i in /sys/devices/pci0000:00/0000:$pciID/host0/target*/0:0* ; do
-      state=`cat $i/state`
+    for i in $(find /sys/devices/pci0000:00/0000:$pciID/host*/target* -name state -type f ! -wholename *power*) ; do
+      state=`cat $i`
       if [ $state == 'running' ]; then
         j=`expr $j + 1`
       fi
@@ -77,6 +83,9 @@ if [ $? == 0 ]; then
     ;;
     5)
       sudo /usr/bin/arrayprobe
+    ;;
+    6)
+      sudo /usr/lib/nagios/plugins/contrib/check_raid/check_3ware_raid
     ;;
     *)
       echo "Unknown device !"

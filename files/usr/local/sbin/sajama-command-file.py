@@ -1,8 +1,16 @@
 #!/usr/bin/env python
-import os, sys
+import os, sys, commands
 
+ionice = commands.getstatus('which ionice')
+if ionice:
+  allowedCmd = {'rdiff':'nice -n 10 rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
+  default = 'nice -n 10 rdiff-backup --server'
+else:
+  allowedCmd = {'rdiff':'nice -n 10 ionice -n 7 rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
+  default = 'nice -n 10 ionice -n 7 rdiff-backup --server'
+
+print default
 sshOrig = os.getenv('SSH_ORIGINAL_COMMAND')
-allowedCmd = {'rdiff':'rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
 cmd = ''
 
 if sshOrig:
@@ -12,7 +20,7 @@ else:
 
 ## if there NO arg -> rdiff-backup
 if len(argv) == 1:
-  os.system('rdiff-backup --server')
+  os.system(default)
   sys.exit(0)
 
 try:

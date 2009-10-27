@@ -35,10 +35,11 @@ def getsadb():
 def getLocalVE():
   velist = getoutput("/usr/sbin/vzlist -a -H -o veid,status").split('\n')
   out = {}
-  for ve in velist:
-    myDebug(ve)
-    veid, status = ve.split()
-    out[veid] = status
+  if len(velist) > 1:
+    for ve in velist:
+      myDebug(ve)
+      veid, status = ve.split()
+      out[veid] = status
   return out
 
 def help():

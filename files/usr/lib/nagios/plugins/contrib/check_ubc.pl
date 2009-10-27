@@ -65,16 +65,20 @@ if (-e $file) {
         my $maxheld=$beancounters{$vmachine_id}{$resource}[1];
         my $barrier=$beancounters{$vmachine_id}{$resource}[2];
         my $limit=$beancounters{$vmachine_id}{$resource}[3];
+#        if ( 0 < $failcnt ){
+#          $out = "Failcnt presents on $vmachine_id: $resource $failcnt (held->$held , maxheld->$maxheld , barrier->$barrier , limit->$limit ) " ;
+#          $status = 'WARNING';
+#        }
         if ( $failcnt_old < $failcnt ){
           $out = "Incrased failcnt  $vmachine_id: $resource from $failcnt_old to $failcnt (held->$held , maxheld->$maxheld , barrier->$barrier , limit->$limit ) " ;
           $status = 'CRITICAL';
         }
       }
     }
-
   }
+  `cat /proc/user_beancounters > $file`;
 } else {
-  `cp /proc/user_beancounters $file`;
+  `cat /proc/user_beancounters > $file`;
 }
 print STDOUT "$status: $out\n";
 exit $ERRORS{$status};

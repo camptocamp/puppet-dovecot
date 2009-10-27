@@ -43,4 +43,16 @@ class c2c::old-ssh-users {
     ensure  => absent,
     force   => true,
   }
+  file {"/etc/ssh/authorized_keys/pvalsecc":
+    ensure  => absent,
+    force   => true,
+  }
+  file {"/etc/ssh/authorized_keys/jflarroche":
+    ensure  => absent,
+    force   => true,
+  }
+  file {"/etc/ssh/authorized_keys/dcorpataux":
+    ensure  => absent,
+    force   => true,
+  }
 }

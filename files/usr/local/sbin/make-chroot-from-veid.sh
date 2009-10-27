@@ -18,7 +18,7 @@ if ! vzlist |grep -q $1; then
 fi
 
 vzctl exec $VEID 'apt-get clean'
-vzctl exec $VEID '/usr/sbin/update-rc.d -f puppet remove'
+vzctl exec $VEID 'crontab -u root -r'
 vzctl exec $VEID '/usr/sbin/update-rc.d -f monit remove'
 vzctl stop $VEID
 
@@ -26,9 +26,9 @@ cd /var/lib/vz/private/$VEID
 tar cvzf /var/lib/vz/$CHROOTNAME.tar.gz -C ../ $VEID --exclude=home/* --exclude=root/* --exclude=var/backups/* --exclude=/var/apache-tomcat-5.5.26/logs/*  --exclude=/var/apache-tomcat-5.5.26/log/* $3
 
 vzctl start $VEID
-vzctl exec $VEID '/usr/sbin/update-rc.d puppet defaults 20 20'
 vzctl exec $VEID '/usr/sbin/update-rc.d monit defaults'
+vzctl exec $VEID 'puppetd -t'
 
-scp /var/lib/vz/$CHROOTNAME.tar.gz root@sa.camptocamp.com:/var/www/chroots
+scp /var/lib/vz/$CHROOTNAME.tar.gz root@sa.camptocamp.com:/var/www/sa.camptocamp.com/htdocs/chroots/
 rm /var/lib/vz/$CHROOTNAME.tar.gz
 

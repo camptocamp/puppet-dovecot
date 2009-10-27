@@ -1,4 +1,4 @@
-define c2c::sshuser::sadb ($ensure=present) {
+define c2c::sshuser::sadb ($ensure=present, $groups=false) {
 
   $firstname = url_get("${sadb}/user/${name}/firstname")
   $lastname  = url_get("${sadb}/user/${name}/lastname")
@@ -10,6 +10,12 @@ define c2c::sshuser::sadb ($ensure=present) {
     managehome => true,
     shell      => "/bin/bash",
     require    => Class["c2c::skel"],
+  }
+
+  if $groups != false {
+    User[$name] {
+      groups => $groups,
+    }
   }
 
   ssh_authorized_key {"$name on $name":

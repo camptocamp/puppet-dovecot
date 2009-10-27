@@ -3,10 +3,8 @@ module Puppet::Parser::Functions
     username = args[0]
     field = args[1]
 
-    case field
-      when "cn" then
-        cmd = 'ldapsearch -LLL -x -b "ou=Users,dc=ldap,dc=c2c" "uid=%s" cn | egrep "^cn:" | sed "s/^cn: //"' % [username]
-        %x[#{cmd}].strip!
-    end
+    cmd = "ldapsearch -LLL -x -b 'ou=Users,dc=ldap,dc=c2c' 'uid=#{username}' #{field} | egrep '^#{field}:' | sed 's/^#{field}: //'"
+    Puppet.debug "Running external command: #{cmd}"
+    %x[#{cmd}].strip!
   end
 end

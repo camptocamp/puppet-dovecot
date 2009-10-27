@@ -1,4 +1,4 @@
-class c2c::openteam-in-charge {
+class c2c::openteam-in-charge inherits openerp::base {
 
   c2c::ssh_authorized_key{"nicolas.bessi@camptocamp.com":
     sadb_user => "nbessi",
@@ -8,12 +8,6 @@ class c2c::openteam-in-charge {
 
   c2c::ssh_authorized_key{"joel.grandguillaume@camptocamp.com":
     sadb_user => "jgrandguillaume",
-    user => "openerp",
-    require => User["openerp"],
-  }
-
-  c2c::ssh_authorized_key{"jean-baptiste.aubort@camptocamp.com":
-    sadb_user => "jbaubort",
     user => "openerp",
     require => User["openerp"],
   }
@@ -28,6 +22,15 @@ class c2c::openteam-in-charge {
     sadb_user => "awuest",
     user  => "openerp",
     require => User["openerp"],
+    ensure => absent,
+  }
+
+  c2c::ssh_authorized_key { "jean-baptiste.aubort@camptocamp.com":
+    sadb_user => "jbaubort",
+    user  => "openerp",
+    require => User["openerp"],
+    ensure => absent,
+    ensure => absent,
   }
 
   c2c::ssh_authorized_key { "vincent.renaville@camptocamp.com":
