@@ -31,14 +31,6 @@ class tilecache::base {
     ensure  => present,
   }
 
-  case $architecture {
-    amd64: {
-      package {"python-image-merge":
-        ensure => present,
-      }
-    }
-  }
-
   case $lsbdistcodename {
     'etch' : {
       apache::module {"mod_python":
@@ -50,6 +42,13 @@ class tilecache::base {
       apache::module {"python":
         ensure  => present,
         require => Package["libapache2-mod-python"],
+      }
+      case $architecture {
+        amd64: {
+          package {"python-image-merge":
+            ensure => present,
+          }
+        }
       }
     }
   }
