@@ -1,0 +1,73 @@
+# Global parameters
+[global]
+    workgroup = <%= samba_domain_name %>
+    netbios name = <%= samba_netbios_name %>
+    os level = 68
+    security = user
+    wins support = Yes
+    enable privileges = Yes
+    server string = Samba Server %v
+    encrypt passwords = true
+
+    unix password sync = Yes
+    ldap passwd sync = Yes
+    passwd program = /usr/sbin/smbldap-passwd -u %u
+    passwd chat = *password* %n\n *password* %n\n *success*
+
+    log level = 0
+    syslog = 0
+    log file = /var/log/samba/log.%m
+    max log size = 100000
+    time server = Yes
+    socket options = TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192
+    mangling method = hash2
+    Dos charset = utf-8
+    Unix charset = utf-8
+    name resolve order = wins host lmhosts bcast
+	
+    domain logons = Yes
+    preferred master = True
+    domain master = True
+    dns proxy = No
+	
+    # no profiles
+    logon path = 
+    logon home =
+
+    # smbldap-tools configuration
+    passdb backend = ldapsam:<%= ldap_uri %>
+    ldap admin dn = cn=admin,<%= ldap_base %>
+    ldap suffix = <%= ldap_base %>
+    ldap group suffix = ou=groups
+    ldap user suffix = ou=users
+    ldap machine suffix = ou=computers
+    ldap idmap suffix = ou=users
+    add user script = /usr/sbin/smbldap-useradd -m "%u"
+    ldap delete dn = Yes
+    delete user script = /usr/sbin/smbldap-userdel "%u"
+    add machine script = /usr/sbin/smbldap-useradd -w "%m"
+    add group script = /usr/sbin/smbldap-groupadd -p "%g" 
+    delete group script = /usr/sbin/smbldap-groupdel "%g"
+    add user to group script = /usr/sbin/smbldap-groupmod -m "%u" "%g"
+    delete user from group script = /usr/sbin/smbldap-groupmod -x "%u" "%g"
+    set primary group script = /usr/sbin/smbldap-usermod -g "%g" "%u"
+
+    nt acl support = No
+    deadtime = 10
+    guest account = nobody
+    map to guest = Bad User
+    dont descend = /proc,/dev,/etc,/lib,/lost+found,/initrd
+
+    # to maintain capital letters in shortcuts in any of the profile folders:
+    preserve case = yes
+    short preserve case = yes
+    case sensitive = no
+
+[homes]
+    comment = repertoire de %U, %u
+    path = /home/%U
+    read only = No
+    oplocks = no
+    create mask = 0644
+    directory mask = 0755
+    browseable = No
