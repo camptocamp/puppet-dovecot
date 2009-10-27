@@ -126,19 +126,6 @@ class os::debian {
   file {"/etc/apt/sources.list.d/2c.list":
     ensure => absent,
   }
-<<<<<<< HEAD:manifests/classes/debian.pp
-=======
-
-  file {"/etc/adduser.conf":
-    ensure => present,
-    owner => root,
-    group => root,
-    mode => 644,
-    content => template("os/etc/adduser.conf.erb"),
-  }
-
-}
->>>>>>> 65d2ac40a3fdc92a93e57e5812f3877aaec1789a:manifests/classes/debian.pp
 
   file {"/etc/adduser.conf":
     ensure => present,
