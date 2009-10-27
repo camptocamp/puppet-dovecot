@@ -27,17 +27,15 @@ define postgresql::database($ensure, $owner = false, $encoding = false, $source 
         present: {
             exec { "Create $name postgres db":
                 command => "/usr/bin/createdb $ownerstring $encodingstring $name",
-                user    => "postgres",
-                unless  => "/usr/bin/psql -l | grep '$name  *|'",
-                require => Service["postgresql"],
+                user => "postgres",
+                unless => "/usr/bin/psql -l | grep '$name  *|'",
             }
         }
         absent:  {
             exec { "Remove $name postgres db":
                 command => "/usr/bin/dropdb $name",
-                onlyif  => "/usr/bin/psql -l | grep '$name  *|'",
-                user    => "postgres",
-                require => Service["postgresql"],
+                onlyif => "/usr/bin/psql -l | grep '$name  *|'",
+                user => "postgres"
             }
         }
         default: {
@@ -49,10 +47,9 @@ define postgresql::database($ensure, $owner = false, $encoding = false, $source 
     if $overwrite {
         exec { "Drop database $name before import":
             command => "dropdb ${name}",
-            onlyif  => "/usr/bin/psql -l | grep '$name  *|'",
-            user    => "postgres",
-            before  => Exec["Create $name postgres db"],
-            require => Service["postgresql"],
+            onlyif => "/usr/bin/psql -l | grep '$name  *|'",
+            user => "postgres",
+            before => Exec["Create $name postgres db"],
         }
     }
 
@@ -63,7 +60,7 @@ define postgresql::database($ensure, $owner = false, $encoding = false, $source 
             command => "zcat ${source} | psql ${name}",
             user    => "postgres",
             onlyif  => "test $(psql ${name} -c '\\dt' | wc -l) -eq 1",
-            require => [Service["postgresql"], Exec["Create $name postgres db"]],
+            require => Exec["Create $name postgres db"],
         }
     }
 }

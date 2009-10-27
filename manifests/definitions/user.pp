@@ -1,10 +1,6 @@
-define postgresql::user($ensure, $password = false, $superuser = false, 
-                        $createdb = false, $createrole = false) {
-
-  $passwordtext = $password ? {
-    false   => "",
-    default => "PASSWORD '$password' ",
-  }
+define postgresql::user($ensure = present, $password = false, $superuser = false,
+                        $createdb = false, $createrole = false,
+                        $hostname = '/var/run/postgresql', $port = '5432', $user = 'postgres') {
 
   $pgpass = $password ? {
     false   => "",
@@ -26,6 +22,8 @@ define postgresql::user($ensure, $password = false, $superuser = false,
     default => "CREATEROLE",
   }
 
+  # Connection string
+  $connection = "-h ${hostname} -p ${port} -U ${user}"
 
   case $ensure {
     present: {
@@ -33,52 +31,61 @@ define postgresql::user($ensure, $password = false, $superuser = false,
       # The createuser command always prompts for the password.
       # User with '-' like www-data must be inside double quotes
       exec { "Create postgres user $name":
-        command => "psql -c \"CREATE USER \\\"$name\\\" $passwordtext\" ",
+        command => $password ? {
+          false => "psql ${connection} -c \"CREATE USER \\\"$name\\\" \" ",
+          default => "psql ${connection} -c \"CREATE USER \\\"$name\\\" PASSWORD '$password'\" ",
+        },
         user    => "postgres",
-        unless  => "psql -c '\\du' | egrep '^\s*$name\s'",
-        require => [Service["postgresql"], User["postgres"]],
+        unless  => "psql ${connection} -c '\\du' | grep '^  *$name'",
+        require => User["postgres"],
       }
 
       exec { "Set SUPERUSER attribute for postgres user $name":
-        command => "psql -c 'ALTER USER \"$name\" $superusertext' ",
+        command => "psql ${connection} -c 'ALTER USER \"$name\" $superusertext' ",
         user    => "postgres",
-        unless  => "psql -tc \"SELECT rolsuper FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $superuser |cut -c 1)",
-        require => [Service["postgresql"], User["postgres"], Exec["Create postgres user $name"]],
+        unless  => "psql ${connection} -tc \"SELECT rolsuper FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $superuser |cut -c 1)",
+        require => [User["postgres"], Exec["Create postgres user $name"]],
       }
 
       exec { "Set CREATEDB attribute for postgres user $name":
-        command => "psql -c 'ALTER USER \"$name\" $createdbtext' ",
+        command => "psql ${connection} -c 'ALTER USER \"$name\" $createdbtext' ",
         user    => "postgres",
-        unless  => "psql -tc \"SELECT rolcreatedb FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $createdb |cut -c 1)",
-        require => [Service["postgresql"], User["postgres"], Exec["Create postgres user $name"]],
+        unless  => "psql ${connection} -tc \"SELECT rolcreatedb FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $createdb |cut -c 1)",
+        require => [User["postgres"], Exec["Create postgres user $name"]],
       }
 
       exec { "Set CREATEROLE attribute for postgres user $name":
-        command => "psql -c 'ALTER USER \"$name\" $createroletext' ",
+        command => "psql ${connection} -c 'ALTER USER \"$name\" $createroletext' ",
         user    => "postgres",
-        unless  => "psql -tc \"SELECT rolcreaterole FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $createrole |cut -c 1)",
-        require => [Service["postgresql"], User["postgres"], Exec["Create postgres user $name"]],
+        unless  => "psql ${connection} -tc \"SELECT rolcreaterole FROM pg_roles WHERE rolname = '$name'\" |grep -q $(echo $createrole |cut -c 1)",
+        require => [User["postgres"], Exec["Create postgres user $name"]],
       }
 
-      # change only if its not the same password
-      exec { "Change password for postgres user $name":
-        command => "psql -c \"ALTER USER \\\"$name\\\" $passwordtext\" ",
-        user    => "postgres",
-        unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo 'localhost:5432:template1:$name:$pgpass' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql -h localhost -c '\\q' -U $name template1 && rm -f \$TMPFILE",
-        require => [Service["postgresql"], User["postgres"], Exec["Create postgres user $name"]],
+      if $password {
+        $host = $hostname ? {
+          '/var/run/postgresql' => "localhost",
+          default               => $hostname,
+        }
+
+        # change only if it's not the same password
+        exec { "Change password for postgres user $name":
+          command => "psql ${connection} -c \"ALTER USER \\\"$name\\\" PASSWORD '$password' \"",
+          user    => "postgres",
+          unless  => "TMPFILE=$(mktemp /tmp/.pgpass.XXXXXX) && echo '${host}:${port}:template1:${name}:${pgpass}' > \$TMPFILE && PGPASSFILE=\$TMPFILE psql -h ${host} -p ${port} -U ${name} -c '\\q' template1 && rm -f \$TMPFILE",
+          require => [User["postgres"], Exec["Create postgres user $name"]],
+        }
       }
 
     }
 
     absent:  {
       exec { "Remove postgres user $name":
-        command => "psql -c 'DROP USER \"$name\" ' ",
+        command => "psql ${connection} -c 'DROP USER \"$name\" ' ",
         user    => "postgres",
-        onlyif  => "psql -c '\\du' | egrep '^\s*$name\s'",
-        require => Service["postgresql"],
+        onlyif  => "psql ${connection} -c '\\du' | grep '$name  *|'"
       }
     }
-  
+
     default: {
       fail "Invalid 'ensure' value '$ensure' for postgres::user"
       }

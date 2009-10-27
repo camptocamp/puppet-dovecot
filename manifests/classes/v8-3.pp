@@ -6,7 +6,6 @@ class postgresql::v8-3 inherits postgresql::base {
       os::backported_package {"postgresql-8.3":
         ensure => present,
         alias  => "postgresql",
-        require => User["postgres"],
       }
 
       os::backported_package {"postgresql-common":
@@ -29,7 +28,6 @@ class postgresql::v8-3 inherits postgresql::base {
       package { "postgresql-8.3":
         ensure  => installed,
         alias   => "postgresql",
-        require => User["postgres"],
       }
 
       service { "postgresql-8.3":

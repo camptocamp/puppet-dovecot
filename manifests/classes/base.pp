@@ -4,17 +4,12 @@ class postgresql::base {
     ensure => installed
   }
 
-  group { "postgres":
-    ensure => present,
-    require => User["postgres"],
-  }
-
   user { "postgres":
     ensure  => present,
-    require => Package["ssl-cert"],
+    require => Package["postgresql"],
   }
 
-  file { "/var/backups/pgsql":
+  file { ["/var/backups/pgsql", "/var/lib/postgresql"]:
     ensure  => directory,
     owner   => "postgres",
     group   => "postgres",
