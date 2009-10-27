@@ -43,8 +43,8 @@ class c2c::sysadmin-in-charge-new {
 
   file {"/root/.bashrc":
     ensure => present,
-    mode   => 600,
-    source => "puppet:///c2c/etc/skel/.bashrc",
+    mode => 600,
+    content => template("c2c/etc/skel/.bashrc"),
   }
   
   file {"/root/.screenrc":
