@@ -6,7 +6,6 @@ class puppet::master::base {
       Debian => "puppetmaster",
       RedHat => "puppet-server",
     },
-    "pwgen", # used in mysql class
     "python-docutils", # used by puppetdoc -m pdf
     ]: ensure => present,
   }
