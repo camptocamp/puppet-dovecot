@@ -1,0 +1,35 @@
+Package: *
+Pin: release o=c2c
+Pin-Priority: 1001
+
+Package: mapserver-bin-5.2
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: cgi-mapserver-5.2
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: php5-mapscript-5.2
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: python-mapscript-5.2
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: mapserver-doc-5.2 
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: perl-mapscript-5.2
+Pin: version 5.2.*
+Pin-Priority: 1002
+
+Package: libecw
+Pin: version 3.3*
+Pin-Priority: 1002
+
+Package: libgdal1-1.5.0
+Pin: version 1.5.0*
+Pin-Priority: 1002
