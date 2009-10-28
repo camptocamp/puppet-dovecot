@@ -25,12 +25,53 @@ class mapserver::debian {
       "libgdal-doc",
       "libapache2-mod-fcgid",
       "python-gdal",
-      "cgi-mapserver",
-      "mapserver-bin",
-      "perl-mapscript",
-      "php5-mapscript",
-      "python-mapscript",
     ]: ensure => present,
+  }
+
+  case $lsbdistcodename {
+    'etch' : {
+
+      include mapserver::epsg::legacy
+
+      package {
+        [
+          "cgi-mapserver-5.2",
+          "perl-mapscript-5.2",
+          "mapserver-bin-5.2",
+          "mapserver-doc-5.2",
+          "php5-mapscript-5.2",
+          "python-mapscript-5.2",
+        ]: ensure => present,
+      }
+
+      common::concatfilepart { "sig-packages":
+        ensure => present,
+        file => "/etc/apt/preferences",
+        source => "puppet:///mapserver/etc/apt/preferences-v5-2",
+      } 
+    } 
+
+    'lenny' : {
+  
+      case $epsg_file {
+        "tuned","minimal": {
+          include mapserver::epsg::minimal
+        }
+        default: {
+          include mapserver::epsg
+        }
+      }
+    
+      package {
+        [
+          "cgi-mapserver",
+          "mapserver-bin",
+          "perl-mapscript",
+          "php5-mapscript",
+          "python-mapscript",
+        ]:  ensure => present,
+      }
+    }
   }
 
   apache::module {"fcgid":
