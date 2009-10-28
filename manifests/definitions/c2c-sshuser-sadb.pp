@@ -1,4 +1,4 @@
-define c2c::sshuser::sadb ($ensure=present, $groups = "") {
+define c2c::sshuser::sadb ($ensure=present, $groups = "", $target = false) {
 
   $firstname = url_get("${sadb}/user/${name}/firstname")
   $lastname  = url_get("${sadb}/user/${name}/lastname")
@@ -15,7 +15,8 @@ define c2c::sshuser::sadb ($ensure=present, $groups = "") {
 
   ssh_authorized_key {"$name on $name":
     ensure  => $ensure,
-    user    => $name,
+    target  => $target? {false => undef, default => $target },
+    user    => $target? {false => $name, default => undef },
     type    => url_get("${sadb}/user/${name}/ssh_pub_key_type"),
     key     => url_get("${sadb}/user/${name}/ssh_pub_key"),
     require => User[$name],
