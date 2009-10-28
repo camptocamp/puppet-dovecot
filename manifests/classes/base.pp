@@ -3,6 +3,9 @@
 #
 
 class mapserver::base {
+
+  include mapserver::epsg::legacy
+
   $mapserver_packages_release = "20070605"
 
   apt::sources_list{"mapserver-etch-c2c":
@@ -46,17 +49,6 @@ class mapserver::base {
       "python-gdal",
       "python-mapscript"
     ]: ensure => present,
-  }
-
-  # HACK: proj fixes
-  case $lsbdistcodename {
-    'etch' : {
-      file {"/usr/share/proj/epsg":
-        ensure  => present,
-        source  => "puppet:///mapserver/epsg.C2C",
-        require => Package["proj"],
-      }
-    }
   }
 
   # HACK: Pear looks for php_sqlite.so instead of sqlite.so provided by the php5-sqlite package
