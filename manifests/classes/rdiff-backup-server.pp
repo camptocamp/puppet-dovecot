@@ -14,7 +14,10 @@ class rdiff-backup::server {
     }
   }
 
-  package {"librsync-dev":
+  package {[
+    "librsync-dev",
+    "python2.5-dev"
+    ]:
     ensure => present,
   }
 
@@ -22,7 +25,13 @@ class rdiff-backup::server {
     ensure => directory,
   }
 
-  file {"/srv/rdiff-backup":
+  if ($rdiff_backup_backupdir) {
+    $backupdir = $rdiff_backup_backupdir
+  } else {
+    $backupdir = "/srv/rdiff-backup"
+  }
+
+  file {$backupdir:
     ensure => directory,
   }
 
