@@ -1,26 +1,33 @@
 define postgresql::cluster (
   $ensure,
+  $clustername,
   $version,
-  $uid = "",
-  $gid = "",
-  $data_dir = "",
-  $socket_dir = "",
-  $log_dir = "",
-  $locale = "",
-  $encoding = "",
-  $port = ""
+  $uid = "postgres",
+  $gid = "postgres",
+  $data_dir = "/var/lib/postgresql"
 ) {
 
   case $ensure {
     present: {
-      exec {"pg_createcluster $version $name":
-        unless => "pg_lsclusters -h | awk '{ print \$1,\$2; }' | egrep '^${version} ${name}\$'",
+
+      file {$data_dir:
+        ensure => directory,
+        owner => "postgres",
+        group => "postgres",
+        mode => 755,
+        require => [Package["postgresql"], User["postgres"]],
       }
+
+      exec {"pg_createcluster --start -u $uid -g $gid -d ${data_dir}/${version}/${clustername} $version $clustername":
+        unless => "pg_lsclusters -h | awk '{ print \$1,\$2; }' | egrep '^${version} ${clustername}\$'",
+        require => File[$data_dir],
+      }
+
     }
 
     absent: {
-      exec {"pg_dropcluster --stop $version $name":
-        onlyif => "pg_lsclusters -h | awk '{ print \$1,\$2; }' | egrep '^${version} ${name}\$'",
+      exec {"pg_dropcluster --stop $version $clustername":
+        onlyif => "pg_lsclusters -h | awk '{ print \$1,\$2,\$6; }' | egrep '^${version} ${clustername} ${data_dir}/${version}/${clustername}\$'",
       }
     }
   }
