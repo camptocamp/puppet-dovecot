@@ -6,6 +6,7 @@ import re
 import time
 import sys
 import glob
+from optparse import OptionParser
 import email
 import smtplib
 import ConfigParser
@@ -19,15 +20,16 @@ _RB_PATH = "/opt/rdiff-backup/rdiff-backup-%s/bin/rdiff-backup"
 _PYTHONPATH = "PYTHONPATH=/opt/rdiff-backup/rdiff-backup-%s/lib/python2.5/site-packages "
 
 class Email:
-  def __init__ (self, subject, msg, mailFrom, mailTo):
+  def __init__ (self, subject, msg, mailFrom, mailTo, smtpSrv = 'localhost'):
     self.subject = subject
     self.msg = msg
     self.mailFrom = mailFrom
     self.mailTo = mailTo
+    self.smtpSrv = smtpSrv
   def send(self):
     msg = email.MIMEText.MIMEText(self.msg.encode('utf-8'), _subtype="plain", _charset='utf-8')
     msg['Subject'] = email.Header.Header(self.subject.encode("utf-8"), 'utf-8')
-    server = smtplib.SMTP('localhost')
+    server = smtplib.SMTP(self.smtpSrv)
     server.sendmail(self.mailFrom, self.mailTo, msg.as_string())
     server.quit()
 
@@ -140,6 +142,27 @@ def formatResult(backupDict):
 
   return (result, nbBackup)
 
+def chooseHost(hostDic):
+  hosts = map(os.path.basename, hostDic)
+  hosts = map(lambda x: x[:-5], hosts)
+  hosts.sort()
+  for index, host in enumerate(hosts):
+    print '  %s\t%s' % (index, host)
+  h = -1
+  while h not in xrange(len(hosts)):
+    try:
+      h = input("  Host: ")
+    except NameError:
+      continue
+  return hosts[h]
+
+def chk_host(hostDic, host):
+  hosts = map(os.path.basename, hostDic)
+  hosts = map(lambda x: x[:-5], hosts)
+  if host in hosts:
+    return host
+  return False 
+
 if __name__=="__main__":
   # check if root
   if os.getuid():
@@ -153,7 +176,27 @@ if __name__=="__main__":
     print "No backup configuration in '/etc/rdiff-backup.d' !"
     sys.exit(1)
 
-   # start threads together
+  options = OptionParser(version="1.0")
+  options.add_option("-l", "--list", action="store_true", help="displays configured hosts, letting choose a host to backup", default=False)
+  options.add_option("-H", "--host", dest="host", help="launch backup for <host> only")
+
+  (opt, args) = options.parse_args()
+
+  if opt.host and opt.list:
+    print 'Options -l and -H are mutually exclusive.'
+    sys.exit(1)
+
+  # list ?
+  if opt.list:
+    host = chooseHost(backupDict)
+  # host ?
+  if opt.host:
+    host = chk_host(backupDict, opt.host)
+
+  if host:
+    backupDict = {'/etc/rdiff-backup.d/%s.conf' % host: None}
+
+  # start threads together
   while moreBackupToRun(backupDict): 
     if nbBackupRunning(backupDict) < mainConf['max_threads']:
       host = getNextBackupToRun(backupDict)
@@ -168,5 +211,5 @@ if __name__=="__main__":
 
   # send an email resume
   title = "rdiff-backup result (%s/%s) - %s" %(result['success'], nb, date())
-  Email(title, result['msg'], mainConf['mail_from'], mainConf['mail_to']).send()
+  Email(title, result['msg'], mainConf['mail_from'], mainConf['mail_to'], mainConf['smtp_server']).send()
 
