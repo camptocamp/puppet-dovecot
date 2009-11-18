@@ -186,6 +186,8 @@ if __name__=="__main__":
     print 'Options -l and -H are mutually exclusive.'
     sys.exit(1)
 
+  host = None
+
   # list ?
   if opt.list:
     host = chooseHost(backupDict)
