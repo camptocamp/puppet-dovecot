@@ -2,6 +2,7 @@ define c2c::sshuser::sadb ($ensure=present, $groups = "") {
 
   $firstname = url_get("${sadb}/user/${name}/firstname")
   $lastname  = url_get("${sadb}/user/${name}/lastname")
+  $email     = url_get("${sadb}/user/${name}/email")
 
   user {$name:
     ensure     => $ensure,
@@ -13,11 +14,10 @@ define c2c::sshuser::sadb ($ensure=present, $groups = "") {
     require    => Class["c2c::skel"],
   }
 
-  ssh_authorized_key {"$name on $name":
+  c2c::ssh_authorized_key {"$email on $name":
     ensure  => $ensure,
+    sadb_user => $name,
     user    => $name,
-    type    => url_get("${sadb}/user/${name}/ssh_pub_key_type"),
-    key     => url_get("${sadb}/user/${name}/ssh_pub_key"),
     require => User[$name],
   }
 
