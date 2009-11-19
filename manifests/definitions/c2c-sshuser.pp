@@ -9,7 +9,7 @@ define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $grou
     require    => Class["c2c::skel"],
   }
 
-  ssh_authorized_key {"$name on $name":
+  ssh_authorized_key {"$email on $name":
     ensure  => $ensure,
     user    => $name,
     type    => $type,
