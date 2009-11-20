@@ -30,12 +30,11 @@ for host, date in hosts.items():
         hosts_ok.append(host)
         break
 
+nb_failed = len(hosts) - len(hosts_ok)
 
-problem_hosts = list(set(hosts.keys()) - set(hosts_ok))
-
-if problem_hosts:
-  print "CRITICAL: %s/%s missing" %(len(problem_hosts), len(hosts))
+if nb_failed != 0:
+  print "CRITICAL - %s/%s hosts backed-up successfully (%s failed)" %(len(hosts_ok), len(hosts), nb_failed)
   sys.exit(2)
 
 else:
-  print "OK"
+  print "OK - %s/%s hosts backed-up successfully" %(len(hosts_ok), len(hosts))
