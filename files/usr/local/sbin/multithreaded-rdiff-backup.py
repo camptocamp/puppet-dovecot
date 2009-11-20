@@ -211,7 +211,8 @@ if __name__=="__main__":
   # wait thread and display results
   result, nb = formatResult(backupDict)
 
-  # send an email resume
-  title = "rdiff-backup result (%s/%s) - %s" %(result['success'], nb, date())
-  Email(title, result['msg'], mainConf['mail_from'], mainConf['mail_to'], mainConf['smtp_server']).send()
+  # send an email summary
+  if mainConf['enable_mail'] == 1:
+    title = "rdiff-backup result (%s/%s) - %s" %(result['success'], nb, date())
+    Email(title, result['msg'], mainConf['mail_from'], mainConf['mail_to'], mainConf['smtp_server']).send()
 
