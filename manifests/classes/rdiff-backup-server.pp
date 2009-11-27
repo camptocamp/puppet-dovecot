@@ -14,11 +14,19 @@ class rdiff-backup::server {
     }
   }
 
-  package {[
-    "librsync-dev",
-    "python2.5-dev"
-    ]:
-    ensure => present,
+  case $operatingsystem {
+    Debian: {
+      package {
+        "librsync-dev":  ensure => present, alias => "librsync-devel";
+        "python2.5-dev": ensure => present, alias => "python-devel";
+      }
+    }
+    RedHat: {
+      package {
+        "librsync-devel": ensure => present, alias => "librsync-devel";
+        "python-devel":   ensure => present, alias => "python-devel";
+      }
+    }
   }
 
   file {"/opt/rdiff-backup":
