@@ -26,7 +26,7 @@ now = datetime.datetime.now()
 for host, date in hosts.items():
   if date == now.strftime("%Y-%m-%d") or now.hour < thld_hour and date == (now - timedelta(days=1)).strftime("%Y-%m-%d"):
     for line in open(os.path.join(logsDir, logs[host])):
-      if line.strip() == "Errors 0":
+      if line.strip() == "RDIFF-BACKUP-EXIT-STATUS=0":
         hosts_ok.append(host)
         break
 
