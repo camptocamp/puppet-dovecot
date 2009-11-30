@@ -66,6 +66,7 @@ class Backup(Thread):
     # writes a logfile with rdiff-backup stdin and stderr
     flog = open(logFile, 'w')
     flog.write(self.output+"\n")
+    flog.write("RDIFF-BACKUP-EXIT-STATUS=%s\n" % self.status) 
     flog.close()
 
   def getStatus(self):
