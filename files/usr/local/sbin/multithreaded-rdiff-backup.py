@@ -14,6 +14,8 @@ from os.path import join
 from threading import Thread
 from socket import gethostname
 from commands import getstatusoutput
+from email import MIMEText
+from email import Header
 
 _REGEX = re.compile(r""".*ElapsedTime .*? \((?P<time>.*?)\).*Errors\s(?P<errors>\d+)""", re.DOTALL)
 _RB_PATH = "/opt/rdiff-backup/rdiff-backup-%s/bin/rdiff-backup"

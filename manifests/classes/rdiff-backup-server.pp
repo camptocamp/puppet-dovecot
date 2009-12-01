@@ -1,4 +1,11 @@
 class rdiff-backup::server {
+
+  include buildenv::c
+  include python::dev
+
+  file {"/opt/rdiff-backup":
+    ensure => directory,
+  }
   
   file {"/etc/rdiff-backup.d":
     ensure => directory,
@@ -18,19 +25,13 @@ class rdiff-backup::server {
     Debian: {
       package {
         "librsync-dev":  ensure => present, alias => "librsync-devel";
-        "python2.5-dev": ensure => present, alias => "python-devel";
       }
     }
     RedHat: {
       package {
         "librsync-devel": ensure => present, alias => "librsync-devel";
-        "python-devel":   ensure => present, alias => "python-devel";
       }
     }
-  }
-
-  file {"/opt/rdiff-backup":
-    ensure => directory,
   }
 
   if ($rdiff_backup_backupdir) {
