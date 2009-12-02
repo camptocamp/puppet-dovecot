@@ -1,11 +1,11 @@
-define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $groups) {
+define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $groups=false) {
   user {$name:
     ensure     => $ensure,
     comment    => $comment,
     managehome => true,
     uid        => $uid,
     shell      => "/bin/bash",
-    groups     => $groups,
+    groups     => $groups ? {false => undef, default => $groups},
     require    => Class["c2c::skel"],
   }
 
