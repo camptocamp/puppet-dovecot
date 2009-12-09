@@ -17,17 +17,6 @@ class mapserver::debian {
     }
   }
 
-  package {
-    [
-      "proj",
-      "gdal-bin",
-      "libecw",
-      "libgdal-doc",
-      "libapache2-mod-fcgid",
-      "python-gdal",
-    ]: ensure => present,
-  }
-
   case $lsbdistcodename {
     'etch' : {
 
@@ -41,6 +30,11 @@ class mapserver::debian {
           "mapserver-doc-5.2",
           "php5-mapscript-5.2",
           "python-mapscript-5.2",
+          "proj",
+          "gdal-bin",
+          "libecw",
+          "libapache2-mod-fcgid",
+          "python-gdal"
         ]: ensure => present,
       }
 
@@ -61,6 +55,16 @@ class mapserver::debian {
           include mapserver::epsg
         }
       }
+
+      os::backported_package{
+        [
+          "proj",
+          "libgeos-dev",
+          "libgeos-c1",
+          "libgeos-3.1.0"
+        ]:
+        ensure => present,
+      }
     
       package {
         [
@@ -69,7 +73,13 @@ class mapserver::debian {
           "perl-mapscript",
           "php5-mapscript",
           "python-mapscript",
-        ]:  ensure => present,
+          "gdal-bin",
+          "libecw",
+          "libapache2-mod-fcgid",
+          "python-gdal"
+        ]:  
+        ensure => present,
+        require => [Package["proj"], Package["libgeos-dev"], Package["libgeos-c1"], Package["libgeos-3.1.0"]],
       }
     }
   }
