@@ -42,11 +42,11 @@ class mapserver::debian {
         ensure => present,
         file => "/etc/apt/preferences",
         source => "puppet:///mapserver/etc/apt/preferences-v5-2",
-      } 
-    } 
+      }
+    }
 
     'lenny' : {
-  
+
       case $epsg_file {
         "tuned","minimal": {
           include mapserver::epsg::minimal
@@ -56,16 +56,12 @@ class mapserver::debian {
         }
       }
 
-      os::backported_package{
-        [
-          "proj",
-          "libgeos-dev",
-          "libgeos-c1",
-          "libgeos-3.1.0"
-        ]:
-        ensure => present,
+      apt::preferences { "gis_tools_from_bp.o":
+         package => "proj libproj-dev libproj0 proj-bin proj-data libgeos-dev libgeos-c1 libgeos-3.1.0",
+         pin => "release a=${lsbdistcodename}-backports",
+         priority => "1100";
       }
-    
+
       package {
         [
           "cgi-mapserver",
@@ -76,10 +72,14 @@ class mapserver::debian {
           "gdal-bin",
           "libecw",
           "libapache2-mod-fcgid",
-          "python-gdal"
-        ]:  
+          "python-gdal",
+          "proj-bin",
+          "proj-data",
+          "libgeos-dev",
+          "libgeos-c1",
+          "libgeos-3.1.0"
+        ]:
         ensure => present,
-        require => [Package["proj"], Package["libgeos-dev"], Package["libgeos-c1"], Package["libgeos-3.1.0"]],
       }
     }
   }
