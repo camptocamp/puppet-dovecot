@@ -14,10 +14,6 @@ class mapfish::base {
       package {"python-virtualenv":
         ensure => present,
       }
-
-      package {"libgeos-dev":
-        ensure => present,
-      }
     }
   }
 
