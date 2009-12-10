@@ -2,7 +2,7 @@ class mapserver::epsg {
 
   file { "/usr/share/proj/epsg":
     ensure  => present,
-    require => Package["proj"],
+    require => Package["proj-data"],
   }
 }
 
