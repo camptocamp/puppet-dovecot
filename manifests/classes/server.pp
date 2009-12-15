@@ -1,7 +1,5 @@
 class mysql::server {
 
-  if $mysqldump_retention {} else { $mysqldump_retention = "week" }
-
   $mycnf = $operatingsystem ? {
     RedHat => "/etc/my.cnf",
     default => "/etc/mysql/my.cnf",
@@ -190,13 +188,6 @@ class mysql::server {
     creates     => "/root/.my.cnf",
   }
 
-  file { "/var/backups":
-    ensure  => directory,
-    owner   => "root",
-    group   => "root",
-    mode    => 755,
-  }
-
   file { "/var/lib/mysql":
     ensure  => directory,
     owner   => "mysql",
@@ -204,30 +195,6 @@ class mysql::server {
     mode    => 755,
     seltype => "mysqld_db_t",
     require => Package["mysql-server"],
-  }
-
-  file { "/var/backups/mysql":
-    ensure  => directory,
-    owner   => "root",
-    group   => "root",
-    mode    => 750,
-    require => File["/var/backups"]
-  }
-
-  file { "/usr/local/bin/mysql-backup.sh":
-    ensure => present,
-    source => "puppet:///mysql/mysql-backup.sh",
-    owner => "root",
-    group => "root",
-    mode  => 555,
-  }
-
-  cron { "mysql-backup":
-    command => "/usr/local/bin/mysql-backup.sh ${mysqldump_retention}",
-    user    => "root",
-    hour    => 2,
-    minute  => 0,
-    require => [File["/var/backups/mysql"], File["/usr/local/bin/mysql-backup.sh"]],
   }
 
   file { "/etc/logrotate.d/mysql-server":

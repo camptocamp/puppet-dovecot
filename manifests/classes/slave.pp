@@ -14,12 +14,5 @@ class mysql::slave inherits mysql::master {
     ],
   }
 
-  Cron["mysql-backup"] {
-    ensure => absent
-  }
-
-  File["/usr/local/bin/mysql-backup.sh"] {
-    ensure => "absent"
-  }
 }
 
