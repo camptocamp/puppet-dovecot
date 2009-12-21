@@ -21,7 +21,7 @@ Example usage:
   }
 
 */
-define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename, $command, $options, package=false) {
+define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, package=false) {
 
   nagios::config::command { $codename:
     ensure => $ensure,
@@ -35,7 +35,6 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
       host_name           => $fqdn,
       contact_groups      => $contact,
       service_description => $name,
-      export_for          => $nagios_nsca_server,
       package             => $package,
     }
 
