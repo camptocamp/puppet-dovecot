@@ -8,6 +8,8 @@ class monitoring::diskusage {
     codename => "check_disk_usage",
     command  => "check_disk",
     options  => $monitoring_diskusage_opt,
+    interval => 30,
+    retry    => 10,
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-disk",
       default => false,

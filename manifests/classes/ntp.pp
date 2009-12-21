@@ -16,6 +16,8 @@ class monitoring::ntp {
       default   => "check_ntp_time",
     },
     options  => "-H ${ntp_server}",
+    interval => 120,
+    retry    => 30,
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-ntp",
       default => false,
