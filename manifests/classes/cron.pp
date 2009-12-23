@@ -4,8 +4,8 @@ class monitoring::cron {
     codename => "check_crond_process",
     command  => "check_procs",
     options  => $operatingsystem ? {
-      Debian => "-w 1:1 -c 1:1 -C cron",
-      RedHat => "-w 1:1 -c 1:1 -C crond",
+      Debian => "-w 1: -c 1: -C cron",
+      RedHat => "-w 1: -c 1: -C crond",
     },
   }
 
