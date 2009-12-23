@@ -18,7 +18,7 @@ class monitoring::vmware {
     retry    => "30",
   }
 
-  file { "/opt/nagios-plugins/check_vmware_kmod.sh":
+  file { "/opt/nagios-plugins/check_vmware_kmods.sh":
     mode    => 0755,
     owner   => "root",
     group   => "root",
