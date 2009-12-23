@@ -16,12 +16,15 @@ Example usage:
     codename => "check_demo",
     base     => "/usr/local/sbin/",
     command  => "check_dummy.pl",
-    options  => "-w 1:1 -c 1:1 -C atd",
+    options  => "-w 1 -c 2",
+    interval => "10",
+    retry    => "5",
+    remote   => true,
     package  => ["foo", "bar"],
   }
 
 */
-define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, $interval=false, $retry=false, package=false) {
+define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, $interval=false, $retry=false, $remote=false, $package=false) {
 
   nagios::config::command { $codename:
     ensure => $ensure,
@@ -30,10 +33,11 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
 
   if $fqdn == $nagios_nsca_server {
 
-    nagios::service::local { $codename:
+    nagios::service::local { "$codename on $fqdn":
       ensure                => $ensure,
       host_name             => $fqdn,
       contact_groups        => $contact,
+      check_command         => $codename,
       normal_check_interval => $interval,
       retry_check_interval  => $retry,
       service_description   => $name,
@@ -42,16 +46,31 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
 
   } else {
 
-    nagios::service::nsca { $codename:
-      ensure                => $ensure,
-      host_name             => $fqdn,
-      contact_groups        => $contact,
-      normal_check_interval => $interval,
-      retry_check_interval  => $retry,
-      service_description   => $name,
-      export_for            => $nagios_nsca_server,
-      package               => $package,
-    }
+    if $remote == true {
 
+      nagios::service::remote { $codename:
+        ensure                => $ensure,
+        host_name             => $fqdn,
+        contact_groups        => $contact,
+        normal_check_interval => $interval,
+        retry_check_interval  => $retry,
+        service_description   => $name,
+        target                => "/etc/nagios/auto-puppet/services.cfg",
+        export_for            => $nagios_nsca_server,
+      }
+
+    } else {
+
+      nagios::service::nsca { $codename:
+        ensure                => $ensure,
+        host_name             => $fqdn,
+        contact_groups        => $contact,
+        normal_check_interval => $interval,
+        retry_check_interval  => $retry,
+        service_description   => $name,
+        export_for            => $nagios_nsca_server,
+        package               => $package,
+      }
+    }
   }
 }
