@@ -1,0 +1,88 @@
+/*
+== Class: monitoring::dell
+
+Monitors Dell related stuff:
+- whatever openmanage has to say
+- warranty information fetched from dell's website.
+
+See:
+- http://folk.uio.no/trondham/software/check_openmanage.html
+- http://gitorious.org/smarmy/check_dell_warranty
+
+*/
+class monitoring::dell {
+
+  $check_omsa_ver = "3.5.3"
+  $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
+
+  # download and extract check_openmanage.tar.gz
+  common::archive::tar-gz { "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}":
+    source  => "http://folk.uio.no/trondham/software/files/check_openmanage-${check_omsa_ver}.tar.gz",
+    target  => "/opt/nagios-plugins",
+    require => File["/opt/nagios-plugins"],
+  }
+
+  file { "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage":
+    mode    => 0755,
+    owner   => "root",
+    group   => "root",
+    require => Common::Archive::Tar-gz["/opt/nagios-plugins/check_openmanage-${check_omsa_ver}"],
+  }
+
+  file { "/opt/nagios-plugins/check_openmanage":
+    ensure  => link,
+    target  => "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage",
+    require => File["/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage"],
+  }
+
+  # download check_dell_warranty.py
+  exec { "download check_dell_warranty.py version $check_warranty_ver":
+    command => "curl http://gitorious.org/smarmy/check_dell_warranty/blobs/raw/${check_warranty_ver}/check_dell_warranty.py > /opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
+    creates => "/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
+    require => File["/opt/nagios-plugins"],
+  }
+
+  file {"/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}":
+    mode    => 0755,
+    owner   => "root",
+    group   => "root",
+    require => Exec["download check_dell_warranty.py version $check_warranty_ver"],
+  }
+
+  file { "/opt/nagios-plugins/check_dell_warranty.py":
+    ensure  => link,
+    target  => "/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
+    require => File["/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}"],
+  }
+
+
+  # monitoring definition.
+
+  monitoring::check { "Dell OMSA":
+    codename => "check_omsa_status",
+    command  => "check_openmanage",
+    base     => '$USER2$/',
+    interval => "360", # every 6h
+    retry    => "180", # every 3h
+    require  => File["/opt/nagios-plugins/check_openmanage"],
+  }
+
+  monitoring::check { "Dell Warranty":
+    codename => "check_dell_warranty",
+    command  => "check_dell_warranty.py",
+    base     => '$USER2$/',
+    interval => "10080", # once a week
+    retry    => "1440",  # once a day
+    require  => File["/opt/nagios-plugins/check_dell_warranty.py"],
+  }
+
+  monitoring::check {
+    "legacy omsa disks":   codename => "check_omsa_disks",   ensure => absent;
+    "legacy omsa raid":    codename => "check_omsa_raid",    ensure => absent;
+    "legacy omsa chassis": codename => "check_omsa_chassis", ensure => absent;
+  }
+
+  file {["/usr/lib/nagios/plugins/contrib/check_omsa.pl",
+         "/usr/lib64/nagios/plugins/contrib/check_omsa.pl"]: ensure => absent }
+
+}
