@@ -6,7 +6,7 @@ class monitoring::puppet {
   monitoring::check { "Puppet last run":
     codename => "check_puppet_state_yaml",
     command  => "check_file_age",
-    options  => "-C 1 -c 86400 -f /var/puppet/state/state.yaml", # once per day
+    options  => "-W 1 -C 1 -w 86400 -c 86400 -f /var/puppet/state/state.yaml", # once per day
     interval => "360", # 6h
     retry    => "180", # 3h
   }
@@ -17,7 +17,7 @@ class monitoring::puppet {
   monitoring::check { "Puppet last manifest refresh":
     codename => "check_puppet_localconfig_yaml",
     command  => "check_file_age",
-    options  => "-c 259200 -f /var/puppet/state/localconfig.yaml", # once every 3 days
+    options  => "-w 259200 -c 259200 -f /var/puppet/state/localconfig.yaml", # once every 3 days
     interval => "360", # 6h
     retry    => "180", # 3h
   }
