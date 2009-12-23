@@ -33,6 +33,7 @@ class monitoring::dell {
     ensure  => link,
     target  => "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage",
     require => File["/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage"],
+    before  => Monitoring::Check["Dell OMSA"],
   }
 
   # download check_dell_warranty.py
@@ -53,6 +54,7 @@ class monitoring::dell {
     ensure  => link,
     target  => "/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
     require => File["/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}"],
+    before  => Monitoring::Check["Dell Warranty"],
   }
 
 
@@ -64,7 +66,6 @@ class monitoring::dell {
     base     => '$USER2$/',
     interval => "360", # every 6h
     retry    => "180", # every 3h
-    require  => File["/opt/nagios-plugins/check_openmanage"],
   }
 
   monitoring::check { "Dell Warranty":
@@ -73,7 +74,6 @@ class monitoring::dell {
     base     => '$USER2$/',
     interval => "10080", # once a week
     retry    => "1440",  # once a day
-    require  => File["/opt/nagios-plugins/check_dell_warranty.py"],
   }
 
   monitoring::check {
