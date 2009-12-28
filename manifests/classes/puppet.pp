@@ -9,6 +9,7 @@ class monitoring::puppet {
     options  => "-W 1 -C 1 -w 86400 -c 86400 -f /var/puppet/state/state.yaml", # once per day
     interval => "360", # 6h
     retry    => "180", # 3h
+    package  => "nagios-plugins-file_age",
   }
 
   # Si le manifest puppet fourni par le puppetmaster génère une erreur ou un
@@ -20,6 +21,7 @@ class monitoring::puppet {
     options  => "-w 259200 -c 259200 -f /var/puppet/state/localconfig.yaml", # once every 3 days
     interval => "360", # 6h
     retry    => "180", # 3h
+    package  => "nagios-plugins-file_age",
   }
 
 

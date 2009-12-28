@@ -72,8 +72,8 @@ class monitoring::dell {
     codename => "check_dell_warranty",
     command  => "check_dell_warranty.py",
     base     => '$USER2$/',
-    interval => "10080", # once a week
-    retry    => "1440",  # once a day
+    interval => "1440", # once a day
+    retry    => "1440", # once a day
   }
 
   monitoring::check {
