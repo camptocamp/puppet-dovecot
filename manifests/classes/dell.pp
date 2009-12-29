@@ -77,6 +77,18 @@ class monitoring::dell {
     retry    => "1440", # once a day
   }
 
+  monitoring::check { "Dell OMSA-snmp bridge":
+    codename => "check_dell_snmp",
+    command  => "check_snmp",
+    options  => "-H localhost -R 'dell' -o SNMPv2-SMI::enterprises.674.10892.1.300.10.1.8.1",
+    interval => "120", # every 2h
+    retry    => "60",  # every 1h
+    package  => $operatingsystem ? {
+      RedHat  => "nagios-plugins-snmp",
+      default => "libnet-snmp-perl",
+    },
+  }
+
   monitoring::check {
     "legacy omsa disks":   codename => "check_omsa_disks",   ensure => absent;
     "legacy omsa raid":    codename => "check_omsa_raid",    ensure => absent;
