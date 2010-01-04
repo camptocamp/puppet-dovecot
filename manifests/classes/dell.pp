@@ -57,6 +57,19 @@ class monitoring::dell {
     before  => Monitoring::Check["Dell Warranty"],
   }
 
+  if $operatingsystem == "RedHat" and $lsbmajdistrelease == "4" {
+    package { "python2.4":
+      ensure   => present,
+      provider => "rpm",
+      source   => "http://www.python.org/ftp/python/2.4/rpms/fedora-3/python2.4-2.4-1pydotorg.i386.rpm",
+      before   => Monitoring::Check["Dell Warranty"],
+    }
+
+    $python_prefix = "/usr/bin/python2.4"
+  } else {
+    $python_prefix = "/usr/bin/python"
+  }
+
 
   # monitoring definition.
 
@@ -72,7 +85,7 @@ class monitoring::dell {
     codename => "check_dell_warranty",
     command  => "check_dell_warranty.py",
     options  => "--timeout 120",
-    base     => '$USER2$/',
+    base     => "${python_prefix} \$USER2\$/",
     interval => "1440", # once a day
     retry    => "1440", # once a day
   }
