@@ -58,11 +58,15 @@ class monitoring::dell {
   }
 
   if $operatingsystem == "RedHat" and $lsbmajdistrelease == "4" {
+
+    package { "readline.i386": ensure => present }
+
     package { "python2.4":
       ensure   => present,
       provider => "rpm",
       source   => "http://www.python.org/ftp/python/2.4/rpms/fedora-3/python2.4-2.4-1pydotorg.i386.rpm",
       before   => Monitoring::Check["Dell Warranty"],
+      require  => Package["readline.i386"],
     }
 
     $python_prefix = "/usr/bin/python2.4"
