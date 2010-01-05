@@ -16,6 +16,8 @@ class monitoring::security {
     command  => "check_password.sh",
     base     => '$USER2$/',
     options  => "root c2c",
+    interval => "720", # 12h
+    retry    => "120",
     require  => File["/opt/nagios-plugins/check_password.sh"],
   }
 }
