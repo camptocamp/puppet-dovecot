@@ -13,7 +13,7 @@ class monitoring::security {
 
   monitoring::check { "Default root password":
     codename => "check_root_password",
-    command  => "check_procs",
+    command  => "check_password.sh",
     base     => '$USER2$/',
     options  => "root c2c",
     require  => File["/opt/nagios-plugins/check_password.sh"],
