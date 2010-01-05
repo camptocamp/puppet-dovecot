@@ -75,7 +75,7 @@ class monitoring::dell {
 
   monitoring::check { "Dell OMSA":
     codename => "check_omsa_status",
-    command  => "check_openmanage",
+    command  => "check_openmanage --blacklist ctrl_fw=ALL/ctrl_driver=ALL",
     base     => '$USER2$/',
     interval => "360", # every 6h
     retry    => "180", # every 3h
