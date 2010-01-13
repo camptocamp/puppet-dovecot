@@ -2,6 +2,7 @@
 # Nagios plusgin to check errors and missing backups
 
 logsDir = "/var/log/rdiff-backup/"
+rdiffBackupDir = "/etc/rdiff-backup.d/"
 thld_hour = 4 # Hour of day after which todays backup should be present
 
 
@@ -25,14 +26,19 @@ for opt, val in opts:
 
 try:
   log_name_re = re.compile("(.*)-(\d{2})-(\d{2})-(\d{4})\.log")
+  conf_name_re = re.compile("(.*)\.conf")
   
   hosts = {}
+  for conf_file in os.listdir(rdiffBackupDir):
+    host, = conf_name_re.match(conf_file).groups()
+    hosts[host] = None
+
   logs = {}
   for log_file in os.listdir(logsDir):
     host, day, month, year = log_name_re.match(log_file).groups()
     date = "%s-%s-%s" %(year, month, day)
   
-    if host not in hosts or date > hosts[host]:
+    if host in hosts and (hosts[host] is None or date > hosts[host]):
       hosts[host] = date
       logs[host] = log_file
   
