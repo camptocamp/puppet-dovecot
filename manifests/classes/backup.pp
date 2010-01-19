@@ -1,6 +1,10 @@
 class postgresql::backup {
 
-  file { "/var/backups/pgsql":
+  if ( ! $postgresql_backupdir ) {
+    $postgresql_backupdir = "/var/backups/pgsql"
+  }
+
+  file {$postgresql_backupdir:
     ensure  => directory,
     owner   => "postgres",
     group   => "postgres",
@@ -13,8 +17,8 @@ class postgresql::backup {
     owner   => root,
     group   => root,
     mode    => 755,
-    source  => "puppet:///postgresql/usr/local/bin/pgsql-backup.sh",
-    require => File["/var/backups/pgsql"],
+    content => template("postgresql/pgsql-backup.sh.erb"),
+    require => File[$postgresql_backupdir],
   }
 
   cron { "pgsql-backup":
