@@ -3,8 +3,8 @@
 == Class: pacemaker
 
 Installs the pacemaker package and heartbeat high availability service. This
-class sets up heartbeat on the nodes of the cluster, but does not configure the
-cluster itself !
+class sets up heartbeat on the nodes of the cluster, then optionally loads the
+cluster configuration.
 
 The default communication between nodes is via network broadcast. So mind your
 network and firewall settings !
@@ -19,9 +19,12 @@ It is then your job to define the cluster resources and relationships using the
 
 Class variables:
 - *$pacemaker_authkey*: the secret key shared between cluster nodes. It is
-  required to set this variable.
+  required to set this attribute.
+- *$pacemaker_crmcli*: the configuration file we want to activate as a
+  configuration file. If this attribute is not set, puppet will not manage the
+  cluster's configuration.
 - *$pacemaker_hacf*: An alternate file to use instead of the default
-  /etc/ha.d/ha.cf defined in this class. This variable should point to an ERB
+  /etc/ha.d/ha.cf defined in this class. This attribute should point to an ERB
   template somewhere in your modulepath.
 - *$pacemaker_port*: UDP port used in default configuration. Defaults to 691.
 - *$pacemaker_interface*: Interface used in default configuration. Defaults to eth0.
@@ -35,6 +38,7 @@ Example usage:
 
   # use ha.cf template from $moduledir/mymodule/templates/myproject.ha.cf.erb
   $pacemaker_hacf      = "mymodule/myproject.ha.cf.erb"
+  $pacemaker_crmcli    = "puppet:///myproject/crm_config.cli"
   $pacemaker_interface = "eth1"
   $pacemaker_authkey   = "gugus"
 
@@ -110,5 +114,22 @@ class pacemaker {
     hasstatus => true,
     enable    => true,
     require   => Package["heartbeat"],
+  }
+
+  if ( $pacemaker_crmcli ) {
+
+    # actually load the configuration into heartbeat
+    exec { "reload crm config":
+      command     => "crm configure load replace /etc/ha.d/crm-config.cli",
+      refreshonly => true,
+      require     => Service["heartbeat"],
+    }
+
+    # this file contains the configuration to be loaded into the cluster.
+    file { "/etc/ha.d/crm-config.cli":
+      notify  => Exec["reload crm config"],
+      source  => $pacemaker_crmcli,
+      require => Package["heartbeat"],
+    }
   }
 }
