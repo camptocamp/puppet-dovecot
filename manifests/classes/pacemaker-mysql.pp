@@ -16,7 +16,9 @@ Example usage:
 class pacemaker::mysql inherits mysql::server {
 
   Service["mysql"] {
-    ensure => undef,
-    enable => false,
+    ensure     => undef,
+    enable     => false,
+    hasrestart => true,
+    restart    => "service mysqld condrestart",
   }
 }
