@@ -36,7 +36,7 @@ define postgresql::user($ensure = present, $password = false, $superuser = false
           default => "psql ${connection} -c \"CREATE USER \\\"$name\\\" PASSWORD '$password'\" ",
         },
         user    => "postgres",
-        unless  => "psql ${connection} -c '\\du' | grep '^  *$name'",
+        unless  => "psql ${connection} -c '\\du' | egrep '^  *$name '",
         require => User["postgres"],
       }
 
