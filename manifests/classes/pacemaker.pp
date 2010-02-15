@@ -59,13 +59,12 @@ class pacemaker {
   case $operatingsystem {
     RedHat: {
 
-      # opensuse build service has pacemaker packages available for RHEL.
+      # clusterlabs.org hosts an up to date repository for RHEL.
       yumrepo { "server_ha-clustering":
         descr => "High Availability/Clustering server technologies (RHEL_${lsbmajdistrelease})",
-        baseurl => "http://download.opensuse.org/repositories/server:/ha-clustering/RHEL_${lsbmajdistrelease}/",
+        baseurl => "http://www.clusterlabs.org/rpm/epel-${lsbmajdistrelease}/",
         enabled => 1,
-        gpgkey => "http://download.opensuse.org/repositories/server:/ha-clustering/RHEL_${lsbmajdistrelease}/repodata/repomd.xml.key",
-        gpgcheck => 1,
+        gpgcheck => 0,
       }
 
       package { "pacemaker.${architecture}":
