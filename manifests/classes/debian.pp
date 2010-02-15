@@ -77,7 +77,7 @@ class os::debian {
   exec {"locale-gen":
     refreshonly => true,
     command => "locale-gen",
-    timeout => 20,
+    timeout => 30,
     require => [Package["locales"], File["/etc/locale.gen"]],
   }
 
