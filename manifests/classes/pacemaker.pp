@@ -25,7 +25,6 @@ class monitoring::pacemaker {
     command  => "check_crm",
     options  => "/etc/ha.d/cluster-status.txt '[a-z0-9]\.epfl\.ch'",
     base     => '$USER2$/',
-    require  => File["/etc/ha.d/cluster-status.txt"],
   }
 
   monitoring::check { "Process: heartbeat":
