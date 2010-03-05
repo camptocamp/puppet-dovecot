@@ -34,6 +34,27 @@ Setup:
 EOF
 }
 
+# minimal attempt to obtain crm status in a failsafe manner. nagios user
+# needs to be in haclient group on systems where crm sockets are only
+# accessible to members of this group (redhat & debian for instance).
+function getstatus {
+
+  if [ -d /var/run/crm ]; then
+    sockets="/var/run/crm"
+  elif [ -d /var/run/heartbeat/crm ]; then
+    sockets="/var/run/heartbeat/crm"
+  else
+    return 3
+  fi
+
+  if [ -r $sockets/cib_ro ] && [ -r $sockets/cib_callback ]; then
+    crm_mon -1
+  else
+    sg haclient -c "crm_mon -1"
+  fi
+}
+
+
 if [ $# -ne 2 ]; then
   echo "Error: 2 parameters expected"
   usage
@@ -49,7 +70,7 @@ sedcmd="sed -r \"/^=+$/,/^=+$/d; s/$noderegex/node/g\""
 tmpdir=$(mktemp -d)
 error=$(($error || $?))
 
-crm_mon -1 | eval $sedcmd > $tmpdir/file1
+getstatus | eval $sedcmd > $tmpdir/file1
 error=$(($error || $?))
 
 test -r $sourcefile
