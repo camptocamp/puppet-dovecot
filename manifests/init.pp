@@ -48,7 +48,7 @@ class dovecot::ldap inherits dovecot
 	$ldap_suffix = dn_from_domain( $domain )
 
 	File["/etc/dovecot/dovecot.conf"] {
-		source => "puppet://$servername/dovecot/dovecot.ldap.conf",
+		source => "puppet:///modules/dovecot/dovecot.ldap.conf",
 	}
 
 	file {
@@ -65,7 +65,7 @@ class dovecot::pam inherits dovecot
 {
 
 	File["/etc/dovecot/dovecot.conf"] {
-		source => "puppet://$servername/dovecot/dovecot.pam.conf",
+		source => "puppet:///modules/dovecot/dovecot.pam.conf",
 	}
 
 }
