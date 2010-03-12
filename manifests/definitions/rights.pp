@@ -9,6 +9,7 @@ Example usage:
     user     => "foo",
     password => "bar",
     database => "mydata",
+    privs    => ["select_priv", "update_priv"]
   }
 
 Available parameters:
@@ -17,7 +18,7 @@ Available parameters:
 - *$user*: the target user
 - *$password*: user's password
 - *$host*: target host, default to "localhost"
-- *$priv*: target privileges, defaults to "all".
+- *$priv*: target privileges, defaults to "all" (values are the fieldnames from mysql.db table).
 
 */
 define mysql::rights($database, $user, $password, $host="localhost", $ensure="present", $priv="all") {
