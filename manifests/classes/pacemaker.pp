@@ -23,7 +23,7 @@ class monitoring::pacemaker {
   monitoring::check { "CRM":
     codename => "check_crm_status",
     command  => "check_crm",
-    options  => "/etc/ha.d/cluster-status.txt '[a-z0-9]\.epfl\.ch'",
+    options  => "/etc/ha.d/cluster-status.txt '[a-z0-9]+\.epfl\.ch'",
     base     => '$USER2$/',
   }
 
