@@ -28,7 +28,7 @@ class monitoring::sslcert {
 
 == Definition: monitoring::check::sslcert
 
-A small wrapper around monitoring::check-
+A small wrapper around monitoring::check.
 
 Not included in monitoring::sslcert because we could need to check more than
 one certificate per host.
@@ -38,12 +38,15 @@ define monitoring::check::sslcert (
   $ensure="present",
   $host="localhost", # check local certificate by default
   $org=$sslcert_organisation, # see apache::base::ssl
+  $rootcrt="",
   $port="443",
   $days="45") {
 
-  $rootcrt = $operatingsystem ? {
-    Debian => "/etc/ssl/certs/ca-certificates.crt",
-    RedHat => "/etc/pki/tls/certs/ca-bundle.crt",
+  if ($rootcrt == "") {
+    $rootcrt = $operatingsystem ? {
+      Debian => "/etc/ssl/certs/ca-certificates.crt",
+      RedHat => "/etc/pki/tls/certs/ca-bundle.crt",
+    }
   }
 
   monitoring::check { "SSL Cert: $name:$port":
