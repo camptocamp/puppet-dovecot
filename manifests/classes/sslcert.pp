@@ -43,10 +43,12 @@ define monitoring::check::sslcert (
   $days="45") {
 
   if ($rootcrt == "") {
-    $rootcrt = $operatingsystem ? {
+    $crtfile = $operatingsystem ? {
       Debian => "/etc/ssl/certs/ca-certificates.crt",
       RedHat => "/etc/pki/tls/certs/ca-bundle.crt",
     }
+  } else {
+    $crtfile = $rootcrt
   }
 
   monitoring::check { "SSL Cert: $name:$port":
@@ -54,7 +56,7 @@ define monitoring::check::sslcert (
     command  => "check_ssl_cert",
     interval => "720", # 2x/day
     base     => '$USER2$/',
-    options  => "-H ${host} -n ${name} -p ${port} -r ${rootcrt} -d ${days} -o '${org}'",
+    options  => "-H ${host} -n ${name} -p ${port} -r ${crtfile} -d ${days} -o '${org}'",
   }
 
 }
