@@ -4,7 +4,7 @@ class monitoring::puppet {
   # plus exécuté (cron absent, fichier de lock), le fichier n'est plus mis à
   # jour. Si puppet a été interrompu (CTRL-C), il sera vide.
   monitoring::check { "Puppet last run":
-    codename => "check_puppet_state_yaml",
+    codename => "check_puppet_last_run",
     command  => "check_file_age",
     options  => "-W 1 -C 1 -w 86400 -c 86400 -f /var/puppet/state/state.yaml", # once per day
     interval => "360", # 6h
@@ -16,12 +16,11 @@ class monitoring::puppet {
   }
 
   # Si le manifest puppet fourni par le puppetmaster génère une erreur ou un
-  # warning, puppet appliquera la config stockée dans localconfig.yaml à la
-  # place. Ce fichier ne sera donc pas mis à jour.
+  # warning, le fichier classes.txt ne sera sera pas mis à jour par puppet.
   monitoring::check { "Puppet last manifest refresh":
-    codename => "check_puppet_localconfig_yaml",
+    codename => "check_puppet_last_successful_run",
     command  => "check_file_age",
-    options  => "-w 259200 -c 259200 -f /var/puppet/state/localconfig.yaml", # once every 3 days
+    options  => "-w 259200 -c 259200 -f /var/puppet/state/classes.txt", # once every 3 days
     interval => "360", # 6h
     retry    => "180", # 3h
     package  => $operatingsystem ? {
@@ -34,6 +33,16 @@ class monitoring::puppet {
   monitoring::check { "legacy puppet check":
     ensure   => absent,
     codename => "check_puppet",
+  }
+
+  monitoring::check { "legacy last puppet run":
+    ensure   => absent,
+    codename => "check_puppet_state_yaml",
+  }
+
+  monitoring::check { "legacy last manifest refresh":
+    ensure   => absent,
+    codename => "check_puppet_localconfig_yaml",
   }
 
   file {
