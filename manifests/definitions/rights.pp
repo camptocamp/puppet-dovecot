@@ -9,7 +9,7 @@ Example usage:
     user     => "foo",
     password => "bar",
     database => "mydata",
-    privs    => ["select_priv", "update_priv"]
+    priv    => ["select_priv", "update_priv"]
   }
 
 Available parameters:
