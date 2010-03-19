@@ -21,7 +21,7 @@ class puppet::master::mongrel inherits puppet::master {
   # Init scripts
   file {"/etc/default/puppetmaster":
     ensure  => present,
-    source => "puppet:///puppet/puppetmaster-mongrel.default",
+    content => template("puppet/puppetmaster-mongrel.default.erb"),
     notify  => Service["puppetmaster"],
   }
 
