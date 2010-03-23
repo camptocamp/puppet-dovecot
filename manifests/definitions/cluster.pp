@@ -9,13 +9,14 @@ define postgresql::cluster (
 
   case $ensure {
     present: {
-
-      file {$data_dir:
-        ensure => directory,
-        owner => "postgres",
-        group => "postgres",
-        mode => 755,
-        require => [Package["postgresql"], User["postgres"]],
+      if $data_dir != "/var/lib/postgresql" {
+        file {$data_dir:
+          ensure => directory,
+          owner => "postgres",
+          group => "postgres",
+          mode => 755,
+          require => [Package["postgresql"], User["postgres"]],
+        }
       }
 
       exec {"pg_createcluster --start -u $uid -g $gid -d ${data_dir}/${version}/${clustername} $version $clustername":
