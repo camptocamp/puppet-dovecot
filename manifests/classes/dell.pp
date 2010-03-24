@@ -15,6 +15,10 @@ class monitoring::dell {
   $check_omsa_ver = "3.5.3"
   $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
 
+  if (! $check_openmanage_opts) {
+    $check_openmanage_opts = "--blacklist ctrl_fw=ALL/ctrl_driver=ALL"
+  }
+
   # download and extract check_openmanage.tar.gz
   common::archive::tar-gz { "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}":
     source  => "http://folk.uio.no/trondham/software/files/check_openmanage-${check_omsa_ver}.tar.gz",
@@ -79,7 +83,8 @@ class monitoring::dell {
 
   monitoring::check { "Dell OMSA":
     codename => "check_omsa_status",
-    command  => "check_openmanage --blacklist ctrl_fw=ALL/ctrl_driver=ALL",
+    command  => "check_openmanage",
+    options  => $check_openmanage_opts,
     base     => '$USER2$/',
     interval => "360", # every 6h
     retry    => "180", # every 3h
