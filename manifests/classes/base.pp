@@ -41,4 +41,14 @@ class cartoweb3::base {
     require => [ File["/usr/local/bin/cartoweb3-clean.sh"], User["www-data"] ],
   }
 
+  file {"/etc/php5/conf.d/cartoweb3.ini":
+    ensure => present,
+    owner => root,
+    group => root,
+    mode => 644,
+    content => "enable_dl = On\n",
+    require => [Package["php5-common"], Package["apache"]],
+    notify => Service["apache"],
+  }
+
 }
