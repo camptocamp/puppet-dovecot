@@ -9,7 +9,8 @@ class cartoweb3::base {
       "php5-pgsql",
       "php5-curl",
       "php5-sqlite",
-      "php5-mysql"
+      "php5-mysql",
+      "make"
     ]: ensure => present,
   }
 
