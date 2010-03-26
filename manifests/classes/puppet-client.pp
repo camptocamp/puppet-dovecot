@@ -99,7 +99,7 @@ class puppet::client {
       }
     }
 
-    RedHat: {
+    default: {
       # fake command just to satisfy dependencies
       exec {"update pkg cache if necessary":
         command => "true",
