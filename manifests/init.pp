@@ -60,6 +60,8 @@ Usage:
 */
 class python::mod_python {
 
+  include python
+
   package { "mod_python":
     ensure => present,
     name   => $operatingsystem ? {
