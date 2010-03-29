@@ -11,7 +11,7 @@ Usage:
 */
 class python {
 
-  package { "python":
+  package { ["python", "python-setuptools"]:
     ensure => present,
   }
 }
