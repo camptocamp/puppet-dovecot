@@ -1,4 +1,4 @@
-class mapfish::base {
+class mapfish::debian {
 
   case $lsbdistcodename {
     'etch' : {
@@ -12,6 +12,10 @@ class mapfish::base {
       }
 
       package {"python-virtualenv":
+        ensure => present,
+      }
+
+      package {"libgeos-dev":
         ensure => present,
       }
     }
