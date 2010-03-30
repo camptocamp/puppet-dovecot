@@ -7,22 +7,21 @@ class mapfish::debian {
       }
     }
     'lenny' : {
-      package {"libapache2-mod-wsgi":
-        ensure => present,
-      }
-
-      package {"python-virtualenv":
-        ensure => present,
-      }
-
-      package {"libgeos-dev":
+      package {[
+        "libapache2-mod-wsgi",
+        "python-virtualenv",
+        "libgeos-dev",
+        "naturaldocs",
+      ]:
         ensure => present,
       }
     }
   }
 
-  apache::module{ "headers":
-    ensure  => present,
+  if !defined(Apache::Module["headers"]) {
+    apache::module{ "headers":
+      ensure  => present,
+    }
   }
 
 }
