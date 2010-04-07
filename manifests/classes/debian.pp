@@ -74,13 +74,13 @@ class os::debian {
     source  => "puppet:///os/locale.gen",
     notify => Exec["locale-gen"],
   }
+
   exec {"locale-gen":
     refreshonly => true,
     command => "locale-gen",
     timeout => 30,
     require => [Package["locales"], File["/etc/locale.gen"]],
   }
-
 
   # BUG: Smells hacky ?
   file {"/usr/share/locale/locale.alias":
