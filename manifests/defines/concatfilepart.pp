@@ -4,7 +4,8 @@ define common::concatfilepart (
   $ensure = present,
   $file,
   $content = false,
-  $source  = false
+  $source  = false,
+  $manage  = false
 ) {
 
   # Resulting file
@@ -23,8 +24,13 @@ define common::concatfilepart (
     debug("${dir} already defined")
   } else {
     file {$dir:
-      ensure => directory,
-      mode   => 0600,
+      ensure  => directory,
+      mode    => 0600,
+      source  => "puppet:///common/empty/",
+      recurse => $manage,
+      purge   => $manage,
+      force   => $manage,
+      ignore  => '.ignore',
     }
   }
 
