@@ -23,7 +23,7 @@ class pacemaker::apache {
 
       class pacemaker::apache-redhat inherits apache::redhat {
 
-        Service["httpd"] {
+        Service["apache"] {
           ensure => undef,
           enable => false,
         }
@@ -35,7 +35,7 @@ class pacemaker::apache {
 
       class pacemaker::apache-debian inherits apache::debian {
 
-        Service["apache2"] {
+        Service["apache"] {
           ensure => undef,
           enable => false,
         }
