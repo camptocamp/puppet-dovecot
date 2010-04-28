@@ -36,6 +36,7 @@ one certificate per host.
 */
 define monitoring::check::sslcert (
   $ensure="present",
+  $certname=undef,
   $host="localhost", # check local certificate by default
   $org=$sslcert_organisation, # see apache::base::ssl
   $rootcrt="",
@@ -51,12 +52,18 @@ define monitoring::check::sslcert (
     $crtfile = $rootcrt
   }
 
-  monitoring::check { "SSL Cert: $name:$port":
-    codename => "check_ssl_cert_${name}_${port}",
+  if (!$certname) {
+    $_certname = $name
+  } else {
+    $_certname = $certname
+  }
+
+  monitoring::check { "SSL Cert: $_certname:$port":
+    codename => "check_ssl_cert_${_certname}_${port}",
     command  => "check_ssl_cert",
     interval => "720", # 2x/day
     base     => '$USER2$/',
-    options  => "-H ${host} -n ${name} -p ${port} -r ${crtfile} -d ${days} -o '${org}'",
+    options  => "-H ${host} -n ${_certname} -p ${port} -r ${crtfile} -d ${days} -o '${org}'",
   }
 
 }
