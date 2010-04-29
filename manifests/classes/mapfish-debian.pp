@@ -10,7 +10,6 @@ class mapfish::debian {
       package {[
         "libapache2-mod-wsgi",
         "python-virtualenv",
-        "libgeos-dev",
         "naturaldocs",
       ]:
         ensure => present,
