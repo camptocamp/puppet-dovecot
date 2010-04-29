@@ -56,10 +56,18 @@ class mapserver::debian {
         }
       }
 
-      apt::preferences { "gis_tools_from_bp.o":
-         package => "proj libproj-dev libproj0 proj-bin proj-data libgeos-dev libgeos-c1 libgeos-3.1.0",
-         pin => "release a=${lsbdistcodename}-backports",
-         priority => "1100";
+      apt::preferences {[
+          "proj",
+          "libproj-dev",
+          "libproj0",
+          "proj-bin",
+          "proj-data", 
+          "libgeos-dev",
+          "libgeos-c1",
+          "libgeos-3.1.0"
+        ]:
+        pin => "release a=${lsbdistcodename}-backports",
+        priority => "1100";
       }
 
       package {
