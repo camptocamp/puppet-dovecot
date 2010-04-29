@@ -1,4 +1,4 @@
-define apt::preferences($ensure="present", $package, $pin, $priority) {
+define apt::preferences($ensure="present", $pin, $priority) {
 
   common::concatfilepart { $name:
     ensure  => $ensure,
