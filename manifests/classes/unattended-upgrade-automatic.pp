@@ -5,7 +5,7 @@ class apt::unattended-upgrade::automatic inherits apt::unattended-upgrade {
   }
 
   apt::conf{"50unattended-upgrades":
-    ensure => present,
-    source => "puppet:///apt/unattended-upgrades.${lsbdistcodename}",
+    ensure  => present,
+    content => template("apt/unattended-upgrades.${lsbdistid}.erb"),
   }
 }
