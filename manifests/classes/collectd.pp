@@ -16,4 +16,8 @@ class monitoring::collectd {
     require => Package["nagios"],
   }
 
+  if $operatingsystem == "Debian" {
+    package { "collectd-utils": ensure => present }
+  }
+
 }
