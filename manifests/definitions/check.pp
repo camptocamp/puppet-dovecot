@@ -56,7 +56,7 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
         retry_check_interval  => $retry,
         service_description   => $name,
         target                => "/etc/nagios/auto-puppet/services.cfg",
-        export_for            => $nagios_nsca_server,
+        export_for            => "nagios-${nagios_nsca_server}",
       }
 
     } else {
@@ -68,7 +68,7 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
         normal_check_interval => $interval,
         retry_check_interval  => $retry,
         service_description   => $name,
-        export_for            => $nagios_nsca_server,
+        export_for            => "nagios-${nagios_nsca_server}",
         package               => $package,
       }
     }
