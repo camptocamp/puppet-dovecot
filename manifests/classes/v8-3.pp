@@ -1,56 +1,74 @@
-class postgresql::v8-3 inherits postgresql::base {
+/*
 
-  case $lsbdistcodename {
-    
-    "etch" : {
-      os::backported_package {"postgresql-8.3":
-        ensure => present,
-        alias  => "postgresql",
-      }
+==Class: postgresql::debian::v8-3
 
-      os::backported_package {"postgresql-common":
-        ensure => present,
-      }
-       
-      os::backported_package {"postgresql-client-common":
-        ensure => present,
-      }
-   
-      service { "postgresql-8.3":
-        ensure    => running,
-        hasstatus => true,
-        require   => Package["postgresql-8.3"],
-        alias     => "postgresql",
-      }
-    }
-  
-    "lenny", "hardy": {
-      package { "postgresql-8.3":
-        ensure  => installed,
-        alias   => "postgresql",
-      }
+Parameters:
+ $postgresql_data_dir:
+   set the data directory path, which is used to store all the databases
 
-      service { "postgresql-8.3":
-        ensure    => running,
-        hasstatus => true,
-        require   => Package["postgresql-8.3"],
-        alias     => "postgresql",
-      }
-  
-      # [workaround]
-      # by default pg_createcluster encoding derived from locale
-      # but it do does not work by installing postgresql via puppet ?!
-      exec {"force UTF8 as default encoding" : 
-        command   => "echo \"UPDATE pg_database SET datistemplate = FALSE where datname = 'template1';drop database template1;create database template1 with template = template0 encoding = 'UTF8';UPDATE pg_database SET datistemplate = TRUE where datname = 'template1';\" |psql",
-        unless    => "psql -l |grep template1 |grep -q UTF8",
-        user      => postgres,
-        require   => Service["postgresql-8.3"],
-      }
+Requires:
+ - Class["apt::preferences"]
 
-    }
-    default: {
-      fail "postgresql version not available for ${operatingsystem}/${lsbdistcodename}"
+*/
+class postgresql::debian::v8-3 inherits postgresql::debian::base {
+
+  $data_dir = $postgresql_data_dir ? {
+    "" => "/var/lib/postgresql",
+    default => $postgresql_data_dir,
+  }
+
+  if $lsbdistcodename == "etch" {
+    apt::preferences {[
+      "libpq-dev",
+      "libpq5",
+      "postgresql-8.3",
+      "postgresql-client-8.3",
+      "postgresql-common", 
+      "postgresql-client-common",
+      "postgresql-contrib-8.3"
+      ]:
+      pin => "release a=${lsbdistcodename}-backports",
+      priority => "1100"
     }
   }
 
+  case $lsbdistcodename {
+    "etch", "lenny" : {
+      package {[
+        "libpq-dev",
+        "libpq5",
+        "postgresql-client-8.3",
+        "postgresql-common",
+        "postgresql-client-common",
+        "postgresql-contrib-8.3"
+        ]:
+        ensure  => present,
+      }
+  
+      package {"postgresql-8.3":
+        ensure => present,
+        alias => "postgresql",
+        notify => Exec["pg_createcluster in utf8"]
+      }
+
+      service { "postgresql-8.3":
+        ensure => running,
+        hasstatus => true,
+        require => Package["postgresql"],
+        alias => "postgresql"
+      }
+  
+      # re-create the cluster in UTF8
+      exec {"pg_createcluster in utf8" :
+        command => "pg_dropcluster --stop 8.3 main && pg_createcluster -e UTF8 -d ${data_dir}/8.3/main --start 8.3 main",
+        onlyif => "test \$(su -c \"psql -tA -c 'SELECT count(*)=3 AND min(encoding)=0 AND max(encoding)=0 FROM pg_catalog.pg_database;'\" postgres) = t",
+        user => root,
+        timeout => 60,
+      }
+    }
+
+    default: {
+      fail "postgresql 8.3 not available for ${operatingsystem}/${lsbdistcodename}"
+    }
+  }
 }
