@@ -1,6 +1,0 @@
-<recipe xmlns="http://redhat.com/prm/1.0" name="URL" version="1.0">
-  <label>Postgresql</label>
-  <description>Postgresql Puppet module, initial version by Luke Kanies</description>
-  <dependencies>
-  </dependencies>
-</recipe>
