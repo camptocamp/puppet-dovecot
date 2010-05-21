@@ -22,13 +22,6 @@ $nagios_host_check_timeout="80"
 $ldap_uri = "ldap://ldap.lsn.camptocamp.com ldap://ldap.cby.camptocamp.com"
 $ldap_base = "dc=ldap,dc=c2c"
 $openvz_kernel_version = "2.6.18"
-#$the_guy_in_charge = "c2c.sysadmin@camptocamp.com"
-
-## BUG: Better off moving that in the ssh module
-#$sshd_config_src      = "puppet:///ssh-old/etc/ssh/sshd_config"
-#$sshd_config_dest     = "/etc/ssh/sshd_config"
-#$authorized_keys_src  = "puppet://sa.camptocamp.com/files/authorized_keys-autogen-c2cdev"
-#$authorized_keys_dest = "/etc/ssh/authorized_keys"
 
 $sites = "/etc/apache2/sites"
 $mods = "/etc/apache2/mods"
@@ -43,11 +36,12 @@ $puppet_server = "c2cpc9.camptocamp.com"
 $puppet_reportserver = "c2cpc9.camptocamp.com"
 $puppet_client_version = "0.25.4-2~bpo50+1"
 $puppet_server_version = "0.25.4-2~bpo50+1"
-$facter_version = "1.5.1-0.2"
+$facter_version = "1.5.7-1~bpo50+1"
+$augeas_version = "0.7.0-1~bpo50+1"
 
 Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 
-filebucket { main: server => "mremy.int.lsn.camptocamp.com" }
+filebucket { main: server => "c2cpc9.camptocamp.com" }
 
 # global defaults
 File {
