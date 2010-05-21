@@ -1,0 +1,36 @@
+[submodule "modules/c2c"]
+	path = modules/c2c
+	url = git@github.com:camptocamp/puppet-c2c
+[submodule "modules/apache"]
+	path = modules/apache
+	url = git@github.com:camptocamp/puppet-apache
+[submodule "modules/apt"]
+	path = modules/apt
+	url = git@github.com:camptocamp/puppet-apt
+[submodule "modules/buildenv"]
+	path = modules/buildenv
+	url = git@github.com:camptocamp/puppet-buildenv
+[submodule "modules/common"]
+	path = modules/common
+	url = git@github.com:camptocamp/puppet-common
+[submodule "modules/monit"]
+	path = modules/monit
+	url = git@github.com:camptocamp/puppet-monit
+[submodule "modules/mysql"]
+	path = modules/mysql
+	url = git@github.com:camptocamp/puppet-mysql
+[submodule "modules/nagios"]
+	path = modules/nagios
+	url = git@github.com:camptocamp/puppet-nagios
+[submodule "modules/os"]
+	path = modules/os
+	url = git@github.com:camptocamp/puppet-os
+[submodule "modules/puppet"]
+	path = modules/puppet
+	url = git@github.com:camptocamp/puppet-puppet
+[submodule "modules/ruby"]
+	path = modules/ruby
+	url = git@github.com:camptocamp/puppet-ruby
+[submodule "modules/syslog-ng"]
+	path = modules/syslog-ng
+	url = git@github.com:camptocamp/puppet-syslog-ng
