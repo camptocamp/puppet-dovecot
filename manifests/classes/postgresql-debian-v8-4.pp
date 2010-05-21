@@ -1,0 +1,74 @@
+/*
+
+==Class: postgresql::debian::v8-4
+
+Parameters:
+ $postgresql_data_dir:
+    set the data directory path, which is used to store all the databases
+
+Requires:
+ - Class["apt::preferences"]
+
+*/
+class postgresql::debian::v8-4 inherits postgresql::debian::base {
+
+  $data_dir = $postgresql_data_dir ? {
+    "" => "/var/lib/postgresql",
+    default => $postgresql_data_dir,
+  }
+
+  if $lsbdistcodename == "lenny" {
+    apt::preferences {[
+      "libpq-dev",
+      "libpq5",
+      "postgresql-8.4",
+      "postgresql-client-8.4",
+      "postgresql-common", 
+      "postgresql-client-common",
+      "postgresql-contrib-8.4"
+      ]:
+      pin => "release a=${lsbdistcodename}-backports",
+      priority => "1100"
+    }
+  }
+
+  case $lsbdistcodename {
+    "lenny" : {
+      package {[
+        "libpq-dev",
+        "libpq5",
+        "postgresql-client-8.4",
+        "postgresql-common",
+        "postgresql-client-common",
+        "postgresql-contrib-8.4"
+        ]:
+        ensure  => present,
+      }
+  
+      package {"postgresql-8.4":
+        ensure => present,
+        alias => "postgresql",
+        notify => Exec["pg_createcluster in utf8"]
+      }
+
+      service { "postgresql-8.4":
+        ensure => running,
+        hasstatus => true,
+        require => Package["postgresql"],
+        alias => "postgresql"
+      }
+   
+      # re-create the cluster in UTF8
+      exec {"pg_createcluster in utf8" : 
+        command => "pg_dropcluster --stop 8.4 main && pg_createcluster -e UTF8 -d ${data_dir}/8.4/main --start 8.4 main",
+        onlyif => "test \$(su -c \"psql -tA -c 'SELECT count(*)=3 AND min(encoding)=0 AND max(encoding)=0 FROM pg_catalog.pg_database;'\" postgres) = t",
+        user => root,
+        timeout => 60,
+      }
+    }
+
+    default: {
+      fail "postgresql 8.4 not available for ${operatingsystem}/${lsbdistcodename}"
+    }
+  }
+}
