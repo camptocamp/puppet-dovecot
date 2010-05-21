@@ -1,7 +1,15 @@
+/*
+
+==Definition: postgresql::cluster
+
+Create a new PostgreSQL cluster
+
+*/
 define postgresql::cluster (
   $ensure,
   $clustername,
   $version,
+  $encoding = "UTF8",
   $uid = "postgres",
   $gid = "postgres",
   $data_dir = "/var/lib/postgresql"
@@ -9,17 +17,16 @@ define postgresql::cluster (
 
   case $ensure {
     present: {
-      if $data_dir != "/var/lib/postgresql" {
-        file {$data_dir:
-          ensure => directory,
-          owner => "postgres",
-          group => "postgres",
-          mode => 755,
-          require => [Package["postgresql"], User["postgres"]],
-        }
+
+      file {$data_dir:
+        ensure => directory,
+        owner => "postgres",
+        group => "postgres",
+        mode => 755,
+        require => [Package["postgresql"], User["postgres"]],
       }
 
-      exec {"pg_createcluster --start -u $uid -g $gid -d ${data_dir}/${version}/${clustername} $version $clustername":
+      exec {"pg_createcluster --start -e $encoding -u $uid -g $gid -d ${data_dir}/${version}/${clustername} $version $clustername":
         unless => "pg_lsclusters -h | awk '{ print \$1,\$2; }' | egrep '^${version} ${clustername}\$'",
         require => File[$data_dir],
       }
