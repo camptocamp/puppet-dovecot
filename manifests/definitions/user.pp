@@ -1,6 +1,19 @@
-define postgresql::user($ensure = present, $password = false, $superuser = false,
-                        $createdb = false, $createrole = false,
-                        $hostname = '/var/run/postgresql', $port = '5432', $user = 'postgres') {
+/*
+
+==Definition: postgresql::user
+
+Create a new PostgreSQL user
+
+*/
+define postgresql::user(
+  $ensure=present, 
+  $password=false, 
+  $superuser=false,
+  $createdb=false,
+  $createrole=false,
+  $hostname='/var/run/postgresql', 
+  $port='5432', 
+  $user='postgres') {
 
   $pgpass = $password ? {
     false   => "",
