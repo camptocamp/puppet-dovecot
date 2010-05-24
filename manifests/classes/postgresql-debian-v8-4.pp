@@ -45,17 +45,12 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
         ensure  => present,
       }
   
-      package {"postgresql-8.4":
-        ensure => present,
-        alias => "postgresql",
-        notify => Exec["pg_createcluster in utf8"]
+      Package["postgresql"] {
+        name => "postgresql-8.4",
       }
 
-      service { "postgresql-8.4":
-        ensure => running,
-        hasstatus => true,
-        require => Package["postgresql"],
-        alias => "postgresql"
+      Service["postgresql"] {
+        name => "postgresql-8.4"
       }
    
       # re-create the cluster in UTF8
