@@ -13,6 +13,17 @@ class postgresql::base {
     require => Package["postgresql"],
   }
 
+  package {"postgresql":
+    ensure => present,
+    notify => undef,
+  }
+
+  service {"postgresql":
+    ensure => running,
+    hasstatus => true,
+    require => Package["postgresql"],
+  }
+
   file { "/var/lib/postgresql":
     ensure => directory,
     owner => "postgres",
