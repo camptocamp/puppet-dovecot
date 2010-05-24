@@ -13,5 +13,5 @@ file {
 		mode => 0755, owner => root, group => 0;
 }
 
-import "defines/*.pp"
+import "definitions/*.pp"
 import "classes/*.pp"
