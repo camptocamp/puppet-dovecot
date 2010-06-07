@@ -7,7 +7,7 @@ class os-base {
   include os
   include apt
   include c2c::sysadmin-in-charge-new
-  include puppet-client
+  include puppet::client
   include c2c::skel
 
   if $lsbdistcodename == 'lenny' {
