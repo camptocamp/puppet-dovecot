@@ -7,9 +7,8 @@ class os-base {
   include os
   include apt
   include c2c::sysadmin-in-charge-new
-  include c2c::puppet-client
+  include puppet-client
   include c2c::skel
-  #include pam::base
 
   if $lsbdistcodename == 'lenny' {
     include apt::unattended-upgrade::automatic
