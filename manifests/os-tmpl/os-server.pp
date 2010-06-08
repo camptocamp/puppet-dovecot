@@ -7,6 +7,23 @@
 # Requires: os-base
 
 class os-server {
+
+  common::concatfilepart { "000-sudoers.init":
+    ensure => present,
+    file => "/etc/sudoers",
+    content => "
+## This part is managed by puppet
+Defaults    env_keep=SSH_AUTH_SOCK
+Defaults    !authenticate
+Defaults    env_reset
+Defaults    mailto=c2c.sysadmin@camptocamp.com
+Defaults    always_set_home
+root  ALL=(ALL) ALL
+##
+
+",
+  }
+
   if $server_group == "prod" {
 
     # Syslog-ng installation that also sends logs to logserver.camptocamp.com
