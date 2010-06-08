@@ -1,3 +1,3 @@
-node 'c2cpc9.camptocamp.com' {
+node 'pm.camptocamp.net' {
   include srv-c2c-puppetmaster
 }
