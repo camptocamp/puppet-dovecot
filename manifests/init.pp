@@ -34,7 +34,8 @@ class os {
         gutsy,
         hardy,
         intrepid,
-        jaunty: {
+        jaunty,
+        lucid: {
           include "os::ubuntu-${lsbdistcodename}"
           include os::debian::backports
         }
