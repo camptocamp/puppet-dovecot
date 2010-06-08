@@ -18,4 +18,12 @@ class app-c2c-puppetmaster {
     groups  => "sysadmin",
   }
 
+  common::concatfilepart {"sudoers.sysadmin":
+    ensure => present,
+    file => "/etc/sudoers",
+    content => "## This part is managed by puppet
+%sysadmin ALL=(ALL) ALL
+##\n",
+  }
+
 }
