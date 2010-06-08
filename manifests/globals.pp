@@ -25,7 +25,6 @@ $openvz_kernel_version = "2.6.18"
 
 $sites = "/etc/apache2/sites"
 $mods = "/etc/apache2/mods"
-$sync_authorized_keys_src = false 
 $pam_config_dir = "/etc/pam.d"
 $sig_packages_release = "20080225"
 $smart_host = "mail.camptocamp.com"
@@ -41,14 +40,15 @@ $augeas_version = "0.7.0-1~bpo50+1"
 
 Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 
-filebucket { main: server => "pm.camptocamp.net" }
+filebucket { main: server => $puppet_server }
 
 # global defaults
 File {
   backup => main,
-  ignore => '.svn',
+  ignore => ['.svn', '.git', '.bzr'],
   owner  => root,
   group  => root,
+  mode   => 0644,
 }
 
 $osdist = "${operatingsystem}-${lsbdistcodename}"
