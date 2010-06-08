@@ -37,3 +37,6 @@
 [submodule "modules/augeas"]
 	path = modules/augeas
 	url = git@github.com:camptocamp/puppet-augeas
+[submodule "modules/java"]
+	path = modules/java
+	url = git@github.com:camptocamp/puppet-java.git
