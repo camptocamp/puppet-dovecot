@@ -1,7 +1,8 @@
 # Each node must be defined in nodes/$fqdn.pp
 import "nodes/*.pp"
 
-# Default node handling
+# Default nodes
 node default {
-    fail "Connection from an unconfigured host: ${fqdn}"
+  notice "Connection from unconfigured node '$fqdn'"
+  include srv-basic
 }
