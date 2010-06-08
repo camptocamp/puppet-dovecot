@@ -32,8 +32,8 @@ $smart_host = "mail.camptocamp.com"
 $sadb = "http://sadb.camptocamp.com"
 
 # Puppet configuration
-$puppet_server = "c2cpc9.camptocamp.com"
-$puppet_reportserver = "c2cpc9.camptocamp.com"
+$puppet_server = "pm.camptocamp.net"
+$puppet_reportserver = "pm.camptocamp.net"
 $puppet_client_version = "0.25.4-2~bpo50+1"
 $puppet_server_version = "0.25.4-2~bpo50+1"
 $facter_version = "1.5.7-1~bpo50+1"
@@ -41,7 +41,7 @@ $augeas_version = "0.7.0-1~bpo50+1"
 
 Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 
-filebucket { main: server => "c2cpc9.camptocamp.com" }
+filebucket { main: server => "pm.camptocamp.net" }
 
 # global defaults
 File {
