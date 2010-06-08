@@ -1,4 +1,4 @@
-# Server type used on node c2cpc9.camptocamp.com
+# Server type used on node pm.camptocamp.net
 #
 
 class srv-c2c-puppetmaster {
