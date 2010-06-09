@@ -2,6 +2,7 @@ class bazaar::client {
   case $lsbdistcodename {
     hardy,
     intrepid,
+    lucid,
     lenny: {
       package{["bzr", "bzrtools"]:
         ensure => installed,
@@ -15,7 +16,6 @@ class bazaar::client {
 
       os::backported_package{"bzrtools":
         ensure  => present,
-        #require => Package["bzr"],
       }
     }
 
