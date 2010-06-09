@@ -40,3 +40,9 @@
 [submodule "modules/java"]
 	path = modules/java
 	url = git@github.com:camptocamp/puppet-java.git
+[submodule "modules/postfix"]
+	path = modules/postfix
+	url = git@github.com:camptocamp/puppet-postfix
+[submodule "modules/sudo"]
+	path = modules/sudo
+	url = git@github.com:camptocamp/puppet-sudo
