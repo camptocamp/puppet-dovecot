@@ -5,16 +5,27 @@
 
 class os-base {
   include os
+  include ssh
   include apt
   include c2c::sysadmin-in-charge-new
   include puppet::client
   include c2c::skel
   include sudo::base
 
-  if $lsbdistcodename == 'lenny' {
-    include apt::unattended-upgrade::automatic
-  } else {
-    include apt::unattended-upgrade
+  augeas { "sshd/AuthorizedKeysFile":
+    context => "/files/etc/ssh/sshd_config/",
+    changes => "set AuthorizedKeysFile %h/.ssh/authorized_keys",
+    notify => Service["ssh"],
+  }
+
+  file {"/etc/ssh/authorized_keys":
+    ensure => absent,
+    purge => true,
+  }
+
+  case $lsbdistcodename {
+    lenny,lucid : { include apt::unattended-upgrade::automatic }
+    default : { include apt::unattended-upgrade }
   }
 
 }
