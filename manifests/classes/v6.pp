@@ -18,16 +18,19 @@ class java::v6 {
     'hardy',
     'intrepid',
     'jaunty',
+    'lucid',
     'lenny' : {
-      package { "sun-java6-bin":
-        ensure       => present,
-        responsefile => "/var/cache/debconf/sun-java6-bin.preseed",
-        require      => [Exec["apt-get_update"], File["/var/cache/debconf/sun-java6-bin.preseed"]],
-      }
-      
-      package {["sun-java6-jdk", "sun-java6-jre"]:
-        ensure  => present,
-        require => Package["sun-java6-bin"],
+      package { 
+        "sun-java6-bin":
+          ensure       => present,
+          responsefile => "/var/cache/debconf/sun-java6-bin.preseed",
+          require      => [Exec["apt-get_update"], File["/var/cache/debconf/sun-java6-bin.preseed"]];
+        "sun-java6-jdk":
+          ensure => present,
+          require => Package["sun-java6-bin"];
+        "sun-java6-jre":
+          ensure  => present,
+          require => Package["sun-java6-bin"];
       }
     } 
   }
