@@ -21,6 +21,7 @@ class os-base {
   file {"/etc/ssh/authorized_keys":
     ensure => absent,
     purge => true,
+    force => true,
   }
 
   case $lsbdistcodename {
