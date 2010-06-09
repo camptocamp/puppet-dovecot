@@ -23,8 +23,4 @@ class bazaar::client {
       notice "Unknown bzr package for $lsbdistcodename"
     }
   }
-
-  package{"python-paramiko":
-    ensure => present,
-  }
 }
