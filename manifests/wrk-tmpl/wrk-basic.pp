@@ -6,5 +6,6 @@ class srv-workstation {
   ### OS #########################################
   include os-base
 
-  include java
+  ### MW #########################################
+  include mw-java-v6
 }
