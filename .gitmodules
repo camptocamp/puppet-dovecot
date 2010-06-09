@@ -49,3 +49,6 @@
 [submodule "modules/ssh"]
 	path = modules/ssh
 	url = git@github.com:camptocamp/puppet-ssh
+[submodule "modules/bazaar"]
+	path = modules/bazaar
+	url = git@github.com:camptocamp/puppet-bazaar
