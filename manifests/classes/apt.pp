@@ -4,20 +4,22 @@ class apt {
   }
 
   # apt support preferences.d since version >= 0.7.22
-  if $lsbdistcodename == "lucid" {
+  case $lsbdistcodename { 
+    lucid : {
 
-    file {"/etc/apt/preferences":
-      ensure => absent,
-    }
+      file {"/etc/apt/preferences":
+        ensure => absent,
+      }
 
-    file {"/etc/apt/preferences.d":
-      ensure => directory,
-      owner => root,
-      group => root,
-      mode => 755,
-      recurse => true,
-      purge => true,
-      force => true,
+      file {"/etc/apt/preferences.d":
+        ensure  => directory,
+        owner   => root,
+        group   => root,
+        mode    => 755,
+        recurse => true,
+        purge   => true,
+        force   => true,
+      }
     }
   }
 
