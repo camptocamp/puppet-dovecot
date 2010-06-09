@@ -13,8 +13,8 @@ class monitoring::puppet {
     codename => "check_puppet_last_run",
     command  => "check_file_age",
     options  => "-W 1 -C 1 -w 86400 -c 86400 -f ${statepath}/state.yaml", # once per day
-    interval => "360", # 6h
-    retry    => "180", # 3h
+    interval => "60",
+    retry    => "30",
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-file_age",
       default => false,
@@ -27,8 +27,8 @@ class monitoring::puppet {
     codename => "check_puppet_last_successful_run",
     command  => "check_file_age",
     options  => "-w 259200 -c 259200 -f ${statepath}/classes.txt", # once every 3 days
-    interval => "360", # 6h
-    retry    => "180", # 3h
+    interval => "60",
+    retry    => "30",
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-file_age",
       default => false,
