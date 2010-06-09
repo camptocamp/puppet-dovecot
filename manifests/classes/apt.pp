@@ -3,6 +3,24 @@ class apt {
     require => Exec["apt-get_update"]
   }
 
+  # apt support preferences.d since version >= 0.7.22
+  if $lsbdistcodename == "lucid" {
+
+    file {"/etc/apt/preferences":
+      ensure => absent,
+    }
+
+    file {"/etc/apt/preferences.d":
+      ensure => directory,
+      owner => root,
+      group => root,
+      mode => 755,
+      recurse => true,
+      purge => true,
+      force => true,
+    }
+  }
+
   # ensure only files managed by puppet be present in this directory.
   file { "/etc/apt/sources.list.d":
     ensure  => directory,
