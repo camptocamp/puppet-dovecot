@@ -51,10 +51,11 @@ class os::debian-lenny inherits debian {
     ensure => present,
   }
 
-  common::concatfilepart { "c2c-mirror":
-    ensure  => present,
-    file    => "/etc/apt/preferences",
-    content => "Package: *\nPin: release o=c2c\nPin-Priority: 1001\n\n",
+  apt::preferences { "c2c-mirror":
+    ensure => present,
+    package => "*",
+    pin => "release o=c2c",
+    priority => "1001",
   }
 
 }

@@ -12,10 +12,11 @@ class os::debian::backports {
     },
   }
 
-  common::concatfilepart {"${lsbdistcodename}-backports":
-    ensure  => present,
-    content => "Package: *\nPin: release a=${lsbdistcodename}-backports\nPin-Priority: 400\n\n",
-    file    => "/etc/apt/preferences",
+  apt::preferences {"${lsbdistcodename}-backports":
+    ensure => present,
+    package => "*",
+    pin => "release a=${lsbdistcodename}-backports",
+    priority => 400,
   }
 
   case $lsbdistid {
