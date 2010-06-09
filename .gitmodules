@@ -46,3 +46,6 @@
 [submodule "modules/sudo"]
 	path = modules/sudo
 	url = git@github.com:camptocamp/puppet-sudo
+[submodule "modules/ssh"]
+	path = modules/ssh
+	url = git@github.com:camptocamp/puppet-ssh
