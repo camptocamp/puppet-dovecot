@@ -160,4 +160,9 @@ class app-workstation-packages {
     "pidgin-plugin-pack":               ensure => present;
     "python-setuptools":                ensure => present;
   }
+
+  package {["indicator-messages"]:
+    ensure => absent,
+  }
+    
 }
