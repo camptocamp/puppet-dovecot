@@ -45,7 +45,7 @@ define c2c::workstation::sadb::user ($ensure=present, $shell="/bin/bash") {
   }
 
   exec {"default-user-password for ${name}":
-    command => "echo '${name}:c2c' | chpasswd",
+    command => "usermod -p fhb8GJD/DWeDw ${name}",
     unless  => "test $(cat /etc/shadow | egrep '^${name}:' | cut -d: -f2) != '!'",
     require => User[$name],
   }
