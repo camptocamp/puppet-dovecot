@@ -11,14 +11,12 @@ class wrk-c2c {
   include bazaar::client
   include apt::unattended-upgrade::automatic
 
-  ### MW #########################################
-
   ### APP (generic) ##############################
   include app-workstation-tuning
   include app-c2c-workstation-vpn
   include app-c2c-worstations-vmware
-
-  ### APP (specific ) ############################
+  include app-workstation-packages
+  include app-c2c-workstation-vpn-swisstopo
   c2c::workstation::sadb::user{$c2c_workstation_users:}
 
 }
