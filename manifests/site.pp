@@ -2,7 +2,6 @@
 
 import "globals"
 import "nodes"
-
 import "common"
 
 import "srv-tmpl/*.pp"

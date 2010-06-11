@@ -1,5 +1,18 @@
 # globals.pp 
 
+# Puppet configuration
+$puppet_server = "pm.camptocamp.net"
+$puppet_reportserver = "pm.camptocamp.net"
+$puppet_client_version = "0.25.4-2~c2c+1"
+$puppet_server_version = "0.25.4-2~c2c+1"
+$facter_version = "1.5.7-1~c2c+1"
+
+case $lsbdistcodename {
+  lenny:    { $augeas_version = "0.7.0-1~bpo50+1" }
+  lucid:    { $augeas_version = "0.7.0-1ubuntu1" }
+  default : { notice "Unsupported distcodename ${lsbdistcodename}" }
+}
+
 # main configuration
 $nagios_root_dir="/etc/nagios3"
 $nagios_cfg_dir="${nagios_root_dir}/auto-puppet"
@@ -29,14 +42,6 @@ $pam_config_dir = "/etc/pam.d"
 $sig_packages_release = "20080225"
 $smart_host = "mail.camptocamp.com"
 $sadb = "http://sadb.camptocamp.com"
-
-# Puppet configuration
-$puppet_server = "pm.camptocamp.net"
-$puppet_reportserver = "pm.camptocamp.net"
-$puppet_client_version = "0.25.4-2~bpo50+1"
-$puppet_server_version = "0.25.4-2~bpo50+1"
-$facter_version = "1.5.7-1~bpo50+1"
-$augeas_version = "0.7.0-1~bpo50+1"
 
 Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 

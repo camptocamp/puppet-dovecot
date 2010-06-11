@@ -4,5 +4,4 @@ import "nodes/*.pp"
 # Default nodes
 node default {
   notice "Connection from unconfigured node '$fqdn'"
-  include srv-basic
 }
