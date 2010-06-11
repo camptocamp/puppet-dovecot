@@ -27,7 +27,7 @@ deb-src http://dev.camptocamp.com/packages ${lsbdistcodename} puppet-0.25
 
   apt::preferences {"facter":
     ensure => present,
-    pin => "version 1.5.7-1~c2c*",
+    pin => "version ${facter_version}",
     priority => 1100,
   }
 
@@ -37,7 +37,7 @@ deb-src http://dev.camptocamp.com/packages ${lsbdistcodename} puppet-0.25
 
   apt::preferences {["puppet", "puppet-common","vim-puppet", "puppet-el"]:
     ensure => present,
-    pin => "version 0.25.4-2~c2c*",
+    pin => "version ${puppet_client_version}",
     priority => 1100,
   }
 
