@@ -13,9 +13,10 @@ class wrk-c2c {
 
   ### APP (generic) ##############################
   include app-workstation-tuning
+  include app-workstation-packages
+  include app-c2c-workstation
   include app-c2c-workstation-vpn
   include app-c2c-worstations-vmware
-  include app-workstation-packages
   include app-c2c-workstation-vpn-swisstopo
   c2c::workstation::sadb::user{$c2c_workstation_users:}
 
