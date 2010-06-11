@@ -7,4 +7,12 @@ class app-c2c-workstation {
     shell    => "/bin/bash"
   }
 
+  # customized default ubuntu wallpaper
+  if $lsbdistcodename == "lucid" {
+    file {"/usr/share/backgrounds/warty-final-ubuntu.png":
+      ensure   => present,
+      source   => "puppet:///c2c/usr/share/backgrounds/warty-final-ubuntu-lucid.png",
+    }
+  }
+
 }
