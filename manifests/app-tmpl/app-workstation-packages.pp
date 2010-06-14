@@ -159,6 +159,7 @@ class app-workstation-packages {
     "pidgin-encryption":                ensure => present;
     "pidgin-plugin-pack":               ensure => present;
     "python-setuptools":                ensure => present;
+    "gnupg-agent":	                ensure => present;
   }
 
   package {["indicator-messages"]:
