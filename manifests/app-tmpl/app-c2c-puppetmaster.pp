@@ -42,15 +42,20 @@ class app-c2c-puppetmaster {
     ensure    => present,
     vhost     => "pm.camptocamp.net",
     directive => "
+DocumentRoot /usr/share/puppet-dashboard/public
+
 PassengerStatThrottleRate 120
 RackAutoDetect On
 RailsAutoDetect On
 
-RewriteEngine On
-RewriteCond %{HTTPS} ^off$
-RewriteCond %{REMOTE_ADDR} !127.0.0.1
-RewriteCond %{REMOTE_ADDR} !${ipaddress_eth0}
-rewriteRule ^/.* - [F,L]
+<Location />
+  order deny,allow
+  deny from all
+  allow from 10.27.10.
+  allow from 127.0.0.1
+  allow from 128.179.66.9
+</Location>
+
 ",
   }
 
