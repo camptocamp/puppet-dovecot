@@ -6,8 +6,11 @@ class srv-c2c-puppetmaster {
   ### Global attributes ##########################
   $server_group = "prod" #(one of dev, demo or prod)
   $ps1label = "new puppetmaster"
+
   $puppetmaster_confdir = "/srv/puppetmaster/prod/"
   $puppetmaster_ssldir = "/var/lib/puppet/ssl"
+  $wwwroot = "/var/www/"
+
   $root_mail_recipient = "c2c.sysadmin@camptocamp.com"
   $postfix_relayhost = "mail.camptocamp.com"
 
