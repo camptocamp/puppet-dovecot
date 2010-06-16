@@ -32,10 +32,10 @@ class app-c2c-puppetmaster {
 
   apache::vhost-ssl {"pm.camptocamp.net":
     ensure    => present,
-    cert      => "/var/lib/puppet/ssl/certs/pm.camptocamp.net.pem",
-    certkey   => "/var/lib/puppet/ssl/private_keys/pm.camptocamp.net.pem",
-    cacert    => "/var/lib/puppet/ssl/ca/ca_crt.pem",
-    certchain => "/var/lib/puppet/ssl/ca/ca_crt.pem",
+    cert      => "/var/lib/puppetmaster/ssl/certs/pm.camptocamp.net.pem",
+    certkey   => "/var/lib/puppetmaster/ssl/private_keys/pm.camptocamp.net.pem",
+    cacert    => "/var/lib/puppetmaster/ssl/ca/ca_crt.pem",
+    certchain => "/var/lib/puppetmaster/ssl/ca/ca_crt.pem",
   }
 
   apache::directive {"dashboard-local":
