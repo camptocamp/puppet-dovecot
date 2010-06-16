@@ -8,7 +8,7 @@ class srv-c2c-puppetmaster {
   $ps1label = "new puppetmaster"
 
   $puppetmaster_confdir = "/srv/puppetmaster/prod/"
-  $puppetmaster_ssldir = "/var/lib/puppet/ssl"
+  $puppetmaster_ssldir = "/var/lib/puppetmaster/ssl"
   $wwwroot = "/var/www/"
 
   $root_mail_recipient = "c2c.sysadmin@camptocamp.com"
