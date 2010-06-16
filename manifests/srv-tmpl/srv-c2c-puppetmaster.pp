@@ -8,6 +8,8 @@ class srv-c2c-puppetmaster {
   $ps1label = "new puppetmaster"
   $puppetmaster_confdir = "/srv/puppetmaster/prod/"
   $puppetmaster_ssldir = "/var/lib/puppet/ssl"
+  $root_mail_recipient = "c2c.sysadmin@camptocamp.com"
+  $postfix_relayhost = "mail.camptocamp.com"
 
   ### OS #########################################
   include os-base
@@ -15,6 +17,7 @@ class srv-c2c-puppetmaster {
 
   ### MW #########################################
   include mw-apache-ssl
+  include postfix::satellite
 
   ### APP (generic) ##############################
 
