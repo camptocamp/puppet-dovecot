@@ -6,7 +6,11 @@ define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $grou
     uid        => $uid,
     shell      => "/bin/bash",
     groups     => $groups ? {false => undef, default => $groups},
-    require    => Class["c2c::skel"],
+    require    => $ensure ? {
+      present => Class["c2c::skel"],
+      absent  => Ssh_authorized_key["$email on $name"],
+      default => undef,
+    }
   }
 
   ssh_authorized_key {"$email on $name":
@@ -14,6 +18,9 @@ define c2c::sshuser ($ensure=present, $uid, $comment, $email, $type, $key, $grou
     user    => $name,
     type    => $type,
     key     => $key,
-    require => User[$name],
+    require => $ensure ? {
+      present => User[$name],
+      default => undef,
+    }
   }
 }
