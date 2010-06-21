@@ -79,7 +79,7 @@ class os::debian {
     refreshonly => true,
     command => "locale-gen",
     timeout => 30,
-    require => [Package["locales"], File["/etc/locale.gen"]],
+    require => [File["/usr/share/locale/locale.alias"], Package["locales"], File["/etc/locale.gen"]],
   }
 
   # BUG: Smells hacky ?
