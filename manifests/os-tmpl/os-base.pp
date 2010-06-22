@@ -32,7 +32,7 @@ deb-src http://dev.camptocamp.com/packages ${lsbdistcodename} puppet-0.25
   }
 
   package {["puppet-common","vim-puppet", "puppet-el"]:
-    ensure => present,
+    ensure => $puppet_client_version,
   }
 
   apt::preferences {["puppet", "puppet-common","vim-puppet", "puppet-el"]:
