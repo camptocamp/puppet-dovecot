@@ -62,9 +62,12 @@ class puppet::master::passenger inherits puppet::master::base {
     ensure  => present,
     require => Class["ruby::passenger::apache"],
   }
+
   apache::vhost-ssl { "puppetmasterd":
     config_content => template("puppet/vhost-passenger.conf.erb"),
   }
+
+  apache::listen { "8140": }
 
   file { [$rack_location, "${rack_location}/public", "${rack_location}/tmp"]:
     ensure => directory,
