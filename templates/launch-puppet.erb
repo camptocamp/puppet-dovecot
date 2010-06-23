@@ -7,6 +7,11 @@ BIN="/usr/sbin/puppetd"
 ARGS="--onetime --no-daemonize --server $SERVER"
 FACILITY="local1.warn"
 
+if [ $(id -u) != 0 ]; then
+  echo "please run $0 as root."
+  exit 1
+fi
+
 <% if has_variable?("facter_envvars") and facter_envvars.is_a?(Array) then -%>
 # see http://reductivelabs.com/trac/puppet/wiki/FrequentlyAskedQuestions#can-i-access-environmental-variables-with-facter
 <% facter_envvars.each do |f| -%>
