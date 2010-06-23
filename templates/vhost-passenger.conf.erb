@@ -1,19 +1,19 @@
 
-# you probably want to tune these settings
-PassengerHighPerformance on
-PassengerMaxPoolSize 12
-PassengerPoolIdleTime 1500
-# PassengerMaxRequests 1000
-PassengerStatThrottleRate 120
-RackAutoDetect Off
-RailsAutoDetect Off
-
-<% if has_variable?("passenger_tempdir") %>
-PassengerTempDir <%= passenger_tempdir %>
-<% end %>
-
 Listen 8140
 <VirtualHost *:8140>
+
+  # you probably want to tune these settings
+  PassengerHighPerformance on
+  PassengerMaxPoolSize 12
+  PassengerPoolIdleTime 1500
+  # PassengerMaxRequests 1000
+  PassengerStatThrottleRate 120
+  RackAutoDetect Off
+  RailsAutoDetect Off
+
+  <% if has_variable?("passenger_tempdir") %>
+  PassengerTempDir <%= passenger_tempdir %>
+  <% end %>
 
   ServerName puppetmasterd
 
