@@ -12,7 +12,7 @@ class monitoring::varnish {
 
 FILE="/etc/varnish/$(hostname).vcl"
 
-echo | varnishd -d -n $((RANDOM)) -f $FILE > /dev/null 2>&1
+echo | varnishd -d -n /tmp/$((RANDOM)) -f $FILE > /dev/null 2>&1
 
 if [ $? == 0 ]; then
   echo "$FILE has no errors"
