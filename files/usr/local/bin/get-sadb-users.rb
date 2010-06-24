@@ -17,7 +17,7 @@ begin
   c2c::sshuser {\"#{uid}\": 
     ensure  => $ensure, 
     uid     => url_get(\"${sadb}/user/#{uid}/uid_number\"),
-    comment => sprintf(\"%s %s\", url_get(\"${sadb}/user/mbornoz/firstname\"), url_get(\"${sadb}/user/mbornoz/lastname\")),
+    comment => sprintf(\"%s %s\", url_get(\"${sadb}/user/#{uid}/firstname\"), url_get(\"${sadb}/user/#{uid}/lastname\")),
     email   => url_get(\"${sadb}/user/#{uid}/email\"), 
     type    => url_get(\"${sadb}/user/#{uid}/ssh_pub_key_type\"),
     key     => url_get(\"${sadb}/user/#{uid}/ssh_pub_key\"),
