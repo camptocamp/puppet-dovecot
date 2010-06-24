@@ -13,6 +13,12 @@ case $lsbdistcodename {
   default : { notice "Unsupported distcodename ${lsbdistcodename}" }
 }
 
+# fist uid/gid used by type user (provider=adduser)
+# sadb 1000 -> 19999
+# others 2000 -> MAX
+$adduser_first_uid = "2000"
+$adduser_first_gid = "2000"
+
 # main configuration
 $nagios_root_dir="/etc/nagios3"
 $nagios_cfg_dir="${nagios_root_dir}/auto-puppet"

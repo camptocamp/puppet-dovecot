@@ -2,6 +2,7 @@
 #
 
 class os-base {
+
   include os
   include ssh
   include apt
@@ -10,6 +11,7 @@ class os-base {
   include c2c::skel
   include sudo::base
   include puppet::client
+  include apt::unattended-upgrade::automatic
 
   apt::sources_list {"puppet-0.25":
     ensure => present,
@@ -51,11 +53,6 @@ deb-src http://dev.camptocamp.com/packages ${lsbdistcodename} puppet-0.25
     ensure => absent,
     purge => true,
     force => true,
-  }
-
-  case $lsbdistcodename {
-    lenny,lucid : { include apt::unattended-upgrade::automatic }
-    default :     { include apt::unattended-upgrade }
   }
 
 }
