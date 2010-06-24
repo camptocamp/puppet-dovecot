@@ -1,7 +1,7 @@
 class mw-postgis-8-4 {
 
   class c2c::postgis inherits postgis::debian::v8-4 {
-    if defined (Apt::Sources_list["sig-${lsbdistcodename}-c2c"]) {
+    if defined (Apt::Sources_list["sig-${lsbdistcodename}-postgresql-8.4"]) {
       notice "Sources-list for SIG packages is already defined"
     } else {
       apt::sources_list {"sig-${lsbdistcodename}-postgresql-8.4":
