@@ -43,7 +43,7 @@ class app-c2c-sig {
     aliases => [$fqdn],
   }
 
-  tomcat::instance {"$project_name":
+  tomcat::instance {"tomcat1":
     ensure => present,
     group  => sigdev,
   } 
