@@ -1,6 +1,6 @@
 class app-c2c-remove-ldap-support {
 
-  package {["libpam-ldap","libnss-ldap","ldap-utils"]:
+  package {["libpam-ldap","libnss-ldap","ldap-utils","nscd"]:
     ensure => purged,
     notify => Exec["removed old nsswitch.conf"],
   }
@@ -18,7 +18,13 @@ class app-c2c-remove-ldap-support {
     mode    => 644,
     replace => false,
     source  => "/usr/share/base-files/nsswitch.conf",
-    require => [ Exec["removed old nsswitch.conf"], Package["libpam-ldap"], Package["libnss-ldap"], Package["ldap-utils"] ],
+    require => [ 
+      Exec["removed old nsswitch.conf"], 
+      Package["libpam-ldap"], 
+      Package["libnss-ldap"], 
+      Package["ldap-utils"],
+      Package["nscd"]
+    ],
   }
 
 }
