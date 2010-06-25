@@ -22,6 +22,6 @@ class srv-c2c-sig-dev {
   include app-c2c-sig
 
   ### APP (specific to this server) ##############
-  app::c2c::sadb::users{["all c2c users"]: groups => ["sigdev"]}
+  app::c2c::sadb::users{["all c2c users"]: groups => ["sigdev", "www-data"]}
 
 }
