@@ -8,9 +8,17 @@ define c2c::workstation::sadb::user ($ensure=present, $shell="/bin/bash") {
 
   notice "comment: ${comment}, uid: ${uid}, gid: ${gid}"
 
+  if (! defined(Mount["/home"])) {
+    mount {"/home":
+      ensure    => mounted,
+      device    => "/dev/sda6",
+      atboot    => true,
+    }
+  }
+
   user {$name:
     ensure     => $ensure,
-    require    => Group[$name],
+    require    => [ Group[$name], Mount["/home"] ],
     comment    => $comment,
     managehome => true,
     uid        => $uid,
