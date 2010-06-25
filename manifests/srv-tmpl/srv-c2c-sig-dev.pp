@@ -20,6 +20,7 @@ class srv-c2c-sig-dev {
 
   ### APP (generic) ##############################
   include app-c2c-sig
+  include app-c2c-remove-ldap-support
 
   ### APP (specific to this server) ##############
   app::c2c::sadb::users{["all c2c users"]: groups => ["sigdev", "www-data"]}
