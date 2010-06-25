@@ -8,6 +8,13 @@
 
 class os-server {
 
+  # check an fix locales generation
+  exec {"check locales":
+    command => "/usr/sbin/locale-gen",
+    unless => "test \$(locale -a |egrep -c '^(de|fr|en|it)\$') == 4",
+    require => [File["/usr/share/locale/locale.alias"], Package["locales"], File["/etc/locale.gen"]],
+  }
+
   common::concatfilepart { "000-sudoers.init":
     ensure => present,
     file => "/etc/sudoers",
