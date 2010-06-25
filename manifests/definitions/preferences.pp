@@ -5,8 +5,6 @@ define apt::preferences($ensure="present", $package="", $pin, $priority) {
     default => $package,
   }
 
-  notice "version: $lsbdistcodename"
-
   # apt support preferences.d since version >= 0.7.22
   case $lsbdistcodename {
     lucid : {   
