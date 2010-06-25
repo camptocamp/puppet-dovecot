@@ -37,6 +37,12 @@ define common::archive::download (
   $timeout=120,
   $src_target="/usr/src") {
 
+  if !defined(Package['curl']) {
+    package{'curl':
+      ensure => present,
+    }
+  }
+
   case $checksum {
     true : {
       case $digest_type {
@@ -65,7 +71,8 @@ define common::archive::download (
               command => "curl -o ${src_target}/${name}.${digest_type} ${digest_src}",
               creates => "${src_target}/${name}.${digest_type}",
               timeout => $timeout,
-              notify => Exec["download archive $name and check sum"],
+              notify  => Exec["download archive $name and check sum"],
+              require => Package["curl"],
             }
     
           }
@@ -114,6 +121,7 @@ define common::archive::download (
         creates => "${src_target}/${name}",
         logoutput => true,
         timeout => $timeout,
+        require => Package["curl"],
         refreshonly => $checksum ? {
           true => true,
           default => undef,
