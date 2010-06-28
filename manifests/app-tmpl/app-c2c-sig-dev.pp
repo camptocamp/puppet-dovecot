@@ -1,8 +1,11 @@
 class app-c2c-sig-dev {
-  $pr_id = url_get("${sadb}/vserver/${fqdn}/project_id")
-  $pr_name = url_get("${sadb}/project/${pr_id}/name")
+  
+  $project_name = $apache_vhost_name ? {
+    "" => project_name_from_domain($fqdn),
+    default => $fqdn,
+  }
 
-  apache::vhost {"$pr_name":
+  apache::vhost {$project_name:
     ensure  => present,
     group   => sigdev,
     mode    => 2775,
