@@ -20,6 +20,7 @@ class srv-c2c-sig-dev {
 
   ### APP (generic) ##############################
   include app-c2c-sig
+  include app-c2c-sig-dev
   include app-c2c-remove-ldap-support
 
   ### APP (specific to this server) ##############
