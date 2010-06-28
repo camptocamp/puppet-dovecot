@@ -35,17 +35,4 @@ class app-c2c-sig {
     mode   => 0755,
     require => [Package["deploy"], User["deploy"]],
   }
-
-  apache::vhost {"$project_name":
-    ensure  => present,
-    group   => sigdev,
-    mode    => 2775,
-    aliases => [$fqdn, server_alias_from_domain($fqdn)],
-  }
-
-  tomcat::instance {"tomcat1":
-    ensure => present,
-    group  => sigdev,
-  } 
-
 }
