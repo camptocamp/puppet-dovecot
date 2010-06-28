@@ -76,3 +76,6 @@
 [submodule "modules/postgresql"]
 	path = modules/postgresql
 	url = git@github.com:camptocamp/puppet-postgresql.git
+[submodule "modules/monitoring"]
+	path = modules/monitoring
+	url = git@github.com:camptocamp/puppet-monitoring.git
