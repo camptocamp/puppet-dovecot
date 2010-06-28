@@ -2,7 +2,7 @@ class srv-c2c-sig-blonay-cartoriviera {
 
   ### Global attributes ##########################
   $server_group = "prod"
-  $ps1label = "production blonay_cartoriviera"
+  $ps1label = "blonay-cartoriviera"
   $sudo_apache_admin_user = "deploy, %admin"
   $sudo_postgresql_admin_user = "deploy, %admin"
   $sudo_tomcat_admin_user = "deploy, %admin"
