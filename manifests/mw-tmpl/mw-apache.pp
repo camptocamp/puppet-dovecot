@@ -5,7 +5,7 @@ class mw-apache {
   include apache::deflate
 
   if $server_group == "prod" {
-    include monitoring::apache_status
+#    include monitoring::apache_status
   }
  
 }
