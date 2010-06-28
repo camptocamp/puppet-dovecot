@@ -18,7 +18,12 @@ class mw-sig {
     }
   }
 
-  include c2c::mapserver
+  if $postgresql_version == "8.3" {
+    include mapserver
+  } else {
+    include c2c::mapserver
+  }
+
   include tilecache::base
   include mapfish
   include cartoweb3::base
