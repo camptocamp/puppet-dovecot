@@ -35,4 +35,9 @@ class app-c2c-sig {
     mode   => 0755,
     require => [Package["deploy"], User["deploy"]],
   }
+
+  postgresql::user {"www-data":
+    ensure => present,
+    password => "www-data",
+  }
 }
