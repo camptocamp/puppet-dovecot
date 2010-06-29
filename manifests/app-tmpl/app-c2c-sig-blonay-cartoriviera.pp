@@ -7,7 +7,7 @@ class app-c2c-sig-blonay-cartoriviera {
     aliases => [$fqdn, server_alias_from_domain($fqdn)],
   }
 
-  tomcat::instance {"tomcat1":
+  tomcat::instance {"print":
     ensure => present,
     group  => sigdev,
   } 
