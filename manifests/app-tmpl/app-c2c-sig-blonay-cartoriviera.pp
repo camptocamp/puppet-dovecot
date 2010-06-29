@@ -1,15 +1,20 @@
 class app-c2c-sig-blonay-cartoriviera {
+
+  group {"admin":
+    ensure  => present,
+    require => User["admin"],
+  }
   
   apache::vhost {"blonay-cartoriviera":
     ensure  => present,
-    group   => sigdev,
+    group   => admin,
     mode    => 2775,
     aliases => [$fqdn, server_alias_from_domain($fqdn)],
   }
 
-  tomcat::instance {"tomcat1":
+  tomcat::instance {"print":
     ensure => present,
-    group  => sigdev,
+    group  => admin,
   } 
 
   user {"admin":
@@ -17,7 +22,9 @@ class app-c2c-sig-blonay-cartoriviera {
     managehome => true,
     home       => "/home/admin",
     shell      => "/bin/bash",
+    groups     => ["www-data", "sigdev"],
   }
+
   c2c::ssh_authorized_key{
     "alex on admin": sadb_user => "alex", user => "admin", require => User["admin"];
   }
