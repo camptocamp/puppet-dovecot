@@ -13,6 +13,8 @@ define c2c::workstation::sadb::user ($ensure=present, $shell="/bin/bash") {
       ensure    => mounted,
       device    => "/dev/sda6",
       atboot    => true,
+      fstype    => "auto",
+      options   => "defaults",
     }
   }
 
