@@ -1,5 +1,10 @@
 class app-c2c-remove-ldap-support {
 
+  exec {"fix homes rights":
+    command => "chmod 755 /home/*",
+    onlyif => "test $(find /home -maxdepth 1 -perm 0775 |wc -l) -gt 0",
+  }
+
   package {["libpam-ldap","libnss-ldap","ldap-utils","nscd"]:
     ensure => purged,
     notify => [ 
