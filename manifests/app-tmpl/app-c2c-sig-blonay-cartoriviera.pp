@@ -42,7 +42,7 @@ class app-c2c-sig-blonay-cartoriviera {
   c2c::sshuser {"tcachin": 
     ensure  => present, 
     groups  => "admin", 
-    uid     => 2001, 
+    uid     => 2005, 
     comment => "tcachin@blonay.ch", 
     email   => "tcachin@blonay.ch",
     type    => "rsa", 
