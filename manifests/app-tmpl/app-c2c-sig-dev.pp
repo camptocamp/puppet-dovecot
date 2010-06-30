@@ -12,7 +12,12 @@ class app-c2c-sig-dev {
     aliases => [$fqdn, server_alias_from_domain($fqdn)],
   }
 
-  tomcat::instance {"tomcat1":
+  $tomcat_name = $tomcat_instance_name ? {
+    ""      => "tomcat1",
+    default => $tomcat_instance_name,
+  }
+
+  tomcat::instance {$tomcat_name:
     ensure => present,
     group  => sigdev,
   } 
