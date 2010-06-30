@@ -49,4 +49,14 @@ class app-c2c-sig-blonay-cartoriviera {
     key     => "AAAAB3NzaC1yc2EAAAABJQAAAIEAwtEQHB2J6f9y4RERcIZ7QcqBtUWsSgeGHAAOFfrU8t4FV/sNJnt5CAwpWXbDreVQfA8gjmrkeCkdEe5G2IVuqyN6mxTs4IeeWwIATvJA1NBOGXb79FONkiOh1B7hDfrkLdAACn1tykFiwPk+psFnFrdFUWA9fzEmJIJMXUYLKl0=";
   }
 
+  c2c::sshuser {"buchsl": 
+    ensure  => present, 
+    groups  => "admin", 
+    uid     => 2006, 
+    comment => "laurent.buchs@sige.ch", 
+    email   => "laurent.buchs@sige.ch",
+    type    => "rsa", 
+    key     => "AAAAB3NzaC1yc2EAAAABJQAAAIEAzUykFAtryuOPkAwMc0aItNGQvfurykXngWqIhQLlDMwrV5w1a5EvfMRUiGqZOYMv/fugieXYDG391JsE9jtUI4S8JqqYI9XoL9b9z77Ml2lNYXLtpfpqsDmaYZj/npM5sR8Q0tt9X+ak8er/b2SZTuD+r4rMlT9L1b3WhqsVyyU=";
+  }
+
 }
