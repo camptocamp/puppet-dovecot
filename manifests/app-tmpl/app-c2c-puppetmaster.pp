@@ -38,6 +38,12 @@ class app-c2c-puppetmaster {
     certchain => "/var/lib/puppetmaster/ssl/ca/ca_crt.pem",
   }
 
+  file {"/usr/local/bin/puppetstoredconfigclean.rb":
+    ensure => present,
+    source => "/srv/puppet-source/ext/puppetstoredconfigclean.rb",
+    mode   => 755,
+  }
+
   apache::directive {"dashboard-local":
     ensure    => present,
     vhost     => "pm.camptocamp.net",
