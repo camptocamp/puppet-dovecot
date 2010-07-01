@@ -49,6 +49,9 @@ $sig_packages_release = "20080225"
 $smart_host = "mail.camptocamp.com"
 $sadb = "http://sadb.camptocamp.com"
 
+# EPSG configuration
+$epsg_file = "minimal"
+
 Exec { path => "/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin" }
 
 filebucket { main: server => $puppet_server }
