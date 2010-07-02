@@ -7,6 +7,7 @@ class os-base {
   include ssh
   include apt
   include augeas
+  include subversion
   include c2c::sysadmin-in-charge-new
   include c2c::skel
   include sudo::base
