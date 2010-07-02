@@ -26,8 +26,6 @@ class os::debian {
     "less": ensure => present;
     "rsync": ensure => present;
     "rdiff-backup": ensure => present;
-    "subversion": ensure => present;
-    "subversion-tools": ensure => present;
     "elinks": ensure => present;
     "psmisc": ensure => present;
     "nmap": ensure => present;
