@@ -46,6 +46,9 @@ class os {
       }
     }
 
+    CentOS: {
+      include os::centos
+    }
     default: {
       fail "Unsupported OS ${operatingsystem} in 'os' module"
     }
