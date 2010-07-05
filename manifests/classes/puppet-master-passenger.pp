@@ -65,6 +65,8 @@ class puppet::master::passenger inherits puppet::master::base {
 
   apache::vhost-ssl { "puppetmasterd":
     config_content => template("puppet/vhost-passenger.conf.erb"),
+    mode           => "2755",
+    user           => "root",
   }
 
   apache::listen { "8140": }
