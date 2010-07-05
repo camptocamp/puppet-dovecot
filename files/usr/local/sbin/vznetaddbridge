@@ -1,0 +1,22 @@
+#!/bin/bash
+# /usr/sbin/vznetaddbrdige
+# a script to bring up bridged network interfaces (veth's) in a VE
+
+CONFIGFILE=/etc/vz/conf/$VEID.conf
+. $CONFIGFILE
+VZHOSTIF=`echo $NETIF |sed 's/^.*host_ifname=\(.*\),.*$/\1/g'`
+
+if [ ! -n "$NETIF_BRIDGE" ]; then
+   echo "According to $CONFIGFILE VE$VEIDI has no bridge interface configured."
+   exit 1
+fi
+
+if [ ! -n "$VZHOSTIF" ]; then
+   echo "According to $CONFIGFILE VE$VEIDI has no veth host interface configured."
+   exit 1
+fi
+
+/sbin/ip link set $VZHOSTIF up
+/usr/sbin/brctl addif $NETIF_BRIDGE $VZHOSTIF
+
+exit 0
