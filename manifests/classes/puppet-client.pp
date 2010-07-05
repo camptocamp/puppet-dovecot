@@ -24,6 +24,7 @@ class puppet::client {
       Ubuntu => "lsb-release",
       Redhat => "redhat-lsb",
       fedora => "redhat-lsb",
+      CentOS => "redhat-lsb",
     },
     ensure => present,
   }
@@ -37,6 +38,7 @@ class puppet::client {
       Debian => "ruby /usr/sbin/puppetd -w 0",
       Ubuntu => "ruby /usr/sbin/puppetd -w 0",
       RedHat => "/usr/bin/ruby /usr/sbin/puppetd$",
+      CentOS => "/usr/bin/ruby /usr/sbin/puppetd$",
     }
   }
 
