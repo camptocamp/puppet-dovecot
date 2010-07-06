@@ -4,6 +4,10 @@ class monitoring::ssh {
     codename => "check_sshd_process",
     command  => "check_procs",
     options  => "-w 1: -c 1: -C sshd",
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 
   # monitor ssh service from nagios server

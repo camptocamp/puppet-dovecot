@@ -4,6 +4,10 @@ class monitoring::collectd {
     codename => "check_collectd_process",
     command  => "check_procs",
     options  => "-w 1:1 -c 1:1 -C collectd",
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 
   # plugin required to be able to use collectd-nagios

@@ -6,6 +6,10 @@ class monitoring::syslog {
       codename => "check_syslogd_process",
       command  => "check_procs",
       options  => "-w 1:1 -c 1:1 -C syslog-ng",
+      package  => $operatingsystem ?{
+        CentOS => "nagios-plugins-procs",
+        default => false
+      }
     }
 
   } else {
@@ -18,6 +22,10 @@ class monitoring::syslog {
         RedHat => "-w 1:1 -c 1:1 -C syslogd",
         CentOS => "-w 1:1 -c 1:1 -C syslogd",
       },
+      package  => $operatingsystem ?{
+        CentOS => "nagios-plugins-procs",
+        default => false
+      }
     }
 
     if $operatingsystem == "RedHat" {

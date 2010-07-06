@@ -16,6 +16,10 @@ class monitoring::vmware {
     options  => "-w 1:1 -c 1:1 -C ${vmware}",
     interval => "60",
     retry    => "30",
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 
   file { "/opt/nagios-plugins/check_vmware_kmods.sh":

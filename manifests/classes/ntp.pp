@@ -4,6 +4,10 @@ class monitoring::ntp {
     codename => "check_ntpd_process",
     command  => "check_procs",
     options  => "-w 1:1 -c 1:1 -C ntpd",
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 
   # every epnet router is an NTP server

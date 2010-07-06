@@ -31,5 +31,9 @@ class monitoring::pacemaker {
     codename => "check_hb_process",
     command  => "check_procs",
     options  => "-w 4:10 -c 1: -C heartbeat",
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 }

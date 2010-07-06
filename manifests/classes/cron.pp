@@ -8,6 +8,10 @@ class monitoring::cron {
       RedHat => "-w 1: -c 1: -C crond",
       CentOS => "-w 1: -c 1: -C crond",
     },
+    package  => $operatingsystem ?{
+      CentOS => "nagios-plugins-procs",
+      default => false
+    }
   }
 
   monitoring::check { "legacy cron check":
