@@ -20,7 +20,10 @@ $adduser_first_uid = "2000"
 $adduser_first_gid = "2000"
 
 # main configuration
-$nagios_root_dir="/etc/nagios3"
+case $lsbdistid {
+  CentOS: { $nagios_root_dir="/etc/nagios" }
+  default:{ $nagios_root_dir="/etc/nagios3" }
+}
 $nagios_cfg_dir="${nagios_root_dir}/auto-puppet"
 $nagios_main_config_file="${nagios_root_dir}/nagios.cfg"
 
