@@ -16,6 +16,7 @@ class monitoring::syslog {
       options  => $operatingsystem ? {
         Debian => "-w 1:1 -c 1:1 -C rsyslogd",
         RedHat => "-w 1:1 -c 1:1 -C syslogd",
+        CentOS => "-w 1:1 -c 1:1 -C syslogd",
       },
     }
 

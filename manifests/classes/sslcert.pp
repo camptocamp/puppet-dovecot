@@ -47,6 +47,7 @@ define monitoring::check::sslcert (
     $crtfile = $operatingsystem ? {
       Debian => "/etc/ssl/certs/ca-certificates.crt",
       RedHat => "/etc/pki/tls/certs/ca-bundle.crt",
+      CentOS => "/etc/pki/tls/certs/ca-bundle.crt",
     }
   } else {
     $crtfile = $rootcrt

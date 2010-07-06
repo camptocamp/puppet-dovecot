@@ -17,6 +17,7 @@ class monitoring::puppet {
     retry    => "30",
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-file_age",
+      CentOS  => "nagios-plugins-file_age",
       default => false,
     },
   }

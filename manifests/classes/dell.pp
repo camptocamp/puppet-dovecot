@@ -107,6 +107,7 @@ class monitoring::dell {
     retry    => "60",  # every 1h
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-snmp",
+      CentOS  => "nagios-plugins-snmp",
       default => "libnet-snmp-perl",
     },
   }

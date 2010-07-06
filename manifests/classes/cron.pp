@@ -6,6 +6,7 @@ class monitoring::cron {
     options  => $operatingsystem ? {
       Debian => "-w 1: -c 1: -C cron",
       RedHat => "-w 1: -c 1: -C crond",
+      CentOS => "-w 1: -c 1: -C crond",
     },
   }
 

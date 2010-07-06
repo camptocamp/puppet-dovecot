@@ -12,6 +12,7 @@ class monitoring::diskusage {
     retry    => 10,
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-disk",
+      CentOS  => "nagios-plugins-disk",
       default => false,
     },
   }

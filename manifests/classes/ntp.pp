@@ -25,6 +25,7 @@ class monitoring::ntp {
     retry    => 30,
     package  => $operatingsystem ? {
       RedHat  => "nagios-plugins-ntp",
+      CentOS  => "nagios-plugins-ntp",
       default => false,
     },
   }
