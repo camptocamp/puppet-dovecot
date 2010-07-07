@@ -6,6 +6,7 @@ class monitoring::ssh {
     options  => "-w 1: -c 1: -C sshd",
     package  => $operatingsystem ?{
       CentOS => "nagios-plugins-procs",
+      RedHat => "nagios-plugins-procs",
       default => false
     }
   }

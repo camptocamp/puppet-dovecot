@@ -10,6 +10,7 @@ class monitoring::cron {
     },
     package  => $operatingsystem ?{
       CentOS => "nagios-plugins-procs",
+      RedHat => "nagios-plugins-procs",
       default => false
     }
   }

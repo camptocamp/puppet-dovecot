@@ -18,6 +18,7 @@ class monitoring::vmware {
     retry    => "30",
     package  => $operatingsystem ?{
       CentOS => "nagios-plugins-procs",
+      RedHat => "nagios-plugins-procs",
       default => false
     }
   }

@@ -8,6 +8,7 @@ class monitoring::syslog {
       options  => "-w 1:1 -c 1:1 -C syslog-ng",
       package  => $operatingsystem ?{
         CentOS => "nagios-plugins-procs",
+        RedHat => "nagios-plugins-procs",
         default => false
       }
     }
@@ -24,6 +25,7 @@ class monitoring::syslog {
       },
       package  => $operatingsystem ?{
         CentOS => "nagios-plugins-procs",
+        RedHat => "nagios-plugins-procs",
         default => false
       }
     }

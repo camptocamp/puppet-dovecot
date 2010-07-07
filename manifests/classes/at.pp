@@ -6,6 +6,7 @@ class monitoring::at {
     options  => "-w 1:1 -c 1:1 -C atd",
     package  => $operatingsystem ?{
       CentOS => "nagios-plugins-procs",
+      RedHat => "nagios-plugins-procs",
       default => false
     }
   }

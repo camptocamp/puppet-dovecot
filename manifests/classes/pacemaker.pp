@@ -33,6 +33,7 @@ class monitoring::pacemaker {
     options  => "-w 4:10 -c 1: -C heartbeat",
     package  => $operatingsystem ?{
       CentOS => "nagios-plugins-procs",
+      RedHat => "nagios-plugins-procs",
       default => false
     }
   }
