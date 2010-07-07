@@ -22,6 +22,7 @@ class c2c::sysadmin-in-charge-new {
   c2c::ssh_authorized_key{"jean-baptiste.aubort@camptocamp.com on root":
     sadb_user => "jbaubort",
     user      => "root",
+    ensure    => absent,
   }
 
   c2c::ssh_authorized_key{"christian.kaenzig@camptocamp.com on root":

@@ -28,6 +28,7 @@ class c2c::sysadmin-in-charge {
   ssh-old::account::allowed_user { "jbaubort on root":
     allowed_user => "jbaubort",
     system_user  => "root",
+    ensure       => absent,
   }
 
   ssh-old::account::allowed_user { "ckaenzig on root":
