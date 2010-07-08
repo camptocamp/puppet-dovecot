@@ -3,8 +3,8 @@
 # Puppet configuration
 $puppet_server = "pm.camptocamp.net"
 $puppet_reportserver = "pm.camptocamp.net"
-$puppet_client_version = "0.25.4-3~c2c+2"
-$puppet_server_version = "0.25.4-3~c2c+1"
+$puppet_client_version = "0.25.5-1~c2c+1"
+$puppet_server_version = "0.25.5-1~c2c+1"
 $facter_version = "1.5.7-1~c2c+1"
 
 case $lsbdistcodename {
