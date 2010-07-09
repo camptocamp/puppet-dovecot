@@ -16,6 +16,7 @@ class mw-nagios-nsca-client-base {
   include monitoring::cron
   include monitoring::diskusage
   include monitoring::ssh
+  include monitoring::puppet
 
   nagios::config::template {"generic-service":
     conf_type => "service",
