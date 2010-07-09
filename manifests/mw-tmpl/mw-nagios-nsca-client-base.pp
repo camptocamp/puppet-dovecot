@@ -1,5 +1,5 @@
 class mw-nagios-nsca-client-base {
-  $nagios_nsca_server = 'nagios'
+  $nagios_nsca_server = 'nagios.dmz.lsn.camptocamp.com'
   include nagios::base
   include nagios::nsca::client
 
@@ -16,6 +16,7 @@ class mw-nagios-nsca-client-base {
   include monitoring::cron
   include monitoring::diskusage
   include monitoring::ssh
+  include monitoring::puppet
 
   nagios::config::template {"generic-service":
     conf_type => "service",
