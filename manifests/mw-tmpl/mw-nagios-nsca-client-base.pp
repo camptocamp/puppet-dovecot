@@ -1,5 +1,5 @@
 class mw-nagios-nsca-client-base {
-  $nagios_nsca_server = 'nagios'
+  $nagios_nsca_server = 'nagios.dmz.lsn.camptocamp.com'
   include nagios::base
   include nagios::nsca::client
 
