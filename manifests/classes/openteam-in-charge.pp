@@ -30,7 +30,6 @@ class c2c::openteam-in-charge inherits openerp::base {
     user  => "openerp",
     require => User["openerp"],
     ensure => absent,
-    ensure => absent,
   }
 
   c2c::ssh_authorized_key { "vincent.renaville@camptocamp.com":
