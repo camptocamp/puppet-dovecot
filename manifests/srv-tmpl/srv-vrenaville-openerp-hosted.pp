@@ -21,4 +21,6 @@ class srv-vrenaville-openerp-hosted {
   include mw-openerp-manager
 
   ### APP (generic) ##############################
+
+  include app-vrenaville-opernep-hosted
 }
