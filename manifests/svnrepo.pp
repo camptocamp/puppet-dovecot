@@ -18,25 +18,21 @@
 # Create a new subversion repository.
 define subversion::svnrepo(
     $ensure=present,
-    $path='',
-    $owner='false',
-    $group='false',
-    $mode='false'
+    $path='/srv/svn',
+    $owner='',
+    $group='',
+    $mode=''
 ) {
     include subversion
 
-    case $path {
-        '': { $svn_path = "/srv/svn" }
-        default: { $svn_path = "${path}" }
-    }
-    $repository_path = "${svn_path}/${name}"
+    $repository_path = "${path}/${name}"
 
     if $ensure == 'present' {
       exec { "create-svn-$name":
           command => "/usr/bin/svnadmin create $repository_path",
           creates => "$repository_path",
           before => File["$repository_path"],
-          require => [ Package['subversion'], File[$svn_path] ],
+          require => [ Package['subversion'], File[$path] ],
       }
     }
 
