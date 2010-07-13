@@ -17,7 +17,8 @@
 
 # Create a new subversion repository.
 define subversion::svnrepo(
-    $path='absent',
+    $ensure=present,
+    $path='',
     $owner='false',
     $group='false',
     $mode='false'
@@ -25,46 +26,27 @@ define subversion::svnrepo(
     include subversion
 
     case $path {
-        absent: {
-            include subversion::basics
-            $create_path = "/srv/svn/${name}"
-        }
-        default: { $create_path = "${path}/${name}" }
+        '': { $svn_path = "/srv/svn" }
+        default: { $svn_path = "${path}" }
     }
-    exec { "create-svn-$name":
-        command => "/usr/bin/svnadmin create $create_path",
-        creates => "$create_path",
-        before => File["${create_path}"],
+    $repository_path = "${svn_path}/${name}"
+
+    if $ensure == 'present' {
+      exec { "create-svn-$name":
+          command => "/usr/bin/svnadmin create $repository_path",
+          creates => "$repository_path",
+          before => File["$repository_path"],
+          require => [ Package['subversion'], File[$svn_path] ],
+      }
     }
-    case $path {
-        absent: { 
-            Exec["create-svn-$name"]{
-                require +> [ Package['subversion'], File['/srv/svn'] ],
-            }
-        }
-        default: {
-            Exec["create-svn-$name"]{
-                require +> Package['subversion'],
-            }
-        }
-    }
-    file{"${create_path}":
-        ensure => directory,
+
+    file{"$repository_path":
+        ensure  => $ensure ? {'absent' => 'absent', default => directory},
         recurse => true,
+        force   => true,
+        owner   => $owner ? { '' => undef, default => $owner },
+        group   => $group ? { '' => undef, default => $group },
+        mode    => $mode  ? { '' => undef, default => $mode },
+        require => $ensure ? {'absent' => undef, default => Exec["create-svn-$name"]},
     }
-    if $owner {
-        File["${create_path}"]{
-            owner => $owner,
-        }
-    } 
-    if $group {
-        File["${create_path}"]{
-            group => $group,
-        }
-    } 
-    if $mode {
-        File["${create_path}"]{
-            mode => $mode,
-        }
-    } 
 }
