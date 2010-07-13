@@ -16,10 +16,6 @@ The subversion module provides a ``subversion`` class and a
   definition.
 
 
-**subversion::basics** (*class*)
-  Some basic directory setups for a server, which might get used on ``subversion::svnrepo``
-
-
 **subversion::working-copy** (*definition*)
   Checks out a copy of the named subversion project into the specified
   directory. Keeps the working copy in sync with the repository. The
@@ -64,15 +60,13 @@ The subversion module provides a ``subversion`` class and a
 
   - ``$name``: The name of the subversion repository. This will be used
     as the directory name.
+  - ``$ensure``: 'present' creates the new repository, 'absent' deletes the
+    repository *including all the data it contains*!
   - ``$path``: The path of the parent directory of the subversion repository
-    Default is set to absent, which means that ``subversion::basics`` gets
-    included and the parent directory is set to: ``/srv/svn/``
-  - ``$owner``: The owner of the repository. Default is to false, which means
-    that puppet defaults are used.
-  - ``$group``: The group of the repository. Default is to false, which means
-    that puppet defaults are used.
-  - ``$mode``: The mode of the repository directory. Default is to false, which means
-    that puppet defaults are used.
+    Default is set to: ``/srv/svn/`` (which is *not* created automatically)
+  - ``$owner``: The owner of the repository. Default uses puppet defaults.
+  - ``$group``: The group of the repository. Default uses puppet defaults.
+  - ``$mode``: The mode of the repository directory. Default uses puppet defaults.
 
   Example::
 
