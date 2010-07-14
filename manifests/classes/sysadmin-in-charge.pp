@@ -10,8 +10,8 @@ class c2c::sysadmin-in-charge {
     system_user  => "root",
   }
 
-  ssh-old::account::allowed_user { "francois on root":
-    allowed_user => "francois",
+  ssh-old::account::allowed_user { "mremy on root":
+    allowed_user => "mremy",
     system_user  => "root",
   }
 
@@ -23,12 +23,6 @@ class c2c::sysadmin-in-charge {
   ssh-old::account::allowed_user { "cjeanneret on root":
     allowed_user => "cjeanneret",
     system_user  => "root",
-  }
-
-  ssh-old::account::allowed_user { "jbaubort on root":
-    allowed_user => "jbaubort",
-    system_user  => "root",
-    ensure       => absent,
   }
 
   ssh-old::account::allowed_user { "ckaenzig on root":
@@ -46,8 +40,8 @@ class c2c::sysadmin-in-charge {
       system_user  => "admin",
     }
   
-    ssh-old::account::allowed_user { "francois on admin":
-      allowed_user => "francois",
+    ssh-old::account::allowed_user { "mremy on admin":
+      allowed_user => "mremy",
       system_user  => "admin",
     }
   
@@ -58,11 +52,6 @@ class c2c::sysadmin-in-charge {
   
     ssh-old::account::allowed_user { "cjeanneret on admin":
       allowed_user => "cjeanneret",
-      system_user  => "admin",
-    }
-  
-    ssh-old::account::allowed_user { "jbaubort on admin":
-      allowed_user => "jbaubort",
       system_user  => "admin",
     }
   
