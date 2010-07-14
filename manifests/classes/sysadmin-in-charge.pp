@@ -30,6 +30,12 @@ class c2c::sysadmin-in-charge {
     system_user  => "root",
   }
 
+  ssh-old::account::allowed_user { "francois on root":
+    allowed_user => "francois",
+    system_user  => "root",
+    ensure => absent,
+  }
+
   #
   # If an admin user is present on the system, let's install sysadmins there as well
   #
@@ -58,6 +64,12 @@ class c2c::sysadmin-in-charge {
     ssh-old::account::allowed_user { "ckaenzig on admin":
       allowed_user => "ckaenzig",
       system_user  => "admin",
+    }
+
+    ssh-old::account::allowed_user { "francois on admin":
+      allowed_user => "francois",
+      system_user  => "admin",
+      ensure => absent,
     }
   }
 }
