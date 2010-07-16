@@ -13,7 +13,8 @@ class app-c2c-worstations-vmware {
       }
       $vmware = "VMware-Workstation-6.5.0-118166.${vmware_arch}.bundle"
     }
-    "intrepid","jaunty","lucid" : {
+    
+    "intrepid","jaunty" : {
       $vmware = "VMware-Workstation-6.5.3-185404.${vmware_arch}.bundle"
       # bugfix for keyboard
       line {
@@ -36,6 +37,31 @@ class app-c2c-worstations-vmware {
         ensure => directory,
       }
     }
+
+    "lucid": {
+      $vmware = "VMware-Workstation-Full-7.0.1-227600.${vmware_arch}.bundle"
+      # bugfix for keyboard
+      line {
+        "bugfix1 for vmware in /etc/vmware/config":
+          file    => '/etc/vmware/config',
+          line    => "xkeymap.nokeycodeMap = true",
+          ensure  => present,
+          require => File["/etc/vmware/config"];
+        "bugfix2 for vmware in /etc/vmware/config":
+          file    => '/etc/vmware/config',
+          line    => "xkeymap.keysym.ISO_Level3_Shift = 0x138",
+          ensure  => present,
+          require => File["/etc/vmware/config"]
+      }
+      file {"/etc/vmware/config":
+        ensure  => present,
+        require => File["/etc/vmware"],
+      }
+      file {"/etc/vmware":
+        ensure => directory,
+      }
+    }
+    
     default: { $vmware = "VMware-Workstation-6.5.0-118166.${vmware_arch}.bundle" }
   }
 
