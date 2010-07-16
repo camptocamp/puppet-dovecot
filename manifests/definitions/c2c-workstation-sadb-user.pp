@@ -163,8 +163,12 @@ Comment=
   }
 
   file {"/home/${name}/.vmware/license.ws.6.0.200610":
-    ensure  => present,
-    source  => "puppet:///c2c/license.ws.6.0.200610",
+    ensure  => absent,
+  }
+
+  file {"/home/${name}/.vmware/license-ws-70-e1-200904":
+    ensure => present,
+    source  => "puppet:///c2c/license-ws-70-e1-200904",
     owner   => $name,
     group   => $name,
     require => File["/home/${name}/.vmware"],
