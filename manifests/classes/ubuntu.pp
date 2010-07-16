@@ -19,7 +19,6 @@ class ubuntu {
     "ipcalc": ensure => present;
     "ipython": ensure => present;
     "cvs": ensure => present;
-    "subversion": ensure => present;
     "smartmontools": ensure => present;
     "bzip2": ensure => present;
     "cadaver": ensure => present;
