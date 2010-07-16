@@ -1,4 +1,4 @@
-class app-c2c-worstations-vmware {
+class app-c2c-workstations-vmware {
 
   case $architecture {
     "i386": { $vmware_arch = "i386" }
@@ -39,7 +39,7 @@ class app-c2c-worstations-vmware {
     }
 
     "lucid": {
-      $vmware = "VMware-Workstation-Full-7.0.1-227600.${vmware_arch}.bundle"
+      $vmware = "VMware-Workstation-Full-7.1.0-261024.${vmware_arch}.bundle"
       # bugfix for keyboard
       line {
         "bugfix1 for vmware in /etc/vmware/config":

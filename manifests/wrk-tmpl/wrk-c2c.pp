@@ -16,9 +16,10 @@ class wrk-c2c {
   include app-workstation-packages
   include app-c2c-workstation
   include app-c2c-workstation-vpn
-  include app-c2c-worstations-vmware
+  include app-c2c-workstations-vmware
   include app-c2c-workstation-openerp
   include app-c2c-workstation-vpn-swisstopo
+  include teamviewer
   c2c::workstation::sadb::user{$c2c_workstation_users:}
 
 }
