@@ -30,19 +30,16 @@ define subversion::svnrepo(
     if $ensure == 'present' {
       exec { "create-svn-$name":
           command => "/usr/bin/svnadmin create $repository_path",
-          creates => "$repository_path",
-          before => File["$repository_path"],
-          require => [ Package['subversion'], File[$path] ],
+          creates => "$repository_path/db",
+          user    => $owner,
+          require => [ File["$repository_path"], Package['subversion'], File[$path] ],
       }
     }
 
     file{"$repository_path":
         ensure  => $ensure ? {'absent' => 'absent', default => directory},
-        recurse => true,
-        force   => true,
         owner   => $owner ? { '' => undef, default => $owner },
         group   => $group ? { '' => undef, default => $group },
         mode    => $mode  ? { '' => undef, default => $mode },
-        require => $ensure ? {'absent' => undef, default => Exec["create-svn-$name"]},
     }
 }
