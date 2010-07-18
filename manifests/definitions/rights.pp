@@ -24,9 +24,11 @@ Available parameters:
 define mysql::rights($database, $user, $password, $host="localhost", $ensure="present", $priv="all") {
 
   if $mysql_exists == "true" and $ensure == "present" {
-    mysql_user { "${user}@${host}":
-      password_hash => mysql_password($password),
-      require => File["/root/.my.cnf"],
+    if ! defined(Mysql_user ["${user}@${host}"]) {
+      mysql_user { "${user}@${host}":
+        password_hash => mysql_password($password),
+        require => File["/root/.my.cnf"],
+      }
     }
 
     mysql_grant { "${user}@${host}/${database}":
