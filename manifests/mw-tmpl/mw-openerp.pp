@@ -32,4 +32,11 @@ class mw-openerp {
     content => "%openerp ALL=(ALL) NOPASSWD: /bin/su - postgres, /bin/su postgres\n",
   }
 
+  file {"/var/run/openerp":
+    ensure  => directory,
+    owner   => openerp,
+    group   => openerp,
+    mode    => 0755,
+    require => User["openerp"],
+  }
 }
