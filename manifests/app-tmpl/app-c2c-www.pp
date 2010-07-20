@@ -90,6 +90,8 @@ class app-c2c-www {
     path   => "/modules/mod_jflanguageselection/tmpl/mod_jflanguageselection.css",
   }
 
+  include apache::awstats
+
   apache::aw-stats{"www.camptocamp.com":
     ensure => present,
   }
