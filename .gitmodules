@@ -88,3 +88,6 @@
 [submodule "modules/subversion"]
 	path = modules/subversion
 	url = git@github.com:camptocamp/puppet-subversion
+[submodule "modules/openssl"]
+	path = modules/openssl
+	url = git@github.com:camptocamp/puppet-openssl.git
