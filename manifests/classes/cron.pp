@@ -5,12 +5,10 @@ class monitoring::cron {
     command  => "check_procs",
     options  => $operatingsystem ? {
       Debian => "-w 1: -c 1: -C cron",
-      RedHat => "-w 1: -c 1: -C crond",
-      CentOS => "-w 1: -c 1: -C crond",
+      /RedHat|CentOS/ => "-w 1: -c 1: -C crond",
     },
     package  => $operatingsystem ?{
-      CentOS => "nagios-plugins-procs",
-      RedHat => "nagios-plugins-procs",
+      /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
     }
   }

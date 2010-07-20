@@ -1,6 +1,6 @@
 class monitoring::pacemaker {
 
-  if $operatingsystem == "RedHat" and !defined(User["nagios"]) {
+  if ($operatingsystem == "RedHat" or $operatingsystem == "CentOS") and !defined(User["nagios"]) {
 
     # nagios need to have access to the sockets in /var/run/crm to be able to
     # run crm_mon
@@ -32,8 +32,7 @@ class monitoring::pacemaker {
     command  => "check_procs",
     options  => "-w 4:10 -c 1: -C heartbeat",
     package  => $operatingsystem ?{
-      CentOS => "nagios-plugins-procs",
-      RedHat => "nagios-plugins-procs",
+      /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
     }
   }

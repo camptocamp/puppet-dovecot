@@ -5,8 +5,7 @@ class monitoring::collectd {
     command  => "check_procs",
     options  => "-w 1:1 -c 1:1 -C collectd",
     package  => $operatingsystem ?{
-      CentOS => "nagios-plugins-procs",
-      RedHat => "nagios-plugins-procs",
+      /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
     }
   }

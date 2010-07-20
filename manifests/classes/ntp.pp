@@ -5,8 +5,7 @@ class monitoring::ntp {
     command  => "check_procs",
     options  => "-w 1:1 -c 1:1 -C ntpd",
     package  => $operatingsystem ?{
-      CentOS => "nagios-plugins-procs",
-      RedHat => "nagios-plugins-procs",
+      /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
     }
   }
@@ -29,8 +28,7 @@ class monitoring::ntp {
     interval => 120,
     retry    => 30,
     package  => $operatingsystem ? {
-      RedHat  => "nagios-plugins-ntp",
-      CentOS  => "nagios-plugins-ntp",
+      /RedHat|CentOS/  => "nagios-plugins-ntp",
       default => false,
     },
   }
