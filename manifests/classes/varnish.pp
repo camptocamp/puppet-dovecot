@@ -12,15 +12,31 @@ class monitoring::varnish {
 
 FILE="/etc/varnish/$(hostname).vcl"
 
-echo | varnishd -d -n /tmp/$((RANDOM)) -f $FILE > /dev/null 2>&1
+TMPDIR=$(mktemp -d)
+
+if [ -z "$TMPDIR" ] || [ ! -w "$TMPDIR" ]; then
+  echo "temporary work dir creation failed"
+  exit 3
+fi
+
+echo | varnishd -d -s malloc -n "$TMPDIR" -f "$FILE" > /dev/null 2>&1
 
 if [ $? == 0 ]; then
-  echo "$FILE has no errors"
-  exit 0
+  MESSAGE="$FILE has no errors"
+  STATUS=0
 else
-  echo "$FILE has syntax errors or is missing"
-  exit 2
+  MESSAGE="$FILE has syntax errors or is missing"
+  STATUS=2
 fi
+
+rm -f "$TMPDIR/_.vsl" && rmdir "$TMPDIR"
+if [ $? != 0 ]; then
+  MESSAGE="failed to remove temporary dir"
+  STATUS=3
+fi
+
+echo "$MESSAGE"
+exit $STATUS
 ',
   }
 
