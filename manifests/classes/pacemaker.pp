@@ -1,6 +1,6 @@
 class monitoring::pacemaker {
 
-  if ($operatingsystem == "RedHat" or $operatingsystem == "CentOS") and !defined(User["nagios"]) {
+  if ($operatingsystem =~ /RedHat|CentOS/) and !defined(User["nagios"]) {
 
     # nagios need to have access to the sockets in /var/run/crm to be able to
     # run crm_mon
