@@ -32,6 +32,12 @@ class mw-openerp {
     content => "%openerp ALL=(ALL) NOPASSWD: /bin/su - postgres, /bin/su postgres\n",
   }
 
+  common::concatfilepart {"openerp manage opernerp services":
+    file  => "/etc/sudoers",
+    ensure  => present,
+    content => "%openerp ALL=(ALL) NOPASSWD: /etc/init.d/openerp-multi-instances\n%openerp ALL=(ALL) NOPASSWD: /etc/init.d/openerp*\n",
+  }
+
   file {"/var/run/openerp":
     ensure  => directory,
     owner   => openerp,
