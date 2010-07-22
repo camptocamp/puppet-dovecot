@@ -18,4 +18,9 @@ class c2c::tinyteam-in-charge {
     allowed_user => "vrenaville",
     system_user => "admin",
   }
+
+  ssh-old::account::allowed_user {"jbove on admin":
+    allowed_user => "jbove",
+    system_user => "admin",
+  }
 }

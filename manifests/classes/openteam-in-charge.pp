@@ -18,6 +18,18 @@ class c2c::openteam-in-charge inherits openerp::base {
     require => User["openerp"],
   }
 
+  c2c::ssh_authorized_key { "vincent.renaville@camptocamp.com":
+    sadb_user => "vrenaville",
+    user  => "openerp",
+    require => User["openerp"],
+  }
+
+  c2c::ssh_authorized_key { "jerome.bove@camptocamp.com":
+    sadb_user => "jbove",
+    user  => "openerp",
+    require => User["openerp"],
+  }
+
   c2c::ssh_authorized_key { "arnaud.wuest@camptocamp.com":
     sadb_user => "awuest",
     user  => "openerp",
@@ -30,11 +42,5 @@ class c2c::openteam-in-charge inherits openerp::base {
     user  => "openerp",
     require => User["openerp"],
     ensure => absent,
-  }
-
-  c2c::ssh_authorized_key { "vincent.renaville@camptocamp.com":
-    sadb_user => "vrenaville",
-    user  => "openerp",
-    require => User["openerp"],
   }
 }
