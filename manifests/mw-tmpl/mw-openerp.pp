@@ -6,7 +6,9 @@ class mw-openerp {
   include postgresql::backup
   include openerp::server::multiinstance
   include c2c::openteam-in-charge
-  include bazaar::client
+  # we have to use backported bzr package - include this template
+  # instead of bazaar::client
+  include mw-bazaar-client
   
   postgresql::user {"openerp":
     superuser => true,
