@@ -167,7 +167,7 @@ print '''Dropping database...'''
 subprocess.Popen(['dropdb','openerp_integrationc<%=openerp_project%>'], stdout=devnull, stderr=devnull)
 time.sleep(5)
 print '''Creating database'''
-subprocess.Popen(['createdb', '-O', 'openerp_integration', '-E', 'UNICODE', 'openerp_integration<%=openerp_project%>'], stdout=devnull, stderr=devnull)
+subprocess.Popen(['createdb', '-O', 'openerp_integration', '-T', 'template0', '-E', 'UNICODE', 'openerp_integration<%=openerp_project%>'], stdout=devnull, stderr=devnull)
 time.sleep(5)
 print '''Inserting data in database...'''
 pgdump = subprocess.Popen(['/usr/bin/pg_dump', '-c', '-O', '-d', '-D', 'openerp_prod<%=openerp_project%>'], stdout=subprocess.PIPE, stderr=devnull)

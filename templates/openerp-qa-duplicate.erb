@@ -30,7 +30,7 @@ p = subprocess.Popen(['dropdb','openerp_qa<%=openerp_project%>'], stdout=devnull
 p.wait()
 
 print '''Create brand new database'''
-p = subprocess.Popen(['createdb','-O','openerp_qa','-E','UNICODE','openerp_qa<%=openerp_project%>'], stdout=devnull, stderr=devnull)
+p = subprocess.Popen(['createdb','-O','openerp_qa', '-T', 'template0', '-E','UNICODE','openerp_qa<%=openerp_project%>'], stdout=devnull, stderr=devnull
 p.wait()
 
 print '''Dump database from prod to integration'''
