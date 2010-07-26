@@ -31,17 +31,13 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
     nagios::service::local { "$codename on $fqdn":
       ensure                => $ensure,
       host_name             => $fqdn,
+      command_line          => "${base}${command} ${options}",
       contact_groups        => $contact,
       check_command         => $codename,
       normal_check_interval => $interval,
       retry_check_interval  => $retry,
       service_description   => $name,
       package               => $package,
-    }
-
-    nagios::command { $codename:
-      ensure => $ensure,
-      command_line => "${base}${command} ${options}",
     }
 
   } else {
@@ -64,17 +60,13 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
       nagios::service::nsca { $codename:
         ensure                => $ensure,
         host_name             => $fqdn,
+        command_line          => "${base}${command} ${options}",
         contact_groups        => $contact,
         normal_check_interval => $interval,
         retry_check_interval  => $retry,
         service_description   => $name,
         export_for            => "nagios-${nagios_nsca_server}",
         package               => $package,
-      }
-
-      nagios::command { $codename:
-        ensure => $ensure,
-        command_line => "${base}${command} ${options}",
       }
     }
   }
