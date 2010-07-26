@@ -56,7 +56,6 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
         normal_check_interval => $interval,
         retry_check_interval  => $retry,
         service_description   => $name,
-        target                => "/etc/nagios/auto-puppet/services.cfg",
         export_for            => "nagios-${nagios_nsca_server}",
       }
 
