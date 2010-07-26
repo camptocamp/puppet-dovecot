@@ -26,11 +26,6 @@ Example usage:
 */
 define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, $interval=false, $retry=false, $remote=false, $package=false) {
 
-  nagios::config::command { $codename:
-    ensure => $ensure,
-    command_line => "${base}${command} ${options}",
-  }
-
   if $fqdn == $nagios_nsca_server {
 
     nagios::service::local { "$codename on $fqdn":
@@ -44,6 +39,11 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
       package               => $package,
     }
 
+    nagios::config::command { $codename:
+      ensure => $ensure,
+      command_line => "${base}${command} ${options}",
+    }
+
   } else {
 
     if $remote == true {
@@ -51,6 +51,7 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
       nagios::service::remote { $codename:
         ensure                => $ensure,
         host_name             => $fqdn,
+        command_line          => "${base}${command} ${options}",
         contact_groups        => $contact,
         normal_check_interval => $interval,
         retry_check_interval  => $retry,
@@ -70,6 +71,11 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
         service_description   => $name,
         export_for            => "nagios-${nagios_nsca_server}",
         package               => $package,
+      }
+
+      nagios::config::command { $codename:
+        ensure => $ensure,
+        command_line => "${base}${command} ${options}",
       }
     }
   }
