@@ -39,7 +39,7 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
       package               => $package,
     }
 
-    nagios::config::command { $codename:
+    nagios::command { $codename:
       ensure => $ensure,
       command_line => "${base}${command} ${options}",
     }
@@ -73,7 +73,7 @@ define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins"
         package               => $package,
       }
 
-      nagios::config::command { $codename:
+      nagios::command { $codename:
         ensure => $ensure,
         command_line => "${base}${command} ${options}",
       }
