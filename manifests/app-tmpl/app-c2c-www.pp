@@ -103,6 +103,51 @@ class app-c2c-www {
     authUserFile => "/var/www/www.camptocamp.com/private/htpasswd",
   }
 
+  # Joomla files and directories that need to be writeable by Apache
+  file {"/var/www/www.camptocamp.com/htdocs/configuration.php":
+    ensure => present,
+    owner  => admin,
+    group  => www-data,
+    mode   => 664,
+  }
+  file {[
+    "/var/www/www.camptocamp.com/htdocs/cache",
+    "/var/www/www.camptocamp.com/htdocs/components",
+    "/var/www/www.camptocamp.com/htdocs/images",
+    "/var/www/www.camptocamp.com/htdocs/language",
+    "/var/www/www.camptocamp.com/htdocs/media",
+    "/var/www/www.camptocamp.com/htdocs/modules",
+    "/var/www/www.camptocamp.com/htdocs/plugins",
+    "/var/www/www.camptocamp.com/htdocs/templates",
+    "/var/www/www.camptocamp.com/htdocs/tmp",
+
+    "/var/www/www.camptocamp.com/htdocs/administrator/backups",
+    "/var/www/www.camptocamp.com/htdocs/administrator/cache",
+    "/var/www/www.camptocamp.com/htdocs/administrator/components",
+    "/var/www/www.camptocamp.com/htdocs/administrator/language",
+    "/var/www/www.camptocamp.com/htdocs/administrator/modules",
+    "/var/www/www.camptocamp.com/htdocs/administrator/templates",
+
+    "/var/www/www.camptocamp.com/htdocs/administrator/language/en-GB",
+    "/var/www/www.camptocamp.com/htdocs/administrator/language/fr-FR",
+
+    "/var/www/www.camptocamp.com/htdocs/images/banners",
+    "/var/www/www.camptocamp.com/htdocs/images/stories",
+
+    "/var/www/www.camptocamp.com/htdocs/plugins/content",
+    "/var/www/www.camptocamp.com/htdocs/plugins/editors",
+    "/var/www/www.camptocamp.com/htdocs/plugins/search",
+    "/var/www/www.camptocamp.com/htdocs/plugins/system",
+    "/var/www/www.camptocamp.com/htdocs/plugins/tmp",
+
+    "/var/www/www.camptocamp.com/htdocs/language/en-GB",
+    "/var/www/www.camptocamp.com/htdocs/language/fr-FR"
+    ]:
+    owner => admin,
+    group => www-data,
+    mode  => 2775,
+  }
+
 
   ## Testing
 
@@ -148,6 +193,7 @@ class app-c2c-www {
     "/var/www/wwwtest.camptocamp.net/htdocs/administrator/templates",
 
     "/var/www/wwwtest.camptocamp.net/htdocs/administrator/language/en-GB",
+    "/var/www/wwwtest.camptocamp.net/htdocs/administrator/language/fr-FR",
 
     "/var/www/wwwtest.camptocamp.net/htdocs/images/banners",
     "/var/www/wwwtest.camptocamp.net/htdocs/images/stories",
@@ -158,21 +204,13 @@ class app-c2c-www {
     "/var/www/wwwtest.camptocamp.net/htdocs/plugins/system",
     "/var/www/wwwtest.camptocamp.net/htdocs/plugins/tmp",
 
-    "/var/www/wwwtest.camptocamp.net/htdocs/language/en-GB"
+    "/var/www/wwwtest.camptocamp.net/htdocs/language/en-GB",
+    "/var/www/wwwtest.camptocamp.net/htdocs/language/fr-FR"
     ]:
     owner => admin,
     group => www-data,
     mode  => 2775,
   }
 
-  # Remove unneeded templates
-  file {[
-    "/var/www/wwwtest.camptocamp.net/htdocs/templates/beez",
-    "/var/www/wwwtest.camptocamp.net/htdocs/templates/ja_purity",
-    "/var/www/wwwtest.camptocamp.net/htdocs/templates/rhuk_milkyway"
-    ]:
-    ensure => absent,
-    force  => true,
-  } 
 
 }
