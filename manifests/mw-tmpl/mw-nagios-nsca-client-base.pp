@@ -9,7 +9,7 @@ class mw-nagios-nsca-client-base {
     nagios_alias   => "$hostname ($hostgroup)",
     contact_groups => $basic_contact_group,
     hostgroups     => $hostgroup,
-    export_for     => "nagios",
+    export_for     => "nagios-${nagios_nsca_server}",
   }
 
   # default checks
