@@ -14,7 +14,7 @@ class srv-c2c-nagios {
   include os-server
 
   ### MW #########################################
-  include mw-apache
+  include mw-apache-ssl
 
   ### APP (generic) ##############################
 
