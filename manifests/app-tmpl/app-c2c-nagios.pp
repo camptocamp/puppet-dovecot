@@ -20,7 +20,7 @@ class app-c2c-nagios {
   }
 
 
-  apache::vhost{$fqdn:
+  apache::vhost-ssl{$fqdn:
     ensure => present,
   }
   apache::auth::htpasswd{"nagiosadmin":
@@ -30,18 +30,22 @@ class app-c2c-nagios {
     userFileName  => "nagios-htpasswd",
   }
 
-  apache::redirectmatch {"slash-to-nagios3":
+  apache::directive {"nagios-only-ssl":
     ensure => present,
     vhost  => "$fqdn",
-    regex  => "^/$",
-    url    => "/nagios3/",
+    directive => "
+RewriteEngine On
+RewriteCond   %{SERVER_PORT}  !^443$
+RewriteRule ^(.*)$ https://c2cpc27.camptocamp.com/ [L,R=301]
+
+RewriteRule ^/$ /nagios3/ [L,R=301]
+"
   }
 
   apache::directive {"nagios-config":
     ensure    => present,
     vhost     => "$fqdn",
-    directive => "# file managed by Puppet
-
+    directive => "
 ScriptAlias /cgi-bin/nagios3     /usr/lib/cgi-bin/nagios3/
 ScriptAlias /nagios3/cgi-bin     /usr/lib/cgi-bin/nagios3/
 Alias       /nagios3/stylesheets /etc/nagios3/stylesheets
@@ -59,8 +63,7 @@ Alias       /nagios3             /usr/share/nagios3/htdocs
   apache::directive{"nagios-access":
     ensure    =>  present,
     vhost     => "$fqdn",
-    directive => "# file managed by Puppet
-
+    directive => "
 <Location />
   Order deny,allow
   Deny from all
