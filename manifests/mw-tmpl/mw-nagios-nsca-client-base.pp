@@ -17,7 +17,7 @@ class mw-nagios-nsca-client-base {
   include monitoring::ssh
   include monitoring::puppet
 
-  nagios::config::template {"generic-service":
+  nagios::template {"generic-service":
     conf_type => "service",
     content   => "
   active_checks_enabled           0
@@ -45,7 +45,7 @@ class mw-nagios-nsca-client-base {
 ",
   }
 
-  nagios::config::template {"generic-service-active":
+  nagios::template {"generic-service-active":
     conf_type => "service",
     content   => "
   use                     generic-service
@@ -54,7 +54,7 @@ class mw-nagios-nsca-client-base {
 ",
   }
 
-  nagios::config::template {"generic-service-passive":
+  nagios::template {"generic-service-passive":
     conf_type => "service",
     content   => "
   use                     generic-service
