@@ -14,7 +14,7 @@ class app-c2c-nagios {
 
 
   nagios::local::hostgroup { [
-    "production"
+    "ovz-host"
     
     ]:
   }
