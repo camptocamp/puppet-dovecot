@@ -9,7 +9,6 @@ else:
   allowedCmd = {'rdiff':'nice -n 10 ionice -n 7 rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
   default = 'nice -n 10 ionice -n 7 rdiff-backup --server'
 
-print default
 sshOrig = os.getenv('SSH_ORIGINAL_COMMAND')
 cmd = ''
 
