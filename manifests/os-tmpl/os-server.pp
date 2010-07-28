@@ -37,7 +37,7 @@ root  ALL=(ALL) ALL
     #include c2c::syslog::client
 
     # Nagios installation and basic checks present on all production servers
-    $basic_contact_group = "sysadmins"
+    $basic_contact_group = "admins"
   
     include mw-nagios-nsca-client-base
 
