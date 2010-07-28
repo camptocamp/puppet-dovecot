@@ -2,13 +2,24 @@ class mw-nagios-nsca-client-base {
   include nagios::base
   include nagios::nsca::client
 
+
   # create host
-  nagios::host::remote {$fqdn:
-    ensure         => present,
-    nagios_alias   => "$hostname ($hostgroup)",
-    contact_groups => $basic_contact_group,
-    hostgroups     => $hostgroup,
-    export_for     => "nagios-${nagios_nsca_server}",
+  if "$fqdn" == "$nagios_nsca_server" {
+    nagios::host {$fqdn:
+      ensure          => present,
+      nagios_alias    => "$hostname ($hostgroup)",
+      contact_groups  => $basic_contact_group,
+      hostgroups      => $hostgroup,
+    }
+  }
+  else {
+    nagios::host::remote {$fqdn:
+      ensure         => present,
+      nagios_alias   => "$hostname ($hostgroup)",
+      contact_groups => $basic_contact_group,
+      hostgroups     => $hostgroup,
+      export_for     => "nagios-${nagios_nsca_server}",
+    }
   }
 
   # default checks
