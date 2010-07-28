@@ -19,6 +19,7 @@ class wrk-c2c {
   include app-c2c-workstations-vmware
   include app-c2c-workstation-openerp
   include app-c2c-workstation-vpn-swisstopo
+  include app-c2c-workstation-printers
   c2c::workstation::sadb::user{$c2c_workstation_users:}
 
 }
