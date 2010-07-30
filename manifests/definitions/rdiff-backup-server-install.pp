@@ -1,6 +1,6 @@
 define rdiff-backup::server::install ($ensure=present) {
   $version = "rdiff-backup-${name}"
-  $url = "http://www.very-clever.com/download/nongnu/rdiff-backup/${version}.tar.gz"
+  $url = "http://mirror.lihnidos.org/GNU/savannah/rdiff-backup/${version}.tar.gz"
 
   if !defined($rdiff_backup_enable_mail) or ($rdiff_backup_enable_mail == 1) or ($rdiff_backup_enable_mail == "on") or ($rdiff_backup_enable_mail == "yes") or ($rdiff_backup_enable_mail == "true") {
     $rdiff_backup_enable_mail = 1
