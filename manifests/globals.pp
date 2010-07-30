@@ -81,6 +81,10 @@ Package {
   require => Exec["apt-get_update"]
 }
 
+# Set first UID/GID
+Group {require => File["/etc/adduser.conf"]}
+User {require => File["/etc/adduser.conf"]}
+
 ## openerp settings
 $openerp_db_name = ""
 $openerp_db_user = "openerp-demo-camptocamp"
