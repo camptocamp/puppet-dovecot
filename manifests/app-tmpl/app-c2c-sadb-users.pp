@@ -263,16 +263,6 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     groups  => $groups, 
   }
 
-  c2c::sshuser {"cgampouris": 
-    ensure  => $ensure, 
-    uid     => url_get("${sadb}/user/cgampouris/uid_number"),
-    comment => sprintf("%s %s", url_get("${sadb}/user/cgampouris/firstname"), url_get("${sadb}/user/cgampouris/lastname")),
-    email   => url_get("${sadb}/user/cgampouris/email"), 
-    type    => url_get("${sadb}/user/cgampouris/ssh_pub_key_type"),
-    key     => url_get("${sadb}/user/cgampouris/ssh_pub_key"),
-    groups  => $groups, 
-  }
-
   c2c::sshuser {"pmauduit": 
     ensure  => $ensure, 
     uid     => url_get("${sadb}/user/pmauduit/uid_number"),
@@ -320,6 +310,26 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     email   => url_get("${sadb}/user/tsauerwein/email"), 
     type    => url_get("${sadb}/user/tsauerwein/ssh_pub_key_type"),
     key     => url_get("${sadb}/user/tsauerwein/ssh_pub_key"),
+    groups  => $groups, 
+  }
+
+  c2c::sshuser {"gbaconnier": 
+    ensure  => $ensure, 
+    uid     => url_get("${sadb}/user/gbaconnier/uid_number"),
+    comment => sprintf("%s %s", url_get("${sadb}/user/gbaconnier/firstname"), url_get("${sadb}/user/gbaconnier/lastname")),
+    email   => url_get("${sadb}/user/gbaconnier/email"), 
+    type    => url_get("${sadb}/user/gbaconnier/ssh_pub_key_type"),
+    key     => url_get("${sadb}/user/gbaconnier/ssh_pub_key"),
+    groups  => $groups, 
+  }
+
+  c2c::sshuser {"bquartier": 
+    ensure  => $ensure, 
+    uid     => url_get("${sadb}/user/bquartier/uid_number"),
+    comment => sprintf("%s %s", url_get("${sadb}/user/bquartier/firstname"), url_get("${sadb}/user/bquartier/lastname")),
+    email   => url_get("${sadb}/user/bquartier/email"), 
+    type    => url_get("${sadb}/user/bquartier/ssh_pub_key_type"),
+    key     => url_get("${sadb}/user/bquartier/ssh_pub_key"),
     groups  => $groups, 
   }
 }
