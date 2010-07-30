@@ -65,4 +65,12 @@ RailsAutoDetect On
 ",
   }
 
+  file {"/usr/local/bin/get-sadb-users.rb":
+    ensure => present,
+    owner  => root,
+    group  => root,
+    mode   => 0755,
+    source => "puppet:///modules/c2c/usr/local/bin/get-sadb-users.rb"
+  }
+
 }
