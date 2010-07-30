@@ -8,11 +8,10 @@
 
 class os-server {
 
-  # check an fix locales generation
-  exec {"check locales":
-    command => "/usr/sbin/locale-gen",
-    unless => "test \$(locale -a |egrep -c '^(de|fr|en|it)\$') == 4",
-    require => [File["/usr/share/locale/locale.alias"], Package["locales"], File["/etc/locale.gen"]],
+  case $operatingsystem {
+    /Debian|Ubuntu/: { include os-server-debian }
+    /RedHat|CentOS/: {  }
+    default: { fail "No instruction for \$operatingsystem $operatingsystem" }
   }
 
   common::concatfilepart { "000-sudoers.init":
