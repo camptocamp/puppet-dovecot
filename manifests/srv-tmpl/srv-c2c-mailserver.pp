@@ -16,5 +16,6 @@ class srv-c2c-mailserver {
   ### APP (generic) ##############################
 
   ### APP (specific to this server) ##############
+  include app-c2c-mailserver
 
 }
