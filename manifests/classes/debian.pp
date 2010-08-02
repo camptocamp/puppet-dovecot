@@ -37,10 +37,7 @@ class os::debian {
     "ipcalc": ensure => present;
     "cvs": ensure => present;
     "gettext": ensure => present;
-    "python-dev": ensure => present;
     "ngrep": ensure => present;
-    "ipython": ensure => present;
-    "python-mode": ensure => present;
     "pwgen": ensure => present;
     "locate": ensure => absent;
     "xfsprogs": ensure => present;
@@ -95,12 +92,6 @@ class os::debian {
 
   file {"/etc/profile.d":
     ensure => directory
-  }
-
-  # Python environment
-  package {
-    "python": ensure => present;
-    "python-setuptools": ensure => present;
   }
 
   # SSL Configuration
