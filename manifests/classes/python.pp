@@ -14,4 +14,13 @@ class python {
   package { ["python", "python-setuptools"]:
     ensure => present,
   }
+
+  case $operatingsystem {
+    Debian: {
+      package {"python-mode":
+        ensure => present
+      }
+    }
+  }
+
 }
