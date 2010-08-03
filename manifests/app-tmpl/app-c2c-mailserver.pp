@@ -1,7 +1,7 @@
 class app-c2c-mailserver {
   
   # Mail archiving
-  package {"mpop":
+  package {"offlineimap":
     ensure => installed,
   }
 
