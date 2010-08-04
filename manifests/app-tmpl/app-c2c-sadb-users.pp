@@ -332,4 +332,14 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     key     => url_get("${sadb}/user/bquartier/ssh_pub_key"),
     groups  => $groups, 
   }
+
+  c2c::sshuser {"sbrunner": 
+    ensure  => $ensure, 
+    uid     => url_get("${sadb}/user/sbrunner/uid_number"),
+    comment => sprintf("%s %s", url_get("${sadb}/user/sbrunner/firstname"), url_get("${sadb}/user/sbrunner/lastname")),
+    email   => url_get("${sadb}/user/sbrunner/email"), 
+    type    => url_get("${sadb}/user/sbrunner/ssh_pub_key_type"),
+    key     => url_get("${sadb}/user/sbrunner/ssh_pub_key"),
+    groups  => $groups, 
+  }
 }
