@@ -1,5 +1,5 @@
 #
-# This puppet recipe is generated with the script get-c2c-sadb-users.rb
+# This puppet recipe is generated with the script get-sadb-users.rb
 #
 define app::c2c::sadb::users ($ensure=present, $groups=false) {
 
