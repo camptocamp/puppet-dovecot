@@ -29,6 +29,10 @@ class app-c2c-sadb {
   file {"/etc/init.d/pylons":
     ensure => "/var/www/sadb.camptocamp.com/private/sadb/pylons.initd",
   }
+  service {"pylons":
+    ensure => running,
+    require => File["/etc/init.d/pylons"],
+  }
 
   postgresql::user {"sadb":
     ensure => present,
