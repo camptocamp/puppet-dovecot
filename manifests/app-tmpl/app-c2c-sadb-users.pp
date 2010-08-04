@@ -1,5 +1,5 @@
 #
-# This puppet recipe is generated with the script get-sadb-users.rb
+# This puppet recipe is generated with the script get-c2c-sadb-users.rb
 #
 define app::c2c::sadb::users ($ensure=present, $groups=false) {
 
@@ -313,6 +313,16 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     groups  => $groups, 
   }
 
+  c2c::sshuser {"sbrunner": 
+    ensure  => $ensure, 
+    uid     => url_get("${sadb}/user/sbrunner/uid_number"),
+    comment => sprintf("%s %s", url_get("${sadb}/user/sbrunner/firstname"), url_get("${sadb}/user/sbrunner/lastname")),
+    email   => url_get("${sadb}/user/sbrunner/email"), 
+    type    => url_get("${sadb}/user/sbrunner/ssh_pub_key_type"),
+    key     => url_get("${sadb}/user/sbrunner/ssh_pub_key"),
+    groups  => $groups, 
+  }
+
   c2c::sshuser {"gbaconnier": 
     ensure  => $ensure, 
     uid     => url_get("${sadb}/user/gbaconnier/uid_number"),
@@ -330,16 +340,6 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     email   => url_get("${sadb}/user/bquartier/email"), 
     type    => url_get("${sadb}/user/bquartier/ssh_pub_key_type"),
     key     => url_get("${sadb}/user/bquartier/ssh_pub_key"),
-    groups  => $groups, 
-  }
-
-  c2c::sshuser {"sbrunner": 
-    ensure  => $ensure, 
-    uid     => url_get("${sadb}/user/sbrunner/uid_number"),
-    comment => sprintf("%s %s", url_get("${sadb}/user/sbrunner/firstname"), url_get("${sadb}/user/sbrunner/lastname")),
-    email   => url_get("${sadb}/user/sbrunner/email"), 
-    type    => url_get("${sadb}/user/sbrunner/ssh_pub_key_type"),
-    key     => url_get("${sadb}/user/sbrunner/ssh_pub_key"),
     groups  => $groups, 
   }
 }
