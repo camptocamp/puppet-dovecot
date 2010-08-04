@@ -14,7 +14,7 @@ class os-base {
 
   case $operatingsystem {
     /Ubuntu|Debian/: { include os-base-debian }
-    /RedHat|CentOS/: { include os-base-rhel }
+    /RedHat|CentOS/: { include os-base-centos }
     default: { fail "Nothing configured for \$operatingsystem $operatingsystem" }
   }
 }

@@ -1,4 +1,4 @@
-class os-base-rhel {
+class os-base-centos {
   yumrepo {"epel-fedora":
     descr => "Extra Packages for Enterprise Linux ${lsbmajdistrelease} - \$basearch",
     baseurl => "http://mirror.switch.ch/ftp/mirror/epel/${lsbmajdistrelease}/\$basearch",
