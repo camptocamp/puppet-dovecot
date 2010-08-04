@@ -7,7 +7,7 @@ begin
   puts "# This puppet recipe is generated with the script get-c2c-sadb-users.rb"
   puts "#"
   puts "define app::c2c::sadb::users ($ensure=present, $groups=false) {"
-  open('http://sadb.camptocamp.com/user/internal/') {|f|
+  open('http://sadb.camptocamp.com/user/internal') {|f|
     f.each_line {|line| 
       args = line.split(";")
       uid = args[1]
