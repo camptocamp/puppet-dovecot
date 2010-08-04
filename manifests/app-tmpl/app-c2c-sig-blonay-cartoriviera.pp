@@ -5,11 +5,39 @@ class app-c2c-sig-blonay-cartoriviera {
     require => User["admin"],
   }
   
-  apache::vhost {"blonay-cartoriviera":
+  apache::vhost {"map.cartoriviera.ch":
     ensure  => present,
     group   => admin,
     mode    => 2775,
-    aliases => [$fqdn, server_alias_from_domain($fqdn)],
+  }
+
+  apache::vhost {"preprod.cartoriviera.ch":
+    ensure  => present,
+    group   => admin,
+    mode    => 2775,
+  }
+
+  apache::vhost {"www.cartoriviera.ch":
+    ensure  => present,
+    group   => admin,
+    mode    => 2775,
+  }
+
+  apache::vhost {"blonay-cartoriviera":
+    ensure => absent,
+  }
+
+  apache::auth::htpasswd {"cartoriviera in /var/www/preprod.cartoriviera.ch/private/htpasswd":
+    ensure => present,
+    vhost => "preprod.cartoriviera.ch",
+    username => "cartoriviera",
+    clearPassword => "cartoriviera",
+  }
+
+  apache::auth::basic::file::user {"user1-on-webdav2":
+    vhost => "preprod.cartoriviera.ch",
+    location => "/",
+    users => "cartoriviera",
   }
 
   tomcat::instance {"print":
