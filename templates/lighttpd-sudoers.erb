@@ -1,0 +1,15 @@
+## managed by puppet
+## This part comes from modules/lighttpd/manifests/classes/lighttpd-administration.pp
+<% if has_variable?("sudo_lighttpd_admin_user") -%>
+User_Alias LIGHTTY_ADMIN = %lighttpd-admin,<%= sudo_lighttpd_admin_user %>
+<% else -%>
+User_Alias LIGHTTY_ADMIN = %lighttpd-admin
+<% end -%>
+<% if has_variable?("sudo_lighttpd_admin_cmnd") -%>
+Cmnd_Alias LIGHTTY_ADMIN = <%= sudo_lighttpd_admin_cmnd %>
+<% else -%>
+Cmnd_Alias LIGHTTY_ADMIN = /etc/init.d/lighttpd, /usr/sbin/lighttpd-angel, /bin/su www-data, /bin/su - www-data
+<% end -%>
+LIGHTTY_ADMIN ALL=(www-data) ALL : ALL=(root) LIGHTTY_ADMIN
+##
+
