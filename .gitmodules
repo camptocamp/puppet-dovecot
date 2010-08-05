@@ -91,3 +91,6 @@
 [submodule "modules/openssl"]
 	path = modules/openssl
 	url = git@github.com:camptocamp/puppet-openssl.git
+[submodule "modules/lighttpd"]
+	path = modules/lighttpd
+	url = git@github.com:camptocamp/puppet-lighttpd
