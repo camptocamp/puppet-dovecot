@@ -18,8 +18,12 @@ class app-c2c-puppetmaster {
     ensure => latest,
   }
 
-  c2c::sshuser::sadb {["ckaenzig", "marc", "mbornoz", "cjeanneret", "jbaubort", "mremy"]:
+  c2c::sshuser::sadb {["ckaenzig", "marc", "mbornoz", "cjeanneret", "vrenaville", "mremy"]:
     groups  => "sysadmin",
+  }
+
+  c2c::sshuser::sadb {"jbaubort":
+    ensure => absent,
   }
 
   common::concatfilepart {"sudoers.sysadmin":
