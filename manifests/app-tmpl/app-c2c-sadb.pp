@@ -20,7 +20,7 @@ class app-c2c-sadb {
     vhost         => "sadb.camptocamp.com",
     location      => "/admin/",
     authLDAPUrl   => "ldap://ldap.lsn.camptocamp.com ldap.cby.camptocamp.com/dc=ldap,dc=c2c?uid??(sambaSID=*)",
-    authzRequire  => "user cjeanneret ckaenzig marc mbornoz mremy",
+    authzRequire  => "ldap-user cjeanneret ckaenzig marc mbornoz mremy",
   }
 
   package {["python-pylons", "python-ldap"]:
