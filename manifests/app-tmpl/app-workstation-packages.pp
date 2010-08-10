@@ -10,7 +10,6 @@ class app-workstation-packages {
     "gstreamer0.10-ffmpeg":             ensure => present;
     "gstreamer0.10-plugins-bad":        ensure => present;
     "gstreamer0.10-plugins-ugly":       ensure => present;
-    "gstreamer0.10-schroedinger":       ensure => present;
     "gstreamer0.10-fluendo-mp3":        ensure => present;
     "gstreamer0.10-sdl":                ensure => present;
     "mpg321":                           ensure => present;
@@ -129,7 +128,7 @@ class app-workstation-packages {
     "pinentry-gtk2":                    ensure => present;
     "hipo":                             ensure => present;
     "mdbtools-gmdb":                    ensure => present;
-    "msttcorefonts":                    ensure => present;
+    "ttf-mscorefonts-installer":        ensure => present;
     "nautilus-actions":                 ensure => present;
     "network-manager-pptp":             ensure => present;
     "ttf-dejavu":                       ensure => present;
