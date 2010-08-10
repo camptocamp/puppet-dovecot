@@ -4,6 +4,39 @@ class app-c2c-unhcr-dev {
     ensure => present,
   }
 
+  # openldap part
+  package {["ldap-utils", "libldap-2.4-2"]:
+    ensure => present,
+  }
+
+  augeas{"ldap.conf":
+    context => "/files/etc/ldap/ldap.conf",
+    changes => [
+      "set URI ldaps://193.134.241.62",
+      "set BASE cn=geoportal,ou=Agents,dc=unhcr,dc=org",
+      "set ssl on",
+      "set TLS_CACERT '/etc/ldap/ssl/client.pem'",
+    ],
+    require => Package["ldap-utils"],
+  }
+
+  file {"/etc/ldap/ssl":
+    ensure  => directory,
+    mode    => 0644,
+    owner   => root,
+    group   => root,
+    require => Package["ldap-utils"],
+  }
+  file {"/etc/ldap/ssl/client.pem":
+    ensure  => present,
+    mode    => 0644,
+    owner   => root,
+    group   => root,
+    source  => "puppet:///modules/c2c/ssl/unhcr-ldap-client.pem",
+    require => File["/etc/ldap/ssl"],
+  }
+
+
   apache::vhost-ssl{"unhcr":
     ensure  => present,
     group   => "sigdev",
