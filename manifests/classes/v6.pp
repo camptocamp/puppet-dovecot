@@ -47,13 +47,14 @@ class java::v6 {
     content => template("java/java-home.erb"),
   }
  
-  # On Debian/Ubuntu status of update-java-alternatives is always 1 !
+  # On Debian/Ubuntu status of update-java-alternatives is always 1,
+  # || true is just a temporary workaround !
   exec {"set default jvm":
     command => $operatingsystem ? {
-      'RedHat'          => "update-java-alternatives --set java-6-sun",
-      /(Debian|ubuntu)/ => "update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java",
+      'RedHat'         => "update-java-alternatives --set java-6-sun",
+      /Debian|Ubuntu/  => "update-alternatives --set java /usr/lib/jvm/java-6-sun/jre/bin/java || true",
     },
-    unless => 'test $(readlink /etc/alternatives/java) == "/usr/lib/jvm/java-6-sun/jre/bin/java"',
+    unless => 'test $(readlink /etc/alternatives/java) = /usr/lib/jvm/java-6-sun/jre/bin/java',
     require => Package["sun-java6-bin"],
   }
 
