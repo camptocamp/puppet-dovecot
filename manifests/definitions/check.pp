@@ -24,7 +24,7 @@ Example usage:
   }
 
 */
-define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, $interval=false, $retry=false, $remote=false, $package=false) {
+define monitoring::check ($ensure="present", $base='$USER1$/', $contact="admins", $codename=undef, $command=undef, $options=undef, $interval='5', $retry='3', $remote=false, $package=false) {
 
   if $fqdn == $nagios_nsca_server {
 
