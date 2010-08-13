@@ -13,7 +13,7 @@ class wrk-c2c {
 
   ### APP (generic) ##############################
   include app-workstation-tuning
-  include app-workstation-packages
+  include app-c2c-workstation-packages
   include app-c2c-workstation
   include app-c2c-workstation-vpn
   include app-c2c-workstations-vmware

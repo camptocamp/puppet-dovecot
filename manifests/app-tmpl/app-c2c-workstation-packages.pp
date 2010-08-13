@@ -1,4 +1,4 @@
-class app-workstation-packages {
+class app-c2c-workstation-packages {
 
   package {
     # Multimedia
