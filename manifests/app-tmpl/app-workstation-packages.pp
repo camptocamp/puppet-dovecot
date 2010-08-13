@@ -159,6 +159,9 @@ class app-workstation-packages {
     "pidgin-plugin-pack":               ensure => present;
     "python-setuptools":                ensure => present;
     "gnupg-agent":	                ensure => present;
+
+    # Gestion certificats X509 (VPN SwissTopo)
+    "xca":                              ensure => present;
   }
 
   package {["indicator-messages"]:
