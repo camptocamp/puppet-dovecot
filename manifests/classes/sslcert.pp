@@ -1,25 +1,28 @@
 class monitoring::sslcert {
 
+  include monitoring::params
+
   $rev  = "1144" # svn revision number, increment after testing.
   $repo = "https://trac.id.ethz.ch/projects/nagios_plugins"
   $url  = "${repo}/export/${rev}/check_ssl_cert/check_ssl_cert"
 
+  #TODO: use vcsrepo
   exec { "download check_ssl_cert":
-    command => "curl -o /opt/nagios-plugins/check_ssl_cert-r${rev} ${url}",
-    creates => "/opt/nagios-plugins/check_ssl_cert-r${rev}",
-    require => [File["/opt/nagios-plugins/"], Package["curl"]],
+    command => "curl -o ${monitoring::params::customplugins}/check_ssl_cert-r${rev} ${url}",
+    creates => "${monitoring::params::customplugins}/check_ssl_cert-r${rev}",
+    require => [File["${monitoring::params::customplugins}"], Package["curl"]],
   }
 
-  file { "/opt/nagios-plugins/check_ssl_cert-r${rev}":
+  file { "${monitoring::params::customplugins}/check_ssl_cert-r${rev}":
     owner   => "root",
     mode    => 0755,
     require => Exec["download check_ssl_cert"],
   }
 
-  file { "/opt/nagios-plugins/check_ssl_cert":
+  file { "${monitoring::params::customplugins}/check_ssl_cert":
     ensure  => link,
-    target  => "/opt/nagios-plugins/check_ssl_cert-r${rev}",
-    require => File["/opt/nagios-plugins/check_ssl_cert-r${rev}"],
+    target  => "${monitoring::params::customplugins}/check_ssl_cert-r${rev}",
+    require => File["${monitoring::params::customplugins}/check_ssl_cert-r${rev}"],
   }
 
 }
@@ -62,7 +65,7 @@ define monitoring::check::sslcert (
     codename => "check_ssl_cert_${_certname}_${port}",
     command  => "check_ssl_cert",
     interval => "720", # 2x/day
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     options  => "-H ${host} -n ${_certname} -p ${port} -r ${crtfile} -d ${days} -o '${org}'",
     type     => "passive",
     server   => $nagios_nsca_server,

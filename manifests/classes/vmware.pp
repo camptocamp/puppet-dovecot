@@ -1,5 +1,7 @@
 class monitoring::vmware {
 
+  include monitoring::params
+
   $vmware = $lsbdistcodename ? {
     #TODO/^(Nahant|lenny)/ => "vmware-guestd",
     Lenny         => "vmware-guestd",
@@ -24,7 +26,7 @@ class monitoring::vmware {
     }
   }
 
-  file { "/opt/nagios-plugins/check_vmware_kmods.sh":
+  file { "${monitoring::params::customplugins}/check_vmware_kmods.sh":
     mode    => 0755,
     owner   => "root",
     group   => "root",
@@ -50,7 +52,7 @@ exit 0
   monitoring::check { "Vmware: kernel modules":
     codename => "check_vmware_kmods",
     command  => "check_vmware_kmods.sh",
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     interval => "60",
     retry    => "30",
     type     => "passive",

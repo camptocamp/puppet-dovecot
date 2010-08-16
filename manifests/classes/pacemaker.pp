@@ -1,5 +1,7 @@
 class monitoring::pacemaker {
 
+  include monitoring::params
+
   if ($operatingsystem =~ /RedHat|CentOS/) and !defined(User["nagios"]) {
 
     # nagios need to have access to the sockets in /var/run/crm to be able to
@@ -10,7 +12,7 @@ class monitoring::pacemaker {
     }
   }
 
-  file { "/opt/nagios-plugins/check_crm":
+  file { "${monitoring::params::customplugins}/check_crm":
     mode   => 0755,
     owner  => "root",
     group  => "root",
@@ -24,7 +26,7 @@ class monitoring::pacemaker {
     codename => "check_crm_status",
     command  => "check_crm",
     options  => "/etc/ha.d/cluster-status.txt '[a-z0-9]+\.epfl\.ch'",
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     type     => "passive",
     server   => $nagios_nsca_server,
   }

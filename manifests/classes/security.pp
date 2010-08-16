@@ -1,8 +1,10 @@
 class monitoring::security {
 
+  include monitoring::params
+
   package { "expect": ensure => present }
 
-  file { "/opt/nagios-plugins/check_password.sh":
+  file { "${monitoring::params::customplugins}/check_password.sh":
     ensure => present,
     owner  => "root",
     group  => "root",
@@ -14,12 +16,12 @@ class monitoring::security {
   monitoring::check { "Default root password":
     codename => "check_root_password",
     command  => "check_password.sh",
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     options  => "root c2c",
     interval => "720", # 12h
     retry    => "120",
     type     => "passive",
     server   => $nagios_nsca_server,
-    require  => File["/opt/nagios-plugins/check_password.sh"],
+    require  => File["${monitoring::params::customplugins}/check_password.sh"],
   }
 }

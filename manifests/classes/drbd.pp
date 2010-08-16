@@ -1,6 +1,8 @@
 class monitoring::drbd {
 
-  file { "/opt/nagios-plugins/check_drbd":
+  include monitoring::params
+
+  file { "${monitoring::params::customplugins}/check_drbd":
     mode    => 0755,
     owner   => "root",
     group   => "root",
@@ -12,7 +14,7 @@ class monitoring::drbd {
     codename => "check_drbd_status",
     command  => "check_drbd",
     options  => "/proc/drbd",
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     type     => "passive",
     server   => $nagios_nsca_server,
   }

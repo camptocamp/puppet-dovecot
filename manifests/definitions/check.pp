@@ -27,7 +27,7 @@ Example usage:
 */
 define monitoring::check (
   $ensure="present",
-  $base='$USER1$/',
+  $base='default',
   $contact="admins",
   $codename=undef,
   $command=undef,
@@ -38,6 +38,13 @@ define monitoring::check (
   $server,
   $package=false) {
 
+  include monitoring::params
+
+  if $base == 'default' {
+    $basedir = "${monitoring::params::mainplugins}"
+  } else {
+    $basedir = $base
+  }
 
   case $type {
 
@@ -47,7 +54,7 @@ define monitoring::check (
         nagios::service::local { "$codename on $fqdn":
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           check_command         => $codename,
           normal_check_interval => $interval,
@@ -59,7 +66,7 @@ define monitoring::check (
         nagios::service::nsca { $codename:
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           normal_check_interval => $interval,
           retry_check_interval  => $retry,
@@ -76,7 +83,7 @@ define monitoring::check (
         nagios::service::local { "$codename on $fqdn":
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           check_command         => $codename,
           normal_check_interval => $interval,
@@ -88,7 +95,7 @@ define monitoring::check (
         nagios::service::nrpe { $codename:
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           normal_check_interval => $interval,
           retry_check_interval  => $retry,
@@ -105,7 +112,7 @@ define monitoring::check (
         nagios::service::local { "$codename on $fqdn":
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           check_command         => $codename,
           normal_check_interval => $interval,
@@ -117,7 +124,7 @@ define monitoring::check (
         nagios::service::remote { $codename:
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${base}${command} ${options}",
+          command_line          => "${basedir}${command} ${options}",
           contact_groups        => $contact,
           normal_check_interval => $interval,
           retry_check_interval  => $retry,

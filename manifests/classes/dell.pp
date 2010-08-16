@@ -12,6 +12,8 @@ See:
 */
 class monitoring::dell {
 
+  include monitoring::params
+
   $check_omsa_ver = "3.5.3"
   $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
 
@@ -20,44 +22,45 @@ class monitoring::dell {
   }
 
   # download and extract check_openmanage.tar.gz
-  common::archive::tar-gz { "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}":
+  common::archive::tar-gz { "${monitoring::params::customplugins}/check_openmanage-${check_omsa_ver}":
     source  => "http://folk.uio.no/trondham/software/files/check_openmanage-${check_omsa_ver}.tar.gz",
-    target  => "/opt/nagios-plugins",
-    require => File["/opt/nagios-plugins"],
+    target  => "${monitoring::params::customplugins}",
+    require => File["${monitoring::params::customplugins}"],
   }
 
-  file { "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage":
+  file { "${monitoring::params::customplugins}/check_openmanage-${check_omsa_ver}/check_openmanage":
     mode    => 0755,
     owner   => "root",
     group   => "root",
-    require => Common::Archive::Tar-gz["/opt/nagios-plugins/check_openmanage-${check_omsa_ver}"],
+    require => Common::Archive::Tar-gz["${monitoring::params::customplugins}/check_openmanage-${check_omsa_ver}"],
   }
 
-  file { "/opt/nagios-plugins/check_openmanage":
+  file { "${monitoring::params::customplugins}/check_openmanage":
     ensure  => link,
-    target  => "/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage",
-    require => File["/opt/nagios-plugins/check_openmanage-${check_omsa_ver}/check_openmanage"],
+    target  => "${monitoring::params::customplugins}/check_openmanage-${check_omsa_ver}/check_openmanage",
+    require => File["${monitoring::params::customplugins}/check_openmanage-${check_omsa_ver}/check_openmanage"],
     before  => Monitoring::Check["Dell OMSA"],
   }
 
+  #TODO: use vcsrepo instead
   # download check_dell_warranty.py
   exec { "download check_dell_warranty.py version $check_warranty_ver":
-    command => "curl http://gitorious.org/smarmy/check_dell_warranty/blobs/raw/${check_warranty_ver}/check_dell_warranty.py > /opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
-    creates => "/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
-    require => File["/opt/nagios-plugins"],
+    command => "curl http://gitorious.org/smarmy/check_dell_warranty/blobs/raw/${check_warranty_ver}/check_dell_warranty.py > ${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}",
+    creates => "${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}",
+    require => File["${monitoring::params::customplugins}"],
   }
 
-  file {"/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}":
+  file { "${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}":
     mode    => 0755,
     owner   => "root",
     group   => "root",
     require => Exec["download check_dell_warranty.py version $check_warranty_ver"],
   }
 
-  file { "/opt/nagios-plugins/check_dell_warranty.py":
+  file { "${monitoring::params::customplugins}/check_dell_warranty.py":
     ensure  => link,
-    target  => "/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}",
-    require => File["/opt/nagios-plugins/check_dell_warranty-${check_warranty_ver}"],
+    target  => "${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}",
+    require => File["${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}"],
     before  => Monitoring::Check["Dell Warranty"],
   }
 
@@ -85,7 +88,7 @@ class monitoring::dell {
     codename => "check_omsa_status",
     command  => "check_openmanage",
     options  => $check_openmanage_opts,
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
     interval => "360", # every 6h
     retry    => "180", # every 3h
     type     => "passive",
@@ -96,7 +99,7 @@ class monitoring::dell {
     codename => "check_dell_warranty",
     command  => "check_dell_warranty.py",
     options  => "--timeout 120",
-    base     => "${python_prefix} \$USER2\$/",
+    base     => "${python_prefix} ${monitoring::params::customplugins}",
     interval => "1440", # once a day
     retry    => "1440", # once a day
     type     => "passive",
