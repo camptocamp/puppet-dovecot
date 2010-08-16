@@ -72,14 +72,12 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     refreshonly => true,
   }
 
-  #file {"/var/cache/debconf/nslcd.preseed":
-  #  source => "puppet:///modules/c2c/sqdf/nslcd.preseed",
-  #}
 
-  #package {"nslcd":
-  #  ensure       => installed,
-  #  responsefile => "/var/cache/debconf/nslcd.preseed",
-  #  require      => File["/var/cache/debconf/nslcd.preseed"],
-  #}
+  # Medibuntu sources.list
+
+  apt::sources_list{"medibuntu":
+    ensure => present,
+    source => "puppet:///modules/c2c/sqdf/medibuntu.lucid.sources.list",
+  }
 
 }
