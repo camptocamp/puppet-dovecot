@@ -24,6 +24,10 @@ class mw-sig {
     include c2c::mapserver
   }
 
+  package {"ttf-mscorefonts-installer":
+    ensure => present,
+  }
+
   include tilecache::base
   include mapfish
   include cartoweb3::base
