@@ -3,14 +3,23 @@
 # Puppet configuration
 $puppet_server = "pm.camptocamp.net"
 $puppet_reportserver = "pm.camptocamp.net"
-$puppet_client_version = "0.25.5-1~c2c+1"
-$puppet_server_version = "0.25.5-1~c2c+1"
-$facter_version = "1.5.7-1~c2c+2"
 
-case $lsbdistcodename {
-  lenny:    { $augeas_version = "0.7.0-1~bpo50+1" }
-  lucid:    { $augeas_version = "0.7.0-1ubuntu1" }
-  default : { notice "Unsupported distcodename ${lsbdistcodename}" }
+case $operatingsystem {
+  /Debian|Ubuntu/: {
+    $puppet_client_version = "0.25.5-1~c2c+1"
+    $puppet_server_version = "0.25.5-1~c2c+1"
+    $facter_version = "1.5.7-1~c2c+2"
+    case $lsbdistcodename {
+      lenny:    { $augeas_version = "0.7.0-1~bpo50+1" }
+      lucid:    { $augeas_version = "0.7.0-1ubuntu1" }
+    }
+  }
+  /CentOS|RedHat/: {
+    $puppet_client_version = "0.25.5-1.el${lsbmajdistrelease}"
+    $facter_version = "1.5.7-1.el${lsbmajdistrelease}"
+    $augeas_version = "0.7.2-2.el${lsbmajdistrelease}"
+  }
+
 }
 
 # fist uid/gid used by type user (provider=adduser)
@@ -74,11 +83,13 @@ Package {
   provider => $operatingsystem ? {
     debian => apt,
     ubuntu => apt,
-    redhat => up2date,
-    centos => up2date
+    redhat => yum,
+    centos => yum
   },
-
-  require => Exec["apt-get_update"]
+}
+case $operatingsystem {
+  /Debian|Ubuntu/: { Package { require => Exec["apt-get_update"] } }
+  default : {}
 }
 
 if $lsbdistid == "Debian" {
