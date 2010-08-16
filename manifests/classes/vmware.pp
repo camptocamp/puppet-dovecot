@@ -3,13 +3,8 @@ class monitoring::vmware {
   include monitoring::params
 
   $vmware = $lsbdistcodename ? {
-    #TODO/^(Nahant|lenny)/ => "vmware-guestd",
-    Lenny         => "vmware-guestd",
-    Nahantupdate5 => "vmware-guestd",
-    Nahantupdate6 => "vmware-guestd",
-    Nahantupdate7 => "vmware-guestd",
-    Nahantupdate8 => "vmware-guestd",
-    Tikanga       => "vmtoolsd",
+    /^(Nahant|lenny)/ => "vmware-guestd",
+    Tikanga           => "vmtoolsd",
   }
 
   monitoring::check { "Process: $vmware":

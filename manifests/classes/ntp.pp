@@ -18,12 +18,7 @@ class monitoring::ntp {
   monitoring::check { "NTP Offset":
     codename => "check_ntp_offset",
     command  => $lsbdistcodename ? {
-      #TODO /^Nahant/ => "check_ntp",
-      "NahantUpdate4" => "check_ntp",
-      "NahantUpdate5" => "check_ntp",
-      "NahantUpdate6" => "check_ntp",
-      "NahantUpdate7" => "check_ntp",
-      "NahantUpdate8" => "check_ntp",
+      /^Nahant/ => "check_ntp",
       default   => "check_ntp_time",
     },
     options  => "-H ${ntp_server}",
