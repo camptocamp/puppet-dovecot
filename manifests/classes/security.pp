@@ -18,6 +18,8 @@ class monitoring::security {
     options  => "root c2c",
     interval => "720", # 12h
     retry    => "120",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     require  => File["/opt/nagios-plugins/check_password.sh"],
   }
 }

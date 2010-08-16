@@ -10,6 +10,8 @@ class monitoring::diskusage {
     options  => $monitoring_diskusage_opt,
     interval => 30,
     retry    => 10,
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ? {
       /RedHat|CentOS/  => "nagios-plugins-disk",
       default => false,

@@ -88,6 +88,8 @@ class monitoring::dell {
     base     => '$USER2$/',
     interval => "360", # every 6h
     retry    => "180", # every 3h
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 
   monitoring::check { "Dell Warranty":
@@ -97,6 +99,8 @@ class monitoring::dell {
     base     => "${python_prefix} \$USER2\$/",
     interval => "1440", # once a day
     retry    => "1440", # once a day
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 
   monitoring::check { "Dell OMSA-snmp bridge":
@@ -105,6 +109,8 @@ class monitoring::dell {
     options  => "-H localhost -R 'dell' -o SNMPv2-SMI::enterprises.674.10892.1.300.10.1.8.1",
     interval => "120", # every 2h
     retry    => "60",  # every 1h
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ? {
       /RedHat|CentOS/  => "nagios-plugins-snmp",
       default => "libnet-snmp-perl",

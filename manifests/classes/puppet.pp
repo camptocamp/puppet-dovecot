@@ -15,6 +15,8 @@ class monitoring::puppet {
     options  => "-W 1 -C 1 -w 86400 -c 432000 -f ${statepath}/state.yaml", # warn after 24h, crit after 5 days
     interval => "60",
     retry    => "30",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ? {
       /RedHat|CentOS/  => "nagios-plugins-file_age",
       default => false,
@@ -29,6 +31,8 @@ class monitoring::puppet {
     options  => "-w 86400 -c 432000 -f ${statepath}/classes.txt", # warn after 24h, crit after 5 days
     interval => "60",
     retry    => "30",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ? {
       /RedHat|CentOS/  => "nagios-plugins-file_age",
       default => false,

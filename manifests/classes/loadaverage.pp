@@ -19,5 +19,7 @@ class monitoring::loadaverage {
     codename => "check_load_average",
     command  => "check_load",
     options  => "-w ${monitoring_load_warn} -c ${monitoring_load_crit}",
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 }

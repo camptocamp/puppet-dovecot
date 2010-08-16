@@ -25,12 +25,16 @@ class monitoring::pacemaker {
     command  => "check_crm",
     options  => "/etc/ha.d/cluster-status.txt '[a-z0-9]+\.epfl\.ch'",
     base     => '$USER2$/',
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 
   monitoring::check { "Process: heartbeat":
     codename => "check_hb_process",
     command  => "check_procs",
     options  => "-w 4:10 -c 1: -C heartbeat",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ?{
       /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false

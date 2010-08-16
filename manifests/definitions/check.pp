@@ -13,13 +13,14 @@ Example usage:
   # example with all options available:
   monitoring::check { "Nagios Demo":
     ensure   => present,
-    codename => "check_demo",
     base     => "/usr/local/sbin/",
+    codename => "check_demo",
     command  => "check_dummy.pl",
     options  => "-w 1 -c 2",
     interval => "10",
     retry    => "5",
-    remote   => true,
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => ["foo", "bar"],
   }
 
@@ -33,50 +34,96 @@ define monitoring::check (
   $options=undef,
   $interval='5',
   $retry='3',
-  $remote=false,
+  $type,
+  $server,
   $package=false) {
 
-  if $fqdn == $nagios_nsca_server {
 
-    nagios::service::local { "$codename on $fqdn":
-      ensure                => $ensure,
-      host_name             => $fqdn,
-      command_line          => "${base}${command} ${options}",
-      contact_groups        => $contact,
-      check_command         => $codename,
-      normal_check_interval => $interval,
-      retry_check_interval  => $retry,
-      service_description   => $name,
-      package               => $package,
+  case $type {
+
+    'passive': { # nsca
+
+      if $fqdn == $server {
+        nagios::service::local { "$codename on $fqdn":
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          check_command         => $codename,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          package               => $package,
+        }
+      } else {
+        nagios::service::nsca { $codename:
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          export_for            => "nagios-${server}",
+          package               => $package,
+        }
+      }
     }
 
-  } else {
+    'active': { #nrpe
 
-    if $remote == true {
-
-      nagios::service::remote { $codename:
-        ensure                => $ensure,
-        host_name             => $fqdn,
-        command_line          => "${base}${command} ${options}",
-        contact_groups        => $contact,
-        normal_check_interval => $interval,
-        retry_check_interval  => $retry,
-        service_description   => $name,
-        export_for            => "nagios-${nagios_nsca_server}",
+      if $fqdn == $server {
+        nagios::service::local { "$codename on $fqdn":
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          check_command         => $codename,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          package               => $package,
+        }
+      } else {
+        nagios::service::nrpe { $codename:
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          export_for            => "nagios-${server}",
+          package               => $package,
+        }
       }
+    }
 
-    } else {
+    'remote': { # remote
 
-      nagios::service::nsca { $codename:
-        ensure                => $ensure,
-        host_name             => $fqdn,
-        command_line          => "${base}${command} ${options}",
-        contact_groups        => $contact,
-        normal_check_interval => $interval,
-        retry_check_interval  => $retry,
-        service_description   => $name,
-        export_for            => "nagios-${nagios_nsca_server}",
-        package               => $package,
+      if $fqdn == $server {
+        nagios::service::local { "$codename on $fqdn":
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          check_command         => $codename,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          package               => $package,
+        }
+      } else {
+        nagios::service::remote { $codename:
+          ensure                => $ensure,
+          host_name             => $fqdn,
+          command_line          => "${base}${command} ${options}",
+          contact_groups        => $contact,
+          normal_check_interval => $interval,
+          retry_check_interval  => $retry,
+          service_description   => $name,
+          export_for            => "nagios-${server}",
+        }
       }
     }
   }

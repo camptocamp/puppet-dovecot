@@ -6,6 +6,8 @@ class monitoring::syslog {
       codename => "check_syslogd_process",
       command  => "check_procs",
       options  => "-w 1:1 -c 1:1 -C syslog-ng",
+      type     => "passive",
+      server   => $nagios_nsca_server,
       package  => $operatingsystem ?{
         /RedHat|CentOS/ => "nagios-plugins-procs",
         default => false
@@ -21,6 +23,8 @@ class monitoring::syslog {
         Debian => "-w 1:1 -c 1:1 -C rsyslogd",
         /RedHat|CentOS/ => "-w 1:1 -c 1:1 -C syslogd",
       },
+      type     => "passive",
+      server   => $nagios_nsca_server,
       package  => $operatingsystem ?{
         /RedHat|CentOS/ => "nagios-plugins-procs",
         default => false
@@ -33,6 +37,8 @@ class monitoring::syslog {
         codename => "check_klogd_process",
         command  => "check_procs",
         options  => "-w 1:1 -c 1:1 -C klogd",
+        type     => "passive",
+        server   => $nagios_nsca_server,
       }
     }
 

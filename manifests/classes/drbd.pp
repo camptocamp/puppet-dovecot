@@ -13,5 +13,7 @@ class monitoring::drbd {
     command  => "check_drbd",
     options  => "/proc/drbd",
     base     => '$USER2$/',
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 }

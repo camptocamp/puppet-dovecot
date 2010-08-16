@@ -64,6 +64,8 @@ define monitoring::check::sslcert (
     interval => "720", # 2x/day
     base     => '$USER2$/',
     options  => "-H ${host} -n ${_certname} -p ${port} -r ${crtfile} -d ${days} -o '${org}'",
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 
 }

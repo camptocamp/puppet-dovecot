@@ -16,6 +16,8 @@ class monitoring::vmware {
     options  => "-w 1:1 -c 1:1 -C ${vmware}",
     interval => "60",
     retry    => "30",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ?{
       /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
@@ -51,5 +53,7 @@ exit 0
     base     => '$USER2$/',
     interval => "60",
     retry    => "30",
+    type     => "passive",
+    server   => $nagios_nsca_server,
   }
 }

@@ -4,6 +4,8 @@ class monitoring::ntp {
     codename => "check_ntpd_process",
     command  => "check_procs",
     options  => "-w 1:1 -c 1:1 -C ntpd",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ?{
       /RedHat|CentOS/ => "nagios-plugins-procs",
       default => false
@@ -27,6 +29,8 @@ class monitoring::ntp {
     options  => "-H ${ntp_server}",
     interval => 120,
     retry    => 30,
+    type     => "passive",
+    server   => $nagios_nsca_server,
     package  => $operatingsystem ? {
       /RedHat|CentOS/  => "nagios-plugins-ntp",
       default => false,
