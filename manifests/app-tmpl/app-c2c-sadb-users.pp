@@ -1,5 +1,5 @@
 #
-# This puppet recipe is generated with the script get-c2c-sadb-users.rb
+# This puppet recipe is generated with the script get-sadb-users.rb
 #
 define app::c2c::sadb::users ($ensure=present, $groups=false) {
 
@@ -341,5 +341,41 @@ define app::c2c::sadb::users ($ensure=present, $groups=false) {
     type    => url_get("${sadb}/user/bquartier/ssh_pub_key_type"),
     key     => url_get("${sadb}/user/bquartier/ssh_pub_key"),
     groups  => $groups, 
+  }
+
+  c2c::sshuser {"fclementi": 
+    ensure  => $ensure, 
+    uid     => url_get("${sadb}/user/fclementi/uid_number"),
+    comment => sprintf("%s %s", url_get("${sadb}/user/fclementi/firstname"), url_get("${sadb}/user/fclementi/lastname")),
+    email   => url_get("${sadb}/user/fclementi/email"), 
+    type    => url_get("${sadb}/user/fclementi/ssh_pub_key_type"),
+    key     => url_get("${sadb}/user/fclementi/ssh_pub_key"),
+    groups  => $groups, 
+  }
+
+  # remove old users
+  user {
+    "francois": ensure => absent;
+    "arnaud": ensure => absent;
+    "awuest": ensure => absent;
+    "cmoullet": ensure => absent;
+    "cpayet": ensure => absent;
+    "dcorpataux": ensure => absent;
+    "djonglez": ensure => absent;
+    "gnguessan": ensure => absent;
+    "ikiener": ensure => absent;
+    "jflarroche": ensure => absent;
+    "jfmony": ensure => absent;
+    "mbaroudi": ensure => absent;
+    "mcoudert": ensure => absent;
+    "mfcochard": ensure => absent;
+    "nribot": ensure => absent;
+    "ojohner": ensure => absent;
+    "olivier": ensure => absent;
+    "pvalsecc": ensure => absent;
+    "tbonfort": ensure => absent;
+    "vjourdan": ensure => absent;
+    "cgampouris": ensure => absent;
+    "epellaud": ensure => absent;
   }
 }
