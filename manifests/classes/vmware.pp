@@ -52,9 +52,4 @@ exit 0
     interval => "60",
     retry    => "30",
   }
-
-  monitoring::check { "legacy vmware check":
-    ensure   => "absent",
-    codename => "check_vmtools",
-  }
 }

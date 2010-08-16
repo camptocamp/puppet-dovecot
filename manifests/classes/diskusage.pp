@@ -15,9 +15,4 @@ class monitoring::diskusage {
       default => false,
     },
   }
-
-  monitoring::check { "legacy disk usage":
-    ensure   => absent,
-    codename => "check_local_du",
-  }
 }

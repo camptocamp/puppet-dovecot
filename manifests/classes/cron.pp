@@ -12,9 +12,4 @@ class monitoring::cron {
       default => false
     }
   }
-
-  monitoring::check { "legacy cron check":
-    codename => "check_cron",
-    ensure   => absent,
-  }
 }

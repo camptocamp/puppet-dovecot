@@ -17,9 +17,4 @@ class monitoring::ssh {
     options  => $fqdn,
     remote   => true,
   }
-
-  monitoring::check { "legacy ssh service check":
-    ensure   => absent,
-    codename => "check_ssh!22",
-  }
 }

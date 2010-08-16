@@ -20,14 +20,4 @@ class monitoring::loadaverage {
     command  => "check_load",
     options  => "-w ${monitoring_load_warn} -c ${monitoring_load_crit}",
   }
-
-  monitoring::check { "legacy load average check":
-    ensure   => absent,
-    codename => "check_load",
-  }
-
-  monitoring::check { "legacy load average backup check":
-    ensure   => absent,
-    codename => "check_load_backup",
-  }
 }

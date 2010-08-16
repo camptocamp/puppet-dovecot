@@ -110,14 +110,4 @@ class monitoring::dell {
       default => "libnet-snmp-perl",
     },
   }
-
-  monitoring::check {
-    "legacy omsa disks":   codename => "check_omsa_disks",   ensure => absent;
-    "legacy omsa raid":    codename => "check_omsa_raid",    ensure => absent;
-    "legacy omsa chassis": codename => "check_omsa_chassis", ensure => absent;
-  }
-
-  file {["/usr/lib/nagios/plugins/contrib/check_omsa.pl",
-         "/usr/lib64/nagios/plugins/contrib/check_omsa.pl"]: ensure => absent }
-
 }

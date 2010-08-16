@@ -34,24 +34,4 @@ class monitoring::puppet {
       default => false,
     },
   }
-
-
-  monitoring::check { "legacy puppet check":
-    ensure   => absent,
-    codename => "check_puppet",
-  }
-
-  monitoring::check { "legacy last puppet run":
-    ensure   => absent,
-    codename => "check_puppet_state_yaml",
-  }
-
-  monitoring::check { "legacy last manifest refresh":
-    ensure   => absent,
-    codename => "check_puppet_localconfig_yaml",
-  }
-
-  file {
-    ["/usr/lib/nagios/plugins/contrib/check_puppet.pl",
-     "/usr/lib64/nagios/plugins/contrib/check_puppet.pl"]: ensure => absent }
 }
