@@ -89,4 +89,16 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     require => Exec["Add ppa kubuntu repository"],
   }
 
+  if $subilia_bluetooth_kbd != "" {
+    # bluetooth configuration
+    file {"/root/bluetooth.tar.gz":
+      source => "puppet:///modules/c2c/sqdf/bluetooth_subilia.tar.gz",
+    }
+    exec {"install bt config-files":
+      command => "tar zxfp /root/bluetooth.tar.gz -C /",
+      unless => "grep -r 'MX5000' /var/lib/bluetooth/*",
+      require => File["/root/bluetooth.tar.gz"],
+    }
+  }
+
 }
