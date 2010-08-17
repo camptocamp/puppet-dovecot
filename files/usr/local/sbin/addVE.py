@@ -39,7 +39,6 @@ def execCmdLive(cmd, msg):
 
 def execCmd(cmd, msg):
     status, output = getstatusoutput(cmd)
-    output = ''
     if status:
         print "%s failed, abort !" % msg
         sys.exit(1)
@@ -76,14 +75,53 @@ def addVE(veid,name,bridge,template, cpu, mem):
     execCmdLive("vzctl set %s --privvmpages %sM --save" % (veid, int(mem)*MB_PER_UNIT ), "Set memory limit")
     execCmdLive("echo NETIF_BRIDGE='%s' >> /etc/vz/conf/%s.conf" % (bridge, veid), "Set netif_bridge")
 
+
+### interactive part
+def getdata(url):
+    '''
+    opens %url% and maps its output into a list of dictionnaries
+    '''
+    try:
+        result = urllib2.urlopen(url).readlines()
+    except urllib2.HTTPError:
+        return []
+    cols = result[0].strip().split(";")
+    items = map(lambda item:dict(zip(cols, item.strip().split(";"))), result[1:])
+    return items
+
+def getIp(hostname):
+    result = execCmd("host %s" % hostname, "Check DNS entry for %s" % hostname)
+    return result.split()[-1]
+
+def getUnits(veid):
+    d = getdata('http://sadb.camptocamp.com/vserver/search/veid/%s'%veid)
+    return int(float(d[0]['cpu'])),int(float(d[0]['memory']))
+
+def getHostname(veid):
+    d = getdata('http://sadb.camptocamp.com/vserver/search/veid/%s'%veid)
+    return d[0]['hostname']
+
+def getVars():
+    environment = raw_input('Environment: ')
+    veid = raw_input('VEID: ')
+    hostname = getHostname(veid)
+    name = hostname.split('.')[0]
+    ip = getIp(hostname)
+    cpu, mem = getUnits(veid)
+
+    return (environment, veid, hostname, name, ip, cpu, mem)
+
 if __name__=="__main__":
-    environment = sys.argv[1]
-    veid = sys.argv[2]
-    hostname = sys.argv[3]
-    name = sys.argv[4]
-    ip = sys.argv[5]
-    cpu = sys.argv[6]
-    mem = sys.argv[7]
+    if len(sys.argv) != 8:
+      environment, veid, hostname, name, ip, cpu, mem = getVars()
+    else:
+      environment = sys.argv[1]
+      veid = sys.argv[2]
+      hostname = sys.argv[3]
+      name = sys.argv[4]
+      ip = sys.argv[5]
+      cpu = sys.argv[6]
+      mem = sys.argv[7]
     template = "debian-5.0-amd64-c2c"
     subnet, bridge = getBridge(ip)
     addVE(veid, name, bridge, template, cpu, mem)
