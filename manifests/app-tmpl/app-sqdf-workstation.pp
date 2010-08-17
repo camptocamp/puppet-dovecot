@@ -109,4 +109,21 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     }
   }
 
+  # Custom fonts
+  file {"/usr/share/fonts/sqdf":
+    ensure => directory,
+    source => "puppet:///modules/c2c/sqdf/fonts",
+    recurse => true,
+    notify => Exec["refresh fontconfig"],
+  }
+  package {"fontconfig":
+    ensure => installed
+  }
+  exec{"refresh fontconfig":
+    command     => "fc-cache",
+    refreshonly => true,
+    require     => Package["fontconfig"],
+  }
+
+
 }
