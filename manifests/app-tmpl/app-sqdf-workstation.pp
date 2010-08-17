@@ -76,8 +76,12 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
   # Additional sources.list
 
   apt::sources_list{"medibuntu":
-    ensure => present,
-    source => "puppet:///modules/c2c/sqdf/medibuntu.lucid.sources.list",
+    ensure  => present,
+    source  => "puppet:///modules/c2c/sqdf/medibuntu.lucid.sources.list",
+    require => Apt::Key["medibuntu-key"],
+  }
+  apt::key{"medibuntu-key":
+    source => "http://packages.medibuntu.org/medibuntu-key.gpg",
   }
 
   exec{"Add ppa kubuntu repository":
