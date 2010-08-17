@@ -84,5 +84,9 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     command => "add-apt-repository ppa:kubuntu-ppa/ppa",
     creates => "/etc/apt/sources.list.d/kubuntu-ppa-ppa-lucid.list",
   }
+  file{"/etc/apt/sources.list.d/kubuntu-ppa-ppa-lucid.list":
+    ensure  => present,
+    require => Exec["Add ppa kubuntu repository"],
+  }
 
 }
