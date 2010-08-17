@@ -1,14 +1,13 @@
 /*
 
-== Class openvz::client::debian
+== Class openvz::guest::notty
 
-Is included by openvz::client
 
 Functions:
 - Disable tty inside container - they are useless, and create useless logs.
 
 */
-class openvz::client::debian {
+class openvz::guest::notty {
 
   exec {"reload init":
     command     => "kill -HUP 1",
