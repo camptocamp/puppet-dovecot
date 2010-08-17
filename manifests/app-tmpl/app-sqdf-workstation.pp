@@ -73,11 +73,16 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
   }
 
 
-  # Medibuntu sources.list
+  # Additional sources.list
 
   apt::sources_list{"medibuntu":
     ensure => present,
     source => "puppet:///modules/c2c/sqdf/medibuntu.lucid.sources.list",
+  }
+
+  exec{"Add ppa kubuntu repository":
+    command => "add-apt-repository ppa:kubuntu-ppa/ppa",
+    creates => "/etc/apt/sources.list.d/kubuntu-ppa-ppa-lucid.list",
   }
 
 }

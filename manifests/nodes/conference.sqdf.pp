@@ -1,3 +1,3 @@
-node 'workstation1.sqdf' {
+node 'conference.sqdf' {
   include wrk-sqdf
 }
