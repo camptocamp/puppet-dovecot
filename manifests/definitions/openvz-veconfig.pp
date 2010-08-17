@@ -11,7 +11,7 @@ openvz::veconfig {"10":
 It whill create a configuration template for the case we have 10 VE on the server
 
 */
-define openvz::veconfig($ensure=>present) {
+define openvz::veconfig($ensure=present) {
 
   case $ensure {
     present: {
