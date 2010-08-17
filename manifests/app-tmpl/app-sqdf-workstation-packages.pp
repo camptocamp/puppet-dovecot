@@ -27,7 +27,6 @@ class app-sqdf-workstation-packages {
     "amarok": ensure => present;
 
     # KDE stuff to REMOVE
-    "dolphin": ensure => absent;
     "kdepim-strigi-plugins": ensure => absent;
     "strigi-daemon": ensure => absent;
 
