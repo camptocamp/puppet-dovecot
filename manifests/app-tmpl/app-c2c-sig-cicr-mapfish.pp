@@ -27,4 +27,28 @@ class app-c2c-sig-cicr-mapfish {
     ensure => present,
     group  => admin,
   }
+
+  apache::auth::htpasswd {"rt-19381":
+    ensure        => present,
+    username      => "cicr",
+    clearPassword => "25dunant",
+    vhost         => "cicr-mapfish",
+  }
+  apache::auth::basic::file::user {"auth on cicr":
+    vhost => "cicr-mapfish",
+    ensure => absent,
+  }
+  apache::directive {"cicr-auth":
+    vhost     => "cicr-mapfish",
+    directive => '
+<LocationMatch ^/(?!geoserver.*).*$>
+  AuthName "Private area"
+  AuthType Basic
+  AuthBasicProvider file
+  AuthUserFile /var/www/cicr-mapfish/private/htpasswd
+  Require valid-user
+</LocationMatch>
+',
+  }
+
 }
