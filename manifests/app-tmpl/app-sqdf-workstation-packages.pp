@@ -48,6 +48,7 @@ class app-sqdf-workstation-packages {
     "whois": ensure => present;
     "krita": ensure => present;
     "quanta": ensure => present;
+    "cryptsetup": ensure => present;
 
     # Languages and dictionaries
     "language-pack-fr": ensure => present;
