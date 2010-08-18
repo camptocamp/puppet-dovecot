@@ -15,8 +15,10 @@ class git-subtree {
   }
 
   file { "/usr/local/bin/git-subtree":
-    ensure  => link,
-    target  => "/usr/src/git-subtree/git-subtree",
+    ensure  => file,
+    source  => "file:///usr/src/git-subtree/git-subtree.sh",
+    owner   => "root",
+    mode    => 0755,
     require => Vcsrepo["/usr/src/git-subtree"],
   }
 }
