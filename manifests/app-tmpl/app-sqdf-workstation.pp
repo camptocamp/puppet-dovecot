@@ -16,10 +16,6 @@ class app-sqdf-workstation {
     source => "puppet:///modules/c2c/sqdf/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop",
   }
 
-  package {"kde-icons-crystal":
-    ensure => present,
-  }
-
   # Sudoers
   common::concatfilepart {"sqdf sudoers":
     file  => "/etc/sudoers",
