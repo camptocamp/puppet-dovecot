@@ -20,6 +20,7 @@ class app-c2c-sig-cicr-mapfish {
     ensure => present,
     group  => admin,
     aliases => [$fqdn, "wathab-icrc.camptocamp.net"],
+    mode    => 2575,
   }
 
   tomcat::instance {"tomcat1":
