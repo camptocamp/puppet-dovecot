@@ -26,6 +26,8 @@ class app-sqdf-workstation-packages {
     #"kde-guidance" : ensure => present;
     "amarok": ensure => present;
     "kde-icons-crystal": ensure => present;
+    "kwrite": ensure => present;
+    "kaffeine": ensure => present;
 
     # KDE stuff to REMOVE
     "kdepim-strigi-plugins": ensure => absent;
@@ -39,8 +41,9 @@ class app-sqdf-workstation-packages {
     "kodos": ensure => present;
     "amule": ensure => present;
     "alien": ensure => present;
-    "dcraw":  ensure => present;
-    "mplayer":  ensure => present;
+    "dcraw": ensure => present;
+    "mplayer": ensure => present;
+    "mplayer-gui": ensure => present;
     "wine": ensure => present;
     "whois": ensure => present;
     "krita": ensure => present;
