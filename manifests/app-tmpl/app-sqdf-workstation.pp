@@ -10,6 +10,7 @@ class app-sqdf-workstation {
   #  shell    => "/bin/bash"
   #}
 
+  # OpenOffice mime type
   file {"/usr/share/desktop-directories/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop":
     ensure => present,
     source => "puppet:///modules/c2c/sqdf/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop",
@@ -124,6 +125,5 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     refreshonly => true,
     require     => Package["fontconfig"],
   }
-
 
 }
