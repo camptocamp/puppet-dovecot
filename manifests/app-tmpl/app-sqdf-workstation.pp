@@ -106,6 +106,21 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
     }
   }
 
+  if $diserens_burg != "" {
+    # Install burg (grub like bootloader) because the console
+    # ouput doesn't work with grub (request from Mr. Subilia)
+    apt::sources_list{"burg":
+      ensure => present,
+      content => "deb http://ppa.launchpad.net/bean123ch/burg/ubuntu lucid main
+deb-src http://ppa.launchpad.net/bean123ch/burg/ubuntu lucid main
+",
+    }
+    package {"burg":
+      ensure => present,
+      require => Apt::Sources_list["burg"],
+    }
+  }
+
   # Custom fonts
   file {"/usr/share/fonts/sqdf":
     ensure => directory,
