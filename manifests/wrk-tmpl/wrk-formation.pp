@@ -18,7 +18,7 @@ class wrk-formation {
 
   ### APP (generic) ##############################
   include app-workstation-tuning
-  include app-workstation-packages
+  include app-c2c-workstation-packages
 
   ### APP (specific to this server) ##############
   include app-c2c-workstation-formation
