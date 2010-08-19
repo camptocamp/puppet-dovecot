@@ -24,7 +24,10 @@ class mw-sig {
     include c2c::mapserver
   }
 
-  package {"ttf-mscorefonts-installer":
+  package {[
+    "ttf-mscorefonts-installer",
+    "python-pycurl"
+    ]:
     ensure => present,
   }
 
