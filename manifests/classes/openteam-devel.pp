@@ -1,6 +1,6 @@
 class c2c::openteam-devel inherits openerp::server::multiinstance {
 
-  $openteam = ["nbessi", "jgrandguillaume", "lmaurer", "vrenaville"]
+  $openteam = ["nbessi", "jgrandguillaume", "lmaurer", "vrenaville", "gbaconnier", "fclementi"]
 
   c2c::sshuser::sadb { $openteam:
     ensure  => present,

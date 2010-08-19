@@ -23,4 +23,14 @@ class c2c::tinyteam-in-charge {
     allowed_user => "jbove",
     system_user => "admin",
   }
+
+  ssh-old::account::allowed_user {"gbaconnier on admin":
+    allowed_user => "gbaconnier",
+    system_user => "admin",
+  }
+
+  ssh-old::account::allowed_user {"fclementi on admin":
+    allowed_user => "fclementi",
+    system_user => "admin",
+  }
 }
