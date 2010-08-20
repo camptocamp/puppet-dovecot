@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# this is a basic Nagios plugin that tests apache configuration
+
+APACHE="/usr/sbin/apache"
+
+if ! [ -x $APACHE ]; then
+  APACHE="/usr/sbin/apache2"
+fi
+
+$APACHE -t 2>&1 | perl -pe 's/\n/ /g'
+
+if `$APACHE -t > /dev/null 2>&1`; then
+  exit 0
+else
+  exit 2
+fi
+

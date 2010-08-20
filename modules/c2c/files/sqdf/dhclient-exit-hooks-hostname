@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Set the hostname - put this in /etc/dhclient-exit-hooks
+
+if [ x$reason != xBOUND ] && [ x$reason != xREBIND ] && [x$reason !=
+xREBOOT]; then exit; fi
+
+echo dhclient-exit-hooks: IP address is $new_ip_address
+
+hostname=$( host $new_ip_address | perl -e '<STDIN> =~ / (\w+)\..*$/; print $1;')
+
+hostname $hostname
+
+echo $hostname >/etc/hostname
+
+echo dhclient-exit-hooks: hostname is $( hostname ) 

@@ -1,0 +1,12 @@
+ldap-auth-config	ldap-auth-config/bindpw	password	
+ldap-auth-config	ldap-auth-config/rootbindpw	password	
+ldap-auth-config	ldap-auth-config/binddn	string	cn=proxyuser,dc=example,dc=net
+ldap-auth-config	ldap-auth-config/dbrootlogin	boolean	false
+ldap-auth-config	ldap-auth-config/rootbinddn	string	cn=manager,dc=example,dc=net
+ldap-auth-config	ldap-auth-config/pam_password	select	md5
+ldap-auth-config	ldap-auth-config/move-to-debconf	boolean	true
+ldap-auth-config	ldap-auth-config/ldapns/ldap-server	string	ldap://artemis.sqdf
+ldap-auth-config	ldap-auth-config/ldapns/base-dn	string	dc=artemis
+ldap-auth-config	ldap-auth-config/override	boolean	true
+ldap-auth-config	ldap-auth-config/ldapns/ldap_version	select	3
+ldap-auth-config	ldap-auth-config/dblogin	boolean	false
