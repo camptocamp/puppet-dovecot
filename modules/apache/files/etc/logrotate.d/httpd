@@ -1,0 +1,21 @@
+# file managed by puppet
+/var/www/vhosts/*/logs/*.log /var/log/httpd/*log {
+    weekly
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    create 644 root adm
+    sharedscripts
+    prerotate
+        if [ -x /etc/cron.hourly/awstats ]; then
+            /etc/cron.hourly/awstats || true
+        fi
+    endscript
+    postrotate
+        if [ -f /var/run/httpd.pid ]; then
+            /sbin/service httpd reload > /dev/null 2>/dev/null || true
+        fi
+    endscript
+}
