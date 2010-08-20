@@ -11,7 +11,12 @@ class app-c2c-puppetmaster {
   include mysql::server
   include git-subtree
 
+
   package{"git-email":
+    ensure => present;
+  }
+
+  package{["gitk", "xauth"]:
     ensure => present;
   }
 
