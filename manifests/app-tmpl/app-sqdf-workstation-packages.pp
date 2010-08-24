@@ -92,6 +92,9 @@ class app-sqdf-workstation-packages {
     "ttf-punjabi-fonts": ensure => present;
     "ttf-tamil-fonts": ensure => present;
     "ttf-telugu-fonts": ensure => present;
+
+    # Acrobat reader no-free
+    "acroread": ensure => present;
   }
 
   # Openoffice
