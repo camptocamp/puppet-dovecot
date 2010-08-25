@@ -2,7 +2,7 @@
 
 # file managed by puppet
 
-File.open("/var/run/nagios/status.dat", "r") do |file|
+File.open("/var/cache/nagios/status.dat", "r") do |file|
 
   inblock = false
   status = Hash.new
