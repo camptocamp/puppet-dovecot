@@ -79,9 +79,9 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
   apt::sources_list{"medibuntu":
     ensure  => present,
     source  => "puppet:///modules/c2c/sqdf/medibuntu.lucid.sources.list",
-    require => Apt::Key["medibuntu-key"],
+    require => Apt::Key["medibuntu"],
   }
-  apt::key{"medibuntu-key":
+  apt::key{"medibuntu":
     source => "http://packages.medibuntu.org/medibuntu-key.gpg",
   }
 
