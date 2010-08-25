@@ -45,6 +45,8 @@ class app-c2c-workstation-packages {
     "pan":                              ensure => present;
     "enigmail":                         ensure => present;
     "urlview":                          ensure => present;
+    "chromium-browser":                 ensure => present;
+    "chromium-codecs-ffmpeg-extra":     ensure => present;
 
     # Network tools
     "ekiga":                            ensure => present;
