@@ -1,4 +1,8 @@
 class app-c2c-sig-dev {
+
+  package {["python-sphinx", "python-setuptools"]:
+    ensure => present,
+  }
   
   $project_name = $apache_vhost_name ? {
     "" => project_name_from_domain($fqdn),
