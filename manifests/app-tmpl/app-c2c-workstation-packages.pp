@@ -37,6 +37,7 @@ class app-c2c-workstation-packages {
     "openoffice.org-gnome":             ensure => present;
     "planner":                          ensure => present;
     "unrar":                            ensure => present;
+    "libpg-java":                       ensure => present;
 
     # Communication
     "xchat-gnome":                      ensure => present;
