@@ -8,8 +8,8 @@ class srv-kartenportal {
   include os-base
   include os-server
 
-  include lighttpd
+  #include lighttpd
   include lighttpd::administration
 
-  include app-kartenportal
+  #include app-kartenportal
 }
