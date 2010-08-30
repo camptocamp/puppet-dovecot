@@ -28,5 +28,12 @@ class app-c2c-workstation {
       "no-X11-forwarding",
     ],
   }
+
+  # Gnome environment configuration cleaning script
+  file {"/usr/local/bin/clean-gnome-environment.sh":
+    ensure => present,
+    source => "puppet:///modules/c2c/clean-gnome-environment.sh",
+    mode   => 0755,
+  }
   
 }
