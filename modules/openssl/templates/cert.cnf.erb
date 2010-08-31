@@ -1,0 +1,39 @@
+# file managed by puppet
+#
+# SSLeay example configuration file.
+#
+
+RANDFILE                = $ENV::HOME/.rnd
+
+[ req ]
+default_bits            = 2048
+default_md              = sha1
+default_keyfile         = privkey.pem
+distinguished_name      = req_distinguished_name
+prompt                  = no
+<% if altnames and not altnames.empty? -%>
+req_extensions          = req_ext
+<% end -%>
+
+[ req_distinguished_name ]
+countryName                     = <%= country %>
+<% if has_variable?("state") -%>
+stateOrProvinceName             = <%= state %>
+<% end -%>
+<% if has_variable?("locality") -%>
+localityName                    = <%= locality %>
+<% end -%>
+organizationName                = <%= organisation %>
+<% if has_variable?("unit") -%>
+organizationalUnitName          = <%= unit %>
+<% end -%>
+commonName                      = <%= commonname %>
+<% if has_variable?("email") -%>
+emailAddress                    = <%= email %>
+<% end -%>
+
+<% if altnames and not altnames.empty? -%>
+[ req_ext ]
+subjectAltName = "<%= altnames.collect! {|i| "DNS: #{i}" }.join(', ') -%>"
+<% end %>
+
