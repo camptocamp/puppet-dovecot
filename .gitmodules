@@ -43,9 +43,6 @@
 [submodule "modules/sysctl"]
 	path = modules/sysctl
 	url = git@github.com:camptocamp/puppet-sysctl.git
-[submodule "modules/openerp"]
-	path = modules/openerp
-	url = git@github.com:camptocamp/puppet-openerp.git
 [submodule "modules/subversion"]
 	path = modules/subversion
 	url = git@github.com:camptocamp/puppet-subversion
