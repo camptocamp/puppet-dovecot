@@ -1,0 +1,5 @@
+deb http://mirror.switch.ch/ftp/mirror/debian/ lenny main contrib non-free
+deb http://mirror.switch.ch/ftp/mirror/debian-security/ lenny/updates main contrib non-free
+
+deb-src http://mirror.switch.ch/ftp/mirror/debian/ lenny main contrib non-free
+deb-src http://mirror.switch.ch/ftp/mirror/debian-security/ lenny/updates main contrib non-free
