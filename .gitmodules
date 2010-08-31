@@ -1,9 +1,6 @@
 [submodule "modules/nagios"]
 	path = modules/nagios
 	url = git@github.com:camptocamp/puppet-nagios
-[submodule "modules/os"]
-	path = modules/os
-	url = git@github.com:camptocamp/puppet-os
 [submodule "modules/puppet"]
 	path = modules/puppet
 	url = git@github.com:camptocamp/puppet-puppet
