@@ -4,9 +4,6 @@
 [submodule "modules/syslog-ng"]
 	path = modules/syslog-ng
 	url = git@github.com:camptocamp/puppet-syslog-ng
-[submodule "modules/sudo"]
-	path = modules/sudo
-	url = git@github.com:camptocamp/puppet-sudo
 [submodule "manifests/generic-tmpl"]
 	path = manifests/generic-tmpl
 	url = git@github.com:camptocamp/puppet-generic-tmpl.git
