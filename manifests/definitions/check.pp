@@ -124,7 +124,10 @@ define monitoring::check (
         nagios::service::remote { $codename:
           ensure                => $ensure,
           host_name             => $fqdn,
-          command_line          => "${basedir}${command} ${options}",
+          command_line          => $base ? {
+            'default' => "\$USER1\$/${command} ${options}",
+            default   => "${basedir}${command} ${options}",
+          },
           contact_groups        => $contact,
           normal_check_interval => $interval,
           retry_check_interval  => $retry,
