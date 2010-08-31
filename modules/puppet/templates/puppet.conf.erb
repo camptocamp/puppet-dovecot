@@ -1,0 +1,21 @@
+# file managed by puppet
+[main]
+  ssldir=/var/lib/puppet/ssl
+
+<% if has_variable?("puppetmaster_ssldir") %>
+[puppetca]
+  ssldir=<%= puppetmaster_ssldir %>
+<% end %>
+
+[puppetd]
+  server=<%= puppet_server %>
+  reportserver=<%= puppet_reportserver %>
+  report=true
+  configtimeout=3600
+  pluginsync=true
+  plugindest=/var/lib/puppet/lib
+  libdir=/var/lib/puppet/lib
+  pidfile=/var/run/puppet/puppetd.pid
+  environment=<%= puppet_environment %>
+  diff_args=-u
+

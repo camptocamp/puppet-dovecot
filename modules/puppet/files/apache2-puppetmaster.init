@@ -1,0 +1,41 @@
+#! /bin/sh
+# file managed by puppet
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/apache2
+DAEMON_OPTS="-f /etc/apache2-puppetmaster.conf"
+NAME=apache2-puppetmaster
+DESC="Puppetmaster apache2 frontend"
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+
+case "$1" in
+    start)
+	log_begin_msg "Starting $DESC"
+	start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
+		--startas $DAEMON -- $DAEMON_OPTS
+
+	log_end_msg $?
+	;;
+    stop)
+	log_begin_msg "Stopping $DESC"
+	start-stop-daemon --stop --quiet --pidfile /var/run/$NAME.pid
+	log_end_msg $?
+	;;
+  restart|force-reload)
+	log_begin_msg "Restarting $DESC"
+	$0 stop
+	sleep 1
+  $0 start
+	log_end_msg 0
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

@@ -1,0 +1,82 @@
+# file managed by puppet
+# Jeff McCune <mccune@math.ohio-state.edu>
+# 2007-09-14
+#
+# Minimal Apache Configuration for Apache+Mongrel+Puppetmaster
+#
+#  Host System Setup and Configuration:
+#  - Add puppet/puppet user/group
+#  - Use the following configuration file.
+#  - /Library/Puppet/Generated/Server is owned by puppet/puppet
+#
+#  - If you have a system which doens't provide Apache 2.2.X packages:
+#    Apache may be built with:
+#
+#    ./configure --enable-so \
+#       --enable-ssl=shared --enable-proxy=shared --enable-proxy_http=shared \
+#       --enable-proxy_balancer=shared --enable-headers=shared \
+#       --enable-authz_host=shared --enable-log_config=shared \
+#       --prefix=/Library/Puppet/Resources/httpd-2.2.4
+#
+# - Finally, start the SSL proxy with:
+#   /Library/Puppet/Resources/httpd-2.2.4/bin/httpd -f \
+#   /Library/Puppet/Versioned/Server/cluster-orange/httpd/puppetmasterd.conf
+
+Listen 8140
+PidFile /var/run/apache2-puppetmaster.pid
+User puppet
+Group puppet
+
+LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
+LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
+LoadModule proxy_balancer_module /usr/lib/apache2/modules/mod_proxy_balancer.so
+LoadModule headers_module /usr/lib/apache2/modules/mod_headers.so
+LoadModule ssl_module /usr/lib/apache2/modules/mod_ssl.so
+LoadModule authz_host_module /usr/lib/apache2/modules/mod_authz_host.so
+
+ErrorLog  /var/log/puppet/balancer_error.log
+CustomLog /var/log/puppet/balancer_access.log "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+CustomLog /var/log/puppet/balancer_ssl_request.log \
+          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+<Directory />
+    Options FollowSymLinks
+    AllowOverride None
+    Order deny,allow
+    Deny from all
+</Directory>
+
+<Proxy balancer://puppetmaster>
+  BalancerMember http://127.0.0.1:18141
+  BalancerMember http://127.0.0.1:18142
+  BalancerMember http://127.0.0.1:18143
+  BalancerMember http://127.0.0.1:18144
+  BalancerMember http://127.0.0.1:18145
+</Proxy>
+
+<VirtualHost *:8140>
+    SSLEngine on
+    SSLCipherSuite SSLv2:-LOW:-EXPORT:RC4+RSA
+    SSLCertificateFile      /var/lib/puppet/ssl/certs/<%= fqdn %>.pem
+    SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/<%= fqdn %>.pem
+    SSLCertificateChainFile /var/lib/puppet/ssl/ca/ca_crt.pem
+    SSLCACertificateFile    /var/lib/puppet/ssl/ca/ca_crt.pem
+    SSLCARevocationFile     /var/lib/puppet/ssl/ca/ca_crl.pem
+    SSLVerifyClient optional
+    SSLVerifyDepth  1
+    SSLOptions +StdEnvVars
+
+    # Store the client DN in a header
+    RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
+    # And store whether the cert verification was a success
+    RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
+    <Location />
+        SetHandler balancer-manager
+        Order allow,deny
+        Allow from all
+    </Location>
+
+    ProxyPass / balancer://puppetmaster:8140/
+    ProxyPassReverse / balancer://puppetmaster:8140/
+    ProxyPreserveHost on
+</VirtualHost>

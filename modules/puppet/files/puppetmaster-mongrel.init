@@ -1,0 +1,60 @@
+#! /bin/sh
+# file managed by puppet
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/puppetmasterd
+DAEMON_OPTS=""
+NAME=puppetmasterd-mongrel
+DESC="puppet configuration management tool mongrel processes"
+
+test -x $DAEMON || exit 0
+
+MONGREL_PROCESSES=1
+[ -r /etc/default/puppetmaster ] && . /etc/default/puppetmaster
+[ -r /etc/default/puppetmaster-mongrel ] && . /etc/default/puppetmaster-mongrel
+
+. /lib/lsb/init-functions
+
+start_puppetmaster() {
+  for i in $(seq 1 $MONGREL_PROCESSES); do
+    echo -n "$i "
+	  start-stop-daemon --start --quiet --pidfile /var/run/$NAME-$i.pid \
+		--startas $DAEMON -- $DAEMON_OPTS --servertype=mongrel --masterport=$[18140+$i] --pidfile /var/run/$NAME-$i.pid
+  done
+}
+
+stop_puppetmaster() {
+  for i in $(seq 1 $MONGREL_PROCESSES); do
+    echo -n "$i "
+	  start-stop-daemon --stop --quiet --pidfile /var/run/$NAME-$i.pid
+  done
+}
+
+case "$1" in
+    start)
+	log_begin_msg "Starting $DESC "
+	start_puppetmaster
+	log_end_msg $?
+	;;
+    stop)
+	log_begin_msg "Stopping $DESC "
+	stop_puppetmaster
+	log_end_msg $?
+	;;
+  reload)
+  	# Do nothing, as Puppetmaster rechecks its config automatically
+        ;;
+  restart|force-reload)
+	log_begin_msg "Restarting $DESC"
+	stop_puppetmaster
+	sleep 1
+	start_puppetmaster
+	log_end_msg 0
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

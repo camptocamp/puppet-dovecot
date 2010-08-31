@@ -1,0 +1,54 @@
+
+<VirtualHost *:8140>
+
+  # you probably want to tune these settings
+  PassengerHighPerformance on
+  PassengerMaxPoolSize 12
+  PassengerPoolIdleTime 1500
+  # PassengerMaxRequests 1000
+  PassengerStatThrottleRate 120
+  RackAutoDetect Off
+  RailsAutoDetect Off
+
+  <% if has_variable?("passenger_tempdir") %>
+  PassengerTempDir <%= passenger_tempdir %>
+  <% end %>
+
+  ServerName puppetmasterd
+
+  LogLevel warn
+  ErrorLog <%= log_location %>/error.log
+  CustomLog <%= log_location %>/access.log "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %{SSL_CLIENT_S_DN}e %{SSL_CLIENT_VERIFY}e"
+
+  Timeout <%= puppetmaster_timeout %>
+
+  SSLEngine on
+  SSLProtocol -ALL +SSLv3 +TLSv1
+  SSLCipherSuite ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:-LOW:-SSLv2:-EXP
+
+  SSLCertificateFile      <%= puppetmaster_ssldir %>/certs/<%= puppet_server %>.pem
+  SSLCertificateKeyFile   <%= puppetmaster_ssldir %>/private_keys/<%= puppet_server %>.pem
+  SSLCertificateChainFile <%= puppetmaster_ssldir %>/ca/ca_crt.pem
+  SSLCACertificateFile    <%= puppetmaster_ssldir %>/ca/ca_crt.pem
+  # If Apache complains about invalid signatures on the CRL, you can try disabling
+  # CRL checking by commenting the next line, but this is not recommended.
+  # SSLCARevocationFile     <%= puppetmaster_ssldir %>/ca/ca_crl.pem
+  SSLVerifyClient optional
+  SSLVerifyDepth  1
+  SSLOptions +StdEnvVars
+
+  # Compatibility settings for Puppet < 0.25
+  RequestHeader set X-SSL-Subject %{SSL_CLIENT_S_DN}e
+  RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
+  RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
+
+  DocumentRoot <%= rack_location %>/public/
+  RackBaseURI /
+  <Directory <%= rack_location %>>
+    Options None
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+</VirtualHost>
