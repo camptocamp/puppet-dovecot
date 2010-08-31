@@ -1,0 +1,3 @@
+Package: *
+Pin: release o=c2c
+Pin-Priority: 1100
