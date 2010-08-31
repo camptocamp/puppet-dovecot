@@ -4,9 +4,6 @@
 [submodule "manifests/generic-tmpl"]
 	path = manifests/generic-tmpl
 	url = git@github.com:camptocamp/puppet-generic-tmpl.git
-[submodule "modules/tomcat"]
-	path = modules/tomcat
-	url = git@github.com:camptocamp/puppet-tomcat
 [submodule "modules/monitoring"]
 	path = modules/monitoring
 	url = git@github.com:camptocamp/puppet-monitoring.git
