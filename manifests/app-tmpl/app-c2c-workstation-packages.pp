@@ -48,6 +48,9 @@ class app-c2c-workstation-packages {
     "urlview":                          ensure => present;
     "chromium-browser":                 ensure => present;
     "chromium-codecs-ffmpeg-extra":     ensure => present;
+    "gajim":                            ensure => present;
+    "skype":                            ensure => present;
+    "freemind":                         ensure => present;
 
     # Network tools
     "ekiga":                            ensure => present;
