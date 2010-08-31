@@ -25,9 +25,6 @@
 [submodule "modules/tomcat"]
 	path = modules/tomcat
 	url = git@github.com:camptocamp/puppet-tomcat
-[submodule "modules/postgis"]
-	path = modules/postgis
-	url = git@github.com:camptocamp/puppet-postgis.git
 [submodule "modules/postgresql"]
 	path = modules/postgresql
 	url = git@github.com:camptocamp/puppet-postgresql.git
