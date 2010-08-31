@@ -46,9 +46,6 @@
 [submodule "modules/mapfish"]
 	path = modules/mapfish
 	url = git@github.com:camptocamp/puppet-mapfish.git
-[submodule "modules/cartoweb3"]
-	path = modules/cartoweb3
-	url = git@github.com:camptocamp/puppet-cartoweb3.git
 [submodule "modules/tomcat"]
 	path = modules/tomcat
 	url = git@github.com:camptocamp/puppet-tomcat
