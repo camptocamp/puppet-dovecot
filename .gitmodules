@@ -19,9 +19,6 @@
 [submodule "modules/syslog-ng"]
 	path = modules/syslog-ng
 	url = git@github.com:camptocamp/puppet-syslog-ng
-[submodule "modules/java"]
-	path = modules/java
-	url = git@github.com:camptocamp/puppet-java.git
 [submodule "modules/postfix"]
 	path = modules/postfix
 	url = git@github.com:camptocamp/puppet-postfix
