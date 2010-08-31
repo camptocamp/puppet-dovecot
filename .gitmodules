@@ -31,15 +31,9 @@
 [submodule "manifests/generic-tmpl"]
 	path = manifests/generic-tmpl
 	url = git@github.com:camptocamp/puppet-generic-tmpl.git
-[submodule "modules/mapserver"]
-	path = modules/mapserver
-	url = git@github.com:camptocamp/puppet-mapserver.git
 [submodule "modules/tilecache"]
 	path = modules/tilecache
 	url = git@github.com:camptocamp/puppet-tilecache.git
-[submodule "modules/mapfish"]
-	path = modules/mapfish
-	url = git@github.com:camptocamp/puppet-mapfish.git
 [submodule "modules/tomcat"]
 	path = modules/tomcat
 	url = git@github.com:camptocamp/puppet-tomcat
