@@ -22,6 +22,3 @@
 [submodule "modules/sysctl"]
 	path = modules/sysctl
 	url = git@github.com:camptocamp/puppet-sysctl.git
-[submodule "modules/subversion"]
-	path = modules/subversion
-	url = git@github.com:camptocamp/puppet-subversion
