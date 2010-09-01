@@ -54,7 +54,9 @@ class app-c2c-sig-blonay-cartoriviera {
   }
 
   c2c::ssh_authorized_key{
-    "alex on admin": sadb_user => "alex", user => "admin", require => User["admin"];
+    "alex on admin"     : sadb_user => "alex",      user => "admin", require => User["admin"];
+    "ebelo on admin"    : sadb_user => "ebelo",     user => "admin", require => User["admin"];
+    "bquartier on admin": sadb_user => "bquartier", user => "admin", require => User["admin"];
   }
 
   c2c::sshuser {"ygillieron": 
