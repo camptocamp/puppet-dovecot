@@ -46,10 +46,15 @@ class app-c2c-unhcr-dev {
   apache::vhost {"mapfish-local":
     ensure  => present,
     group   => sigdev,
-    aliases => ["mapfish-local.camptocamp.com"],
+    aliases => ["mapfish-local.camptocamp.net"],
   }
 
   host {"mapfish-local.camptocamp.com":
+    ensure => absent,
+    ip     => "127.0.0.1",
+  }
+
+  host {"mapfish-local.camptocamp.net":
     ensure => present,
     ip     => "127.0.0.1",
   }
