@@ -59,6 +59,11 @@ class app-c2c-unhcr-dev {
     ip     => "127.0.0.1",
   }
 
+  host {"swigec33.swige.unhcr.org":
+    ensure => present,
+    ip     => "193.134.241.62",
+  }
+
   tomcat::instance {"geoportal-unhcr":
     ensure => present,
     group  => "sigdev",
