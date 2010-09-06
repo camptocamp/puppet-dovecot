@@ -1,12 +1,9 @@
 class monitoring::nagios {
 
   include monitoring::params
+  include nagios::params
 
-  # TODO: use $nagios::params::cfgdir or whatever
-  $nagios = $operatingsystem ? {
-    /Debian|Ubuntu/ => "nagios3",
-    /RedHat|CentOS/ => "nagios",
-  }
+  $nagios = $nagios::params::basename
 
   file { "check_nagios_cfg":
     path    => "${monitoring::params::customplugins}/check_nagios_cfg",
