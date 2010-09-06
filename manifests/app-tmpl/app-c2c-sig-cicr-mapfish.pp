@@ -51,4 +51,71 @@ class app-c2c-sig-cicr-mapfish {
 ',
   }
 
+  apache::directive {"ushahidi":
+    vhost     => "cicr-mapfish",
+    directive => "
+Alias /ushahidi /var/www/cicr-mapfish/htdocs/ushahidi
+<Directory /var/www/cicr-mapfish/htdocs/ushahidi>
+        Order allow,deny
+        Allow from all
+</Directory>
+",
+  }
+
+  package {[
+    "php5-mcrypt",
+    "git-core",
+    ]:
+    ensure => present,
+  }
+
+  vcsrepo {"/var/www/cicr-mapfish/htdocs/ushahidi":
+    ensure   => present,
+    source   => "git://github.com/ushahidi/Ushahidi_Web.git",
+    provider => "git",
+    require  => Package["git-core"],
+    revision => "27e186992fac",
+  }
+
+  file {[
+      "/var/www/cicr-mapfish/htdocs/ushahidi/application/config",
+      "/var/www/cicr-mapfish/htdocs/ushahidi/themes",
+      "/var/www/cicr-mapfish/htdocs/ushahidi/media",
+    ]:
+    ensure => directory,
+    require => Vcsrepo["/var/www/cicr-mapfish/htdocs/ushahidi"],
+    owner   => admin,
+    group   => admin,
+    recurse => true,
+  }
+
+  file {"/var/www/cicr-mapfish/htdocs/ushahidi/.htaccess":
+    ensure => file,
+    require => Vcsrepo["/var/www/cicr-mapfish/htdocs/ushahidi"],
+    owner   => admin,
+    group   => admin,
+  }
+
+  file {"/var/www/cicr-mapfish/htdocs/ushahidi/application/cache/":
+    ensure => directory,
+    require => Vcsrepo["/var/www/cicr-mapfish/htdocs/ushahidi"],
+    owner   => www-data,
+    group   => admin,
+    recurse => false,
+    mode    => 2770,
+  }
+
+  include mysql::server
+
+  mysql::database {"icrc-ushaidi":
+    ensure => present,
+  }
+
+  mysql::rights {"icrc-ushaidi on icrc-ushaidi":
+    ensure => present,
+    database => "icrc-ushaidi",
+    user => "icrc-ushaidi",
+    password => "yapugaeCh8",
+    require => Mysql::Database["icrc-ushaidi"],
+  }
 }
