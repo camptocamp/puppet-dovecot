@@ -37,4 +37,16 @@ finish 0 'no error in config'
     require  => File["check_nagios_cfg"],
   }
 
+  monitoring::check { "Process: nrpe":
+    codename => "check_nrpe_process",
+    command  => "check_procs",
+    options  => "-w 1:1 -c 1:1 -C nrpe",
+    type     => "passive",
+    server   => $nagios_nsca_server,
+    package  => $operatingsystem ? {
+      /RedHat|CentOS/ => "nagios-plugins-procs",
+      default => false
+    }
+  }
+
 }
