@@ -49,4 +49,16 @@ finish 0 'no error in config'
     }
   }
 
+  monitoring::check { "Nagios status":
+    codename => "nagios_status",
+    command  => "check_nagios",
+    options  => "-e 5 -F /var/cache/nagios/status.dat -C /usr/sbin/nagios",
+    type     => "active",
+    server   => $nagios_nrpe_server,
+    package  => $operatingsystem ? {
+      /RedHat|CentOS/ => "nagios-plugins-nagios",
+      default => false,
+    }
+  }
+
 }
