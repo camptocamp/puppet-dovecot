@@ -24,7 +24,7 @@ define lighttpd::module(
         command => "lighty-enable-mod ${name}",
         unless  => "lighty-enable-mod - | egrep 'Already enabled modules:.*${name}'",
         notify  => Exec["reload-lighttpd"],
-        require => Class["lighttpd"],
+        require => Package["lighttpd"],
       }
     }
     absent: {
@@ -32,7 +32,7 @@ define lighttpd::module(
         command => "lighty-disable-mod ${name}",
         onlyif  => "lighty-disable-mod - | egrep 'Already enabled modules:.*${name}'",
         notify  => Exec["reload-lighttpd"],
-        require => Class["lighttpd"],
+        require => Package["lighttpd"],
       }
     }
     default: { faile "unknown \$ensure $ensure for $name" }
