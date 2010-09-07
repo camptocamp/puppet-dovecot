@@ -38,27 +38,11 @@ class lighttpd::base {
     require => Package["lighttpd"],
   }
 
-  file {"/usr/local/share/lighttpd":
-    ensure => directory,
-    owner  => root,
-    group  => root,
-    mode   => 0755,
-  }
-
-  file {"/usr/local/share/lighttpd/include-conf.pl":
-    ensure => present,
-    source => "puppet:///modules/lighttpd/include-conf.pl",
-    owner  => root,
-    group  => root,
-    mode   => 0755,
-  }
-
   file {"/etc/lighttpd/conf-available/00-puppet-vhost.conf":
     ensure  => present,
     owner   => root,
     group   => root,
     mode    => 0644,
-    source  => "puppet:///modules/lighttpd/00-puppet-vhost.conf",
     require => Package["lighttpd"],
   }
 
