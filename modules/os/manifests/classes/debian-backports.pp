@@ -7,8 +7,8 @@ class os::debian::backports {
       "intrepid" => "deb http://archive.ubuntu.com/ubuntu intrepid-backports main universe multiverse restricted\n",
       "jaunty" => "deb http://archive.ubuntu.com/ubuntu jaunty-backports main universe multiverse restricted\n",
       "lucid" => "deb http://archive.ubuntu.com/ubuntu lucid-backports main universe multiverse restricted\n",
-      "etch"  => "deb http://www.backports.org/debian etch-backports main contrib non-free\n",
-      "lenny" => "deb http://www.backports.org/debian lenny-backports main contrib non-free\n",
+      "etch"  => "deb http://backports.debian.org/debian-backports etch-backports main contrib non-free\n",
+      "lenny" => "deb http://backports.debian.org/debian-backports lenny-backports main contrib non-free\n",
     },
   }
 
@@ -22,7 +22,7 @@ class os::debian::backports {
   case $lsbdistid {
     "Debian" : {
       apt::key {"16BA136C":
-        ensure => present,
+        ensure => absent,
         source  => "http://backports.org/debian/archive.key",
       }
     }
