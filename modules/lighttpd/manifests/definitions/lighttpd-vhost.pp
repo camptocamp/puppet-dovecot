@@ -57,10 +57,11 @@ define lighttpd::vhost(
   case $ensure {
     present: {
       file {"${wwwroot}/${name}":
-        ensure => directory,
-        owner  => root,
-        group  => root,
-        mode   => 0755,
+        ensure  => directory,
+        owner   => root,
+        group   => root,
+        mode    => 0755,
+        require => Package["lighttpd"],
       }
 
       file {"${wwwroot}/${name}/htdocs":
