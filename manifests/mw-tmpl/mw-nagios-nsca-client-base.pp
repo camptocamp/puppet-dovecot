@@ -22,6 +22,10 @@ class mw-nagios-nsca-client-base {
     }
   }
 
+  file {"/opt/nagios-plugins":
+    ensure => directory,
+  }
+
   # default checks
   include monitoring::cron
   include monitoring::diskusage
