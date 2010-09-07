@@ -10,7 +10,7 @@ $HTTP["host"] == "<%= name %>" {
   # cgi-bin
   alias.url = ( "/cgi-bin/" => "<%= wwwroot %>/<%= name %>/cgi-bin/" )
 
-  #include_shell "/usr/local/share/lighttpd/include-conf.pl <%= wwwroot %>/<%= name %>/conf"
+  include "vhosts-config/<%= name %>.conf"
 
   # logfiles
   accesslog.filename   = "<%= wwwroot %>/<%= name %>/logs/access.log"

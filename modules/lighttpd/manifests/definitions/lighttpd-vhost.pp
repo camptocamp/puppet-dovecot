@@ -46,18 +46,12 @@ define lighttpd::vhost(
     default: { fail "No instruction for \$operatingsystem $operatingsystem"}
   }
 
-  file {"${lighttpd_config_dir}/site-available/vhost-${name}.conf":
+  common::concatfilepart { "vhost-${name}.conf":
+    file    => "${lighttpd_config_dir}/conf-available/00-puppet-vhost.conf",
     ensure  => $ensure,
-    owner   => root,
-    group   => root,
-    mode    => 0644,
-    content => template("lighttpd/lighttpd-vhost.erb"),
-    require => File["/etc/lighttpd/site-available"],
-    notify  => Exec["reload-lighttpd"],
-  }
-
-  File["${lighttpd_config_dir}/site-enabled/vhost-${name}.conf"] {
-    notify => Exec["reload-lighttpd"],
+    content => "include \"vhosts/vhost-${name}.conf\"\n",
+    manage  => true,
+    #notify  => Exec["reload-lighttpd"],
   }
 
   case $ensure {
@@ -85,6 +79,14 @@ define lighttpd::vhost(
         mode    => $mode,
       }
 
+      file {"${wwwroot}/${name}/conf/lighttpd.conf":
+        ensure => link,
+        target => "${lighttpd_config_dir}/vhosts-config/${name}.conf",
+        owner  => $owner,
+        group  => $group,
+        mode   => $mode,
+      }
+
       file {"${wwwroot}/${name}/private":
         ensure => directory,
         require => File["${wwwroot}/${name}"],
@@ -109,16 +111,27 @@ define lighttpd::vhost(
         mode    => $mode,
       }
 
-      file {"${lighttpd_config_dir}/site-enabled/vhost-${name}.conf":
-        ensure => "../site-available/vhost-${name}.conf",
-        require => [File["${lighttpd_config_dir}/site-available/vhost-${name}.conf"], File["${lighttpd_config_dir}/site-available"]],
+      file {"${lighttpd_config_dir}/vhosts/vhost-${name}.conf":
+        ensure  => present,
+        owner   => "root",
+        mode    => 0644,
+        content => template("lighttpd/lighttpd-vhost.erb"),
       }
+
+      file { "${lighttpd_config_dir}/vhosts-config/${name}.conf":
+        ensure  => present,
+        replace => false,
+        content => "# you can put any lighttpd option related to your http host in this file.\n",
+        owner   => $owner,
+        group   => $group,
+        mode    => 0664,
+      }
+
     }
 
     absent: {
-      file {"${lighttpd_config_dir}/site-enabled/vhost-${name}":
+      file {"${lighttpd_config_dir}/vhosts/vhost-${name}.conf":
         ensure => absent,
-        require => File["${lighttpd_config_dir}/site-available/vhost-${name}"],
       }
       exec {"remove ${wwwroot}/${name}":
         command => "rm -rf ${wwwroot}/${name}",
@@ -128,9 +141,8 @@ define lighttpd::vhost(
     }
 
     disabled: {
-      file {"${lighttpd_config_dir}/site-enabled/vhost-${name}":
+      file {"${lighttpd_config_dir}/vhosts/vhost-${name}.conf":
         ensure => absent,
-        require => File["${lighttpd_config_dir}/site-available/vhost-${name}"],
       }
     }
     default: { fail "Unknown \$ensure $ensure for $name"}
