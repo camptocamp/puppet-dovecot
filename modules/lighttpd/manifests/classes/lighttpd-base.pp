@@ -25,12 +25,7 @@ class lighttpd::base {
     onlyif      => "lighttpd-angel -t -f /etc/lighttpd/lighttpd.conf",
   }
 
-  file {"/etc/lighttpd/site-enabled":
-    ensure  => directory,
-    require => Package["lighttpd"],
-  }
-
-  file {"/etc/lighttpd/site-available":
+  file { ["/etc/lighttpd/vhosts", "/etc/lighttpd/vhosts-config"]:
     ensure  => directory,
     owner   => root,
     group   => root,
