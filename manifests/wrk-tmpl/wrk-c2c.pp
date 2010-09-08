@@ -15,6 +15,7 @@ class wrk-c2c {
   include app-workstation-tuning
   include app-c2c-workstation-packages
   include app-c2c-workstation
+  include app-c2c-workstation-proxy
   include app-c2c-workstation-vpn
   include app-c2c-workstations-vmware
   include app-c2c-workstation-openerp
