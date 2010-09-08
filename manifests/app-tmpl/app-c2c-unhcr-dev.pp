@@ -84,6 +84,7 @@ class app-c2c-unhcr-dev {
     "pierre on admin":       ensure => present, user => admin, require => User["admin"], sadb_user => "pierre";
     "aabt on admin":         ensure => present, user => admin, require => User["admin"], sadb_user => "aabt";
     "fvanderbiest on admin": ensure => present, user => admin, require => User["admin"], sadb_user => "fvanderbiest";
+    "ebelo on admin":        ensure => present, user => admin, require => User["admin"], sadb_user => "ebelo";
   }
 
 
