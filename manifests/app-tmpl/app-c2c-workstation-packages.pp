@@ -120,6 +120,8 @@ class app-c2c-workstation-packages {
     "manpages-dev":                     ensure => present;
     "colordiff":                        ensure => present;
     "qemu":                             ensure => present;
+    "git-core":                         ensure => present;
+    "git-svn":                          ensure => present;
 
     # GIS Tools
     "grass":                            ensure => present;
