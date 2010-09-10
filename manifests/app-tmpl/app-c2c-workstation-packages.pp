@@ -123,6 +123,10 @@ class app-c2c-workstation-packages {
     "git-core":                         ensure => present;
     "git-svn":                          ensure => present;
     "ack-grep":                         ensure => present;
+    "virtualbox-ose":                   ensure => present;
+    "virtualbox-ose-guest-utils":       ensure => present;
+    "virtualbox-ose-guest-x11":         ensure => present;
+    "virtualbox-guest-additions":       ensure => present;
 
     # GIS Tools
     "grass":                            ensure => present;
