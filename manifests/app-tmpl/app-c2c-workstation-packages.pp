@@ -127,6 +127,7 @@ class app-c2c-workstation-packages {
     # GIS Tools
     "grass":                            ensure => present;
     "qcad":                             ensure => present;
+    "gdal-bin":                         ensure => present;
 
    # Misc
     "usermode":                         ensure => present;
