@@ -121,8 +121,9 @@ Comment=
   }
 
   exec {"notify user ${name} to change passwd":
-    command => "if [ $(/usr/bin/test $(grep ${name} /etc/shadow | cut -d ':' -f2) = 'fhb8GJD/DWeDw'; echo $?) -eq 0 ]; then ln -s /home/${name}/.changepwd.desktop /home/${name}/.config/autostart/changepwd.desktop; fi",
-    unless  => "test -L /home/${name}/.config/autostart/changepwd.desktop",
+    command => "ln -s /home/${name}/.changepwd.desktop /home/${name}/.config/autostart/changepwd.desktop",
+    onlyif  => "test $(grep ${name} /etc/shadow | cut -d ':' -f2) = 'fhb8GJD/DWeDw'",
+    unless => "test -L /home/${name}/.config/autostart/changepwd.desktop",
     require => File["/home/${name}/.config/autostart"],
   }
 
