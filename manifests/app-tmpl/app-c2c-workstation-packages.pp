@@ -122,6 +122,7 @@ class app-c2c-workstation-packages {
     "qemu":                             ensure => present;
     "git-core":                         ensure => present;
     "git-svn":                          ensure => present;
+    "ack-grep":                         ensure => present;
 
     # GIS Tools
     "grass":                            ensure => present;
