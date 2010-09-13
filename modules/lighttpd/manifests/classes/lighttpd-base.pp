@@ -25,12 +25,7 @@ class lighttpd::base {
     onlyif      => "lighttpd-angel -t -f /etc/lighttpd/lighttpd.conf",
   }
 
-  file {"/etc/lighttpd/site-enabled":
-    ensure  => directory,
-    require => Package["lighttpd"],
-  }
-
-  file {"/etc/lighttpd/site-available":
+  file { ["/etc/lighttpd/vhosts", "/etc/lighttpd/vhosts-config"]:
     ensure  => directory,
     owner   => root,
     group   => root,
@@ -38,27 +33,11 @@ class lighttpd::base {
     require => Package["lighttpd"],
   }
 
-  file {"/usr/local/share/lighttpd":
-    ensure => directory,
-    owner  => root,
-    group  => root,
-    mode   => 0755,
-  }
-
-  file {"/usr/local/share/lighttpd/include-conf.pl":
-    ensure => present,
-    source => "puppet:///modules/lighttpd/include-conf.pl",
-    owner  => root,
-    group  => root,
-    mode   => 0755,
-  }
-
   file {"/etc/lighttpd/conf-available/00-puppet-vhost.conf":
     ensure  => present,
     owner   => root,
     group   => root,
     mode    => 0644,
-    source  => "puppet:///modules/lighttpd/00-puppet-vhost.conf",
     require => Package["lighttpd"],
   }
 

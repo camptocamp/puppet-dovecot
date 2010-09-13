@@ -1,16 +1,16 @@
-# File managed by Puppet
+# file managed by Puppet
 # lighttpd::vhost
 
 <% if aliases and not aliases.empty? -%>
-$HTTP["host"] =~ "^(<%= name %>|<%= aliases.collect! {|i| "#{i}" }.join('|') -%>)$" {
+$HTTP["host"] =~ "^(<%= name %>|<%= aliases.collect! {|i| "#{i}" }.join('|') -%>)(\:80)?$" {
 <% else -%>
-$HTTP["host"] == "<%= name %>" {
+$HTTP["host"] =~ "^<%= name %>(\:80)$" {
 <% end -%>
   server.document-root = "<%= wwwroot %>/<%= name %>/htdocs/" 
   # cgi-bin
   alias.url = ( "/cgi-bin/" => "<%= wwwroot %>/<%= name %>/cgi-bin/" )
 
-  include_shell "/usr/local/share/lighttpd/include-conf.pl <%= wwwroot %>/<%= name %>/conf"
+  include "vhosts-config/<%= name %>.conf"
 
   # logfiles
   accesslog.filename   = "<%= wwwroot %>/<%= name %>/logs/access.log"
