@@ -8,7 +8,7 @@ case $operatingsystem {
   /Debian|Ubuntu/: {
     $puppet_client_version = "0.25.5-1~c2c+1"
     $puppet_server_version = "0.25.5-1~c2c+1"
-    $facter_version = "1.5.7-1~c2c+2"
+    $facter_version = "1.5.7-1~c2c+3"
     case $lsbdistcodename {
       lenny:    { $augeas_version = "0.7.0-1~bpo50+1" }
       lucid:    { $augeas_version = "0.7.0-1ubuntu1" }
