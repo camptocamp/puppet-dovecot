@@ -26,7 +26,7 @@ class mw-lighttpd {
     }
 
     include my-lighty
-    include monitoring::webserver
+#    include monitoring::webserver
 
   } else {
     include lighttpd
