@@ -1,4 +1,4 @@
-class mw-nagios-nsca-client-base {
+class os-monitoring {
   include nagios
   include nagios::nsca::client
 
