@@ -7,7 +7,7 @@
 
 class app-c2c-nagios {
 
-  include nagios::base
+  include nagios
   include nagios::nsca::server
   include nagios::nrpe::client
   include nagios::webinterface

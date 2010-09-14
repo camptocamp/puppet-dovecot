@@ -1,5 +1,5 @@
 class mw-nagios-nsca-client-base {
-  include nagios::base
+  include nagios
   include nagios::nsca::client
 
 
