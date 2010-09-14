@@ -1,4 +1,24 @@
-class mw-nagios-nsca-client-base {
+# Monitoring for production servers - System and basic services
+
+# Nagios global configuration variables
+#
+# web interface
+$nagios_cgi_dir="/usr/lib/cgi-bin/nagios3"
+$nagios_physical_html_path="/usr/share/nagios3/htdocs"
+$nagios_stylesheets_dir="$nagios_root_dir/stylesheets"
+$nagios_show_context_help="0"
+
+# NSCA
+$nagios_nsca_password="taib2Dai"
+$nagios_nsca_encryption_method="3"
+$nagios_nsca_decryption_method="3"
+$nagios_nsca_server="c2cpc27.camptocamp.com"
+$nagiosadmin_password="nnotWHaxY0PsA"
+$nagios_service_check_timeout="80"
+$nagios_host_check_timeout="80"
+
+
+class os-monitoring {
   include nagios
   include nagios::nsca::client
 
@@ -29,8 +49,10 @@ class mw-nagios-nsca-client-base {
   # default checks
   include monitoring::cron
   include monitoring::diskusage
+  include monitoring::loadaverage
   include monitoring::ssh
   include monitoring::puppet
+  include monitoring::at
 
   nagios::template {"generic-service":
     conf_type => "service",

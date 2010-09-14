@@ -38,7 +38,7 @@ root  ALL=(ALL) ALL
     # Nagios installation and basic checks present on all production servers
     $basic_contact_group = "admins"
   
-    include mw-nagios-nsca-client-base
+    include os-monitoring
 
     # server load
     case $fqdn {

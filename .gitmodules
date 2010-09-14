@@ -1,9 +1,3 @@
-[submodule "modules/nagios"]
-	path = modules/nagios
-	url = git@github.com:camptocamp/puppet-nagios
 [submodule "manifests/generic-tmpl"]
 	path = manifests/generic-tmpl
 	url = git@github.com:camptocamp/puppet-generic-tmpl.git
-[submodule "modules/monitoring"]
-	path = modules/monitoring
-	url = git@github.com:camptocamp/puppet-monitoring.git
