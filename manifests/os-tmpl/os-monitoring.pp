@@ -53,7 +53,6 @@ class os-monitoring {
   include monitoring::ssh
   include monitoring::puppet
   include monitoring::at
-  include monitoring::ntp
 
   nagios::template {"generic-service":
     conf_type => "service",
