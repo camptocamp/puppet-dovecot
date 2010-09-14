@@ -15,6 +15,7 @@ define apt::preferences($ensure="present", $package="", $pin, $priority) {
         mode    => 644,
         content => template("apt/preferences.erb"),
         before  => Exec["apt-get_update"],
+        notify  => Exec["apt-get_update"],
       }
 
     }
@@ -25,6 +26,7 @@ define apt::preferences($ensure="present", $package="", $pin, $priority) {
         file    => "/etc/apt/preferences",
         content => template("apt/preferences.erb"),
         before  => Exec["apt-get_update"],
+        notify  => Exec["apt-get_update"],
       }
     }
   }
