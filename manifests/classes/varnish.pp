@@ -50,6 +50,8 @@ exit $STATUS
   monitoring::check { "Process: varnishd":
     codename => "check_varnishd_process",
     command  => "check_procs",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     options  => "-C varnishd -c 2",
   }
 
@@ -58,7 +60,9 @@ exit $STATUS
     command  => "check_vcl",
     interval => 360,
     retry    => 60,
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     require  => File["${nagios_plugin_dir}/check_vcl"],
   }
 
@@ -111,7 +115,9 @@ define monitoring::check::varnish (
     ensure   => $ensure,
     codename => "check_varnish_${stat}",
     command  => "check_varnish",
-    base     => '$USER2$/',
+    base     => "${monitoring::params::customplugins}",
+    type     => "passive",
+    server   => $nagios_nsca_server,
     options  => "-p ${stat} -w ${warn} -c ${crit}",
     require  => Class["varnish::nagiosplugin"],
   }
