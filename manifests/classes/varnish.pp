@@ -107,6 +107,8 @@ values are checked by default in varnish::nagiosplugin.
 */
 define monitoring::check::varnish (
   $ensure="present",
+  type="passive",
+  server=$nagios_nsca_server,
   $stat,
   $warn,
   $crit) {
@@ -116,8 +118,8 @@ define monitoring::check::varnish (
     codename => "check_varnish_${stat}",
     command  => "check_varnish",
     base     => "${monitoring::params::customplugins}",
-    type     => "passive",
-    server   => $nagios_nsca_server,
+    type     => $type,
+    server   => $server,
     options  => "-p ${stat} -w ${warn} -c ${crit}",
     require  => Class["varnish::nagiosplugin"],
   }
