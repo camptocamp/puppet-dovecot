@@ -37,7 +37,7 @@ class postgresql::v8-4 {
   case $operatingsystem {
     Debian: {
       case $lsbdistcodename {
-        lenny :  { include postgresql::debian::v8-4 }
+        /lenny|squeeze/ :  { include postgresql::debian::v8-4 }
         default: { fail "postgresql 8.4 not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
