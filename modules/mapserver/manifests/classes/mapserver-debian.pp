@@ -90,6 +90,28 @@ class mapserver::debian {
         ensure => present,
       }
     }
+    'squeeze': {
+
+      package {
+        [
+          "cgi-mapserver",
+          "mapserver-bin",
+          "perl-mapscript",
+          "php5-mapscript",
+          "python-mapscript",
+          "gdal-bin",
+          "libecw",
+          "libapache2-mod-fcgid",
+          "python-gdal",
+          "proj-bin",
+          "proj-data",
+          "libgeos-dev",
+          "libgeos-c1",
+          "libgeos-3.1.0"
+        ]:
+        ensure => present,
+      }
+    }
   }
 
   apache::module {"fcgid":
