@@ -33,7 +33,7 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
   }
 
   case $lsbdistcodename {
-    "lenny" : {
+    /lenny|squeeze/ : {
       package {[
         "libpq-dev",
         "libpq5",
@@ -49,10 +49,6 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
         name => "postgresql-8.4",
       }
 
-      Service["postgresql"] {
-        name => "postgresql-8.4"
-      }
-   
       # re-create the cluster in UTF8
       exec {"pg_createcluster in utf8" : 
         command => "pg_dropcluster --stop 8.4 main && pg_createcluster -e UTF8 -d ${data_dir}/8.4/main --start 8.4 main",
@@ -64,6 +60,18 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
 
     default: {
       fail "postgresql 8.4 not available for ${operatingsystem}/${lsbdistcodename}"
+    }
+  }
+  case $lsbdistcodename {
+    lenny: {
+      Service["postgresql"] {
+        name => "postgresql-8.4"
+      }
+    }
+    squeeze: {
+      Service["postgresql"] {
+        name => "postgresql"
+      }
     }
   }
 }
