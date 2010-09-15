@@ -4,7 +4,7 @@ class java {
   case $operatingsystem {
     Debian: {
       case $lsbdistcodename {
-        etch,lenny : { include java::v6 }
+        etch,lenny,squeeze : { include java::v6 }
         default: { fail "java::v6 not available for ${operatingsystem}/${lsbdistcodename}" }
       }
     }
