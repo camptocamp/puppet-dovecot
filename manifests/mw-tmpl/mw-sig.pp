@@ -9,12 +9,15 @@ class mw-sig {
       ensure => absent,
     }
 
-    Apt::Preferences["libgeos-3.1.0"] {
-      ensure => absent,
-    }
+    if $lsbdistcodename == "lenny" {
 
-    Apt::Preferences["libgeos-c1","libgeos-dev"] {
-      pin => "release o=c2c",
+      Apt::Preferences["libgeos-3.1.0"] {
+        ensure => absent,
+      }
+
+      Apt::Preferences["libgeos-c1","libgeos-dev"] {
+        pin => "release o=c2c",
+      }
     }
   }
 
