@@ -1,7 +1,7 @@
 class app-c2c-workstation-openerp {
 
   package {"openerp-client":
-    ensure  => present,
+    ensure  => "4.2.3+2~c2cbzr146",
     require => Apt::Preferences["openerp-client"],
   }
 
