@@ -19,7 +19,8 @@ class java::v6 {
     'intrepid',
     'jaunty',
     'lucid',
-    'lenny' : {
+    'lenny',
+    'squeeze' : {
       package { 
         "sun-java6-bin":
           ensure       => present,
