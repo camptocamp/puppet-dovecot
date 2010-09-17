@@ -1,13 +1,23 @@
-define apt::key($ensure=present, $source="") {
+define apt::key($ensure=present, $source="", $content="") {
 
   case $ensure {
 
     present: {
+      if $content == "" {
+        if $source == "" {
+          $thekey = "gpg --keyserver pgp.mit.edu --recv-key '$name' && gpg --export --armor '$name' | /usr/bin/apt-key add -"
+        }
+        else {
+          $thekey = "wget -O - '$source' | /usr/bin/apt-key add -"
+        }
+      }
+      else {
+        $thekey = "echo '${content}'"
+      }
+
+
       exec { "import gpg key $name":
-        command => $source ? {
-          ""      => "gpg --keyserver pgp.mit.edu --recv-key '$name' && gpg --export --armor '$name' | /usr/bin/apt-key add -",
-          default => "wget -O - '$source' | /usr/bin/apt-key add -",
-        },
+        command => "${thekey} | /usr/bin/apt-key add -",
         unless => "apt-key list | grep -Fqe '${name}'",
         path   => "/bin:/usr/bin",
         before => Exec["apt-get_update"],
@@ -20,5 +30,6 @@ define apt::key($ensure=present, $source="") {
         onlyif => "apt-key list | grep -Fqe '${name}'",
       }
     }
+
   }
 }
