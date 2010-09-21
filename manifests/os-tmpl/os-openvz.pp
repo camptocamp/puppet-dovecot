@@ -40,6 +40,20 @@ class os-openvz {
     group  => root,
   }
 
+  file {"/usr/local/sbin/toggle-ve-status.py":
+    ensure => present,
+    source => "puppet:///modules/c2c/usr/local/sbin/toggle-ve-status.py",
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+  }
+
+  cron {"toggle ve status":
+    minute => "*/5",
+    command => "/usr/local/sbin/toggle-ve-status.py",
+    require => File["/usr/local/sbin/toggle-ve-status.py"],
+  }
+
   file {"/usr/local/sbin/vznetaddbridge":
     ensure => present,
     source => "puppet:///modules/c2c/usr/local/sbin/vznetaddbridge",
