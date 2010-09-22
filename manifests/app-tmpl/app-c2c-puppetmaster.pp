@@ -12,12 +12,12 @@ class app-c2c-puppetmaster {
   include git-subtree
 
 
-  package{"git-email":
+  package{["xauth"]:  # required by gitk
     ensure => present;
   }
 
-  package{["gitk", "xauth"]:
-    ensure => present;
+  os::backported_package {["git", "git-email", "gitk"]:
+    ensure => latest,
   }
 
   os::backported_package {"rake":
