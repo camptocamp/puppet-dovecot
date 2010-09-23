@@ -31,7 +31,7 @@ class monitoring::syslog {
       }
     }
 
-    if $operatingsystem == "RedHat" {
+    if ($operatingsystem =~ /RedHat|CentOS/) {
 
       monitoring::check { "Process: klogd":
         codename => "check_klogd_process",
