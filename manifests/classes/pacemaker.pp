@@ -67,6 +67,15 @@ class pacemaker {
         gpgcheck => 0,
       }
 
+      # ensure file is managed in case we want to purge /etc/yum.repos.d/
+      # http://projects.puppetlabs.com/issues/3152
+      file { "/etc/yum.repos.d/server_ha-clustering.repo":
+        ensure  => present,
+        mode    => 0644,
+        owner   => "root",
+        require => Yumrepo["server_ha-clustering"],
+      }
+
       package { "pacemaker.${architecture}":
         ensure  => present,
         alias   => "pacemaker",
