@@ -77,11 +77,13 @@ EXTERNAL_SCRIPT="/usr/local/sbin/vznetaddbridge"
   common::archive::download {"debian-5.0-amd64-c2c.tar.gz":
     url => "http://sa.camptocamp.com/files/debian-5.0-amd64-c2c.tar.gz",
     src_target => "/vz/template/cache",
+    require    => Mount["/vz"],
   }
 
   common::archive::download {"debian-6.0-amd64-c2c.tar.gz":
     url => "http://sa.camptocamp.com/files/debian-6.0-amd64-c2c.tar.gz",
     src_target => "/vz/template/cache",
+    require    => Mount["/vz"],
   }
 
   # Please see http://wiki.openvz.org/Quick_installation#sysctl
