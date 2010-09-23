@@ -1,7 +1,7 @@
 class mysql::server {
 
   $mycnf = $operatingsystem ? {
-    RedHat => "/etc/my.cnf",
+    /RedHat|Fedora|CentOS/ => "/etc/my.cnf",
     default => "/etc/mysql/my.cnf",
   }
 
@@ -40,16 +40,16 @@ class mysql::server {
       "set character-set-server utf8",
       "set log-warnings 1",
       $operatingsystem ? {
-        RedHat => "set log-error /var/log/mysqld.log",
+        /RedHat|Fedora|CentOS/ => "set log-error /var/log/mysqld.log",
         default => "set log-error /var/log/mysql.err",
       },
       $operatingsystem ? {
-        RedHat => "set log-slow-queries /var/log/mysql-slow-queries.log",
+        /RedHat|Fedora|CentOS/ => "set log-slow-queries /var/log/mysql-slow-queries.log",
         default => "set set log-slow-queries /var/log/mysql/mysql-slow.log",
       },
       #"ins log-slow-admin-statements after log-slow-queries", # BUG: not implemented in puppet yet
       $operatingsystem ? {
-        RedHat => "set socket /var/lib/mysql/mysql.sock",
+        /RedHat|Fedora|CentOS/ => "set socket /var/lib/mysql/mysql.sock",
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
@@ -79,7 +79,7 @@ class mysql::server {
     changes => [
       "set pid-file /var/run/mysqld/mysqld.pid",
       $operatingsystem ? {
-        RedHat => "set socket /var/lib/mysql/mysql.sock",
+        /RedHat|Fedora|CentOS/ => "set socket /var/lib/mysql/mysql.sock",
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
@@ -123,7 +123,7 @@ class mysql::server {
     load_path => "/usr/share/augeas/lenses/contrib/",
     changes => [
       $operatingsystem ? {
-        RedHat => "set socket /var/lib/mysql/mysql.sock",
+        /RedHat|Fedora|CentOS/ => "set socket /var/lib/mysql/mysql.sock",
         default => "set socket /var/run/mysqld/mysqld.sock",
       }
     ],
@@ -134,7 +134,7 @@ class mysql::server {
     ensure      => running,
     enable      => true,
     name        => $operatingsystem ? {
-      RedHat => "mysqld",
+      /RedHat|Fedora|CentOS/ => "mysqld",
       default => "mysql",
     },
     require   => Package["mysql-server"],
@@ -200,7 +200,7 @@ class mysql::server {
   file { "/etc/logrotate.d/mysql-server":
     ensure => present,
     source => $operatingsystem ? {
-      RedHat => "puppet:///mysql/logrotate.redhat",
+      /RedHat|Fedora|CentOS/ => "puppet:///mysql/logrotate.redhat",
       default => undef,
     }
   }
