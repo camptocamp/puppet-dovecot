@@ -3,6 +3,10 @@ class os-openvz-centos {
     ensure => absent,
   }
 
+  package {"kernel":
+    ensure => absent,
+  }
+
   augeas {"set eth1 config":
     context => "/files/etc/sysconfig/network-scripts/ifcfg-eth1",
     changes => [
