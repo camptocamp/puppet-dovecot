@@ -3,7 +3,7 @@ class monitoring::ssh {
   monitoring::check { "Process: sshd":
     codename => "check_sshd_process",
     command  => "check_procs",
-    options  => "-w 1: -c 1: -C sshd",
+    options  => "-p 1 -w 1: -c 1: -C sshd",
     type     => "passive",
     server   => $nagios_nsca_server,
     package  => $operatingsystem ?{
