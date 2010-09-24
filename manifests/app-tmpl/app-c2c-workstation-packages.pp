@@ -38,6 +38,7 @@ class app-c2c-workstation-packages {
     "planner":                          ensure => present;
     "unrar":                            ensure => present;
     "libpg-java":                       ensure => present;
+    "acroread":                         ensure => present;
 
     # Communication
     "xchat-gnome":                      ensure => present;
