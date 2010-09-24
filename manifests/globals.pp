@@ -67,6 +67,7 @@ Package {
 }
 case $operatingsystem {
   /Debian|Ubuntu/: { Package { require => Exec["apt-get_update"] } }
+  /CentOS|RedHat/: { Package { require => [Yumrepo["epel-fedora"], Yumrepo["kis-local-pkgs"]] } }
   default : {}
 }
 
