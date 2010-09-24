@@ -3,7 +3,7 @@ class monitoring::ntp {
   monitoring::check { "Process: ntpd":
     codename => "check_ntpd_process",
     command  => "check_procs",
-    options  => "-w 1:1 -c 1:1 -C ntpd",
+    options  => "-p 1 -w 1:1 -c 1:1 -C ntpd",
     type     => "passive",
     server   => $nagios_nsca_server,
     package  => $operatingsystem ?{

@@ -5,7 +5,7 @@ class monitoring::syslog {
     monitoring::check { "Process: syslogd":
       codename => "check_syslogd_process",
       command  => "check_procs",
-      options  => "-w 1:1 -c 1:1 -C syslog-ng",
+      options  => "-p 1 -w 1:1 -c 1:1 -C syslog-ng",
       type     => "passive",
       server   => $nagios_nsca_server,
       package  => $operatingsystem ?{
@@ -20,8 +20,8 @@ class monitoring::syslog {
       codename => "check_syslogd_process",
       command  => "check_procs",
       options  => $operatingsystem ? {
-        Debian => "-w 1:1 -c 1:1 -C rsyslogd",
-        /RedHat|CentOS/ => "-w 1:1 -c 1:1 -C syslogd",
+        Debian => "-p 1 -w 1:1 -c 1:1 -C rsyslogd",
+        /RedHat|CentOS/ => "-p 1 -w 1:1 -c 1:1 -C syslogd",
       },
       type     => "passive",
       server   => $nagios_nsca_server,
@@ -36,7 +36,7 @@ class monitoring::syslog {
       monitoring::check { "Process: klogd":
         codename => "check_klogd_process",
         command  => "check_procs",
-        options  => "-w 1:1 -c 1:1 -C klogd",
+        options  => "-p 1 -w 1:1 -c 1:1 -C klogd",
         type     => "passive",
         server   => $nagios_nsca_server,
       }
