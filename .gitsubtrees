@@ -19,7 +19,7 @@ openerp: modules/openerp git@github.com:camptocamp/puppet-openerp.git master
 openssl: modules/openssl git@github.com:camptocamp/puppet-openssl.git master
 openvz: modules/openvz git@github.com:camptocamp/puppet-openvz.git master
 os: modules/os git@github.com:camptocamp/puppet-os.git master
-postfix: modules/postfix git@github.com:camptocamp/puppet-apt.git master
+postfix: modules/postfix git@github.com:camptocamp/puppet-postfix.git master
 postgis: modules/postgis git@github.com:camptocamp/puppet-postgis.git master
 postgresql: modules/postgresql git@github.com:camptocamp/puppet-postgresql.git master
 puppet: modules/puppet git@github.com:camptocamp/puppet-puppet.git master
