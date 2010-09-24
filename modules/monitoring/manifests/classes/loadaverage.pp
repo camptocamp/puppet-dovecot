@@ -21,5 +21,9 @@ class monitoring::loadaverage {
     options  => "-w ${monitoring_load_warn} -c ${monitoring_load_crit}",
     type     => "passive",
     server   => $nagios_nsca_server,
+    package  => $operatingsystem ?{
+      /RedHat|CentOS/ => "nagios-plugins-load",
+      default => false
+    }
   }
 }
