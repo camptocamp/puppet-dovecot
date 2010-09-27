@@ -22,7 +22,7 @@ class os::debian-lenny inherits debian {
     ensure  => present,
     mode    => 644,
     source  => "puppet:///os/etc/emacs/site-start.d/50c2c.el",
-    require => Package["emacs21-nox"]
+    require => Package["emacs23-nox"]
   }
 
   # Umask, etc.

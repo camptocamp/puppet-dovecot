@@ -8,7 +8,8 @@ class os::debian {
     "tiobench": ensure => present; # Useful for doing IO benchmarks
     "smartmontools": ensure => present; # SMART monitoring
     "at" : ensure => present; # usefull for reboots...
-    "emacs21-nox" : ensure => present; # for fredj and sypasche
+    "emacs23-nox" : ensure => present; # for fredj (this comes from backports on Lenny)
+    "emacs21-common" : ensure => absent;
     "unzip": ensure => present;
     "zip": ensure => present;
     "strace": ensure => present;
