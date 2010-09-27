@@ -37,6 +37,7 @@ class app-sqdf-workstation-packages {
     "kcalc": ensure => present;
     "kdf": ensure => present;
     "numlockx": ensure => present;
+    "python-qt4-sql": ensure => present;
     #"vim-full" : ensure => present;
     "kodos": ensure => present;
     "amule": ensure => present;
