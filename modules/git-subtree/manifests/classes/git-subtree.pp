@@ -7,6 +7,11 @@ Installs git-subtree and adds a symlink to /usr/local/bin
 */
 class git-subtree {
 
+  # FIXME: this regex will only work until git 1.9
+  if $gitversion !~ /^(?:1:)1.[789]./ {
+    fail "git-subtree requires git 1.7 or later!"
+  }
+
   vcsrepo { "/usr/src/git-subtree":
     ensure   => present,
     source   => "git://github.com/apenwarr/git-subtree.git",
