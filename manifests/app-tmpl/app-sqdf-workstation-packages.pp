@@ -62,6 +62,8 @@ class app-sqdf-workstation-packages {
     "myspell-en-us": ensure => present;
     "myspell-en-za": ensure => present;
     "myspell-fr-gut": ensure => present;
+    "myspell-de-de": ensure => present;
+    "myspell-de-ch": ensure => present;
 
     # System
     "binutils": ensure => present;
