@@ -26,7 +26,6 @@ class app-c2c-workstation-formation-sig {
     "php5-mapscript",
     "python-mapscript",
     "mapserver-doc",
-    "gdal-bin",
     "python-gdal",
     "proj",
     "libapache2-mod-fcgid"]
