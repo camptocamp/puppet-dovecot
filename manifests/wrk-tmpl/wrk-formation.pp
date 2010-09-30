@@ -23,5 +23,6 @@ class wrk-formation {
   ### APP (specific to this server) ##############
   include app-c2c-workstation-formation
   include app-c2c-workstation-formation-sig
+  include app-c2c-workstation-formation-openerp
 
 }
