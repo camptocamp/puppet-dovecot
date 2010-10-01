@@ -17,8 +17,8 @@ class python::dev {
     ensure => present,
     alias  => "python-devel",
     name   => $operatingsystem ? {
-      Debian => "python-dev",
-      RedHat => "python-devel",
+      /Debian|Ubuntu/ => "python-dev",
+      /RedHat|CentOS/ => "python-devel",
     },
   }
 
