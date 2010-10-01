@@ -9,9 +9,8 @@ class buildenv::c {
   package { "libc-dev":
     ensure => present,
     name   => $operatingsystem ? {
-      Debian => "libc6-dev",
-      Ubuntu => "libc6-dev",
-      RedHat => "glibc-devel",
+      /Debian|Ubuntu/ => "libc6-dev",
+      /RedHat|CentOS/ => "glibc-devel",
     },
   }
 
