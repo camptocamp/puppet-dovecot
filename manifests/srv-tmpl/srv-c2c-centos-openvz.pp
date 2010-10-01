@@ -9,4 +9,6 @@ class srv-c2c-centos-openvz {
   include os-openvz-centos
   
   ### MW #########################################
+
+  include app-c2c-centos-openvz
 }
