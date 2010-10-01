@@ -7,10 +7,6 @@ class os-openvz-centos {
     ensure => absent,
   }
 
-  package {"rdiff-backup":
-    ensure => present,
-  }
-
   augeas {"set eth1 config":
     context => "/files/etc/sysconfig/network-scripts/ifcfg-eth1",
     changes => [
