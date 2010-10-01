@@ -3,11 +3,15 @@ import os, sys, commands
 
 ionice = commands.getstatus('which ionice')
 if ionice:
-  allowedCmd = {'rdiff':'nice -n 10 rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
-  default = 'nice -n 10 rdiff-backup --server'
+  allowedCmd = {'rdiff':'PYTHONPATH=/opt/rdiff-backup/rdiff-backup-1.2.5/lib64/python2.4/site-packages nice -n 10 /opt/rdiff-backup/rdiff-backup-1.2.5/bin/rdiff-backup --server', 
+      'vzlist':'vzlist -H -o veid,hostname', 
+      'version':'echo 1.2.5'}
 else:
-  allowedCmd = {'rdiff':'nice -n 10 ionice -n 7 rdiff-backup --server', 'vzlist':'vzlist -H -o veid,hostname', 'version':'rdiff-backup -V'}
-  default = 'nice -n 10 ionice -n 7 rdiff-backup --server'
+  allowedCmd = {'rdiff':'PYTHONPATH=/opt/rdiff-backup/rdiff-backup-1.2.5/lib64/python2.4/site-packages nice -n 10 ionice -n 7 /opt/rdiff-backup/rdiff-backup-1.2.5/bin/rdiff-backup --server',
+      'vzlist':'vzlist -H -o veid,hostname',
+      'version':'echo 1.2.5'}
+
+default = allowedCmd['rdiff']
 
 sshOrig = os.getenv('SSH_ORIGINAL_COMMAND')
 cmd = ''
