@@ -7,7 +7,7 @@ class os-openvz-centos {
     ensure => absent,
   }
 
-  package {"rdiff-backup".
+  package {"rdiff-backup":
     ensure => present,
   }
 
