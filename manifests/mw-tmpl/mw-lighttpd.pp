@@ -14,12 +14,12 @@ class mw-lighttpd {
       case $operatingsystem {
         /Debian|Ubuntu/: {
           Package["lighttpd"] {
-            before => Class["nagios::debian::packages"],
+            before => Class["nagios::debian"],
           }
         }
         /RedHat|CentOS/: {
           Package["lighttpd"] {
-            before => Class["nagios::redhat::packages"],
+            before => Class["nagios::redhat"],
           }
         }
       }
