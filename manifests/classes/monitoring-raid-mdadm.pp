@@ -1,5 +1,4 @@
 class monitoring::raid::mdadm {
-  include monitoring::params
   monitoring::check {"System: mdadm raid status":
     ensure   => present,
     codename => "check_mdadm",
