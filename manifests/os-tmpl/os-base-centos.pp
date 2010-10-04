@@ -1,4 +1,10 @@
 class os-base-centos {
+  exec { "update yum cache":
+    command => "yum clean all; yum makecache",
+    refreshonly => true,
+    timeout => "-1",
+  }
+
   yumrepo {"epel-fedora":
     descr => "Extra Packages for Enterprise Linux ${lsbmajdistrelease} - \$basearch",
     baseurl => "http://mirror.switch.ch/ftp/mirror/epel/${lsbmajdistrelease}/\$basearch",
@@ -23,5 +29,12 @@ class os-base-centos {
 
   package {"sendmail":
     ensure => absent,
+  }
+
+  if $manufacturer =~ /Dell/ {
+    include dell::openmanage
+    if $server_group == "prod" {
+      include monitoring::dell
+    }
   }
 }
