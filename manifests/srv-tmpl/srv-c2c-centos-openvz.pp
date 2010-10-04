@@ -1,6 +1,7 @@
 class srv-c2c-centos-openvz {
   ### Global attributes ##########################
   $ps1label = "openvz HN"
+  $server_group = "prod"
 
   ### OS #########################################
   include os-base
