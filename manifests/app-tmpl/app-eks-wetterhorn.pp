@@ -17,7 +17,38 @@ class app-eks-wetterhorn {
     user    => admin,
     require => User["admin"],
     type    => "ssh-rsa",
-    key     => "AAAAB3NzaC1yc2EAAAABIwAAAQEAqcqTyIvfLoinj2gsDkuFoWfFbjK+JNc2OkPAb27/6WhFxkKh12v0hJx8BlfyHJFpHpLVwOqbKTmZkILEIkLCsMyACi5l+rVXPg3xDbRK8Jo8Wh4fv4KE2WcTOdJtnhESs2uv221yxC3JZsP2PM4TtOMZOLEizgmc5iLcnpy3Ja/PCmV2px/fT+r1CbOG9PHdTJ+dEqiB4vYplY9MmrB1C/fQvL5uDo8LqYeIzZDd+zUmRgzqrqBq+k4ZJ+/VoRrnXrFwVCsqStUWAJr8ozCnAUMfHPV89IbGUUEUWdJ5i1+tVz0Ik+obDD7bSoCzZZ0hM3jG8/QrTiTFIsVf+43OKw==",
+    key     => "AAAAB3NzaC1yc2EAAAABJQAAAQB1bJTKd6lSkhqLJUOdBzYUMKJ/2Wv8C+roZ00bqHkkY8BXjywwc1fQeMBgcsDQjjOdA7IaThtVPVpqY5pyUX2Frpn8SoXpLElzwLHN1gSEZAx8Hhhe1gz/oW5KVuf89mSwCyStf7wdutddIEcfIUD19Q5QKubYIj8X0yqRQpCMaDm7DNKb6eJSUXmoyID87EwR27Sygjz4Kwp/kZdJ+AcxBodh+2LfrBPF0fpikrVV8TlvwKG6FTRCyhzLb6x0uExqVTckD0ccpbm0rRxLkU+CwreY1GMnUR6mNPsaR96Sc/eLQxYJOdK3jKxNQxGbaVqXeYoLHiAX+prYnr+9GhKJ",
+  }
+
+  common::concatfilepart {"sudo.admin":
+    file => "/etc/sudoers",
+    content => "# Managed by app-eks-wetterhorn
+admin ALL=(ALL) NOPASSWD: /usr/local/bin/check-rdiff",
+  }
+
+  file {"/usr/local/bin/check-rdiff":
+    ensure => present,
+    owner  => root,
+    group  => root,
+    mode   => 0755,
+    content => '#!/bin/bash
+if [ -z $1 ]; then
+  echo "Usage: $(basename $0) <version> <options>"
+  exit 1
+fi
+
+rdiff_version=$(echo $@| awk \'{print $1}\')
+rdiff_args=$(echo $@ | sed "s/$rdiff_version//")
+
+if [ ! -d /opt/rdiff-backup/rdiff-backup-${rdiff_version} ]; then
+  echo "Usage: $(dirname $0) <version> <options>"
+  echo "Version ${rdiff_version} doesn\'t exists"
+  exit 2
+fi
+
+export PYTHONPATH=/opt/rdiff-backup/rdiff-backup-${rdiff_version}/lib64/python2.5/site-packages
+/opt/rdiff-backup/rdiff-backup-${rdiff_version}/bin/rdiff-backup ${rdiff_args}
+',
   }
 
   file {"/root/.ssh/rdiff-backup-1.1.5.id_rsa":
