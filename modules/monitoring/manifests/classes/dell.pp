@@ -14,7 +14,7 @@ class monitoring::dell {
 
   include monitoring::params
 
-  $check_omsa_ver = "3.5.3"
+  $check_omsa_ver = "3.6.0"
   $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
 
   if (! $check_openmanage_opts) {
