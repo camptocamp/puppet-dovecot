@@ -1,6 +1,6 @@
 class dell::hwtools {
 
-  $ver = "6.1"
+  $ver = "6.3"
 
   # Dans ces paquets, on trouve de quoi flasher et extraires des infos des
   # bios & firmwares.

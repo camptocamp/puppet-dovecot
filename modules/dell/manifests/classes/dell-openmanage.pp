@@ -82,7 +82,7 @@ class dell::openmanage {
 
 class dell::openmanage::redhat {
 
-  $ver = "6.1"
+  $ver = "6.3"
 
   # this package contains the yum plugin which find the best yum repository
   # depending on the hardware.
