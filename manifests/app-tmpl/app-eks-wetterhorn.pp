@@ -8,6 +8,7 @@ class app-eks-wetterhorn {
     ensure => present,
     shell  => "/bin/bash",
     home   => "/home/admin",
+    groups => "adm",
     managehome => true,
   }
 
