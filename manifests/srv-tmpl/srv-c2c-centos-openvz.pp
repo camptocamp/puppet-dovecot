@@ -15,5 +15,8 @@ class srv-c2c-centos-openvz {
   ### MW #########################################
   include postfix::satellite
 
+  ### APP #######################################
+  include app-openvz-server-nfs
+
   include app-c2c-centos-openvz
 }
