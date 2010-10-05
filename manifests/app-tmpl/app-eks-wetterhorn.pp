@@ -4,6 +4,25 @@ class app-eks-wetterhorn {
   include monitoring::raid::mdadm
   rdiff-backup::server::install {["0.13.4", "1.1.5", "1.2.1", "1.2.5"]: }
 
+  host {
+    "eiger.eks":          ip => "192.168.99.2";
+    "eiger":              ip => "192.168.99.2";
+    "wetterhorn.eks.com": ip => "192.168.99.4";
+    "wetterhorn":         ip => "192.168.99.4";
+    "scheidegg":          ip => "10.10.10.2";
+    "rp":                 ip => "10.10.10.5";
+    "svn":                ip => "10.10.10.121";
+    "mail":               ip => "10.10.10.123";
+    "pe2500":             ip => "10.10.10.3";
+    "app":                ip => "10.10.10.100";
+    "appstage":           ip => "10.10.10.101";
+    "home":               ip => "10.10.10.102";
+    "id":                 ip => "10.10.10.103";
+    "jungfrau":           ip => "62.2.237.75";
+    "ecm":                ip => "192.168.99.6";
+    "prod":               ip => "209.59.209.5";
+  }
+
   user {"admin":
     ensure => present,
     shell  => "/bin/bash",
@@ -23,7 +42,7 @@ class app-eks-wetterhorn {
   common::concatfilepart {"sudo.admin":
     file => "/etc/sudoers",
     content => "# Managed by app-eks-wetterhorn
-admin ALL=(ALL) NOPASSWD: /usr/local/bin/check-rdiff",
+admin ALL=(ALL) NOPASSWD: /usr/local/bin/check-rdiff, /usr/local/sbin/sync-to-usb",
   }
 
   file {"/usr/local/bin/check-rdiff":
@@ -86,22 +105,29 @@ qV6ppDYDmKOOzyQD7PMpwrp/8d5KkNyY0jepoLKITMO3t0FWlrQ=
 ",
   }
 
-  host {
-    "eiger.eks":          ip => "192.168.99.2";
-    "eiger":              ip => "192.168.99.2";
-    "wetterhorn.eks.com": ip => "192.168.99.4";
-    "wetterhorn":         ip => "192.168.99.4";
-    "scheidegg":          ip => "10.10.10.2";
-    "rp":                 ip => "10.10.10.5";
-    "svn":                ip => "10.10.10.121";
-    "mail":               ip => "10.10.10.123";
-    "pe2500":             ip => "10.10.10.3";
-    "app":                ip => "10.10.10.100";
-    "appstage":           ip => "10.10.10.101";
-    "home":               ip => "10.10.10.102";
-    "id":                 ip => "10.10.10.103";
-    "jungfrau":           ip => "62.2.237.75";
-    "ecm":                ip => "192.168.99.6";
-    "prod":               ip => "209.59.209.5";
+  file {"/usr/local/sbin/sync-to-usb":
+    ensure  => present,
+    mode    => 0755,
+    owner   => root,
+    group   => root,
+    content => '#!/bin/bash
+# Check for root
+if [ `id -u` -gt 0 ]
+    then echo "not root"; exit
+fi
+TODAY=$(date +%d)
+exec > /var/log/rdiff-backup/rsync-$TODAY-usbhd.log 2>&1
+mount /mnt/external
+if [ $? -ne 0 ]; then
+  echo "FATAL: unable to mount LABEL=EXTERNAL"
+  exit 1
+fi
+
+nice -n 10 rsync -a --delete --delete-excluded --stats --exclude "/media/*" --exclude "/mnt/*" --exclude "/initrd/*" --exclude "/tmp/*" --exclude "/proc/*" --exclude "/sys/*" --exclude "/selinux/*" / /mnt/external/
+df -h /mnt/external
+umount /mnt/external
+exit 0
+',
   }
+
 }
