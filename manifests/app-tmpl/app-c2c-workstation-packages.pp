@@ -88,6 +88,7 @@ class app-c2c-workstation-packages {
     "openoffice.org-help-de":           ensure => present;
     "thunderbird-locale-de":            ensure => present;
     "openoffice.org-l10n-de":           ensure => present;
+    "gimp":                             ensure => present;
     "gimp-help-de":                     ensure => present;
     "kde-l10n-de":                      ensure => present;
     "gnome-user-guide-de":              ensure => present;
