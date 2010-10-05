@@ -37,4 +37,8 @@ class os-base-centos {
       include monitoring::dell
     }
   }
+
+  if $server_group == "prod" {
+    package {"nagios-plugins-ping": }
+  }
 }
