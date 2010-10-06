@@ -1,5 +1,6 @@
 class app-eks-backups {
   include python::dev
+  include monitoring::rdiff-backup 
   include rdiff-backup::server
 
   rdiff-backup::server::install {["0.13.4", "1.1.5", "1.2.1", "1.2.5"]: }
@@ -32,7 +33,7 @@ class app-eks-backups {
     version => "1.2.5",
     source  => "root@jungfrau::/",
     destination => "/srv/backup2/jungfrau",
-    args => "--remote-schema 'ssh -i /root/.ssh/rdiff-backup-1.1.5.id_rsa %s' --exclude '/dev/*' --exclude '/proc/*' --exclude '/sys/*' --exclude '/backup/rdiff-backup/*'",
+    args => "--remote-schema 'ssh -p 2222 -i /root/.ssh/rdiff-backup-1.1.5.id_rsa %s' --exclude '/dev/*' --exclude '/proc/*' --exclude '/sys/*' --exclude '/backup/rdiff-backup/*'",
     retention => "60D",
   }
 
@@ -132,7 +133,7 @@ kIe1B0LpHF4/JwdH6BE8WJh6RGIfoSDJ8GEHrQc2wldzNG5QYmhDIHTm3PdFjQVk
 RHMCgYEAkQzHh0JVBUMyqBor+6uUviYtg6wiKPMnw2fEkKIbrPmjyEyDbpgwDsC8
 wj6lff1kIICRMwJBYieey76OQzUVYzuSOAH8Y8cszmBMvP46Ao2No01H5EAsW5Fo
 qV6ppDYDmKOOzyQD7PMpwrp/8d5KkNyY0jepoLKITMO3t0FWlrQ=
------END RSA PRIVATE KEY----
+-----END RSA PRIVATE KEY-----
 ",
   }
 
@@ -146,8 +147,8 @@ qV6ppDYDmKOOzyQD7PMpwrp/8d5KkNyY0jepoLKITMO3t0FWlrQ=
 if [ `id -u` -gt 0 ]
     then echo "not root"; exit
 fi
-TODAY=$(date +%d)
-exec > /var/log/rdiff-backup/rsync-$TODAY-usbhd.log 2>&1
+TODAY=$(date +%d-%m-%Y)
+exec > /var/log/rdiff-backup/rsync_usbhd-$TODAY.log 2>&1
 mount /mnt/external
 if [ $? -ne 0 ]; then
   echo "FATAL: unable to mount LABEL=EXTERNAL"
