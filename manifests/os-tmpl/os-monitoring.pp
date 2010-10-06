@@ -30,7 +30,7 @@ class os-monitoring {
     }
   } else {
     include nagios::nsca::client
-    nagios::host::nsca {$fqdn:
+    nagios::host::remote {$fqdn:
       ensure         => present,
       nagios_alias   => "$hostname ($hostgroup)",
       contact_groups => $basic_contact_group,
