@@ -21,6 +21,5 @@ class srv-eks-wetterhorn {
 
   ### APP (generic) ##############################
   include app-eks-wetterhorn
-
-
+  include app-eks-backups
 }
