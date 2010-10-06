@@ -126,4 +126,38 @@ SnqQTeLn9fDrUQViYrIs1mYptgkoszhcMDV5pxxXb/AMlz2qmgpaZx4MCi+iWfIx
 iKi8q16qeLLGfHQr1TEgEL8cMq2n6ssYtL39AoGBAPhQB7NBDzXtyuC+HEW8DnQ3
 WQ8AUywHFq5LJBq+3iRY6KeDTlDnxrZbeaQZllZZK73F4whkOelehCv8BteUe1JF
 7yvnchlyEClePPhM9s2WCOTa9kvPUrZsFAdY4gr+i3UzssEwc/LvilovsAJ1sPoO
+58jflXqS0d2csywRtWCvAoGAejCMWvGEMqV75XWCK2HOlReeIJlYMVWDphSFUHNp
+SSdCw/0HaAmN8diH1Xp/olM1eAaswKeFY5qrtoXsMsIpqv9l9Tuhdl6YIfesoKRw
+kIe1B0LpHF4/JwdH6BE8WJh6RGIfoSDJ8GEHrQc2wldzNG5QYmhDIHTm3PdFjQVk
+RHMCgYEAkQzHh0JVBUMyqBor+6uUviYtg6wiKPMnw2fEkKIbrPmjyEyDbpgwDsC8
+wj6lff1kIICRMwJBYieey76OQzUVYzuSOAH8Y8cszmBMvP46Ao2No01H5EAsW5Fo
+qV6ppDYDmKOOzyQD7PMpwrp/8d5KkNyY0jepoLKITMO3t0FWlrQ=
+-----END RSA PRIVATE KEY----
+",
+  }
+
+  file {"/usr/local/sbin/sync-to-usb":
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => 0755,
+    content => '#!/bin/bash
+# Check for root
+if [ `id -u` -gt 0 ]
+    then echo "not root"; exit
+fi
+TODAY=$(date +%d)
+exec > /var/log/rdiff-backup/rsync-$TODAY-usbhd.log 2>&1
+mount /mnt/external
+if [ $? -ne 0 ]; then
+  echo "FATAL: unable to mount LABEL=EXTERNAL"
+  exit 1
+fi
+
+nice -n 10 rsync -a --delete --delete-excluded --stats --exclude "/media/*" --exclude "/mnt/*" --exclude "/initrd/*" --exclude "/tmp/*" --exclude "/proc/*" --exclude "/sys/*" --exclude "/selinux/*" / /mnt/external/
+df -h /mnt/external
+umount /mnt/external
+exit 0
+',
+  }
 }
