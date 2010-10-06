@@ -24,15 +24,15 @@ class os-monitoring {
 
 
   # create host
-  if $is_external {
-    nagios::host::nsca {$fqdn:
-      ensure => present,
-      nagios_alias => "${hostname} (${hostgroup})",
-      contact_groups => $basic_contact_group,
-      hostgroups => $hostgroup,
-      export_for => "nagios-${nagios_nsca_server}",
-    }
-  } else {
+#  if $is_external {
+#    nagios::host::nsca {$fqdn:
+#      ensure => present,
+#      nagios_alias => "${hostname} (${hostgroup})",
+#      contact_groups => $basic_contact_group,
+#      hostgroups => $hostgroup,
+#      export_for => "nagios-${nagios_nsca_server}",
+#    }
+#  } else {
     if "$fqdn" == "$nagios_nsca_server" {
       nagios::host {$fqdn:
         ensure          => present,
@@ -41,7 +41,7 @@ class os-monitoring {
         hostgroups      => $hostgroup,
       }
     } else {
-      nagios::host::remote {$fqdn:
+      nagios::host::nsca {$fqdn:
         ensure         => present,
         nagios_alias   => "$hostname ($hostgroup)",
         contact_groups => $basic_contact_group,
@@ -49,7 +49,7 @@ class os-monitoring {
         export_for     => "nagios-${nagios_nsca_server}",
       }
     }
-  }
+#  }
 
   file {"/opt/nagios-plugins":
     ensure => directory,
