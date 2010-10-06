@@ -41,4 +41,12 @@ class app-eks-wetterhorn {
     content => "# Managed by app-eks-wetterhorn
 admin ALL=(ALL) NOPASSWD: /usr/local/bin/check-rdiff, /usr/local/sbin/sync-to-usb",
   }
+
+  file {"/srv/backup1":
+    ensure  => directory,
+    owner   => admin,
+    group   => admin,
+    mode    => 0755,
+    require => User["admin"],
+  }
 }
