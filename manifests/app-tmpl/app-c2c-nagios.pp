@@ -9,7 +9,7 @@ class app-c2c-nagios {
 
   include nagios
   include nagios::nsca::server
-  include nagios::nrpe::client
+  include nagios::nrpe::server
   include nagios::webinterface
 
 
@@ -18,7 +18,6 @@ class app-c2c-nagios {
     
     ]:
   }
-
 
   apache::vhost-ssl{$fqdn:
     ensure => present,
