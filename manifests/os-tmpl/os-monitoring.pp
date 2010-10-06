@@ -20,36 +20,24 @@ $nagios_host_check_timeout="80"
 
 class os-monitoring {
   include nagios
-  include nagios::nsca::client
 
-
-  # create host
-#  if $is_external {
-#    nagios::host::nsca {$fqdn:
-#      ensure => present,
-#      nagios_alias => "${hostname} (${hostgroup})",
-#      contact_groups => $basic_contact_group,
-#      hostgroups => $hostgroup,
-#      export_for => "nagios-${nagios_nsca_server}",
-#    }
-#  } else {
-    if "$fqdn" == "$nagios_nsca_server" {
-      nagios::host {$fqdn:
-        ensure          => present,
-        nagios_alias    => "$hostname ($hostgroup)",
-        contact_groups  => $basic_contact_group,
-        hostgroups      => $hostgroup,
-      }
-    } else {
-      nagios::host::nsca {$fqdn:
-        ensure         => present,
-        nagios_alias   => "$hostname ($hostgroup)",
-        contact_groups => $basic_contact_group,
-        hostgroups     => $hostgroup,
-        export_for     => "nagios-${nagios_nsca_server}",
-      }
+  if "$fqdn" == "$nagios_nsca_server" {
+    nagios::host {$fqdn:
+      ensure          => present,
+      nagios_alias    => "$hostname ($hostgroup)",
+      contact_groups  => $basic_contact_group,
+      hostgroups      => $hostgroup,
     }
-#  }
+  } else {
+    include nagios::nsca::client
+    nagios::host::nsca {$fqdn:
+      ensure         => present,
+      nagios_alias   => "$hostname ($hostgroup)",
+      contact_groups => $basic_contact_group,
+      hostgroups     => $hostgroup,
+      export_for     => "nagios-${nagios_nsca_server}",
+    }
+  }
 
   file {"/opt/nagios-plugins":
     ensure => directory,
