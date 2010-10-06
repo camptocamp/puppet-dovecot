@@ -11,11 +11,32 @@ See:
 
 */
 class monitoring::dell {
+  include monitoring::dell::omsa
+  include monitoring::dell::snmp
+  include monitoring::dell::warranty
+}
+
+class monitoring::dell::snmp {
+  monitoring::check { "Dell OMSA-snmp bridge":
+    codename => "check_dell_snmp",
+    command  => "check_snmp",
+    options  => "-H localhost -R 'dell' -o SNMPv2-SMI::enterprises.674.10892.1.300.10.1.8.1",
+    interval => "120", # every 2h
+    retry    => "60",  # every 1h
+    type     => "passive",
+    server   => $nagios_nsca_server,
+    package  => $operatingsystem ? {
+      /RedHat|CentOS/  => "nagios-plugins-snmp",
+      default => "libnet-snmp-perl",
+    },
+  }
+}
+
+class monitoring::dell::omsa {
 
   include monitoring::params
 
   $check_omsa_ver = "3.6.0"
-  $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
 
   if (! $check_openmanage_opts) {
     $check_openmanage_opts = "--blacklist ctrl_fw=ALL/ctrl_driver=ALL"
@@ -42,6 +63,25 @@ class monitoring::dell {
     before  => Monitoring::Check["Dell OMSA"],
   }
 
+  # monitoring definition.
+
+  monitoring::check { "Dell OMSA":
+    codename => "check_omsa_status",
+    command  => "check_openmanage",
+    options  => $check_openmanage_opts,
+    base     => "${monitoring::params::customplugins}",
+    interval => "360", # every 6h
+    retry    => "180", # every 3h
+    type     => "passive",
+    server   => $nagios_nsca_server,
+  }
+
+}
+
+class monitoring::dell::warranty {
+  include monitoring::params
+  $check_warranty_ver = "9707a4b" # versions up to 2.0 seem to fail
+
   #TODO: use vcsrepo instead
   # download check_dell_warranty.py
   exec { "download check_dell_warranty.py version $check_warranty_ver":
@@ -49,7 +89,6 @@ class monitoring::dell {
     creates => "${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}",
     require => File["${monitoring::params::customplugins}"],
   }
-
   file { "${monitoring::params::customplugins}/check_dell_warranty-${check_warranty_ver}":
     mode    => 0755,
     owner   => "root",
@@ -82,19 +121,6 @@ class monitoring::dell {
   }
 
 
-  # monitoring definition.
-
-  monitoring::check { "Dell OMSA":
-    codename => "check_omsa_status",
-    command  => "check_openmanage",
-    options  => $check_openmanage_opts,
-    base     => "${monitoring::params::customplugins}",
-    interval => "360", # every 6h
-    retry    => "180", # every 3h
-    type     => "passive",
-    server   => $nagios_nsca_server,
-  }
-
   monitoring::check { "Dell Warranty":
     codename => "check_dell_warranty",
     command  => "check_dell_warranty.py",
@@ -104,19 +130,5 @@ class monitoring::dell {
     retry    => "1440", # once a day
     type     => "passive",
     server   => $nagios_nsca_server,
-  }
-
-  monitoring::check { "Dell OMSA-snmp bridge":
-    codename => "check_dell_snmp",
-    command  => "check_snmp",
-    options  => "-H localhost -R 'dell' -o SNMPv2-SMI::enterprises.674.10892.1.300.10.1.8.1",
-    interval => "120", # every 2h
-    retry    => "60",  # every 1h
-    type     => "passive",
-    server   => $nagios_nsca_server,
-    package  => $operatingsystem ? {
-      /RedHat|CentOS/  => "nagios-plugins-snmp",
-      default => "libnet-snmp-perl",
-    },
   }
 }
