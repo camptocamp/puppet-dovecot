@@ -29,7 +29,7 @@ class app-eks-backups {
   }
 
   rdiff-backup::conf {"jungfrau":
-    version => "1.1.5",
+    version => "1.2.5",
     source  => "root@jungfrau::/",
     destination => "/srv/backup2/jungfrau",
     args => "--remote-schema 'ssh -i /root/.ssh/rdiff-backup-1.1.5.id_rsa %s' --exclude '/dev/*' --exclude '/proc/*' --exclude '/sys/*' --exclude '/backup/rdiff-backup/*'",
