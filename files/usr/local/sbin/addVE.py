@@ -101,6 +101,28 @@ def getHostname(veid):
     d = getdata('http://sadb.camptocamp.com/vserver/search/veid/%s'%veid)
     return d[0]['hostname']
 
+def getTemplate():
+    templates = glob.glob("/var/lib/vz/template/cache/*.tar.gz")
+    templates = map(os.path.basename, templates)
+    templates = map(lambda x: x[:-7], templates)
+    templates.sort()
+
+    print
+    for index, val in enumerate(templates):
+        print "  [%s]\t%s" %(index, val)
+    print
+
+    value = -1
+    while value not in xrange(len(templates)):
+        try:
+            value = input("  Template number: ")
+        except NameError:
+            continue
+
+    return templates[value]
+
+
+
 def getVars():
     environment = raw_input('Environment: ')
     veid = raw_input('VEID: ')
@@ -108,12 +130,13 @@ def getVars():
     name = hostname.split('.')[0]
     ip = getIp(hostname)
     cpu, mem = getUnits(veid)
+    template = getTemplate()
 
-    return (environment, veid, hostname, name, ip, cpu, mem)
+    return (environment, veid, hostname, name, ip, cpu, mem, template)
 
 if __name__=="__main__":
     if len(sys.argv) != 9:
-      environment, veid, hostname, name, ip, cpu, mem = getVars()
+      environment, veid, hostname, name, ip, cpu, mem, template = getVars()
     else:
       environment = sys.argv[1]
       veid = sys.argv[2]
