@@ -112,7 +112,7 @@ def getVars():
     return (environment, veid, hostname, name, ip, cpu, mem)
 
 if __name__=="__main__":
-    if len(sys.argv) != 8:
+    if len(sys.argv) != 9:
       environment, veid, hostname, name, ip, cpu, mem = getVars()
     else:
       environment = sys.argv[1]
@@ -122,7 +122,7 @@ if __name__=="__main__":
       ip = sys.argv[5]
       cpu = sys.argv[6]
       mem = sys.argv[7]
-    template = "debian-5.0-amd64-c2c"
+      template = sys.argv[8]
     subnet, bridge = getBridge(ip)
     addVE(veid, name, bridge, template, cpu, mem)
     setInterfaces(hostname, name, ip, subnet, veid)
