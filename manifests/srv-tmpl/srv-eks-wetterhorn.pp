@@ -5,6 +5,7 @@ class srv-eks-wetterhorn {
 
   ### Global attributes ##########################
   $server_group = "prod" #(one of dev, demo or prod)
+  $is_external = true
   $ps1label = "eks backups"
   $rdiff_backup_max_threads = 2
   $rdiff_backup_logs_dir = "/var/log/rdiff-backups"
