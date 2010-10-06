@@ -34,7 +34,23 @@ class os-base-centos {
   if $manufacturer =~ /Dell/ {
     include dell::openmanage
     if $server_group == "prod" {
-      include monitoring::dell
+      include monitoring::dell::warranty
+      include monitoring::dell::omsa
+      
+      monitoring::check { "Dell OMSA-snmp bridge":
+        ensure   => absent,
+        codename => "check_dell_snmp",
+        command  => "check_snmp",
+        options  => "-H localhost -R 'dell' -o SNMPv2-SMI::enterprises.674.10892.1.300.10.1.8.1",
+        interval => "120", # every 2h
+        retry    => "60",  # every 1h
+        type     => "passive",
+        server   => $nagios_nsca_server,
+        package  => $operatingsystem ? {
+          /RedHat|CentOS/  => "nagios-plugins-snmp",
+          default => "libnet-snmp-perl",
+        },
+      }
     }
   }
 
