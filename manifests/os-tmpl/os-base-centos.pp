@@ -36,6 +36,12 @@ class os-base-centos {
     if $server_group == "prod" {
       include monitoring::dell::warranty
       include monitoring::dell::omsa
+
+      # ugly - omreport 6.3 doesn't work with this script // broken script in fact
+      common::concatfilepart {"sudo for nagios":
+        file => "/etc/sudoers",
+        content => "nagios ALL=(ALL) NOPASSWD: /usr/sbin/dmidecode",
+      }
       
       monitoring::check { "Dell OMSA-snmp bridge":
         ensure   => absent,
