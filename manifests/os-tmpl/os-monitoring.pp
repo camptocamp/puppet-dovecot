@@ -22,6 +22,7 @@ class os-monitoring {
   include nagios
 
   if "$fqdn" == "$nagios_nsca_server" {
+    include nagios::nsca::server
     nagios::host {$fqdn:
       ensure          => present,
       nagios_alias    => "$hostname ($hostgroup)",
