@@ -155,10 +155,19 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-nice -n 10 rsync -a --delete --delete-excluded --stats --exclude "/media/*" --exclude "/mnt/*" --exclude "/initrd/*" --exclude "/tmp/*" --exclude "/proc/*" --exclude "/sys/*" --exclude "/selinux/*" / /mnt/external/
+nice -n 10 rsync -a --delete --delete-excluded --stats /srv/backup2/* /mnt/external/
 df -h /mnt/external
 umount /mnt/external
 exit 0
 ',
+  }
+
+  cron {"sync to usb":
+    ensure  => present,
+    user    => root,
+    hour    => 4,
+    minute  => 30,
+    command => "",
+    require => File["/usr/local/sbin/sync-to-usb"],
   }
 }
