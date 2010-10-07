@@ -167,7 +167,7 @@ exit 0
     user    => root,
     hour    => 4,
     minute  => 30,
-    command => "",
+    command => "/usr/local/sbin/sync-to-usb",
     require => File["/usr/local/sbin/sync-to-usb"],
   }
 }
