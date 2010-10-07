@@ -31,12 +31,22 @@ class os-monitoring {
     }
   } else {
     include nagios::nsca::client
-    nagios::host::remote {$fqdn:
-      ensure         => present,
-      nagios_alias   => "$hostname ($hostgroup)",
-      contact_groups => $basic_contact_group,
-      hostgroups     => $hostgroup,
-      export_for     => "nagios-${nagios_nsca_server}",
+    if $is_external {
+      nagios::host::nsca {$fqdn:
+        ensure         => present,
+        nagios_alias   => "$hostname ($hostgroup)",
+        contact_groups => $basic_contact_group,
+        hostgroups     => $hostgroup,
+        export_for     => "nagios-${nagios_nsca_server}",
+      }
+    } else {
+      nagios::host::remote {$fqdn:
+        ensure         => present,
+        nagios_alias   => "$hostname ($hostgroup)",
+        contact_groups => $basic_contact_group,
+        hostgroups     => $hostgroup,
+        export_for     => "nagios-${nagios_nsca_server}",
+      }
     }
   }
 
