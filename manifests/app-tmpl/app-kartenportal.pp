@@ -35,4 +35,13 @@ class app-kartenportal {
     uid     => 1002,
     require => User["admin"],
   }
+
+  monitoring::check {"Service: Maprank status":
+    ensure    => present,
+    codename  => "check_maprank_status",
+    command   => "check_http",
+    options   => "-H ${fqdn} -u /cgi-bin/maprank.fcgi -s 'MapRankSearch 1.0'",
+    type      => "remote",
+    server    => $nagios_nsca_server,
+  }
 }
