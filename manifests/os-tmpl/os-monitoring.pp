@@ -39,6 +39,7 @@ class os-monitoring {
         hostgroups     => $hostgroup,
         export_for     => "nagios-${nagios_nsca_server}",
       }
+      include monitoring::ssh::process
     } else {
       nagios::host::remote {$fqdn:
         ensure         => present,
@@ -47,6 +48,7 @@ class os-monitoring {
         hostgroups     => $hostgroup,
         export_for     => "nagios-${nagios_nsca_server}",
       }
+      include monitoring::ssh
     }
   }
 
@@ -58,7 +60,6 @@ class os-monitoring {
   include monitoring::cron
   include monitoring::diskusage
   include monitoring::loadaverage
-  include monitoring::ssh
   include monitoring::puppet
   include monitoring::at
 
