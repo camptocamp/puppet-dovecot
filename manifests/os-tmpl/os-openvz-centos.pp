@@ -5,6 +5,36 @@ class os-openvz-centos {
 
   package {"kernel":
     ensure => absent,
+    require => Class["openvz::server"],
+  }
+
+  file {"/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag":               
+    ensure => present,                                             
+    source => "puppet:///c2c/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
+    mode => 644,
+  }
+
+  yumrepo {"rpmforge-dag":
+    descr       => "RPMforge RPM Repository for Red Hat Enterprise 5 - dag",
+    baseurl     => "http://apt.sw.be/redhat/el${lsbmajdistrelease}/en/\$basesearch/rpmforge",
+    mirrorlist  => "http://apt.sw.be/redhat/el5/en/mirrors-rpmforge",
+    enabled     => 1,
+    gpgkey      => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
+    gpgcheck    => 1,
+    includepkgs => "cstream,perl-LockFile-Simple",
+    require     => File["/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag"],
+  }
+
+  package {["cstream","perl-LockFile-Simple"]:
+    ensure => present,
+    require => Yumrepo["rpmforge-dag"]
+  }
+
+  package {"vzdump":
+    ensure   => present,
+    provider => "rpm",
+    source   => "http://download.openvz.org/contrib/utils/vzdump/vzdump-1.2-4.noarch.rpm",
+    require  => Package["cstream","perl-LockFile-Simple"],
   }
 
   augeas {"set eth1 config":
