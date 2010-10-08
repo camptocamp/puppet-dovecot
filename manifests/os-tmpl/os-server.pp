@@ -53,7 +53,7 @@ root  ALL=(ALL) ALL
   
     # define check_load_backup
     nagios::command {"check_load_backup":
-      ensure => present,
+      ensure => absent,
       command_line => '$USER1$/check_load -w 25,20,15 -c 30,25,20',
     }
   }
