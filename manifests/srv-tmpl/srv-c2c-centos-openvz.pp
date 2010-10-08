@@ -8,7 +8,7 @@ class srv-c2c-centos-openvz {
 
   ### OS #########################################
   include os-base
-  include os-monitoring
+  include os-server
   include os-openvz
   include os-openvz-centos
   
