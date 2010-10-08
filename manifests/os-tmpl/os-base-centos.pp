@@ -40,7 +40,7 @@ class os-base-centos {
       # ugly - omreport 6.3 doesn't work with this script // broken script in fact
       common::concatfilepart {"sudo for nagios":
         file => "/etc/sudoers",
-        content => "nagios ALL=(ALL) NOPASSWD: /usr/sbin/dmidecode",
+        content => "nagios ALL=(ALL) NOPASSWD: /usr/sbin/dmidecode\n",
       }
       
       monitoring::check { "Dell OMSA-snmp bridge":
