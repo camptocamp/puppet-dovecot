@@ -13,7 +13,7 @@ class app-avocatsch-workstation {
   # OpenOffice mime type
   file {"/usr/share/desktop-directories/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop":
     ensure => present,
-    source => "puppet:///site-modules/avocatsch/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop",
+    source => "puppet:///modules/avocatsch/vnd.openxmlformats-officedocument.wordprocessingml.document.desktop",
   }
 
   # Sudoers
@@ -28,7 +28,7 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
   # Hostname set by DHCP
   file {"/etc/dhcp3/dhclient-exit-hooks.d/hostname":
     ensure => present,
-    source => "puppet:///site-modules/avocatsch/dhclient-exit-hooks-hostname",
+    source => "puppet:///modules/avocatsch/dhclient-exit-hooks-hostname",
   }
 
   # NFS /home
@@ -50,7 +50,7 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
   ## LDAP authentication
 
   file {"/var/cache/debconf/ldap-auth-config.preseed":
-    source => "puppet:///site-modules/avocatsch/ldap-auth-config.preseed",
+    source => "puppet:///modules/avocatsch/ldap-auth-config.preseed",
   }
 
   package {"ldap-auth-config":
@@ -65,7 +65,7 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
 
   file {"/etc/nsswitch.conf":
     ensure => present,
-    source => "puppet:///site-modules/avocatsch/ldap-nsswitch.conf",
+    source => "puppet:///modules/avocatsch/ldap-nsswitch.conf",
     notify => Exec["restart nscd"],
   }
   exec {"restart nscd":
@@ -78,7 +78,7 @@ ADMIN   ALL=(root) NOPASSWD:ALL",
 
   apt::sources_list{"medibuntu":
     ensure  => present,
-    source  => "puppet:///site-modules/avocatsch/medibuntu.lucid.sources.list",
+    source  => "puppet:///modules/avocatsch/medibuntu.lucid.sources.list",
     require => Apt::Key["0C5A2783"],
   }
   apt::key{"0C5A2783":
@@ -130,7 +130,7 @@ RGgpAJ43cEsGcAqOxNYcJmo1QWX7jG6EMQ==
   if $subilia_bluetooth_kbd != "" {
     # bluetooth configuration
     file {"/root/bluetooth.tar.gz":
-      source => "puppet:///site-modules/avocatsch/bluetooth_subilia.tar.gz",
+      source => "puppet:///modules/avocatsch/bluetooth_subilia.tar.gz",
     }
     exec {"install bt config-files":
       command => "tar zxfp /root/bluetooth.tar.gz -C /",
@@ -157,7 +157,7 @@ deb-src http://ppa.launchpad.net/bean123ch/burg/ubuntu lucid main
   # Custom fonts
   file {"/usr/share/fonts/sqdf":
     ensure => directory,
-    source => "puppet:///site-modules/avocatsch/fonts",
+    source => "puppet:///modules/avocatsch/fonts",
     recurse => true,
     notify => Exec["refresh fontconfig"],
   }
