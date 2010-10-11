@@ -1,7 +1,0 @@
-[Desktop Entry]
-Comment=Document Microsoft Word 2007
-Hidden=false
-Icon=application-vnd.oasis.opendocument.text.png
-MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document
-Patterns=*.docx
-Type=MimeType
