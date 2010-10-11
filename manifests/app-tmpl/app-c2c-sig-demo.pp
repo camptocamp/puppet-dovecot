@@ -1,5 +1,9 @@
 class app-c2c-sig-demo {
   
+  package {["python-devel"]:
+    ensure => present,
+  }
+
   $project_name = $apache_vhost_name ? {
     "" => project_name_from_domain($fqdn),
     default => $fqdn,
