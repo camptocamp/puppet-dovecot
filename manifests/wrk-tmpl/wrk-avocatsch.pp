@@ -1,4 +1,4 @@
-class wrk-sqdf {
+class wrk-avocatsch {
 
   ### Global attributes ##########################
   $ps1label = "workstation"
@@ -11,7 +11,7 @@ class wrk-sqdf {
 
   ### APP (generic) ##############################
   include app-workstation-tuning
-  include app-sqdf-workstation-packages
-  include app-sqdf-workstation
+  include app-avocatsch-workstation-packages
+  include app-avocatsch-workstation
 
 }

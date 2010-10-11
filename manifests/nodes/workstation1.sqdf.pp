@@ -1,3 +1,3 @@
 node 'workstation1.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

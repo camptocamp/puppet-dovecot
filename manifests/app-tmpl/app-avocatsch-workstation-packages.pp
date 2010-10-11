@@ -1,6 +1,6 @@
-# Requires: app-sqdf-workstation
+# Requires: app-avocatsch-workstation
 
-class app-sqdf-workstation-packages {
+class app-avocatsch-workstation-packages {
 
   package {
 

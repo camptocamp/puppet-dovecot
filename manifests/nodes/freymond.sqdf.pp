@@ -1,3 +1,3 @@
 node 'freymond.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

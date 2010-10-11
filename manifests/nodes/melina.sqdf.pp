@@ -1,3 +1,3 @@
 node 'melina.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

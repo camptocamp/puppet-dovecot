@@ -1,3 +1,3 @@
 node 'new_subilia.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

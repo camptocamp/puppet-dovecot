@@ -1,3 +1,3 @@
 node 'marie.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

@@ -1,3 +1,3 @@
 node 'johner.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

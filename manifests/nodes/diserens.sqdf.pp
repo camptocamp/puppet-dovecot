@@ -1,4 +1,4 @@
 node 'diserens.sqdf' {
   $diserens_burg = true
-  include wrk-sqdf
+  include wrk-avocatsch
 }

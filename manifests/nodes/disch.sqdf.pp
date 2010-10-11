@@ -1,3 +1,3 @@
 node 'disch.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }

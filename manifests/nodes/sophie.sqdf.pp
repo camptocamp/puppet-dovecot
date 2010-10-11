@@ -1,3 +1,3 @@
 node 'sophie.sqdf' {
-  include wrk-sqdf
+  include wrk-avocatsch
 }
