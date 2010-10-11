@@ -1,3 +1,0 @@
-[submodule "manifests/generic-tmpl"]
-	path = manifests/generic-tmpl
-	url = git@github.com:camptocamp/puppet-generic-tmpl.git
