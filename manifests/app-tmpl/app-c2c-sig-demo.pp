@@ -1,6 +1,6 @@
 class app-c2c-sig-demo {
   
-  package {["python-devel"]:
+  package {["python-dev"]:
     ensure => present,
   }
 
