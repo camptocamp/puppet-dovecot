@@ -3,6 +3,7 @@
 import "globals"
 import "nodes"
 import "common"
+import "generic-tmpl"
 
 import "srv-tmpl/*.pp"
 import "wrk-tmpl/*.pp"
