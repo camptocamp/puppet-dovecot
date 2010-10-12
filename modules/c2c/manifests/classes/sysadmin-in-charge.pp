@@ -76,5 +76,10 @@ class c2c::sysadmin-in-charge {
       system_user  => "admin",
       ensure => absent,
     }
+
+    ssh-old::account::allowed_user { "jbove on admin":
+      allowed_new  => "jbove",
+      system_user  => "admin",
+    }
   }
 }
