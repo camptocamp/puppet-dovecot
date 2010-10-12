@@ -73,7 +73,7 @@ class app-eks-backups {
     version => "1.2.5",
     source  => "/",
     destination => "/srv/backup2/wetterhorn",
-    args => "--exclude '/dev/*' --exclude '/proc/*' --exclude '/sys/*' --exclude '/srv/*'",
+    args => "--exclude '/dev/*' --exclude '/proc/*' --exclude '/sys/*' --exclude '/srv/*' --exclude '/mnt/*'",
     retention => "60D",
   }
 
