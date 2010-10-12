@@ -24,7 +24,7 @@ class app-c2c-puppetmaster {
     ensure => latest,
   }
 
-  c2c::sshuser::sadb {["ckaenzig", "marc", "mbornoz", "cjeanneret", "vrenaville", "mremy"]:
+  c2c::sshuser::sadb {["ckaenzig", "marc", "mbornoz", "cjeanneret", "vrenaville", "mremy", "jbove"]:
     groups  => "sysadmin",
   }
 
