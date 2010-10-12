@@ -57,6 +57,8 @@ class app-c2c-www {
       "camptocamp.com",
       "camptocamp.net",
       "www.camptocamp.net",
+      "camptocamp.at",
+      "www.camptocamp.at",
       "www.openerp-alliance.ch",
       "openerp-alliance.ch",
       "www.osgeo.eu",
