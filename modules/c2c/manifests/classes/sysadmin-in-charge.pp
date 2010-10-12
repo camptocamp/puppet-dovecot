@@ -30,6 +30,11 @@ class c2c::sysadmin-in-charge {
     system_user  => "root",
   }
 
+  ssh-old::account::allowed_user { "jbove on root":
+    allowed_user => "jbove",
+    system_user  => "root",
+  }
+
   ssh-old::account::allowed_user { "francois on root":
     allowed_user => "francois",
     system_user  => "root",
@@ -70,6 +75,11 @@ class c2c::sysadmin-in-charge {
       allowed_user => "francois",
       system_user  => "admin",
       ensure => absent,
+    }
+
+    ssh-old::account::allowed_user { "jbove on admin":
+      allowed_new  => "jbove",
+      system_user  => "admin",
     }
   }
 }
