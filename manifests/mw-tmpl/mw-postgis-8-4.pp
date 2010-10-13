@@ -22,6 +22,10 @@ class mw-postgis-8-4 {
       pin => "release o=c2c",
     }
 
+    Exec["create postgis_template"] {
+      require +> Class["mw-postgresql-8-4"],
+    }
+
     Package["postgis"] {
       require +> [
         Apt::Sources_list["sig-${lsbdistcodename}-postgresql-8.4"],
@@ -34,13 +38,13 @@ class mw-postgis-8-4 {
     Debian: {
       case $lsbdistcodename {
         lenny :  { include c2c-postgis }
-        default: { fail "mw::postgis::8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
+        default: { fail "mw-postgis-8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
     Ubuntu: {
       case $lsbdistcodename {
         lucid : { include postgis }
-        default: { fail "mw::postgis::8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
+        default: { fail "mw-postgis-8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
     default: { notice "Unsupported operatingsystem ${operatingsystem}" }

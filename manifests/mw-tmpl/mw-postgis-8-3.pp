@@ -18,6 +18,10 @@ class mw-postgis-8-3 {
       }
     }
 
+    Exec["create postgis_template"] {
+      require +> Class["mw-postgresql-8-3"],
+    }
+
     Package["postgis"] {
       require +> [
         Apt::Sources_list["sig-${lsbdistcodename}-c2c"],
