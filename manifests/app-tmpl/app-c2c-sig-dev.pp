@@ -1,6 +1,8 @@
 class app-c2c-sig-dev {
 
-  package {["python-sphinx", "python-setuptools", "python-devel"]:
+  include python::dev
+
+  package {["python-sphinx"]:
     ensure => present,
   }
   

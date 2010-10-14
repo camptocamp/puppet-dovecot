@@ -30,7 +30,7 @@ class srv-c2c-sig-perso {
   include app-c2c-remove-ldap-support
 
   ### APP (specific to this server) ##############
-  include app-c2c-sig-dev
+  include app-c2c-sig-perso
   app::c2c::sadb::users{["all c2c users"]: groups => ["sigdev", "www-data"]}
 
 }
