@@ -14,7 +14,7 @@ mapserver: modules/mapserver git@github.com:camptocamp/puppet-mapserver.git mast
 monit: modules/monit git@github.com:camptocamp/puppet-monit.git master
 monitoring: modules/monitoring git@github.com:camptocamp/puppet-monitoring.git master
 mysql: modules/mysql git@github.com:camptocamp/puppet-mysql.git master
-nagios: modules/nagios git@github.com:camptocamp/puppet-nagios.git refactoring
+nagios: modules/nagios git@github.com:camptocamp/puppet-nagios.git refactorisation
 openerp: modules/openerp git@github.com:camptocamp/puppet-openerp.git master
 openssl: modules/openssl git@github.com:camptocamp/puppet-openssl.git master
 openvz: modules/openvz git@github.com:camptocamp/puppet-openvz.git master
