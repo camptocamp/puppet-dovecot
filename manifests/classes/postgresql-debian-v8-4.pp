@@ -50,6 +50,10 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
       }
 
       Service["postgresql"] {
+        start   => "/etc/init.d/postgresql start 8.4",
+        status  => "/etc/init.d/postgresql status 8.4",
+        stop    => "/etc/init.d/postgresql stop 8.4",
+        restart => "/etc/init.d/postgresql restart 8.4",
         require => [Package["postgresql-common"], File["/etc/init.d/postgresql-8.4"]],
       }
 
