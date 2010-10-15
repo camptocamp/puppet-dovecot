@@ -88,6 +88,13 @@ class app-c2c-www {
     ],
   }
 
+  apache::directive {"redirect":
+    ensure    => present,
+    directive => template("c2c/redirect-www.camptocamp.com.erb"),
+    vhost     => "www.camptocamp.com",
+  }
+ 
+
   c2c::checkexternalurl::export {"www.camptocamp.com":
     path   => "/modules/mod_jflanguageselection/tmpl/mod_jflanguageselection.css",
   }
