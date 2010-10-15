@@ -3,6 +3,9 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} camptocamp\.at
 RewriteRule ^/$ http://www.camptocamp.com/en/ [R,L]
 
+RewriteCond %{HTTP_HOST} camptocamp\.fr
+RewriteRule ^/$ http://www.camptocamp.com/fr/ [R,L]
+
 RewriteCond %{HTTP_HOST} !^www\.camptocamp\.com [NC]
 RewriteRule ^(.*)$ http://www.camptocamp.com$1 [R=301,L]
 
