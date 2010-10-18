@@ -100,6 +100,14 @@ LC_NUMERIC="fr_CH.UTF-8"
     ensure => present,
   }
 
+  file {"/etc/adduser.conf":
+    ensure => present,
+    owner => root,
+    group => root,
+    mode => 644,
+    content => template("os/etc/adduser.conf.erb"),
+  }
+
   package {
     "bash-completion":  ensure => present;
     "iotop":            ensure => present;
