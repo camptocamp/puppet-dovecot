@@ -13,11 +13,12 @@ class os {
   case $operatingsystem {
     debian: {
       case $lsbdistcodename {
-        squeeze,
+        squeeze: { include "os::debian-${lsbdistcodename}" }
         lenny,
         etch,
         sarge: {
           include "os::debian-${lsbdistcodename}"
+          include apt::backports
         }
 
         default: {
