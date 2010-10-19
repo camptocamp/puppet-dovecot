@@ -21,6 +21,7 @@ class app-c2c-nagios {
 
   apache::vhost-ssl{$fqdn:
     ensure => present,
+    aliases => [$hostname, "monitoring.camptocamp.net", "monitoring"],
   }
   apache::auth::htpasswd{"nagiosadmin":
     vhost         => "$fqdn",
