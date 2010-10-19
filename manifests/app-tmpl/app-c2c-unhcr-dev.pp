@@ -78,6 +78,7 @@ class app-c2c-unhcr-dev {
 
   c2c::ssh_authorized_key {
     "fredj on admin":        ensure => present, user => admin, require => User["admin"], sadb_user => "fredj";
+    "ochriste on admin":     ensure => present, user => admin, require => User["admin"], sadb_user => "ochriste";
     "elemoine on admin":     ensure => present, user => admin, require => User["admin"], sadb_user => "elemoine";
     "yves on admin":         ensure => present, user => admin, require => User["admin"], sadb_user => "yves";
     "jeichar on admin":      ensure => present, user => admin, require => User["admin"], sadb_user => "jeichar";
