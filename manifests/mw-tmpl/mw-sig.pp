@@ -37,6 +37,7 @@ class mw-sig {
   include tilecache::base
   include mapfish
   include cartoweb3::base
+  include c2c::sudo::workaround
 
   apache::module {["proxy","proxy_http","proxy_ajp"]:
     ensure => present,
