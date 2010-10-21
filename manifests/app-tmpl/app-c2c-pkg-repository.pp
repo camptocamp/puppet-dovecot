@@ -30,6 +30,21 @@ class app-c2c-pkg-repository {
     require => Group["reprepro"],
   }
 
+  apache::directive {"repository":
+    ensure    => present,
+    vhost     => "pkg.camptocamp.net",
+    directive => '
+DocumentRoot /var/packages
+<Directory "/var/packages">
+  Options Indexes FollowSymLinks MultiViews
+  DirectoryIndex index.html
+  AllowOverride Options
+  Order allow,deny
+  allow from all
+</Directory>
+',
+  }
+
   reprepro::repository {"dev":
     ensure         => present,
     incoming_allow => "lenny squeeze lucid",
