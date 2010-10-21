@@ -18,6 +18,7 @@ Parameters:
 - *dsc_indices*: file name and compression
 - *update*: update policy name
 - *uploaders*: who is allowed to upload packages
+- *not_automatic*: automatic pined to 1 by using NotAutomatic, value are "yes" or "no"
 
 Requires:
 - Class["reprepro"]
@@ -51,7 +52,8 @@ define reprepro::distribution (
   $deb_indices="Packages Release .gz .bz2",
   $dsc_indices="Sources Release .gz .bz2",
   $update="",
-  $uploaders=""
+  $uploaders="",
+  $not_automatic="yes"
 ) {
 
   include reprepro::params
