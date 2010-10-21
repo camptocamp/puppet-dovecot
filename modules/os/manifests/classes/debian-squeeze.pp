@@ -4,8 +4,6 @@ class os::debian-squeeze {
     before => Exec["apt-get_update"],
   }
 
-  include apt::backports
-
   apt::sources_list{"$lsbdistcodename":
     content => "# File managed by puppet - ${name}
 deb http://mirror.switch.ch/ftp/mirror/debian/ ${lsbdistcodename} main contrib non-free
