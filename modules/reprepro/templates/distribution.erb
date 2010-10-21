@@ -1,0 +1,17 @@
+Origin: <%= origin %>
+Label: <%= label %>
+Suite: <%= suite %>
+Codename: <%= codename %>
+Architectures: <%= architectures %>
+Components: <%= components %>
+Description: <%= description %>
+DebIndices: <%= deb_indices %>
+DscIndices: <%= dsc_indices %>
+SignWith: <%= sign_with %>
+<% if uploaders != "" -%>
+Uploaders: <%= uploaders -%> 
+<% end -%>
+<% if update != "" -%>
+Update: <%= update %> 
+<% end -%>
+
