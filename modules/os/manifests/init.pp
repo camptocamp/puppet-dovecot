@@ -38,7 +38,7 @@ class os {
         jaunty,
         lucid: {
           include "os::ubuntu-${lsbdistcodename}"
-          include os::debian::backports
+          include apt::backports
         }
 
         default: {
