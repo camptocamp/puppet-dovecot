@@ -26,7 +26,9 @@ class mw-openerp {
     ensure => present,
   }
   
-  package {"python-mako":
+  package { [ "python-excelerator",
+              "python-mako",
+            ]:
     ensure => present,
   }
 
