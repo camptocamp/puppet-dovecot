@@ -1,4 +1,3 @@
-node 'fredj.int.lsn.camptocamp.com' {
-  $apache_vhost_name = $fqdn
+node "fredj.int.lsn.camptocamp.com" {
   include srv-c2c-sig-perso
 }
