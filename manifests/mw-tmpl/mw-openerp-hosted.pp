@@ -1,6 +1,6 @@
 # OpenERP Hosted part
 #
-# Requires: mw-openerp-prod
+# Requires:
 # Provides: 
 # Conflicts: 
 #
