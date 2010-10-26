@@ -8,7 +8,7 @@ User_Alias POSTGRESQL_ADMIN = %postgresql-admin
 <% if has_variable?("sudo_postgresql_admin_cmnd") %>
 Cmnd_Alias POSTGRESQL_ADMIN = <%= sudo_postgresql_admin_cmnd %>
 <% else -%>
-Cmnd_Alias POSTGRESQL_ADMIN = /etc/init.d/postgresql-*, /bin/su postgres, /bin/su - postgres
+Cmnd_Alias POSTGRESQL_ADMIN = /etc/init.d/postgresql, /etc/init.d/postgresql-*, /bin/su postgres, /bin/su - postgres
 <% end -%>
 POSTGRESQL_ADMIN ALL=(postgres) ALL : ALL=(root) POSTGRESQL_ADMIN
 ##
