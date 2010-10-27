@@ -1,3 +1,16 @@
+#
+# == Template: mw-puppet-client
+#
+# Cette classe permet d'installer d'une manière puppet, facter et augeas
+# 
+# Dépendances:
+#  - Module camptocamp/puppet-puppet
+#  - Module camptocamp/puppet-apt
+#  - Class os-debian-repository du module camptocamp/puppet-generic-tmpl
+#
+# Todo:
+#  - Intégrer également les distributions RedHat et Centos
+#
 class mw-puppet-client inherits puppet::client {
 
   $puppet_client_version = $operatingsystem ? {
@@ -26,20 +39,6 @@ class mw-puppet-client inherits puppet::client {
       case $lsbdistcodename {
         /lenny|squeeze/ :   { 
 
-          if !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"]) {
-            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin":
-              ensure  => present,
-              content => "deb http://pkg.camptocamp.net/${$repository} ${lsbdistcodename} sysadmin\n",
-            }
-          }  
-          
-          if $lsbdistcodename == "lenny" and !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"]) {
-            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-backport-${repository}":
-              ensure  => present,
-              content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
-            }
-          }
-
           apt::preferences {
             "facter":
               ensure   => present, 
@@ -59,12 +58,12 @@ class mw-puppet-client inherits puppet::client {
 
           package {["puppet-common","vim-puppet", "puppet-el"]:
             ensure  => $puppet_client_version,
-            require => Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"],
+            require => Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
             tag     => "install-puppet",
           }
           
           Package["puppet", "facter"] {
-            require +> Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"],
+            require +> Apt::Sources_list["c2c-${lsbdistcodename}-${repository}-sysadmin"],
           }
      
         }
