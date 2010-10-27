@@ -25,23 +25,18 @@ class mw-puppet-client inherits puppet::client {
     Debian: {
       case $lsbdistcodename {
         /lenny|squeeze/ :   { 
-         
-          $pkgrepo = $repository ? {
-            'stable'  => 'prod',
-            'staging' => 'staging',
-          }
 
-          if !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${pkgrepo}-sysadmin"]) {
-            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-${pkgrepo}-sysadmin":
+          if !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"]) {
+            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin":
               ensure  => present,
-              content => "deb http://pkg.camptocamp.net/${pkgrepo} ${lsbdistcodename} sysadmin\n",
+              content => "deb http://pkg.camptocamp.net/${$repository} ${lsbdistcodename} sysadmin\n",
             }
           }  
           
-          if $lsbdistcodename == "lenny" and !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${pkgrepo}-sysadmin"]) {
-            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-backport-${pkgrepo}":
+          if $lsbdistcodename == "lenny" and !defined (Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"]) {
+            apt::sources_list {"pkg-camptocamp-${lsbdistcodename}-backport-${repository}":
               ensure  => present,
-              content => "deb http://pkg.camptocamp.net/${pkgrepo} ${lsbdistcodename}-backports main contrib non-free\n",
+              content => "deb http://pkg.camptocamp.net/${repository} ${lsbdistcodename}-backports main contrib non-free\n",
             }
           }
 
@@ -64,12 +59,12 @@ class mw-puppet-client inherits puppet::client {
 
           package {["puppet-common","vim-puppet", "puppet-el"]:
             ensure  => $puppet_client_version,
-            require => Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${pkgrepo}-sysadmin"],
+            require => Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"],
             tag     => "install-puppet",
           }
           
           Package["puppet", "facter"] {
-            require +> Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${pkgrepo}-sysadmin"],
+            require +> Apt::Sources_list["pkg-camptocamp-${lsbdistcodename}-${repository}-sysadmin"],
           }
      
         }
