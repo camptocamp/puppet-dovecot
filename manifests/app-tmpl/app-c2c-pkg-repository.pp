@@ -50,7 +50,7 @@ DocumentRoot /var/packages
     incoming_allow => "lenny squeeze lucid",
   }
 
-  reprepro::repository {["staging","prod","legacy"]:
+  reprepro::repository {["staging","stable","legacy"]:
     ensure => present,
   }
 
@@ -222,11 +222,11 @@ DocumentRoot /var/packages
   }
 
  ############################################################
- ### PRODUCTION ENVIRONMENT                               ###
+ ### STABLE ENVIRONMENT                                   ###
  ############################################################
-  reprepro::distribution {"prod-lenny-backports":
+  reprepro::distribution {"stable-lenny-backports":
     ensure        => present,
-    repository    => "prod",
+    repository    => "stable",
     codename      => "lenny-backports",
     origin        => "Camptocamp",
     label         => "Camptocamp",
@@ -235,56 +235,56 @@ DocumentRoot /var/packages
     components    => "main contrib non-free",
     description   => "Camptocamp consolidated lenny-backports prod-repository",
     sign_with     => "packages@camptocamp.com",
-    update        => "staging2prod-lenny-backports",
+    update        => "staging2stable-lenny-backports",
   }
 
-  reprepro::distribution {"prod-lenny":
+  reprepro::distribution {"stable-lenny":
     ensure        => present,
-    repository    => "prod",
+    repository    => "stable",
     codename      => "lenny",
     origin        => "Camptocamp",
     label         => "Camptocamp",
     suite         => "lenny",
     architectures => "i386 amd64 source",
     components    => "openerp-client sysadmin sig sig-non-free c2corg",
-    description   => "Camptocamp lenny prod-repository",
+    description   => "Camptocamp lenny stable-repository",
     sign_with     => "packages@camptocamp.com",
-    update        => "staging2prod-lenny",
+    update        => "staging2stable-lenny",
   }
 
-  reprepro::distribution {"prod-squeeze":
+  reprepro::distribution {"stable-squeeze":
     ensure        => present,
-    repository    => "prod",
+    repository    => "stable",
     codename      => "squeeze",
     origin        => "Camptocamp",
     label         => "Camptocamp",
     suite         => "squeeze",
     architectures => "i386 amd64 source",
     components    => "openerp-client sysadmin sig sig-non-free c2corg",
-    description   => "Camptocamp squeeze prod-repository",
+    description   => "Camptocamp squeeze stable-repository",
     sign_with     => "packages@camptocamp.com",
-    update        => "staging2prod-squeeze",
+    update        => "staging2stable-squeeze",
   }
 
-  reprepro::distribution {"prod-lucid":
+  reprepro::distribution {"stable-lucid":
     ensure        => present,
-    repository    => "prod",
+    repository    => "stable",
     codename      => "lucid",
     origin        => "Camptocamp",
     label         => "Camptocamp",
     suite         => "lucid",
     architectures => "i386 amd64 source",
     components    => "openerp-client sysadmin sig sig-non-free c2corg",
-    description   => "Camptocamp lucid prod-repository",
+    description   => "Camptocamp lucid stable-repository",
     sign_with     => "packages@camptocamp.com",
-    update        => "staging2prod-lucid"
+    update        => "staging2stable-lucid"
   }
 
   reprepro::update {
-    "staging2prod-lenny-backports": ensure => present, repository  => "prod", url => 'http://pkg.camptocamp.net/staging';
-    "staging2prod-lenny":           ensure => present, repository  => "prod", url => 'http://pkg.camptocamp.net/staging';
-    "staging2prod-squeeze":         ensure => present, repository  => "prod", url => 'http://pkg.camptocamp.net/staging';
-    "staging2prod-lucid":           ensure => present, repository  => "prod", url => 'http://pkg.camptocamp.net/staging';
+    "staging2stable-lenny-backports": ensure => present, repository  => "stable", url => 'http://pkg.camptocamp.net/staging';
+    "staging2stable-lenny":           ensure => present, repository  => "stable", url => 'http://pkg.camptocamp.net/staging';
+    "staging2stable-squeeze":         ensure => present, repository  => "stable", url => 'http://pkg.camptocamp.net/staging';
+    "staging2stable-lucid":           ensure => present, repository  => "stable", url => 'http://pkg.camptocamp.net/staging';
   }
 
 }
