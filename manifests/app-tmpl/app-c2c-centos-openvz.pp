@@ -7,6 +7,14 @@ class app-c2c-centos-openvz {
     ensure => directory,
   }
 
+  file {"/etc/vz/conf/ve-default.conf-sample":
+    ensure => present,
+    source => "puppet:///modules/c2c/etc/vz/conf/ve-default.conf-sample",
+    owner  => root,
+    group  => root,
+    mode   => 0644,
+  }
+
   package {
     "librsync-devel": ensure => present, alias => "librsync-devel";
   }
