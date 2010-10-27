@@ -12,6 +12,7 @@ class app-c2c-pkg-builder {
     "fredj",
     "aabt",
     "pmauduit",
+    "sbrunner",
     "mremy",
     "cjeanneret",
     "ckaenzig",

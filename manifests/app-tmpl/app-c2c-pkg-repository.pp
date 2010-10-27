@@ -14,6 +14,7 @@ class app-c2c-pkg-repository {
     "fredj",
     "aabt",
     "pmauduit",
+    "sbrunner",
     "mremy",
     "cjeanneret",
     "ckaenzig",
