@@ -72,7 +72,7 @@ class app-c2c-unhcr-dev {
   user {"admin":
     ensure      => present,
     managehome  => true,
-    groups      => ["sigdev", "www-data"],
+    groups      => ["sigdev", "www-data", "adm"],
     shell       => "/bin/bash",
   }
 
