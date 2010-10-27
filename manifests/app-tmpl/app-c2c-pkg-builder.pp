@@ -1,4 +1,10 @@
 class app-c2c-pkg-builder {
+
+  # Ressources needed to build some packages
+  include java
+
+
+  # Build environment
   
   include buildenv::deb
 
