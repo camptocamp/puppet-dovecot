@@ -2,6 +2,7 @@ class app-nimag-sqdf2 {
 
   include mysql::server
   include openldap::server::ssl
+  include monitoring::ldap
 
 
   file {"/etc/ldap/config.ldif":
@@ -72,5 +73,24 @@ class app-nimag-sqdf2 {
     key    => "AAAAB3NzaC1yc2EAAAABIwAAAQEA0ceIdQBMkyvmrqYHY9OA4hOcsQekIr6aMh3jxpaGGHatZgcPN7Pe3vXC5ivLidlKVuDcfY3eDEywEMQpo+H+gdjsMvrs/k+vOziXQegtQ1OCo5mhmP1nByeG9joRQErHYGrEZfxdh9wz52j44OubEWsD/6Sw01GSDnU2G34/Q0Zdx/4knll/qpoEKqHFP1CfgZqsWmquZALP02s97cNPg8Yzya+unk7X149Pr0aiP4LNIWvwej8wFi+P/i6DwGNAtx/jOsBFkdBHhn6M77+I3NSY95V2c1gyocsXR3T1scBu34IYRGT3q7Whv1uMJwpquPgTitTVV01moFI4rviX7Q==",
   }
 
+  common::concatfilepart {"sudoers.osubilia":
+    ensure => present,
+    file   => "/etc/sudoers",
+    content => "osubilia ALL=(ALL) /usr/sbin/a2ensite, /usr/sbin/a2enmod, /usr/sbin/a2dismod, /usr/sbin/a2dissite\n",
+  }
+
+  file {"/etc/apache2/sites-available":
+    ensure => directory,
+    owner  => osubilia,
+    group  => osubilia,
+    mode   => 0755,
+  }
+
+  file {"/var/www/vhosts":
+    ensure => directory,
+    owner  => osubilia,
+    group  => www-data,
+    mode   => 0755,
+  }
 
 }
