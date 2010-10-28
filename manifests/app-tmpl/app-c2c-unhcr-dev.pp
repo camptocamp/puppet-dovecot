@@ -1,5 +1,7 @@
 class app-c2c-unhcr-dev {
 
+  include python::dev
+
   package {["libapache2-mod-jk", "python-httplib2"]:
     ensure => present,
   }
