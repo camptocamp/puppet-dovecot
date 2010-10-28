@@ -1,3 +1,11 @@
+###
+# load config:
+# /etc/init.d/slapd stop
+# rm -rf /etc/ldap/slapd.d/*
+# slapcat -n 0 -F /etc/ldap/slapd.d -f /etc/ldap/config.ldif
+# chown -R openldap: /etc/ldap/slapd.d
+# /etc/init.d/slapd start
+###
 dn: cn=config
 objectClass: olcGlobal
 cn: config
