@@ -20,7 +20,7 @@ class srv-c2c-unhcr-prod {
 
   ### APP (generic) ##############################
   include app-c2c-sig
+  include app-c2c-unhcr
 
   ### APP (specific to this server) ##############
-  include app-c2c-unhcr-dev
 }

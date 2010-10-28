@@ -1,6 +1,17 @@
-class app-c2c-unhcr-dev {
+# Class used on srv-c2c-unhcr-dev and srv-c2c-unhcr-prod
+
+class app-c2c-unhcr {
 
   include python::dev
+
+  # Increase max shared memory on prod
+  if $hostname == "c2cpc54" {
+    line {"shmmax":
+      line   => "sysctl -w kernel.shmmax=1073741824",
+      ensure => present,
+      file   => "/etc/sysctl.conf",
+    }
+  }
 
   package {["libapache2-mod-jk", "python-httplib2"]:
     ensure => present,
