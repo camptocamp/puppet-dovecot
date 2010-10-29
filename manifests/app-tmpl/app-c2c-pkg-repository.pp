@@ -122,6 +122,10 @@ DocumentRoot /var/packages
     ensure     => present,
     repository => "dev",
     packages   => [
+      "collectd",
+      "collectd-core",
+      "collectd-utils",
+      "libcollectdclient0",
       "git install",
       "git-email install",
       "gitk install",
