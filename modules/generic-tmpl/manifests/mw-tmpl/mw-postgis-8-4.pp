@@ -34,6 +34,7 @@ class mw-postgis-8-4 {
     Debian: {
       case $lsbdistcodename {
         lenny :  { include c2c-postgis }
+        squeeze: {include postgis::debian::v8-4 }
         default: { fail "mw::postgis::8-4 not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
