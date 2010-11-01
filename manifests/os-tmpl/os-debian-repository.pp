@@ -22,7 +22,7 @@
 # Todo:
 #  - eventuellement ajouter les clefs officielles Debian qui sont mises en place à l'installation
 #
-class os-debian-repository {
+class generic-tmpl::os-debian-repository {
 
   case $lsbdistcodename {
     /lenny|squeeze/: {

@@ -11,7 +11,7 @@
 # Todo:
 #  - Intégrer également les distributions RedHat et Centos
 #
-class mw-puppet-client inherits puppet::client {
+class generic-tmpl::mw-puppet-client inherits puppet::client {
 
   $puppet_client_version = $operatingsystem ? {
     RedHat => "0.25.5-1.el${lsbmajdistrelease}",

@@ -1,4 +1,4 @@
-class mw-postgresql-8-4 {
+class generic-tmpl::mw-postgresql-8-4 {
 
   include postgresql::v8-4
   include postgresql::administration

@@ -1,4 +1,4 @@
-class mw-tomcat {
+class generic-tmpl::mw-tomcat {
 
   $tomcat_version = '6.0.26'
 
