@@ -7,6 +7,7 @@ class postgresql {
       case $lsbdistcodename {
         etch :   { include postgresql::debian::v8-3 }
         lenny :  { include postgresql::debian::v8-3 }
+        squeeze: { include postgresql::debian::v8-4 }
         default: { fail "postgresql not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     } 
@@ -37,8 +38,8 @@ class postgresql::v8-4 {
   case $operatingsystem {
     Debian: {
       case $lsbdistcodename {
-        lenny :  { include postgresql::debian::v8-4 }
-        default: { fail "postgresql 8.4 not available for ${operatingsystem}/${lsbdistcodename}"}
+        lenny,squeeze :  { include postgresql::debian::v8-4 }
+        default:         { fail "postgresql 8.4 not available for ${operatingsystem}/${lsbdistcodename}"}
       }
     }
     Ubuntu: {
