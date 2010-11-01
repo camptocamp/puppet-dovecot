@@ -5,7 +5,7 @@ class apt {
 
   # apt support preferences.d since version >= 0.7.22
   case $lsbdistcodename { 
-    lucid : {
+    /lucid|squeeze/ : {
 
       file {"/etc/apt/preferences":
         ensure => absent,
