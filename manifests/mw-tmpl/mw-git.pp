@@ -1,4 +1,4 @@
-class mw-git {
+class generic-tmpl::mw-git {
 
   package {"git-core":
     ensure => purged,
