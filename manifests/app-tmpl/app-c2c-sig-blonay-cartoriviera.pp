@@ -35,9 +35,10 @@ class app-c2c-sig-blonay-cartoriviera {
   }
 
   apache::auth::basic::file::user {"user1-on-webdav2":
-    vhost => "preprod.cartoriviera.ch",
+    vhost    => "preprod.cartoriviera.ch",
     location => "/",
-    users => "cartoriviera",
+    users    => "cartoriviera",
+    ensure   => absent,
   }
 
   tomcat::instance {"print":
