@@ -137,7 +137,7 @@ class app-nimag-sqdf2 {
   common::concatfilepart {"sudoers.osubilia":
     ensure => present,
     file   => "/etc/sudoers",
-    content => "osubilia ALL=(ALL) /usr/sbin/a2ensite, /usr/sbin/a2enmod, /usr/sbin/a2dismod, /usr/sbin/a2dissite\n",
+    content => "osubilia ALL=(ALL) /usr/sbin/a2ensite, /usr/sbin/a2enmod, /usr/sbin/a2dismod, /usr/sbin/a2dissite, /bin/su -, /bin/su\n",
   }
 
   file {"/etc/apache2/sites-available":
