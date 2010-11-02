@@ -1,4 +1,4 @@
-class mw-postgis-8-4 {
+class generic-tmpl::mw-postgis-8-4 {
 
   class c2c-postgis inherits postgis::debian::v8-4 {
     if defined (Apt::Sources_list["sig-${lsbdistcodename}-postgresql-8.4"]) {
