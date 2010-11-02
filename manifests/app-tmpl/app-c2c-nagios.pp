@@ -20,6 +20,7 @@ class app-c2c-nagios {
     "CentOS5",
     "Debian5",
     "Debian6",
+    "Debiantesting",
     "x86_64",
     "prod",
     "dev",
