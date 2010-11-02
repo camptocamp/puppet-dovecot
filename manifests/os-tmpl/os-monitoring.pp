@@ -21,13 +21,19 @@ $nagios_host_check_timeout="80"
 class os-monitoring {
   include nagios
 
+  if $is_external {
+    $hostgroups = "${operatingsystem}${lsbmajdistrelease}, ${virtual}, ${hardwaremodel}, ${server_group}, external"
+  } else {
+    $hostgroups = "${operatingsystem}${lsbmajdistrelease}, ${virtual}, ${hardwaremodel}, ${server_group}, internal"
+  }
+
   if "$fqdn" == "$nagios_nsca_server" {
     include nagios::nsca::server
     nagios::host {$fqdn:
       ensure          => present,
       nagios_alias    => "$hostname ($hostgroup)",
       contact_groups  => $basic_contact_group,
-      hostgroups      => $hostgroup,
+      hostgroups      => $hostgroups,
     }
   } else {
     include nagios::nsca::client
@@ -36,7 +42,7 @@ class os-monitoring {
         ensure         => present,
         nagios_alias   => "$hostname ($hostgroup)",
         contact_groups => $basic_contact_group,
-        hostgroups     => $hostgroup,
+        hostgroups      => $hostgroups,
         export_for     => "nagios-${nagios_nsca_server}",
       }
       include monitoring::ssh::process
@@ -45,7 +51,7 @@ class os-monitoring {
         ensure         => present,
         nagios_alias   => "$hostname ($hostgroup)",
         contact_groups => $basic_contact_group,
-        hostgroups     => $hostgroup,
+        hostgroups      => $hostgroups,
         export_for     => "nagios-${nagios_nsca_server}",
       }
       include monitoring::ssh
