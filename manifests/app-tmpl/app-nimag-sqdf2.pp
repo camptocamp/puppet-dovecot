@@ -110,13 +110,25 @@ class app-nimag-sqdf2 {
     ],
   }
 
-  user {"subilia":
+  group {"etude":
     ensure => present,
-    shell  => "/bin/bash",
-    home   => "/home/subilia",
-    groups => "www-data",
+    gid    => 507,
+  }
+
+  group {"subilia":
+    ensure => present,
+    gid    => 500,
+  }
+
+  user {"subilia":
+    ensure  => present,
+    shell   => "/bin/bash",
+    home    => "/home/subilia",
+    groups  => ["www-data", "etude"],
+    uid     => 500,
+    gid     => 500,
+    require => Group['etude', 'subilia'],
     managehome => true,
-    uid    => 500,
   }
 
   file {"/home/subilia/.my.cnf":
