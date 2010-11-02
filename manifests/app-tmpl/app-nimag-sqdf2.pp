@@ -110,46 +110,47 @@ class app-nimag-sqdf2 {
     ],
   }
 
-  user {"osubilia":
+  user {"subilia":
     ensure => present,
     shell  => "/bin/bash",
-    home   => "/home/osubilia",
+    home   => "/home/subilia",
     groups => "www-data",
     managehome => true,
+    uid    => 500,
   }
 
-  file {"/home/osubilia/.my.cnf":
+  file {"/home/subilia/.my.cnf":
     ensure  => present,
-    owner   => osubilia,
-    group   => osubilia,
+    owner   => subilia,
+    group   => subilia,
     mode    => 0600,
     source  => "file:///root/.my.cnf",
-    require => User["osubilia"],
+    require => User["subilia"],
   }
 
   ssh_authorized_key {"olivier.subilia@avocats-ch.ch":
     ensure => present,
-    user   => "osubilia",
+    user   => "subilia",
     type   => "ssh-rsa",
     key    => "AAAAB3NzaC1yc2EAAAABIwAAAQEA0ceIdQBMkyvmrqYHY9OA4hOcsQekIr6aMh3jxpaGGHatZgcPN7Pe3vXC5ivLidlKVuDcfY3eDEywEMQpo+H+gdjsMvrs/k+vOziXQegtQ1OCo5mhmP1nByeG9joRQErHYGrEZfxdh9wz52j44OubEWsD/6Sw01GSDnU2G34/Q0Zdx/4knll/qpoEKqHFP1CfgZqsWmquZALP02s97cNPg8Yzya+unk7X149Pr0aiP4LNIWvwej8wFi+P/i6DwGNAtx/jOsBFkdBHhn6M77+I3NSY95V2c1gyocsXR3T1scBu34IYRGT3q7Whv1uMJwpquPgTitTVV01moFI4rviX7Q==",
   }
 
-  common::concatfilepart {"sudoers.osubilia":
+  common::concatfilepart {"sudoers.subilia":
     ensure => present,
     file   => "/etc/sudoers",
-    content => "osubilia ALL=(ALL) /usr/sbin/a2ensite, /usr/sbin/a2enmod, /usr/sbin/a2dismod, /usr/sbin/a2dissite, /bin/su -, /bin/su\n",
+    content => "subilia ALL=(ALL) /usr/sbin/a2ensite, /usr/sbin/a2enmod, /usr/sbin/a2dismod, /usr/sbin/a2dissite, /bin/su -, /bin/su\n",
   }
 
   file {"/etc/apache2/sites-available":
     ensure => directory,
-    owner  => osubilia,
-    group  => osubilia,
+    owner  => subilia,
+    group  => subilia,
     mode   => 0755,
   }
 
   file {"/var/www/vhosts":
     ensure => directory,
-    owner  => osubilia,
+    owner  => subilia,
     group  => www-data,
     mode   => 0755,
   }
