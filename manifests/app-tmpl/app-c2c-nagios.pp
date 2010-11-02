@@ -22,12 +22,13 @@ class app-c2c-nagios {
     "Debian6",
     "Debiantesting",
     "x86_64",
+    "i686",
     "prod",
     "dev",
     "demo",
     "external",
     "internal",
-    "ovz-host", # TODO: delete this hostgroup!
+    "vmware",
     ]:
   }
 
