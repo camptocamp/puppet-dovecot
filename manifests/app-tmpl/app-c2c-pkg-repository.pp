@@ -10,6 +10,17 @@ class app-c2c-pkg-repository {
     content => "# file managed by puppet\n%reprepro ALL=(reprepro) NOPASSWD: /usr/bin/reprepro, /usr/bin/gpg\n",
   }
 
+  file {"/usr/local/bin/update-repository-list.py":
+    ensure => present,
+    mode   => 0775,
+    source => "puppet:///modules/c2c/usr/local/bin/update-repository-list.py",
+  }
+  cron {"update-repository-list":
+    command => "/usr/local/bin/update-repository-list.py > /var/packages/list.html",
+    hour    => "*",
+    minute  => 2,
+  }
+
   c2c::sshuser::sadb {[ 
     "fredj",
     "aabt",
