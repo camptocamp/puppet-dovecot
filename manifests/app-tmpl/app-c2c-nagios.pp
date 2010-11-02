@@ -14,8 +14,18 @@ class app-c2c-nagios {
 
 
   nagios::local::hostgroup { [
-    "ovz-host"
-    
+    "openvzve",
+    "openvzhn",
+    "CentOS5",
+    "Debian5",
+    "Debian6",
+    "x86_64",
+    "prod",
+    "dev",
+    "demo",
+    "external",
+    "internal",
+    "ovz-host", # TODO: delete this hostgroup!
     ]:
   }
 
