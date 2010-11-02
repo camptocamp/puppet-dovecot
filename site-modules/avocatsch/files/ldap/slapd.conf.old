@@ -21,7 +21,7 @@ include         /etc/ldap/schema/inetorgperson.schema
 include         /etc/ldap/schema/authldap.schema
 
 TLSCertificateFile /etc/ldap/ssl/ldap.crt
-TLSCertificateKeyFile /etc/ldap/ssl/ldap.kes
+TLSCertificateKeyFile /etc/ldap/ssl/ldap.key
 TLSCACertificateFile /etc/ldap/ssl/ldap.crt
 
 pidfile         /var/run/slapd/slapd.pid
