@@ -104,5 +104,3 @@ $openerp_web_protocol = "https"
 $openerp_web_passwrd = "openerp-demo-camptocamp"
 $openerp_web_baseurl = "http://tinyerp.camptocamp.com/"
 $openerp_web_sockhost = "0.0.0.0"
-## nagios default hostgroup
-$hostgroup = "ovz-host"
