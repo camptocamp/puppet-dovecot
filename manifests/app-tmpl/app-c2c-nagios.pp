@@ -16,6 +16,7 @@ class app-c2c-nagios {
   nagios::local::hostgroup { [
     "openvzve",
     "openvzhn",
+    "physical",
     "CentOS5",
     "Debian5",
     "Debian6",
