@@ -19,7 +19,7 @@ class app-c2c-pkg-repository {
     command => "/usr/local/bin/update-repository-list.py > /var/packages/index.html",
     user    => "reprepro",
     hour    => "*",
-    minute  => 2,
+    minute  => "*/5",
   }
 
   c2c::sshuser::sadb {[ 
