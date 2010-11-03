@@ -141,6 +141,7 @@ DocumentRoot /var/packages
       "git install",
       "git-email install",
       "gitk install",
+      "git-svn install",
       "nagios3 install",
       "nagios3-cgi install",
       "nagios3-common install",
