@@ -60,15 +60,37 @@ html = """<html>
 <title>Camptocamp Debian/Ubuntu package repositories</title>
 <style  TYPE="text/css">
 body { font-family:sans-serif; }
+pre  { background-color:#ddd; padding: 5px}
 div.distrib { background-color: #aaf; padding: 10px; margin: 10px; }
 div.component { background-color: #fff; padding: 10px; margin: 10px; }
 th { text-align: left; }
-th.p_name { width: 15em; }
-th.p_version { width: 15em; }
+th.p_name { width: 13em; }
+th.p_version { width: 13em; }
+td { font-family: monospace }
 </style>
 </head>
 <body>
-<p>Repository pkg.camptocamp.net - updated on %s
+<h2> Camptocamp Debian/Ubuntu package repositories </h2>
+
+List of available repositories:
+
+<pre>
+http://pkg.camptocamp.net/legacy DISTRIBUTION MODULE [MODULE ...]
+http://pkg.camptocamp.net/dev DISTRIBUTION MODULE [MODULE ...]
+http://pkg.camptocamp.net/staging DISTRIBUTION MODULE [MODULE ...]
+http://pkg.camptocamp.net/stable DISTRIBUTION MODULE [MODULE ...]
+</pre>
+
+Add the archive key using something like this:
+
+<pre>
+wget http://pkg.camptocamp.net/packages-c2c-key.gpg
+apt-key add packages-c2c-key.gpg
+apt-get update
+</pre>
+
+<h1>Packages lists</h2>
+<p>updated: %s</p>
 """ %(time.strftime("%Y-%m-%d %H:%M:%S"))
 for distrib in packages.keys():
   html += '<div class="distrib"><h2>%s</h2>\n' %(distrib)

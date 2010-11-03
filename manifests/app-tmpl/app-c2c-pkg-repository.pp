@@ -16,7 +16,8 @@ class app-c2c-pkg-repository {
     source => "puppet:///modules/c2c/usr/local/bin/update-repository-list.py",
   }
   cron {"update-repository-list":
-    command => "/usr/local/bin/update-repository-list.py > /var/packages/list.html",
+    command => "/usr/local/bin/update-repository-list.py > /var/packages/index.html",
+    user    => "reprepro",
     hour    => "*",
     minute  => 2,
   }
