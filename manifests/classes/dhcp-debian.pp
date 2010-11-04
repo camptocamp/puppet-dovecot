@@ -9,7 +9,7 @@ This class should not be included as is, please include "dhcp" instead.
 class dhcp::debian inherits dhcp::base {
 
   Common::Concatfilepart["00-base"] {
-    content => template('dhcp/dhcpd.conf.squeeze.erb'),
+    content => template('dhcp/dhcpd.conf.debian.erb'),
   }
 
   Service["dhcpd"] {
