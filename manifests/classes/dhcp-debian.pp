@@ -9,10 +9,7 @@ This class should not be included as is, please include "dhcp" instead.
 class dhcp::debian inherits dhcp::base {
 
   Common::Concatfilepart["00-base"] {
-    content => $lsbdistcodename ? {
-      squeeze => template('dhcp/dhcpd.conf.squeeze.erb'),
-      lenny   => template('dhcp/dhcpd.conf.lenny.erb'),
-    }
+    content => template('dhcp/dhcpd.conf.squeeze.erb'),
   }
 
   Service["dhcpd"] {
