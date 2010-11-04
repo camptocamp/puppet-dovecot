@@ -1,0 +1,39 @@
+# File managed by puppet
+
+<% if netmask -%>
+subnet <%=name%> netmask <%=netmask%> {
+<% else -%>
+subnet <%=name%> netmask <%=netmask_eth0%> {
+<% end -%>
+<% if routeurs -%>
+  option routers <%=routeurs%>;
+<% else -%>
+  option routers <%=network_eth0%>;
+<% end -%>
+<% if subnet_mask -%>
+  option subnet-mask <%=subnet_mask%>;
+<% else -%>
+  option subnet-mask <%=netmask%>;
+<% end -%>
+  option broadcast-address <%=bcast%>;
+  option domain-name-servers <%=dns%>;
+<% if domain_name -%>
+  option domain-name "<%=domain_name%>";
+<% else -%>
+  option domain-name "<%=domain%>";
+<% end -%>
+<% if netbios_dns -%>
+  option netbios-name-servers <%=netbios_dns%>;
+<% else -%>
+  option netbios-name-servers <%=network_eth0%>;
+<% end -%>
+<% if deny -%>
+  deny <%=deny%>;
+<% end -%>
+<% if inc -%>
+  include "<%=to_inc%>";
+<% end -%>
+<% if other_opt and not other_opt.empty? -%>
+<%= other_opt.collect! {|i| "  #{i}" }.join("\n") -%>
+<% end %>
+}
