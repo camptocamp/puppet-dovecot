@@ -157,7 +157,8 @@ ULbZB/F2TAy82x/tWt7ha7oHE7PgwHbOFgzIn5v3wS1As7LTtQ==
 
   cron {"puppet-git-subtrees-monitor":
     ensure  => present,
-    command => "/home/gsm/gitsubtreesmonitor.py /srv/puppetmaster/prod /home/gsm/report/index.html",
+    command => "/home/gsm/gitsubtreesmonitor.py /srv/puppetmaster/prod /home/gsm/report/index.html > /dev/null",
+    environment => "PATH=/bin:/usr/bin:/usr/local/bin",
     user    => "gsm",
     hour    => "*/3",
     minute  => "30",
