@@ -20,14 +20,14 @@ class dhcp::server::base {
     require => Package["dhcp-server"],
   }
 
-  common::concatfilepart {"00-base":
+  common::concatfilepart {"00.dhcp.server.base":
     file    => "${dhcp::variables::config_dir}/dhcpd.conf",
     ensure  => present,
     require => Package["dhcp-server"],
     notify  => Service["dhcpd"],
   }
 
-  file {"subnet-config-dir":
+  file {"dhcp-subnet-config-dir":
     path   => "${dhcp::variables::config_dir}/subnets",
     ensure => directory,
     require => Package["dhcp-server"],
