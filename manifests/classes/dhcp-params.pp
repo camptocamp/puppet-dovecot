@@ -1,11 +1,11 @@
 /*
 
-= Class: dhcp::variables
+= Class: dhcp::params
 Do NOT include this class - it won't do anything.
 Set variables for names and paths
 
 */
-class dhcp::variables {
+class dhcp::params {
   case $operatingsystem {
     Debian: {
       $config_dir = $lsbdistcodename? {
