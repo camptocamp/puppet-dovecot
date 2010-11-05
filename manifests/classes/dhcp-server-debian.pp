@@ -1,12 +1,12 @@
 /*
 
-= Class: dhcp::debian
+= Class: dhcp::server::debian
 Installs a dhcp server on debian system.
 
-This class should not be included as is, please include "dhcp" instead.
+This class should not be included as is, please include "dhcp::server" instead.
 
 */
-class dhcp::debian inherits dhcp::base {
+class dhcp::server::debian inherits dhcp::server::base {
 
   Common::Concatfilepart["00-base"] {
     content => template('dhcp/dhcpd.conf.debian.erb'),

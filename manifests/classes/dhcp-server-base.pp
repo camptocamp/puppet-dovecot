@@ -1,13 +1,13 @@
 /*
 
-= Class dhcp::base
+= Class dhcp::server::base
 Do NOT include this class - it won't work at all.
 Set variables for package name and so on.
-This class should be inherited in dhcp::$operatingsystem.
+This class should be inherited in dhcp::server::$operatingsystem.
 
 */
-class dhcp::base {
-  include dhcp::variables
+class dhcp::server::base {
+  include dhcp::params
   package {"dhcp-server":
     ensure => present,
     name   => $dhcp::variables::srv_dhcpd,

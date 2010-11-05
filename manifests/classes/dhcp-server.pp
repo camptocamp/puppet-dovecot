@@ -1,6 +1,6 @@
 /*
 
-= Class: dhcp
+= Class: dhcp::server
 Simple OS wrapper. Include this to install a dhcp server on your host.
 
 Requires:
@@ -18,7 +18,7 @@ Example:
 node "dhcp.toto.ltd" {
   $dhcpd_domain_name = 'toto.ltd'
   $dhcpd_dns_servers = '192.168.21.1'
-  include dhcp
+  include dhcp::server
   
   dhcp::subnet {"192.168.20.0":
     ensure => present,
@@ -38,6 +38,6 @@ node "dhcp.toto.ltd" {
 */
 class dhcp {
   case $operatingsystem {
-    Debian: { include dhcp::debian }
+    Debian: { include dhcp::server::debian }
   }
 }
