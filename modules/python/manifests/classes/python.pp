@@ -15,12 +15,4 @@ class python {
     ensure => present,
   }
 
-  case $operatingsystem {
-    Debian: {
-      package {"python-mode":
-        ensure => present
-      }
-    }
-  }
-
 }
