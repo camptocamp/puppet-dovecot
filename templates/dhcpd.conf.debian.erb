@@ -19,7 +19,7 @@ max-lease-time 7200;
 
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
-<% if has_variable?('dhcpd_ddns_authoritative') -%>
+<% if has_variable?('dhcpd_authoritative') -%>
 authoritative;
 <% else -%>
 #authoritative;
