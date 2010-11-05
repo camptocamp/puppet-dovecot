@@ -10,19 +10,16 @@ ddns-update-style <%=dhcpd_ddns_update%>;
 ddns-update-style none;
 <% end -%>
 
-# option definitions common to all supported networks...
-option domain-name "<%=dhcpd_domain_name%>";
-option domain-name-servers <%=dhcpd_dns_servers%>;
-
-default-lease-time 600;
-max-lease-time 7200;
-
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
 <% if has_variable?('dhcpd_authoritative') -%>
 authoritative;
 <% else -%>
 #authoritative;
+<% end -%>
+
+<% if dhcpd_opts and not dhcpd_opts.empty? -%>
+<%= dhcpd_opts.collect! {|i| "#{i}" }.join(";\n") %>
 <% end -%>
 
 # Use this to send dhcp log messages to a different log file (you also
