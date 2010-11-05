@@ -5,35 +5,26 @@ subnet <%=name%> netmask <%=netmask%> {
 <% else -%>
 subnet <%=name%> netmask <%=netmask_eth0%> {
 <% end -%>
-<% if routeurs -%>
-  option routers <%=routeurs%>;
+<% if routers and not routers.empty? -%>
+  option routers  routers.collect! {|i| "#{i}" }.join(",");
 <% else -%>
   option routers <%=network_eth0%>;
 <% end -%>
 <% if subnet_mask -%>
   option subnet-mask <%=subnet_mask%>;
-<% else -%>
+<% else if netmask -%>
   option subnet-mask <%=netmask%>;
+<% else -%>
+  option subnet-mask <%=netmask_eth0%>;
 <% end -%>
-  option broadcast-address <%=bcast%>;
-  option domain-name-servers <%=dns%>;
+  option broadcast-address <%=broadcast%>;
 <% if domain_name -%>
   option domain-name "<%=domain_name%>";
 <% else -%>
   option domain-name "<%=domain%>";
 <% end -%>
-<% if netbios_dns -%>
-  option netbios-name-servers <%=netbios_dns%>;
-<% else -%>
-  option netbios-name-servers <%=network_eth0%>;
-<% end -%>
-<% if deny -%>
-  deny <%=deny%>;
-<% end -%>
-<% if inc -%>
   include "<%=to_inc%>";
+<% if other_opts and not other_opts.empty? -%>
+<%= other_opts.collect! {|i| "  #{i}" }.join(";\n") %>
 <% end -%>
-<% if other_opt and not other_opt.empty? -%>
-<%= other_opt.collect! {|i| "  #{i}" }.join("\n") -%>
-<% end %>
 }
