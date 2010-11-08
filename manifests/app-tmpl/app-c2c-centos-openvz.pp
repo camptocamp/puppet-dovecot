@@ -15,6 +15,14 @@ class app-c2c-centos-openvz {
     mode   => 0644,
   }
 
+  file {"/etc/profile.d/openvz-perl5lib.sh":
+    ensure => present,
+    mode   => 0644,
+    owner  => root,
+    group  => root,
+    content => "# File managed by puppet\nexport PERL5LIB=/usr/share/perl5/\n",
+  }
+
   package {
     "librsync-devel": ensure => present, alias => "librsync-devel";
   }
