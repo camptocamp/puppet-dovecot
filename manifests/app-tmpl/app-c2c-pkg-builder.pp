@@ -18,7 +18,7 @@ class app-c2c-pkg-builder {
     groups => "admin",
   }
 
-  package {["cowbuilder","git-buildpackage","pbuilder"]:
+  package {["cowbuilder","git-buildpackage","pbuilder","quilt"]:
     ensure => present,
   }
 
