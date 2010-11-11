@@ -3,7 +3,7 @@ class srv-nimag-sqdf2 {
   $ps1label = "avocats.ch www"
   $is_external = true
 
-  $sudo_apache_admin_user = 'osubilia'
+  $sudo_apache_admin_user = 'subilia'
 
   $slapd_admin_passwd = "1FkJX/ukay1Xg"
   $slapd_passwd = "c2c"
