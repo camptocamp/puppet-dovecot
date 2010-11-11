@@ -15,6 +15,12 @@ class app-nimag-sqdf2 {
     ensure => present,
   }
 
+  augeas {"set LANG and LC_ALL":
+    context => "/files/etc/default/locale/",
+    changes => ["set /LANG en_US.UTF-8",
+    "set LC_ALL en_US.UTF-8"],
+  }
+
   file {"/etc/ldap/config.ldif":
     ensure  => present,
     owner   => root,
