@@ -21,12 +21,12 @@ class os-openvz-centos {
     enabled     => 1,
     gpgkey      => "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag",
     gpgcheck    => 1,
-    includepkgs => "cstream,perl-LockFile-Simple",
+    includepkgs => "cstream,perl-LockFile-Simple,git,perl-Git,perl-Error",
     require     => File["/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmforge-dag"],
   }
 
-  package {["cstream","perl-LockFile-Simple"]:
-    ensure => present,
+  package {["cstream","perl-LockFile-Simple", "git"]:
+    ensure => latest,
     require => Yumrepo["rpmforge-dag"]
   }
 

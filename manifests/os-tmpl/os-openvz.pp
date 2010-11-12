@@ -1,6 +1,7 @@
 class os-openvz {
 
   include openvz
+  include monitoring::openvz
 
   service {"iptables":
     ensure => stopped,
