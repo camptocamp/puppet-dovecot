@@ -39,6 +39,12 @@ class os-base-centos {
 
       # ugly - omreport 6.3 doesn't work with this script // broken script in fact
       common::concatfilepart {"sudo for nagios":
+        ensure => absent,
+        file => "/etc/sudoers",
+        content => "nagios ALL=(ALL) NOPASSWD: /usr/sbin/dmidecode\n",
+      }
+
+      common::concatfilepart {"nagios.dmidecode":
         file => "/etc/sudoers",
         content => "nagios ALL=(ALL) NOPASSWD: /usr/sbin/dmidecode\n",
       }
