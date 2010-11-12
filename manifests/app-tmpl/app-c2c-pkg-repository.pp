@@ -137,6 +137,7 @@ DocumentRoot /var/packages
       "collectd install",
       "collectd-core install",
       "collectd-utils install",
+      "debhelper install",
       "libcollectdclient0 install",
       "git install",
       "git-email install",
