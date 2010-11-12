@@ -22,12 +22,18 @@ class monitoring::openvz {
 
   monitoring::check {"System: Userbeancounter":
     ensure   => present,
-    base     => "${monitoring::params::customplugins}",
+    base     => "/usr/bin/",
     codename => "check_beancounter",
-    command  => "check_beancounter.py",
-    options  => "-c",
+    command  => "sudo",
+    options  => "${monitoring::params::customplugins}check_beancounter.py -c",
     type     => "passive",
     server   => $nagios_nsca_server,
     require  => File["/opt/nagios-plugins/check_beancounter.py"],
+  }
+
+  common::concatfilepart {"monitoring.check_beancounter":
+    ensure  => present,
+    file    => "/etc/sudoers",
+    content => "nagios ALL=(ALL) ${monitoring::params::customplugins}check_beancounter.py\n",
   }
 }
