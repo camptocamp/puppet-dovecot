@@ -14,6 +14,25 @@ class app-nimag-sqdf2 {
   postfix::hash { "/etc/postfix/virtual":
     ensure => present,
   }
+  
+  include stunnel4
+  file {"/etc/stunnel/mysql-artemis.conf":
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => 0644,
+    require => Package["stunnel4"],
+    notify  => Service["stunnel4"],
+    source  => "puppet:///modules/avocatsch/sqdf2/stunnel4-mysql-artemis.conf",
+  }
+
+  file {"/usr/local/sbin/make_chroot_jail.sh":
+    ensure => present,
+    owner  => root,
+    group  => root,
+    mode   => 0700,
+    source => "puppet:///modules/avocatsch/sqdf2/make_chroot_jail.sh",
+  }
 
   augeas {"set LANG and LC_ALL":
     context => "/files/etc/default/locale/",
