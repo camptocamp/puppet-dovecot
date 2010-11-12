@@ -174,6 +174,7 @@ DocumentRoot /var/packages
       "postgresql-contrib-8.4 install",
       "postgis install",
       "postgresql-8.4-postgis install",
+      "syslog-ng install",
     ],
   }
 
