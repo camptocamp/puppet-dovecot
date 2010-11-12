@@ -159,6 +159,7 @@ DocumentRoot /var/packages
       "libgeos-3.2.0 install",
       "libgeos-c1 install",
       "libgeos-dev install",
+      "libjs-jquery install",
       "augeas-lenses install",
       "augeas-tools install",
       "emacs23-bin-common install",
