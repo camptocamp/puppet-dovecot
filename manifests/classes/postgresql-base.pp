@@ -33,4 +33,11 @@ class postgresql::base {
     require => [Package["postgresql"], User["postgres"]],
   }
 
+  file { "/usr/share/augeas/lenses/contrib/pg_hba.aug":
+    ensure => present,
+    mode   => 0644,
+    owner  => "root",
+    source => "puppet:///postgresql/pg_hba.aug",
+  }
+
 }
