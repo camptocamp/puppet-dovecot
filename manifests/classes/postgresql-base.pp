@@ -20,6 +20,7 @@ class postgresql::base {
 
   service {"postgresql":
     ensure => running,
+    enable => true,
     hasstatus => true,
     require => Package["postgresql"],
   }
