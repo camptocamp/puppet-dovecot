@@ -38,6 +38,16 @@ class app-nimag-sqdf2 {
     ensure => present,
   }
 
+  package {[
+    "libapache2-mod-php5",
+    "php5-common",
+    "php5-gd",
+    "php5-mysql",
+    "php5-mcrypt",
+    ]:
+    ensure => present,
+  }
+
   augeas {"set LANG and LC_ALL":
     context => "/files/etc/default/locale/",
     changes => ["set LANG en_US.UTF-8",
