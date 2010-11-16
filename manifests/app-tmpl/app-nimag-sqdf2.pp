@@ -34,6 +34,10 @@ class app-nimag-sqdf2 {
     source => "puppet:///modules/avocatsch/sqdf2/make_chroot_jail.sh",
   }
 
+  package {["reprepro", "dpkg-dev"]:
+    ensure => present,
+  }
+
   augeas {"set LANG and LC_ALL":
     context => "/files/etc/default/locale/",
     changes => ["set LANG en_US.UTF-8",
