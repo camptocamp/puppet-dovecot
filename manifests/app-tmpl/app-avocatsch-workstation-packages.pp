@@ -138,4 +138,20 @@ class app-avocatsch-workstation-packages {
     ensure => absent,
   }
 
+  apt::sources_list {"utils.avocats-ch.ch":
+    ensure  => present,
+    content => "deb http://utils.avocats-ch.ch/ lucid main\n",
+    require => Apt::Key["1CE7F92B"],
+  }
+  
+  apt::key {"1CE7F92B":
+    ensure => present,
+    source => "http://utils.avocats-ch.ch/pubkey.asc",
+  }
+
+  package {"dictaphone":
+    ensure => latest,
+    require => Apt::Sources_list["utils.avocats-ch.ch"],
+  }
+
 }
