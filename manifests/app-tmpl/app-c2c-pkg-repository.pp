@@ -165,6 +165,7 @@ DocumentRoot /var/packages
       "emacs23-bin-common install",
       "emacs23-common install",
       "emacs23-nox install",
+      "haproxy install",
       "libaugeas0 install",
       "libpq-dev install",
       "libpq5 install",
@@ -176,6 +177,9 @@ DocumentRoot /var/packages
       "postgis install",
       "postgresql-8.4-postgis install",
       "syslog-ng install",
+      "varnish install",
+      "libvarnish1 install",
+      "libvarnish-dev install",
     ],
   }
 
