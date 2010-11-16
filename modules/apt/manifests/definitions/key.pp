@@ -8,7 +8,7 @@ define apt::key($ensure=present, $source="", $content="") {
           $thekey = "gpg --keyserver pgp.mit.edu --recv-key '$name' && gpg --export --armor '$name' | /usr/bin/apt-key add -"
         }
         else {
-          $thekey = "wget -O - '$source' | /usr/bin/apt-key add -"
+          $thekey = "wget -O - '$source'"
         }
       }
       else {
