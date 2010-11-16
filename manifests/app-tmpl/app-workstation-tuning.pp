@@ -6,7 +6,7 @@ class app-workstation-tuning {
   }  
 
   apt::sources_list {"utils.avocats-ch":
-    ensure  => present,
+    ensure  => absent,
     content => "deb http://utils.avocats-ch.ch/ lucid main\n",
   }
 
