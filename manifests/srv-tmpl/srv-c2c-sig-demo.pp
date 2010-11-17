@@ -2,7 +2,9 @@ class srv-c2c-sig-demo {
 
   ### Global attributes ##########################
   $server_group = "integration"
-  $ps1label = "integration"
+  if ! $ps1label {
+    $ps1label = "integration"
+  }
   $sudo_apache_admin_user = "deploy, %sigdev"
   $sudo_postgresql_admin_user = "deploy, %sigdev"
   $sudo_tomcat_admin_user = "deploy, %sigdev"
