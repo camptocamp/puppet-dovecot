@@ -1,4 +1,4 @@
-class app-geoportail-dev {
+class app-geoportail-dev-demo {
   package {[
     "slapd",
     "libldap2-dev",
