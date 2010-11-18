@@ -7,6 +7,7 @@ class srv-nimag-manaslu {
   $server_group = "prod" #(one of dev, demo or prod)
   $is_external = true
   $ps1label = "external backups"
+  $basic_contact_group = "admins"
 
   ### OS #########################################
   include os-base
