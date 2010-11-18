@@ -21,6 +21,7 @@ class app-c2c-pnv-refonte {
 
   c2c::checkexternalurl::export {["vanoise.camptocamp.net", "extranet.camptocamp.net", "observatoire.camptocamp.net",$fqdn]:
     path => "/media/system/js/caption.js",
+    host_name => "check-url-c2c",
   }
 
   c2c::ssh_authorized_key {

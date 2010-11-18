@@ -101,6 +101,7 @@ class app-c2c-www {
 
   c2c::checkexternalurl::export {"www.camptocamp.com":
     path   => "/modules/mod_jflanguageselection/tmpl/mod_jflanguageselection.css",
+    host_name => "check-url-c2c",
   }
 
   include apache::awstats
