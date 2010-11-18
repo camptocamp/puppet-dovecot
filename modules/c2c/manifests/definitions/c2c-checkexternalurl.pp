@@ -11,7 +11,7 @@ define c2c::checkexternalurl::export($ensure=present,$path,$host_name="check-url
 define c2c::checkexternalurl::import($ensure=present,$path,$host_name="check-urls") {
   monitoring::check {
     "URL: $name":
-      host_name => "check-url",
+      host_name => $host_name,
       type      => "passive",
       server    => $nagios_nsca_server,
       codename  => "check_${name}",
