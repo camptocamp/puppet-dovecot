@@ -15,14 +15,12 @@ class syslog-ng::server inherits syslog-ng {
   # Log repository
   file {"/srv/syslog":
     ensure  => directory,
+    seltype => "var_t",
   }
 
   file {"/srv/syslog/logs":
     ensure  => directory,
-    seltype => $operatingsystem ? {
-      RedHat => "var_log_t",
-      default => undef,
-    },
+    seltype => "var_log_t",
     require => File["/srv/syslog"],
   }
 
