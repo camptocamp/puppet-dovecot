@@ -16,7 +16,7 @@ class app-nimag-manaslu {
 "
   }
 
-  c2c::checkexternalurl::import{
+  c2c::checkexternalurl::export {
     "geoportal.unhcr.org":            host_name => "check-url-c2c", path => "/";
     "trac.mapfish.org":               host_name => "check-url-c2c", path => "/tracdocs/js/trac.js";
     "www.secureows.org":              host_name => "check-url-c2c", path => "/trac/secureows/chrome/common/js/trac.js";
@@ -32,9 +32,6 @@ class app-nimag-manaslu {
     "www.ajema.ch":                   host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "reseauajema.ch":                 host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "ajema.ch":                       host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
-    "vanoise.camptocamp.net":         host_name => "check-url-c2c", path => "/media/system/js/caption.js";
-    "extranet.camptocamp.net":        host_name => "check-url-c2c", path => "/media/system/js/caption.js";
-    "observatoire.camptocamp.net":    host_name => "check-url-c2c", path => "/media/system/js/caption.js";
     "c2cpc42.camptocamp.com":         host_name => "check-url-c2c", path => "/cdc/scripts/mapfish/mfbase/ext/adapter/ext/ext-base.js";
     "swissrivers.ch":                 host_name => "check-url-c2c", path => "/mfbase/ext/adapter/ext/ext-base.js";
     "www.swissrivers.ch":             host_name => "check-url-c2c", path => "/mfbase/ext/adapter/ext/ext-base.js";
@@ -46,4 +43,6 @@ class app-nimag-manaslu {
     "128.179.66.26":                  host_name => "check-url-c2c", path => "/";
     "sa.camptocamp.com":              host_name => "check-url-c2c", path => "/";
   }
+
+  C2c::Checkexternalurl::Import <<| tag=='manaslu.ext' |>>
 }
