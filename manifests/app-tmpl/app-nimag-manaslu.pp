@@ -33,8 +33,6 @@ class app-nimag-manaslu {
     "reseauajema.ch":                 host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "ajema.ch":                       host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "c2cpc42.camptocamp.com":         host_name => "check-url-c2c", path => "/cdc/scripts/mapfish/mfbase/ext/adapter/ext/ext-base.js";
-    "swissrivers.ch":                 host_name => "check-url-c2c", path => "/mfbase/ext/adapter/ext/ext-base.js";
-    "www.swissrivers.ch":             host_name => "check-url-c2c", path => "/mfbase/ext/adapter/ext/ext-base.js";
     "project.camptocamp.com":         host_name => "check-url-c2c", path => "/img/next.gif";
     "www.geoext.org":                 host_name => "check-url-c2c", path => "/_static/geoext.css";
     "geoext.org":                     host_name => "check-url-c2c", path => "/_static/geoext.css";
