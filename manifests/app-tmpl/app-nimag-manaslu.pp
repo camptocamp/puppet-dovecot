@@ -1,7 +1,7 @@
 class app-nimag-manaslu {
   nagios::host::nsca {"check-url":
     ensure         => present,
-    export_for     => $nagios_nsca_server,
+    export_for     => "nagios-${nagios_nsca_server}",
     hostgroups     => "${operatingsystem}${lsbmajdistrelease}, ${virtual}, ${hardwaremodel}, ${server_group}, external",
     contact_groups => $basic_contact_group,
     nagios_alias   => "check-url",
