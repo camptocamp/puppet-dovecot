@@ -5,11 +5,8 @@ class srv-c2c-openerp-hosted-demo {
 
   ### Global attributes ##########################
   $server_group = "prod" #(one of dev, demo or prod)
-  $ps1label = "demo hosted"
   $sudo_apache_admin_user = 'openerp'
   $sudo_postgresql_admin_user = 'openerp'
-  $openerp_project = 'demo'
-  $openerp_client_contact = 'joel.grandguillaume@camptocamp.com'
 
   ### OS #########################################
   include os-base
