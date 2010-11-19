@@ -1,7 +1,7 @@
 # Server type used on node !insert node name here!
 #
 
-class srv-c2c-openerp-hosted-demo {
+class srv-c2c-openerp-hosted-prod {
 
   ### Global attributes ##########################
   $server_group = "prod" #(one of dev, demo or prod)
