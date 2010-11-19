@@ -1,0 +1,13 @@
+# This part comes from modules/mysql/manifests/classes/administration.pp
+<% if has_variable?("sudo_mysql_admin_user") -%>
+User_Alias MYSQL_ADMIN = %mysql-admin,<%=sudo_mysql_admin_user%>
+<% else -%>
+User_Alias MYSQL_ADMIN = %mysql-admin
+<% end -%>
+<% if has_variable?("sudo_mysql_admin_cmnd") -%>
+Cmnd_Alias MYSQL_ADMIN = <%= sudo_mysql_admin_cmnd %>
+<% else -%>
+Cmnd_Alias MYSQL_ADMIN = <%=distro_specific_mysql_sudo%>, /bin/su mysql, /bin/su - mysql
+<% end -%>
+MYSQL_ADMIN ALL=(ALL) MYSQL_ADMIN
+##

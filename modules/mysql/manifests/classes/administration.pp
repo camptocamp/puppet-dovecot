@@ -17,12 +17,7 @@ class mysql::administration {
   common::concatfilepart { "sudoers.mysql":
     ensure => present,
     file => "/etc/sudoers",
-    content => "
-# This part comes from modules/mysql/manifests/classes/administration.pp
-%mysql-admin ALL=(root) ${distro_specific_mysql_sudo}
-%mysql-admin ALL=(root) /bin/su mysql, /bin/su - mysql
-",
+    content => template("mysql/sudoers.mysql.erb"),
     require => Group["mysql-admin"],
   }
-
 }
