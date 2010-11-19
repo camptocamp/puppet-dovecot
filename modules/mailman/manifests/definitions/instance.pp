@@ -8,7 +8,7 @@ define mailman::instance ($ensure=present, $vhost, $urlpath="/cgi-bin/mailman/")
     urlpath => $urlpath,
   }
 
-  postfix-ng::config {"relay_domains":
+  postfix::config {"relay_domains":
     ensure => $ensure,
     value  => "${name}",
   }
