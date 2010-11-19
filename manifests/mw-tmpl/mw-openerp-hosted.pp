@@ -36,10 +36,17 @@ password=Aevei8ae
 # static file managed by puppet. NO common::line allowed. use app-openerp-hosted to edit it
 local   all         postgres                      ident sameuser
 local   all         openerp                       ident sameuser
-
 local   samerole    all                           ident sameuser
 
-local   all         all                           md5
+local   openerp_prod${openerp_project}        openerp_${openerp_project} trust
+local   openerp_integration${openerp_project} openerp_integration  trust
+local   openerp_qa${openerp_project}          openerp_qa           trust
+
+local   template1  openerp_${openerp_project}  trust
+local   template1  openerp_integration  trust
+local   template1  openerp_qa           trust
+local   all        openerp_test         trust
+local   all         all                 md5
 
 host    all         all         127.0.0.1/32      md5
 host    samerole    all         127.0.0.1/32      md5
@@ -188,8 +195,8 @@ Alias /static /srv/openerp/instances/prod/src/web-client/openerp/static
   Allow from All
 </Proxy>
 ProxyPass /static !
-ProxyPass / http://localhost:8280/
-ProxyPassReverse / http://localhost:8280/
+ProxyPass / http://localhost:8180/
+ProxyPassReverse / http://localhost:8180/
 Alias /static /srv/openerp/instances/prod/src/web-client/openerp/static
 <Directory /srv/openerp/instances/prod/src/web-client/openerp/static>
   Order allow,deny
