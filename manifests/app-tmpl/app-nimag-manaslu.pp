@@ -32,7 +32,6 @@ class app-nimag-manaslu {
     "www.ajema.ch":                   host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "reseauajema.ch":                 host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
     "ajema.ch":                       host_name => "check-url-c2c", path => "/components/com_rsform/front.css";
-    "c2cpc42.camptocamp.com":         host_name => "check-url-c2c", path => "/cdc/scripts/mapfish/mfbase/ext/adapter/ext/ext-base.js";
     "project.camptocamp.com":         host_name => "check-url-c2c", path => "/img/next.gif";
     "www.geoext.org":                 host_name => "check-url-c2c", path => "/_static/geoext.css";
     "geoext.org":                     host_name => "check-url-c2c", path => "/_static/geoext.css";
@@ -40,6 +39,8 @@ class app-nimag-manaslu {
     "trac.geoext.org":                host_name => "check-url-c2c", path => "/tracdocs/css/trac.css";
     "128.179.66.26":                  host_name => "check-url-c2c", path => "/";
     "sa.camptocamp.com":              host_name => "check-url-c2c", path => "/";
+    # ABSENT - host down or else.
+    "c2cpc42.camptocamp.com":         host_name => "check-url-c2c", path => "/cdc/scripts/mapfish/mfbase/ext/adapter/ext/ext-base.js", ensure => absent;
   }
 
   C2c::Checkexternalurl::Import <<| tag=='manaslu.ext' |>>
