@@ -1,4 +1,4 @@
-class mw-postgis-8-3 {
+class generic-tmpl::mw-postgis-8-3 {
 
   class c2c::postgis inherits postgis::debian::v8-3 {
     if defined (Apt::Sources_list["sig-${lsbdistcodename}-c2c"]) {
@@ -16,6 +16,10 @@ class mw-postgis-8-3 {
       apt::key {"A37E4CF5":
         source  => "http://dev.camptocamp.com/packages/debian/pub.key",
       }
+    }
+
+    Exec["create postgis_template"] {
+      require +> Class["mw-postgresql-8-3"],
     }
 
     Package["postgis"] {
