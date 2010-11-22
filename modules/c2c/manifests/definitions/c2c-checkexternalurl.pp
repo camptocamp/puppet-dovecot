@@ -16,5 +16,6 @@ define c2c::checkexternalurl::import($ensure=present,$path,$host_name="check-url
       codename  => "check_${name}",
       command   => "check_http",
       options   => "-H ${name} -u ${path}",
+      ensure    => $ensure,
   }
 }
