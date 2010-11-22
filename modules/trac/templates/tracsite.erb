@@ -1,0 +1,24 @@
+# Subversion
+<Location /svn/<%= tracname %>>
+  DAV svn
+  SVNPath /srv/svn/repos/<%= tracname %>
+
+  AuthzSVNAccessFile /srv/svn/repos/<%= tracname %>/conf/svnaccess.conf
+
+  AuthType Basic
+  AuthName "Subversion"
+  AuthUserFile /srv/trac/projects/<%= tracname %>/conf/htpasswd
+
+  <LimitExcept GET PROPFIND OPTIONS REPORT>
+    #SSLRequireSSL Not working
+    Require valid-user
+  </LimitExcept>
+
+</Location>
+
+# Trac
+<Location /trac/<%= tracname %>>
+  SetEnv TRAC_ENV "/srv/trac/projects/<%= tracname %>"
+</Location>
+
+ScriptAlias /trac/<%= tracname %> /usr/share/trac/cgi-bin/trac.cgi

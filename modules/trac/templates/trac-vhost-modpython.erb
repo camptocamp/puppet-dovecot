@@ -1,0 +1,38 @@
+# file managed by puppet
+<% if lsbdistcodename != "lenny" %>
+Alias /tracdocs/ /usr/share/trac/htdocs/
+<% end %>
+<% if lsbdistcodename == "lenny" %>
+Alias /tracdocs/ /usr/share/pyshared/trac/htdocs/
+<% end %>
+
+<% if slash == true %>
+<Location />
+<% else %>
+<Location /trac/<%=project%>>
+<% end %>
+   SetHandler mod_python
+   PythonInterpreter main_interpreter
+   PythonHandler trac.web.modpython_frontend 
+   <% if slash == true %>
+   PythonOption TracEnv /srv/trac/projects/<%=project%>
+   PythonOption TracUriRoot /
+   <% else %>
+   PythonOption TracEnv /srv/trac/projects/<%=project%>
+   PythonOption TracUriRoot /trac/<%=project%>
+   <% end %>
+</Location>
+<% if slash == true %>
+<Location /tracdocs/>
+  SetHandler none
+</Location>
+<% end %>
+
+# Trac login using SSL
+RewriteEngine On
+RewriteCond   %{HTTPS} off
+<% if slash == true %>
+RewriteRule   ^/login https://%{SERVER_NAME}/login
+<% else %>
+RewriteRule   ^/trac/([^/]+)/login https://%{SERVER_NAME}/trac/$1/login
+<% end %>

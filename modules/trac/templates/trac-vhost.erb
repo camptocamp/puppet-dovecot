@@ -1,0 +1,21 @@
+# file managed by puppet
+
+#RedirectMatch ^/$ /trac
+
+<% if lsbdistcodename != "lenny" %>
+Alias /tracdocs/ /usr/share/trac/htdocs/
+<% end %>
+<% if lsbdistcodename == "lenny" %>
+Alias /tracdocs/ /usr/share/pyshared/trac/htdocs/
+<% end %>
+
+<Location /trac>
+  SetEnv TRAC_ENV_PARENT_DIR /srv/trac/projects
+</Location>
+
+ScriptAlias /trac /usr/share/trac/cgi-bin/trac.cgi
+
+# Trac login using SSL
+RewriteEngine On
+RewriteCond   %{HTTPS} off
+RewriteRule   ^/trac/([^/]+)/login https://%{SERVER_NAME}/trac/$1/login
