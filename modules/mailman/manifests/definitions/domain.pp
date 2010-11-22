@@ -1,5 +1,5 @@
 define mailman::domain ($ensure, $vhost, $urlpath="/cgi-bin/mailman/") {
-  postfix-ng::transport {"${name}":
+  postfix::transport {"${name}":
     ensure      => present,
     destination => "mailman:",
   }
