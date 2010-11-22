@@ -15,7 +15,7 @@ class srv-vrenaville-openerp-hosted {
   include os-server
 
   ### MW #########################################
-  include mw-postgresql-8-3
+  include generic-tmpl::mw-postgresql-8-3
   include mw-openerp
   include mw-openerp-hosted
   include mw-openerp-manager

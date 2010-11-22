@@ -14,8 +14,8 @@ class srv-c2c-pnv-refonte {
   ### MW #########################################
   include mw-sig
   include mw-apache
-  include mw-postgresql-8-3
-  include mw-postgis-8-3
+  include generic-tmpl::mw-postgresql-8-3
+  include generic-tmpl::mw-postgis-8-3
 
   ### APP (generic) ##############################
 

@@ -16,8 +16,8 @@ class srv-c2c-openaddresses {
   ### MW #########################################
   include mw-apache
   include mw-java-v6
-  include mw-postgresql-8-4
-  include mw-postgis-8-4
+  include generic-tmpl::mw-postgresql-8-4
+  include generic-tmpl::mw-postgis-8-4
   include mw-sig
 
   ### APP (generic) ##############################

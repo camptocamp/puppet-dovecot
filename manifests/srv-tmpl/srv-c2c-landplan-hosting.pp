@@ -8,10 +8,10 @@ class srv-c2c-landplan-hosting {
   include os-server
 
   ### MW #########################################
-  include mw-postgresql-8-3
-  include mw-postgis-8-3
+  include generic-tmpl::mw-postgresql-8-3
+  include generic-tmpl::mw-postgis-8-3
   include mw-apache
-  include mw-tomcat
+  include generic-tmpl::mw-tomcat
 #
 #  ### APP (generic) ##############################
   include app-c2c-sig

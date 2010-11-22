@@ -14,9 +14,9 @@ class srv-c2c-unhcr-prod {
   ### MW #########################################
   include mw-sig
   include mw-apache-ssl
-  include mw-tomcat
-  include mw-postgis-8-4
-  include mw-postgresql-8-4
+  include generic-tmpl::mw-tomcat
+  include generic-tmpl::mw-postgis-8-4
+  include generic-tmpl::mw-postgresql-8-4
 
   ### APP (generic) ##############################
   include app-c2c-sig

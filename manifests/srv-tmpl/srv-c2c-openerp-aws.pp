@@ -16,7 +16,7 @@ class srv-c2c-openerp-aws {
   include os-server
 
   ### MW #########################################
-  include mw-postgresql-8-4
+  include generic-tmpl::mw-postgresql-8-4
   include mw-openerp
 
   ### APP (generic) ##############################

@@ -16,15 +16,15 @@ class srv-c2c-sig-dev {
   ### MW #########################################
   include mw-sig
   include mw-apache
-  include mw-tomcat
+  include generic-tmpl::mw-tomcat
   
   # backward compatibility
   if $postgresql_version == "8.3" {
-    include mw-postgis-8-3
-    include mw-postgresql-8-3
+    include generic-tmpl::mw-postgis-8-3
+    include generic-tmpl::mw-postgresql-8-3
   } else {
-    include mw-postgis-8-4
-    include mw-postgresql-8-4
+    include generic-tmpl::mw-postgis-8-4
+    include generic-tmpl::mw-postgresql-8-4
   }
 
   ### APP (generic) ##############################

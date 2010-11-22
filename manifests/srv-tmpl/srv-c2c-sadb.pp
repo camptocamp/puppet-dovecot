@@ -15,7 +15,7 @@ class srv-c2c-sadb {
 
   ### MW #########################################
   include mw-apache
-  include mw-postgresql-8-3
+  include generic-tmpl::mw-postgresql-8-3
 
   ### APP (generic) ##############################
 

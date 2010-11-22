@@ -13,7 +13,7 @@ class srv-c2c-easy-openerp {
   include os-server
 
   ### MW #########################################
-  include mw-postgresql-8-3      # TMP_SRV1
+  include generic-tmpl::mw-postgresql-8-3      # TMP_SRV1
   include mw-openerp             # TMP_SRV1
   include mw-easy-openerp        # TMP_SRV1
 

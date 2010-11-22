@@ -9,10 +9,10 @@ class srv-c2c-peitrequin-hosting {
 
   ### MW #########################################
   include mw-apache
-  include mw-tomcat
+  include generic-tmpl::mw-tomcat
   include mw-sig
-  include mw-postgresql-8-3
-  include mw-postgis-8-3
+  include generic-tmpl::mw-postgresql-8-3
+  include generic-tmpl::mw-postgis-8-3
 
   include app-c2c-peitrequin-hosting
 
