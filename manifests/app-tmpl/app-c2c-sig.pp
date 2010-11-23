@@ -32,7 +32,7 @@ class app-c2c-sig {
     ensure => directory,
     owner  => "deploy",
     group  => "sigdev",
-    mode   => 0755,
+    mode   => 2755,
     require => [Package["deploy"], User["deploy"]],
   }
 
