@@ -23,7 +23,16 @@ class app-c2c-sig {
     require     => Package["deploy"],
   }
 
+  file {"/home/deploy/.ssh":
+    ensure  => directory,
+    owner   => deploy,
+    group   => deploy,
+    mode    => 0755,
+    require => User["deploy"],
+  }
+
   file {"/home/deploy/.ssh/id_rsa":
+    require => File["/home/deploy/.ssh"],
     ensure => present,
     owner  => deploy,
     group  => deploy,
