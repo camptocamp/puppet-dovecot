@@ -27,4 +27,14 @@ class app-c2c-sig-dev {
     ensure => present,
     group  => sigdev,
   } 
+  common::concatfilepart { "sudoers.deploy":
+    ensure => present,
+    file => "/etc/sudoers",
+    content => "## This part is managed by puppet
+Defaults:%sigdev !umask
+%sigdev ALL=(deploy) /usr/bin/deploy
+",
+    require => Group["sigdev"],
+  }
+
 }
