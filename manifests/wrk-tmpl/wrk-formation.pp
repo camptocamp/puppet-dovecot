@@ -12,9 +12,9 @@ class wrk-formation {
   ### MW #########################################
   include mw-apache
   include mw-java-v6
-  include mw-tomcat
-  include mw-postgresql-8-4
-  include mw-postgis-8-4
+  include generic-tmpl::mw-tomcat
+  include generic-tmpl::mw-postgresql-8-4
+  include generic-tmpl::mw-postgis-8-4
 
   ### APP (generic) ##############################
   include app-workstation-tuning
