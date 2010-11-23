@@ -1,4 +1,3 @@
 node 'formation-ch3.wrk.lsn.camptocamp.com' {
-  #include wrk-formation
-  include srv-basic
+  include wrk-formation
 }
