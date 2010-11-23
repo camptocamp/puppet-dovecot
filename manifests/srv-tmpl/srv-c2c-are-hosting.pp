@@ -14,6 +14,8 @@ class srv-c2c-are-hosting {
   include mw-apache
   include mw-mysql
   include mw-sig
+  include generic-tmpl::mw-postgresql-8-3
+  include generic-tmpl::mw-postgis-8-3
 
   include app-c2c-are-hosting
 
