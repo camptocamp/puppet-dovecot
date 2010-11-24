@@ -35,6 +35,7 @@ class os-monitoring {
       contact_groups  => $basic_contact_group,
       hostgroups      => $hostgroups,
     }
+    include monitoring::diode
   } else {
     include nagios::nsca::client
     if $is_external {
