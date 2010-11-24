@@ -75,6 +75,19 @@ EXTERNAL_SCRIPT="/usr/local/sbin/vznetaddbridge"
 ',
   }
 
+  file {"/etc/resolv.conf":
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => 0644,
+    content => "# file managed by puppet
+search camptocamp.com
+nameserver 10.27.21.1
+nameserver 10.26.21.1
+nameserver 128.178.15.8
+",
+  }
+
   common::archive::download {"debian-5.0-amd64-c2c.tar.gz":
     url => "http://sa.camptocamp.com/files/debian-5.0-amd64-c2c.tar.gz",
     src_target => "/vz/template/cache",
