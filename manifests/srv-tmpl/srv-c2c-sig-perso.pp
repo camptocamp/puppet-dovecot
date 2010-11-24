@@ -14,6 +14,7 @@ class srv-c2c-sig-perso {
   ### MW #########################################
   include mw-sig
   include mw-apache
+  include generic-tmpl::mw-git
   include generic-tmpl::mw-tomcat
   
   # backward compatibility

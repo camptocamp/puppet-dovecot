@@ -16,6 +16,7 @@ class srv-c2c-sig-demo {
   ### MW #########################################
   include mw-sig
   include mw-apache
+  include generic-tmpl::mw-git
   include generic-tmpl::mw-tomcat
   
   # backward compatibility
