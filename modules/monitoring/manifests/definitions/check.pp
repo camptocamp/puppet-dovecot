@@ -23,6 +23,7 @@ Example usage:
     type      => "passive",
     server    => $nagios_nsca_server,
     package   => ["foo", "bar"],
+    sudo      => "toto",
   }
 
 */
@@ -39,7 +40,8 @@ define monitoring::check (
   $host_name=$fqdn,
   $type,
   $server,
-  $package=false) {
+  $package=false,
+  $sudo=undef) {
 
   include monitoring::params
 
@@ -47,6 +49,12 @@ define monitoring::check (
     $basedir = "${monitoring::params::mainplugins}"
   } else {
     $basedir = $base
+  }
+
+  if $sudo {
+    $sudocmd = "/usr/bin/sudo -u ${sudo} "
+  } else {
+    $sudocmd = ""
   }
 
   case $type {
@@ -57,7 +65,7 @@ define monitoring::check (
         nagios::service::local { "$codename on $fqdn":
           ensure                => $ensure,
           host_name             => $host_name,
-          command_line          => "${basedir}${command} ${options}",
+          command_line          => "${sudocmd}${basedir}${command} ${options}",
           contact_groups        => $contact,
           service_groups        => $group,
           check_command         => $codename,
@@ -70,7 +78,7 @@ define monitoring::check (
         nagios::service::nsca { $codename:
           ensure                => $ensure,
           host_name             => $host_name,
-          command_line          => "${basedir}${command} ${options}",
+          command_line          => "${sudocmd}${basedir}${command} ${options}",
           contact_groups        => $contact,
           service_groups        => $group,
           normal_check_interval => $interval,
@@ -78,6 +86,14 @@ define monitoring::check (
           service_description   => $name,
           export_for            => "nagios-${server}",
           package               => $package,
+        }
+      }
+
+      if $sudo {
+        common::concatfilepart { "sudo.${name}":
+          ensure  => $ensure,
+          file    => "/etc/sudoers",
+          content => "nagios ALL=(${sudo}) ${basedir}${command} ${options}\n",
         }
       }
     }
@@ -88,7 +104,7 @@ define monitoring::check (
         nagios::service::local { "$codename on $fqdn":
           ensure                => $ensure,
           host_name             => $host_name,
-          command_line          => "${basedir}${command} ${options}",
+          command_line          => "${sudocmd}${basedir}${command} ${options}",
           contact_groups        => $contact,
           service_groups        => $group,
           check_command         => $codename,
@@ -101,7 +117,7 @@ define monitoring::check (
         nagios::service::nrpe { $codename:
           ensure                => $ensure,
           host_name             => $host_name,
-          command_line          => "${basedir}${command} ${options}",
+          command_line          => "${sudocmd}${basedir}${command} ${options}",
           contact_groups        => $contact,
           service_groups        => $group,
           normal_check_interval => $interval,
@@ -111,9 +127,21 @@ define monitoring::check (
           package               => $package,
         }
       }
+
+      if $sudo {
+        common::concatfilepart { "sudo.${name}":
+          ensure  => $ensure,
+          file    => "/etc/sudoers",
+          content => "nagios ALL=(${sudo}) ${basedir}${command} ${options}\n",
+        }
+      }
     }
 
     'remote': { # remote
+
+      if $sudo {
+        fail("'\$sudo' parameter unimplemented in 'remote' mode. If you need sudo for a remote check, then you should rethink your security instead !")
+      }
 
       if $fqdn == $server {
         nagios::service::local { "$codename on $fqdn":
