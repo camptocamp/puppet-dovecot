@@ -15,8 +15,9 @@ class os-server {
   }
 
   common::concatfilepart { "000-sudoers.init":
-    ensure => present,
-    file => "/etc/sudoers",
+    ensure  => present,
+    file    => "/etc/sudoers",
+    manage  => true,
     content => "
 ## This part is managed by puppet
 Defaults    env_keep=SSH_AUTH_SOCK
