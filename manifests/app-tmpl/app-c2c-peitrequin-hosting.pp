@@ -45,4 +45,20 @@ class app-c2c-peitrequin-hosting {
     "python-mapscript": priority => 1100, pin => "release o=Camptocamp";
   }
 
+
+  apache::module {["dav", "dav_fs"]: }
+
+  c2c::webdav::user {"peitrequin_data":
+    vhost => "common.geocommunes.ch",
+    password => "9pMcWOvnetIjM", # Copi5zos0f
+  }
+
+  c2c::webdav::share {
+    "peitrequin_arzier":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+    "peitrequin_coppet":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+    "peitrequin_crans":    vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+    "peitrequin_trelex":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+    "peitrequin_genolier": vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+  }
+
 }
