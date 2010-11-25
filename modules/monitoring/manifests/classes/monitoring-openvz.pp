@@ -20,7 +20,7 @@ class monitoring::openvz {
     require => Vcsrepo["/opt/nagios-plugins/check_beancounter"],
   }
 
-  monitoring::check {"System: Userbeancounter":
+  monitoring::check { "OpenVZ: UBC barriers":
     ensure   => present,
     base     => "${monitoring::params::customplugins}",
     codename => "check_beancounter",
