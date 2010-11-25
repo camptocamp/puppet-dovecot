@@ -20,7 +20,7 @@ class monitoring::diode {
     mode   => 0755,
     group  => root,
     owner  => root,
-    source => "puppet:///modules/monitoring/",
+    source => "puppet:///modules/monitoring/check_diode.pl",
   }
 
 }
