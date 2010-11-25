@@ -2,7 +2,7 @@ define c2c::webdav::share(
   $ensure=present,
   $rw_users,
   $vhost,
-  $directory,
+  $directory=false,
   $ro_users=false,
   $allow_anonymous=false) {
 
@@ -10,7 +10,6 @@ define c2c::webdav::share(
     ensure => $ensure,
     vhost => $vhost,
     directory => $directory,
-    require => File[$directory], 
   }
 
   apache::auth::basic::file::webdav::user {$name:
