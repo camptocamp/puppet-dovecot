@@ -80,7 +80,7 @@ Alias       /nagios3             /usr/share/nagios3/htdocs
 <Location />
   Order deny,allow
   Deny from all
-  Allow from 10.27.0.0/16
+  Allow from 10.0.0.0/8
   Allow from 128.179.66.0/24
 
   AuthName \"Nagios Access\"
