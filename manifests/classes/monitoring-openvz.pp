@@ -28,6 +28,7 @@ class monitoring::openvz {
     options  => "-c",
     type     => "passive",
     server   => $nagios_nsca_server,
+    sudo     => "root",
     require  => File["/opt/nagios-plugins/check_beancounter.py"],
   }
 }
