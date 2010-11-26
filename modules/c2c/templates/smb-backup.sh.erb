@@ -1,0 +1,12 @@
+#!/bin/bash
+# File managed by puppet
+<% if domain -%>
+DOMAIN='-W <%=domain%>'
+<% else -%>
+DOMAIN=''
+<% end -%>
+for file in `echo /var/backups/pgsql/*.tar`; do
+  echo "put $file $(basename $file)" | smbclient -U '<%=user%>%<%=password%>' ${DOMAIN} -I <%=server%> '<%=schema%>'  > /dev/null 2>&1 || echo "problem uploading $file to NAS"
+  sleep 1
+done
+exit 0
