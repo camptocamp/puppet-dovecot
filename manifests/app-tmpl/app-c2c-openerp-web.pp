@@ -101,6 +101,12 @@ export PATH=\${PATH}:\${HOME}/lib/ruby/gems/1.8
     require => User["admin"],
   }
 
+  apache::directive {"redirect":
+    ensure    => present,
+    directive => template("c2c/redirect-openerp.camptocamp.com.erb"),
+    vhost     => "$fqdn",
+  }
+
   apache::module {"passenger":
     ensure => present,
   }
