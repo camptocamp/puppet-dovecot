@@ -16,7 +16,7 @@ for my $host (@hosts) {
       exit $ERRORS{'CRITICAL'};
     }
     print "OK: Diode is opened\n";
-    exit(0);
+    exit $ERRORS{'OK'};
   }
 
   if ($page !~ /Ouvert Diode.+tous/i) {
