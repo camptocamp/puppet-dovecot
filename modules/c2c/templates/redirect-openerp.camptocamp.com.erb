@@ -1,0 +1,13 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^(.*)\.at
+RewriteRule ^/$ http://openerp.camptocamp.com/en/ [R,L]
+
+RewriteCond %{HTTP_HOST} (.*)\.fr
+RewriteRule ^/$ http://openerp.camptocamp.com/fr/ [R,L]
+
+RewriteCond %{HTTP_HOST} !^openerp\.camptocamp\.com [NC]
+RewriteRule ^(.*)$ http://openerp.camptocamp.com$1 [R=301,L]
+
+# References de l'article "Du web 1.0 au web x.0: aussi pour la geomatique !"
+RewriteRule ^/mpg.html$ /fr/component/content/article/5-general-corporate/126-vpk [R,L]
