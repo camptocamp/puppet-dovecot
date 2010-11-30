@@ -25,6 +25,7 @@ class app-c2c-mapfish-www {
     "thomas.bonfort@camptocamp.com on admin":  sadb_user => "tbonfort", user => "admin", ensure => absent;
     "bruno.binet@camptocamp.com on admin":     sadb_user => "bbinet",   user => "admin";
     "jesse.eichar@camptocamp.com on admin":    sadb_user => "jeichar",  user => "admin";
+   "pierre.mauduit@camptocamp.com on admin":   sadb_user => "pmauduit", user => "admin";
   }
 
 

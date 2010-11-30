@@ -118,50 +118,16 @@ class app-mapfish-trac {
 
   ## SSH Access
 
-  c2c::ssh_authorized_key { "frederic.junod@camptocamp.com on admin":
-    sadb_user => "fredj",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "frederic.junod@camptocamp.com on root":
-    sadb_user => "fredj",
-    user      => "root",
-  }
-
-  c2c::ssh_authorized_key { "eric.lemoine@camptocamp.com on admin":
-    sadb_user => "elemoine",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "cedric.moullet@camptocamp.com on admin":
-    sadb_user => "cmoullet",
-    user      => "admin",
-    ensure    => absent,
-  }
-
-  c2c::ssh_authorized_key { "oliver.christen@camptocamp.com on admin":
-    sadb_user => "ochriste",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "yves.bolognini@camptocamp.com on admin":
-    sadb_user => "yves",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "thomas.bonfort@camptocamp.com on admin":
-    sadb_user => "tbonfort",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "bruno.binet@camptocamp.com on admin":
-    sadb_user => "bbinet",
-    user      => "admin",
-  }
-
-  c2c::ssh_authorized_key { "jesse.eichar@camptocamp.com on admin":
-    sadb_user => "jeichar",
-    user      => "admin",
+  c2c::ssh_authorized_key { 
+    "frederic.junod@camptocamp.com on admin": sadb_user => "fredj",    user => "admin";
+   "frederic.junod@camptocamp.com on root":   sadb_user => "fredj",    user => "root";
+   "eric.lemoine@camptocamp.com on admin":    sadb_user => "elemoine", user => "admin";
+   "oliver.christen@camptocamp.com on admin": sadb_user => "ochriste", user => "admin";
+   "yves.bolognini@camptocamp.com on admin":  sadb_user => "yves",     user => "admin";
+   "thomas.bonfort@camptocamp.com on admin":  sadb_user => "tbonfort", user => "admin";
+   "bruno.binet@camptocamp.com on admin":     sadb_user => "bbinet",   user => "admin";
+   "jesse.eichar@camptocamp.com on admin":    sadb_user => "jeichar",  user => "admin";
+   "pierre.mauduit@camptocamp.com on admin":  sadb_user => "pmauduit", user => "admin";
   }
 
   include mailman
