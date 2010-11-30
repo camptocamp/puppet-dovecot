@@ -147,6 +147,7 @@ DocumentRoot /var/packages
       "git-email install",
       "gitk install",
       "git-svn install",
+      "gitweb install",
       "haproxy install",
       "libcollectdclient0 install",
       "libaugeas0 install",
