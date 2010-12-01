@@ -53,4 +53,12 @@ class geste::webapp {
     replace => false,
   }
 
+  file {"/var/www/share/htdocs/openupload-0.4.2/templates_c":
+    ensure  => directory,
+    owner   => root,
+    group   => www-data,
+    mode    => 0770,
+    require => Common::Archive["openupload-0.4.2.tar.gz"],
+  }
+
 }
