@@ -18,8 +18,8 @@ authoritative;
 #authoritative;
 <% end -%>
 
-<% if dhcpd_opts and not dhcpd_opts.empty? -%>
-<%= dhcpd_opts.collect! {|i| "#{i}" }.join(";\n") %>
+<% if has_variable?('dhcpd_opts') and not dhcpd_opts.empty? -%>
+<%= dhcpd_opts.join(";\n") %>
 <% end -%>
 
 # Use this to send dhcp log messages to a different log file (you also
