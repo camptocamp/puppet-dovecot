@@ -1,5 +1,5 @@
 <?php
-$CONFIG['WWW_SERVER'] = 'http://cjeanneret.int.lsn.camptocamp.com';
+$CONFIG['WWW_SERVER'] = 'http://gestepc1.epfl.ch';
 
 $CONFIG['WWW_ROOT'] = '/www';
 
