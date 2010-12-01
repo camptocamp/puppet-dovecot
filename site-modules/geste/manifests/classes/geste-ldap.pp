@@ -1,0 +1,39 @@
+class geste::ldap {
+
+  include openldap::server
+  
+  file {"/etc/ldap/slapd.conf.old":
+    ensure  => present,
+    mode    => 0644,
+    owner   => root,
+    group   => root,
+    require => Class["openldap::server"],
+    source  => "puppet:///modules/geste/ldap/slapd.conf.old",
+  }
+
+  file {"/etc/ldap/schema/samba.schema":
+    ensure  => present,
+    mode    => 0644,
+    owner   => root,
+    group   => root,
+    require => Class["openldap::server"],
+    source  => "puppet:///modules/geste/ldap/samba.schema",
+  }
+
+  augeas {"configure slapd defaults":
+    context => "/files/etc/default/slapd/",
+    notify  => Service["slapd"],
+    require => Class["openldap::server"],
+    changes => ["set SLAPD_SERVICES  'ldap:///'"],
+  }
+
+  augeas {"configure ldap client":
+    context => "/files/etc/ldap/ldap.conf",
+    require => Class["openldap::server"],
+    changes => [
+      "set BASE 'dc=ldap,dc=geste'",
+      "set URI 'ldap://localhost'",
+      "set LDAP_VERSION 3",
+    ],
+  }
+}

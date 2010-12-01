@@ -1,0 +1,53 @@
+# File managed by puppet
+[global]
+    workgroup = GESTEDOMAIN
+    netbios name = FILESERVER
+    os level = 33
+    security = user
+    wins support = Yes
+    enable privileges = Yes
+    username map = /etc/samba/smbusers
+    server string = Samba Server %v
+    encrypt passwords = true
+    unix password sync = No
+    ldap passwd sync = Yes
+    passwd program = /usr/sbin/smbldap-passwd -u %u
+    passwd chat = *password* %n\n *password* %n\n *success*
+    log level = 0
+    syslog = 0
+    log file = /var/log/samba/log.%m
+    max log size = 100000
+    time server = Yes
+    socket options = TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192
+
+    socket address = <%=ipaddress_eth0%>
+    bind interfaces only = yes
+    interfaces = 127.0.0.1 <%=ipaddress_eth0%>
+
+    mangling method = hash2
+    Dos charset = utf-8
+    Unix charset = utf-8
+    name resolve order = wins host lmhosts bcast
+
+    domain logons = Yes
+    preferred master = True
+    domain master = True
+    dns proxy = No
+
+    # on desactive les profiles
+    logon path =
+    logon home =
+
+    nt acl support = No
+    deadtime = 10
+    guest account = nobody
+    map to guest = Bad User
+    dont descend = /proc,/dev,/etc,/lib,/lost+found,/initrd
+
+    # to maintain capital letters in shortcuts in any of the profile folders:
+    preserve case = yes
+    short preserve case = yes
+    case sensitive = no
+
+    ldap ssl = off
+####
