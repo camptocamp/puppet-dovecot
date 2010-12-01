@@ -12,7 +12,7 @@ subnet <%=name%> netmask <%=netmask_eth0%> {
 <% end -%>
 <% if subnet_mask -%>
   option subnet-mask <%=subnet_mask%>;
-<% else if netmask -%>
+<% elsif netmask -%>
   option subnet-mask <%=netmask%>;
 <% else -%>
   option subnet-mask <%=netmask_eth0%>;
@@ -23,8 +23,12 @@ subnet <%=name%> netmask <%=netmask_eth0%> {
 <% else -%>
   option domain-name "<%=domain%>";
 <% end -%>
-  include "<%=to_inc%>";
+  include "<%=to_include%>";
 <% if other_opts and not other_opts.empty? -%>
-<%= other_opts.collect! {|i| "  #{i}" }.join(";\n") %>
+  <% if other_opts.is_a?(Array) -%>
+  <%= other_opts.join(";\n") %>
+  <% else -%>
+  <%=other_opts%>;
+  <% end -%>
 <% end -%>
 }
