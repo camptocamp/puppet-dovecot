@@ -1,0 +1,19 @@
+# Managed by puppet
+# smbldap-tools configuration
+    passdb backend = ldapsam:<%=ldap_uri%>
+    ldap admin dn = <%=ldap_base%>
+    ldap suffix = <%=ldap_suffix%>
+    ldap group suffix = ou=Groups
+    ldap user suffix = ou=Users
+    ldap machine suffix = ou=Computers
+    ldap idmap suffix = ou=Users
+    add user script = /usr/sbin/smbldap-useradd -m "%u"
+    ldap delete dn = Yes
+    delete user script = /usr/sbin/smbldap-userdel "%u"
+    add machine script = /usr/sbin/smbldap-useradd -w "%m"
+    add group script = /usr/sbin/smbldap-groupadd -p "%g"
+    delete group script = /usr/sbin/smbldap-groupdel "%g"
+    add user to group script = /usr/sbin/smbldap-groupmod -m "%u" "%g"
+    delete user from group script = /usr/sbin/smbldap-groupmod -x "%u" "%g"
+    set primary group script = /usr/sbin/smbldap-usermod -g "%g" "%u"
+####
