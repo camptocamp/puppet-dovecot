@@ -1,4 +1,5 @@
 class geste::search {
+  # packages for xapian
   package {[
     "python-xappy",
     "python-xapian",
@@ -6,5 +7,14 @@ class geste::search {
     "xapian-omega",
     ]:
     ensure => present,
+  }
+
+  # packages for pylons
+  package {[
+    "python-pylons",
+    "python-mako",
+    "python-chardet",
+    "python-dns",
+    ]: ensure => present,
   }
 }
