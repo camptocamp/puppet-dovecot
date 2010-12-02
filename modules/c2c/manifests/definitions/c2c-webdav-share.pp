@@ -4,12 +4,14 @@ define c2c::webdav::share(
   $vhost,
   $directory=false,
   $ro_users=false,
+  $mode=2755,
   $allow_anonymous=false) {
 
   apache::webdav::instance {$name:
     ensure => $ensure,
     vhost => $vhost,
     directory => $directory,
+    mode => $mode
   }
 
   apache::auth::basic::file::webdav::user {$name:
