@@ -2,6 +2,7 @@ class srv-c2c-peitrequin-hosting {
   $ps1label = "peitrequin-hosting-prod"
   $sudo_tomcat_admin_user = 'admin'
   $sudo_apache_admin_user = 'admin'
+  $sudo_postgresql_admin_user = 'admin'
 
   ### OS #########################################
   include os-base
