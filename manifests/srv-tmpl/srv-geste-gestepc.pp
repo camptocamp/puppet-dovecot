@@ -39,5 +39,6 @@ class srv-geste-gestepc {
   include geste::samba
   include geste::mail
   include geste::webapp
+  include geste::search
 
 }
