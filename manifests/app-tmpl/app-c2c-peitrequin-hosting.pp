@@ -54,11 +54,11 @@ class app-c2c-peitrequin-hosting {
   }
 
   c2c::webdav::share {
-    "peitrequin_arzier":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
-    "peitrequin_coppet":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
-    "peitrequin_crans":    vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
-    "peitrequin_trelex":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
-    "peitrequin_genolier": vhost => "common.geocommunes.ch", rw_users => "peitrequin_data";
+    "peitrequin_arzier":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data", mode => 2775;
+    "peitrequin_coppet":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data", mode => 2775;
+    "peitrequin_crans":    vhost => "common.geocommunes.ch", rw_users => "peitrequin_data", mode => 2775;
+    "peitrequin_trelex":   vhost => "common.geocommunes.ch", rw_users => "peitrequin_data", mode => 2775;
+    "peitrequin_genolier": vhost => "common.geocommunes.ch", rw_users => "peitrequin_data", mode => 2775;
   }
 
 }
