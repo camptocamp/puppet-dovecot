@@ -179,6 +179,7 @@ DocumentRoot /var/packages
       "proj install",
       "proj-bin install",
       "proj-data install",
+      "python-support install",
       "syslog-ng install",
       "varnish install",
     ],
