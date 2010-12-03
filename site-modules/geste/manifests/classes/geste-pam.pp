@@ -25,7 +25,7 @@ libnss-ldapd    libnss-ldapd/nsswitch   multiselect     group, passwd, shadow\n"
 
   package {"libnss-ldapd":
     ensure  => present,
-    require => [File["/var/cache/debconf/libnss-ldapd.preseed.erb"], Package["libpam-ldap"],
+    require => [File["/var/cache/debconf/libnss-ldapd.preseed.erb"], Package["libpam-ldap"]],
     responsefile => "/var/cache/debconf/libnss-ldapd.preseed.erb",
   }
 
