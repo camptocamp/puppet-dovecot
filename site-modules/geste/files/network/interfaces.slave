@@ -1,0 +1,15 @@
+# File managed by puppet
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+  address 192.168.12.11
+  netmask 255.255.255.0
+  gateway 192.168.12.1
+
+auto eth1
+iface eth1 inet static
+  address 128.179.67.70
+  netmask 255.255.255.0
+  gateway 128.179.67.1

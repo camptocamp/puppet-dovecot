@@ -4,7 +4,6 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet static
-<% if has_variable?("geste_master") and geste_master -%>
   address 192.168.12.5
   netmask 255.255.255.0
   gateway 192.168.12.1
@@ -14,8 +13,3 @@ iface eth1 inet static
   address 128.179.67.100
   netmask 255.255.255.0
   gateway 128.179.67.1
-<% else -%>
-  address 128.179.67.70
-  netmask 255.255.255.0
-  gateway 128.179.67.1
-<% end %>
