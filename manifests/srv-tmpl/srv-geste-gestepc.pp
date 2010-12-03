@@ -31,6 +31,7 @@ class srv-geste-gestepc {
 
   ### APP ########################################
 
+  include geste::partitions
   include geste::baseconfig
   include geste::network
   include geste::dns
