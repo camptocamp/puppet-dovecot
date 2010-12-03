@@ -45,6 +45,14 @@ class app-c2c-peitrequin-hosting {
     "python-mapscript": priority => 1100, pin => "release o=Camptocamp";
   }
 
+  cron {"update carto":
+    ensure  => present,
+    command => "python /var/www/common.geocommunes.ch/private/trunk/peitrequin_common/script/data_postprocessing.py -s",
+    hour    => 4,
+    minute  => 0,
+    user    => "admin",
+    environment => 'MAILTO="peitrequin_update@camptocamp.com"',
+  }
 
   apache::module {["dav", "dav_fs"]: }
 
