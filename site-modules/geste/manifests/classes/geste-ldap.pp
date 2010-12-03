@@ -36,4 +36,30 @@ class geste::ldap {
       "set LDAP_VERSION 3",
     ],
   }
+
+  if $geste_master {
+    file {"/usr/local/sbin/ldap-sync":
+      ensure => present,
+      owner  => root,
+      group  => root,
+      mode   => 0700,
+      source => "puppet:///modules/geste/ldap/ldap-sync.master",
+    }
+   
+    cron {"sync ldap to slave":
+      ensure => absent,
+      hour   => "3",
+      minute => ip_to_cron(1),
+      command => "/usr/local/sbin/ldap-sync",
+      require => File["/usr/local/sbin/ldap-sync"],
+    }
+  } else { # slave
+    file {"/usr/local/sbin/ldap-sync":
+      ensure => present,
+      owner  => root,
+      group  => root,
+      mode   => 0700,
+      source => "puppet:///modules/geste/ldap/ldap-sync.slave",
+    }
+  }
 }

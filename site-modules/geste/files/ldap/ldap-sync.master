@@ -1,0 +1,9 @@
+#!/bin/sh
+# File managed by puppet
+unset SSH_AUTH_SOCK
+
+HOSTS="gestepc3.epfl.ch"
+for HOST in $HOSTS; do
+  /usr/sbin/slapcat | gzip - | ssh -T root@${HOST} /usr/local/sbin/ldap-sync
+done
+
