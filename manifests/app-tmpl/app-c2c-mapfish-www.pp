@@ -16,6 +16,7 @@ class app-c2c-mapfish-www {
   }
 
   c2c::ssh_authorized_key { 
+    "yves.jacolin@camptocamp.com on admin":    sadb_user => "yjacolin", user => "admin";
     "frederic.junod@camptocamp.com on admin":  sadb_user => "fredj",    user => "admin";
     "frederic.junod@camptocamp.com on root":   sadb_user => "fredj",    user => "root";
     "eric.lemoine@camptocamp.com on admin":    sadb_user => "elemoine", user => "admin";
