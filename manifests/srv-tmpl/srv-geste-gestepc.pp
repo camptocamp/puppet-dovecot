@@ -33,6 +33,7 @@ class srv-geste-gestepc {
 
   include geste::partitions
   include geste::baseconfig
+  include geste::pam
   include geste::network
   include geste::dns
 #  include geste::dhcp
