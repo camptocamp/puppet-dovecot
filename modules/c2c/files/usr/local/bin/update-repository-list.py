@@ -67,6 +67,8 @@ th { text-align: left; }
 th.p_name { width: 13em; }
 th.p_version { width: 13em; }
 td { font-family: monospace }
+td.stagdiff { background-color: #ffe088; }
+td.devdiff { background-color: #ffa088; }
 </style>
 </head>
 <body>
@@ -107,7 +109,9 @@ for distrib in packages.keys():
       for repo in repos:
         if repo not in versions:
           versions[repo] = "-"
-      html += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n' %(package, versions["stable"], versions["staging"], versions["dev"])
+      staging_class = versions["staging"] != versions["stable"] and "stagdiff" or ""
+      dev_class = versions["dev"] != versions["staging"] and "devdiff" or staging_class
+      html += '<tr><td>%s</td><td>%s</td><td class="%s">%s</td><td class="%s">%s</td></tr>\n' %(package, versions["stable"], staging_class, versions["staging"], dev_class, versions["dev"])
 
     html += '</table>'
 
