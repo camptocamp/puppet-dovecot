@@ -30,25 +30,27 @@ for repo in repos:
 
       archs = [x.split("-",1)[1] for x in os.listdir(c_path) if x.startswith("binary-") and os.path.isdir(c_path + "/" + x)]
       for arch in archs:
-	a_path = c_path + "/binary-" + arch
+        a_path = c_path + "/binary-" + arch
 
-	packages_data = gzip.open(a_path + "/Packages.gz", 'rb').read()
+        packages_data = gzip.open(a_path + "/Packages.gz", 'rb').read()
         pname = pversion = None
-	for line in packages_data.split("\n"):
+        for line in packages_data.split("\n"):
           if not line and pname is not None:
-	    if pname in packages[distrib][component]:
-	      packages[distrib][component][pname]["versions"][repo] = pversion
-	      packages[distrib][component][pname]["archs"][repo] = arch
-	    else:
-	      packages[distrib][component][pname] = {"versions": {repo: pversion}, "archs": {repo: arch}}
-	  elif line.startswith("Package:"):
-	    pname = line.split(" ",1)[1]
+            if pname in packages[distrib][component]:
+              if arch in packages[distrib][component][pname]:
+                packages[distrib][component][pname][arch][repo] = pversion
+              else:
+                packages[distrib][component][pname][arch] = {repo: pversion}
+            else:
+              packages[distrib][component][pname] = {arch: {repo: pversion}}
+          elif line.startswith("Package:"):
+            pname = line.split(" ",1)[1]
           elif line.startswith("Version:"):
-	    pversion = line.split(" ",1)[1]
+            pversion = line.split(" ",1)[1]
 
 
       if not packages[distrib][component]:
-	del packages[distrib][component]
+        del packages[distrib][component]
 
     if not packages[distrib]:
       del packages[distrib]
@@ -105,13 +107,22 @@ for distrib in packages.keys():
     packages_names = packages[distrib][component].keys()
     packages_names.sort()
     for package in packages_names:
-      versions = packages[distrib][component][package]["versions"]
-      for repo in repos:
-        if repo not in versions:
-          versions[repo] = "-"
-      staging_class = versions["staging"] != versions["stable"] and "stagdiff" or ""
-      dev_class = versions["dev"] != versions["staging"] and "devdiff" or staging_class
-      html += '<tr><td>%s</td><td>%s</td><td class="%s">%s</td><td class="%s">%s</td></tr>\n' %(package, versions["stable"], staging_class, versions["staging"], dev_class, versions["dev"])
+      versions = packages[distrib][component][package]
+      archs = versions.keys()
+      for arch in archs:
+        for repo in repos:
+          if repo not in versions[arch]:
+            versions[arch][repo] = "-"
+      if reduce(lambda x,y: x==y and x or 0, versions.values()):
+        arch = archs[0]
+        staging_class = versions[arch]["staging"] != versions[arch]["stable"] and "stagdiff" or ""
+        dev_class = versions[arch]["dev"] != versions[arch]["staging"] and "devdiff" or staging_class
+        html += '<tr><td>%s</td><td>%s</td><td class="%s">%s</td><td class="%s">%s</td></tr>\n' %(package, versions[arch]["stable"], staging_class, versions[arch]["staging"], dev_class, versions[arch]["dev"])
+      else:
+        for arch in archs:
+          staging_class = versions[arch]["staging"] != versions[arch]["stable"] and "stagdiff" or ""
+          dev_class = versions[arch]["dev"] != versions[arch]["staging"] and "devdiff" or staging_class
+          html += '<tr><td>%s (%s)</td><td>%s</td><td class="%s">%s</td><td class="%s">%s</td></tr>\n' %(package, arch, versions[arch]["stable"], staging_class, versions[arch]["staging"], dev_class, versions[arch]["dev"])
 
     html += '</table>'
 
