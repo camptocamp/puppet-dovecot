@@ -19,6 +19,8 @@ class monitoring::updates {
         options  => "${monitoring::params::customplugins}check_system_update.pl",
         type     => "passive",
         server   => $nagios_nsca_server,
+        interval => "1440", # once a day
+        retry    => "1440", # once a day
       }
 
       common::concatfilepart {"monitoring.check_system_update":
