@@ -69,6 +69,7 @@ class os-monitoring {
   include monitoring::loadaverage
   include monitoring::puppet
   include monitoring::at
+  include monitoring::updates
 
   nagios::template {"generic-service":
     conf_type => "service",
