@@ -14,7 +14,7 @@ class monitoring::updates {
         ensure => present,
         require => File["${monitoring::params::customplugins}check_system_update.pl"],
         codename => "check_system_update",
-        base     => "/usr/bin",
+        base     => "/usr/bin/",
         command  => "sudo",
         options  => "${monitoring::params::customplugins}check_system_update.pl",
         type     => "passive",
