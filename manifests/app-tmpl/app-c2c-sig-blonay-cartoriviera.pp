@@ -100,4 +100,14 @@ class app-c2c-sig-blonay-cartoriviera {
     key     => "AAAAB3NzaC1yc2EAAAABJQAAAIEA1LquxRLS/K6zWZ4rFZaiMwHVnze4i4AsCv7FmApvwLPBMDVGkaiDpEq/alargiWEdS7ir2wMnbDq1GsKueOGtdeRhCugwBvwhuhZLY7I+daq6HceZWlFgrxxCe6mJ2lsyMVTJ85lk8a8utUe4MbxP8gRFbLI4N5LsDvQsoRtQTE=";
   }
 
+  c2c::sshuser {"dgnerre":
+    ensure  => present, 
+    groups  => "admin", 
+    uid     => 2008, 
+    comment => "Daniel.Gnerre@vevey.ch", 
+    email   => "Daniel.Gnerre@vevey.ch",
+    type    => "rsa", 
+    key     => "AAAAB3NzaC1yc2EAAAABJQAAAIEAwkDMdJNGvTj7SH9XPqKOIXW/+3kAR52IO77A+pfO06iqXPkeauCY4Ph1goWeiBy3L2o7dodncxdrDYAcjBmok9Z3pmuzL0OnghKWA+deTBaAoeSXd7hYYnbJfA9Rd3Bcw9NbmiFM5Weiw5FGB81kSsT8f8821s6Ot9f+YlfCtR0=";
+  }
+
 }
