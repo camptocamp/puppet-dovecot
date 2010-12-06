@@ -5,8 +5,8 @@ class geste::network {
     group  => root,
     mode   => 0644,
     source => $geste_master? {
-      true  => "puppet:///modules/geste/network/interfaces.master",
-      false => "puppet:///modules/geste/network/interfaces.slave",
+      true     => "puppet:///modules/geste/network/interfaces.master",
+      default => "puppet:///modules/geste/network/interfaces.slave",
     }
   }
 
