@@ -33,7 +33,7 @@ class postgresql::debian::v8-4 inherits postgresql::debian::base {
   }
 
   case $lsbdistcodename {
-    lenny,squeeze : {
+    "lenny" : {
       package {[
         "libpq-dev",
         "libpq5",
