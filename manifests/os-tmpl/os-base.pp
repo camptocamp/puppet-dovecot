@@ -10,7 +10,7 @@ class os-base {
   include c2c::sysadmin-in-charge-new
   include c2c::skel
   include sudo::base
-  include puppet::client
+  include c2c::puppet-client
 
   ssh_authorized_key {"rdiff-backup":
     ensure  => present,
