@@ -20,6 +20,7 @@ class postgresql::base {
 
   service {"postgresql":
     ensure => running,
+    enable => true,
     hasstatus => true,
     require => Package["postgresql"],
   }
@@ -30,6 +31,17 @@ class postgresql::base {
     group => "postgres",
     mode => 755,
     require => [Package["postgresql"], User["postgres"]],
+  }
+
+  # lens included upstream since augeas 0.7.4
+  if versioncmp($augeasversion, '0.7.3') < 0 { $lens = present }
+  else { $lens = absent }
+
+  file { "/usr/share/augeas/lenses/contrib/pg_hba.aug":
+    ensure => $lens,
+    mode   => 0644,
+    owner  => "root",
+    source => "puppet:///postgresql/pg_hba.aug",
   }
 
 }

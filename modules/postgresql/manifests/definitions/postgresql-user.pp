@@ -50,7 +50,7 @@ define postgresql::user(
         },
         user    => "postgres",
         unless  => "psql ${connection} -c '\\du' | egrep '^  *$name '",
-        require => User["postgres"],
+        require => [User["postgres"], Service["postgresql"]],
       }
 
       exec { "Set SUPERUSER attribute for postgres user $name":
@@ -95,12 +95,13 @@ define postgresql::user(
       exec { "Remove postgres user $name":
         command => "psql ${connection} -c 'DROP USER \"$name\" ' ",
         user    => "postgres",
-        onlyif  => "psql ${connection} -c '\\du' | grep '$name  *|'"
+        onlyif  => "psql ${connection} -c '\\du' | grep '$name  *|'",
+        require => Service["postgresql"],
       }
     }
 
     default: {
       fail "Invalid 'ensure' value '$ensure' for postgres::user"
-      }
     }
+  }
 }

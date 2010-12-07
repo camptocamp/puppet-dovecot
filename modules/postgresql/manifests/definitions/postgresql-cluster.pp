@@ -29,6 +29,7 @@ define postgresql::cluster (
       exec {"pg_createcluster --start -e $encoding -u $uid -g $gid -d ${data_dir}/${version}/${clustername} $version $clustername":
         unless => "pg_lsclusters -h | awk '{ print \$1,\$2; }' | egrep '^${version} ${clustername}\$'",
         require => File[$data_dir],
+        require => Service["postgresql"],
       }
 
     }
@@ -36,6 +37,7 @@ define postgresql::cluster (
     absent: {
       exec {"pg_dropcluster --stop $version $clustername":
         onlyif => "pg_lsclusters -h | awk '{ print \$1,\$2,\$6; }' | egrep '^${version} ${clustername} ${data_dir}/${version}/${clustername}\$'",
+        require => Service["postgresql"],
       }
     }
   }

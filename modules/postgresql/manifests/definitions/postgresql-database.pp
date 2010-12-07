@@ -6,11 +6,11 @@ Create a new PostgreSQL database
 
 */
 define postgresql::database(
-  $ensure=present, 
-  $owner=false, 
+  $ensure=present,
+  $owner=false,
   $encoding=false,
   $template="template1",
-  $source=false, 
+  $source=false,
   $overwrite=false) {
 
   $ownerstring = $owner ? {
@@ -27,15 +27,17 @@ define postgresql::database(
     present: {
       exec { "Create $name postgres db":
         command => "/usr/bin/createdb $ownerstring $encodingstring $name -T $template",
-        user => "postgres",
-        unless => "/usr/bin/psql -l | grep '$name  *|'",
+        user    => "postgres",
+        unless  => "/usr/bin/psql -l | grep '$name  *|'",
+        require => Service["postgresql"],
       }
     }
     absent:  {
       exec { "Remove $name postgres db":
         command => "/usr/bin/dropdb $name",
-        onlyif => "/usr/bin/psql -l | grep '$name  *|'",
-        user => "postgres"
+        onlyif  => "/usr/bin/psql -l | grep '$name  *|'",
+        user    => "postgres",
+        require => Service["postgresql"],
       }
     }
     default: {
@@ -47,9 +49,10 @@ define postgresql::database(
   if $overwrite {
     exec { "Drop database $name before import":
       command => "dropdb ${name}",
-      onlyif => "/usr/bin/psql -l | grep '$name  *|'",
-      user => "postgres",
-      before => Exec["Create $name postgres db"],
+      onlyif  => "/usr/bin/psql -l | grep '$name  *|'",
+      user    => "postgres",
+      before  => Exec["Create $name postgres db"],
+      require => Service["postgresql"],
     }
   }
 
