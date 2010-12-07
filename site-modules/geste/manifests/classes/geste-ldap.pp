@@ -37,6 +37,13 @@ class geste::ldap {
     ],
   }
 
+  user {"openldap":
+    ensure => present,
+    home   => "/var/lib/ldap",
+    shell  => "/bin/false",
+    require => Package["slapd"],
+  }
+
   if $geste_master {
     file {"/usr/local/sbin/ldap-sync":
       ensure => present,
@@ -47,7 +54,7 @@ class geste::ldap {
     }
    
     cron {"sync ldap to slave":
-      ensure => absent,
+      ensure => present,
       hour   => "3",
       minute => ip_to_cron(1),
       command => "/usr/local/sbin/ldap-sync",
