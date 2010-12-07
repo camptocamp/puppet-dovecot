@@ -24,6 +24,8 @@ class app-c2c-sig-alpgis-mapfish {
     "alex on admin"     : sadb_user => "alex",      user => "admin", require => User["admin"];
     "ebelo on admin"    : sadb_user => "ebelo",     user => "admin", require => User["admin"];
     "bquartier on admin": sadb_user => "bquartier", user => "admin", require => User["admin"];
+    "elemoine on admin": sadb_user => "elemoine", user => "admin", require => User["admin"];
+    "sbrunner on admin": sadb_user => "sbrunner", user => "admin", require => User["admin"];
   }
 
 }
