@@ -19,8 +19,8 @@ class monitoring::updates {
         command  => "check_system_update.pl",
         type     => "passive",
         server   => $nagios_nsca_server,
-        interval => "1440", # once a day
-        retry    => "1440", # once a day
+        interval => "7200", # once a week
+        retry    => "720", # twice a day
       }
 
     }
