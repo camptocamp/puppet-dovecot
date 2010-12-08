@@ -11,7 +11,7 @@ Facter.add("localsid") do
   result = "none"
   
   setcode do
-    output = `which net && net getlocalsid`
+    output = `which net && net getlocalsid 2>/dev/null`
     if output =~ /^SID for domain [^ ]* is: (.*)\n$/
       $1
     else
