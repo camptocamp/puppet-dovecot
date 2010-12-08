@@ -22,7 +22,7 @@ class os-base-centos {
     gpgcheck => 0,
   }
   
-  package {["bash-completion", "augeas"]:
+  package {["bash-completion"]:
     ensure => present,
     require => Yumrepo["epel-fedora"],
   }
