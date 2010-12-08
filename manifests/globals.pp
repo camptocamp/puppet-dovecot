@@ -17,7 +17,7 @@ case $operatingsystem {
   /CentOS|RedHat/: {
     $puppet_client_version = "0.25.5-1.el${lsbmajdistrelease}"
     $facter_version = "1.5.8-1.el${lsbmajdistrelease}"
-    $augeas_version = "0.7.2-2.el${lsbmajdistrelease}"
+    $augeas_version = "0.7.3-1.el${lsbmajdistrelease}"
   }
 
 }
