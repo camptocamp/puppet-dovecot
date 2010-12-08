@@ -1,5 +1,13 @@
 class app-c2c-workstation-packages {
 
+  apt::sources_list {"qgis":
+    ensure => present,
+    content => "deb http://ppa.launchpad.net/ubuntugis/ppa/ubuntu $lsbdistcodename main",
+  }
+  apt::key {"314DF160":
+    source => "http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x089EBE08314DF160",
+  }
+
   package {
     # Multimedia
     "amarok":                           ensure => present;
@@ -134,6 +142,7 @@ class app-c2c-workstation-packages {
     "grass":                            ensure => present;
     "qcad":                             ensure => present;
     "gdal-bin":                         ensure => present;
+    "qgis":                             ensure => present;
 
    # Misc
     "usermode":                         ensure => present;
