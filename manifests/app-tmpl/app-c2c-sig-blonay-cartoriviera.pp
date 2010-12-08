@@ -107,7 +107,7 @@ class app-c2c-sig-blonay-cartoriviera {
     comment => "Daniel.Gnerre@vevey.ch", 
     email   => "Daniel.Gnerre@vevey.ch",
     type    => "rsa", 
-    key     => "AAAAB3NzaC1yc2EAAAABJQAAAIEAwkDMdJNGvTj7SH9XPqKOIXW/+3kAR52IO77A+pfO06iqXPkeauCY4Ph1goWeiBy3L2o7dodncxdrDYAcjBmok9Z3pmuzL0OnghKWA+deTBaAoeSXd7hYYnbJfA9Rd3Bcw9NbmiFM5Weiw5FGB81kSsT8f8821s6Ot9f+YlfCtR0=";
+    key     => "AAAAB3NzaC1yc2EAAAABJQAAAIBpJD6b/3vO+1zOJITkCfvAKf6KEwwClYA5MpnVydY9HMDj8IFUMN0V8iWGq9o136vnMy2pZ0m4PBybwec2/EklDcADpkbSoz5xXviyjvQHF6f0s1cR/GAt5944SZxhq+PPVLrfkh85bH/hPkxLVTb8JyjGvVAMKvtpnjSlEUxdOQ==";
   }
 
 }
