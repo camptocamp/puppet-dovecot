@@ -1,6 +1,8 @@
 class app-c2c-bazaar {
   include bazaar::server
 
+  package {"tree": }
+
   group {"c2cdev":
     ensure => present,
   }
