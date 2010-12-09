@@ -53,59 +53,52 @@ RewriteRule ^/(.)*$ https://%{HTTP_HOST}/$1
   }
 
 
-  file {
-    [
-      "/srv/bzr/aesa_tinyerp",
-      "/srv/bzr/c2c_tinyerp",
-      "/srv/bzr/conventus_tinyerp",
-      "/srv/bzr/debethune_tinyerp",
-      "/srv/bzr/dnag_tinyerp",
-      "/srv/bzr/duetschler_tinyerp",
-      "/srv/bzr/ecointesys_tinyerp",
-      "/srv/bzr/esecure_tinyerp",
-      "/srv/bzr/geste_tinyerp",
-      "/srv/bzr/iem_tinyerp",
-      "/srv/bzr/irmicrosystems_tinyerp",
-      "/srv/bzr/locatellifritsch_tinyerp",
-      "/srv/bzr/meditron_openerp",
-      "/srv/bzr/meditron_tinyerp",
-      "/srv/bzr/msf_openerp",
-      "/srv/bzr/oenocap_tinyerp",
-      "/srv/bzr/peg_tinyerp",
-      "/srv/bzr/pse_tinyerp",
-      "/srv/bzr/secretatelier_openerp",
-      "/srv/bzr/c2c_internal_tinyerp",
-      "/srv/bzr/solstis_openerp",
-      "/srv/bzr/swisscom_openerp",
-      "/srv/bzr/accessible_openerp",
-      "/srv/bzr/akatech_openerp",
-      "/srv/bzr/merckserono_openerp",
-      "/srv/bzr/machinevision_openerpsupport",
-      "/srv/bzr/vogelvins_openerp",
-      "/srv/bzr/sensimed_openerp",
-      "/srv/bzr/fasteris_openerp",
-      "/srv/bzr/scalena_cosmeticopenerp",
-      "/srv/bzr/aeschlimann_openerp",
-      "/srv/bzr/geste_openerp",
-      "/srv/bzr/sitn_proto_mapfish",
-      "/srv/bzr/vaudsr_openerpmaquette",
-      "/srv/bzr/c2c_hosted_openerp",
-      "/srv/bzr/panoramapl_openerp",
-      "/srv/bzr/scalena_motoopenerp",
-      "/srv/bzr/subsun_openerp",
-      "/srv/bzr/easy_openerp",
-      "/srv/bzr/mecatis_openerp",
-      "/srv/bzr/aesa_openerp",
-      "/srv/bzr/esecure_openerp",
-      "/srv/bzr/wingo_openerp",
-      "/srv/bzr/iem_openerp",
-      "/srv/bzr/outilmania_openerp",
-      "/srv/bzr/debonix_openerp",
-    ]:
-    ensure => directory,
-    group  => "c2cdev",
-    owner  => "www-data",
-    mode   => 2770,
-    require => Group["c2cdev"],
+  c2c::bazaar{
+      "aesa_tinyerp":       ro_pwd => "co3Ee7ii";
+      "c2c_tinyerp":        ro_pwd => "Aevei8ae";
+      "conventus_tinyerp":  ro_pwd => "Boh5OW9u";
+      "debethune_tinyerp":  ro_pwd => "Pohh4itu";
+      "dnag_tinyerp":       ro_pwd => "ur1ohDie";
+      "duetschler_tinyerp": ;
+      "ecointesys_tinyerp": ro_pwd => "ga6ahC4k";
+      "esecure_tinyerp":    ro_pwd => "Eesit0ah";
+      "geste_tinyerp":      ro_pwd => "hev9ooRe";
+      "iem_tinyerp":        ro_pwd => "bo0ouTh2";
+      "irmicrosystems_tinyerp":   ro_pwd => "Ia6Quiez";
+      "locatellifritsch_tinyerp": ro_pwd => "yahNai2a";
+      "meditron_openerp":   ro_pwd => "aik1ieNg";
+      "meditron_tinyerp":   ro_pwd => "Em5zi2on";
+      "msf_openerp":        ro_pwd => "xahJai9t";
+      "oenocap_tinyerp":    ro_pwd => "Imo5ju9t";
+      "peg_tinyerp":        ro_pwd => "ceegie4O";
+      "pse_tinyerp": ;
+      "secretatelier_openerp": ;
+      "c2c_internal_tinyerp":  ro_pwd => "Ko2aijoh";
+      "solstis_openerp":    ro_pwd => "Thei2tho";
+      "swisscom_openerp":   ro_pwd => "iiPhi3ah";
+      "accessible_openerp": ro_pwd => "taiyiuP8";
+      "akatech_openerp":    ro_pwd => "Ahsie3ah";
+      "merckserono_openerp": ro_pwd => "Im9bo9ah";
+      "machinevision_openerpsupport": ro_pwd => "uSMpEjWti2JF";
+      "vogelvins_openerp": ro_pwd => "peFee4ai"; 
+      "sensimed_openerp":  ro_pwd => "HlpyVq2crQ";
+      "fasteris_openerp": ;
+      "scalena_cosmeticopenerp": ro_pwd => "uYe3aeta";
+      "aeschlimann_openerp": ro_pwd => "Ob8xi8ga";
+      "geste_openerp": ro_pwd => "hev9ooRe";
+      "sitn_proto_mapfish": ensure => absent;
+      "vaudsr_openerpmaquette": ro_pwd => "Thie9Nae";
+      "c2c_hosted_openerp": ;
+      "panoramapl_openerp":  ro_pwd => "ahga6Zae";
+      "scalena_motoopenerp": ro_pwd => "eiZ7aBee";
+      "subsun_openerp":  ro_pwd => "ohShie9n";
+      "easy_openerp":    ro_pwd => "Uyi4Ai2u";
+      "mecatis_openerp": ro_pwd => "thae5iVu";
+      "aesa_openerp":    ro_pwd => "ohph4Za3";
+      "esecure_openerp": ro_pwd => "aizi3Tot";
+      "wingo_openerp":   ro_pwd => "tacie7Ou";
+      "iem_openerp":     ro_pwd => "aeFaigh3";
+      "outilmania_openerp": ro_pwd => "phiePhi1";
+      "debonix_openerp": ro_pwd => "Gihau1Ie";
   }
 }
