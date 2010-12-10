@@ -7,7 +7,7 @@ class srv-geste-gestepc {
   $server_group = "prod" #(one of dev, demo or prod)
   $is_external = true
 
-  $samba_domain_name = "GESTDOMAIN"
+  $samba_domain_name = "GESTEDOMAIN"
   $samba_netbios_name = "FILESERVER"
   $ldap_uri = "ldap://127.0.0.1"
   $ldap_base = "cn=admin,dc=ldap,dc=geste"
