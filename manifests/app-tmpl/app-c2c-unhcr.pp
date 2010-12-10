@@ -53,7 +53,9 @@ class app-c2c-unhcr {
   apache::vhost-ssl{"unhcr":
     ensure  => present,
     group   => "sigdev",
-    aliases => [$fqdn],
+    aliases => [$fqdn, "geoportal.unhcr.org"],
+    cert    => "puppet:///c2c/ssl/prod-unhcr.camptocamp.net.crt",
+    certkey => "puppet:///c2c/ssl/prod-unhcr.camptocamp.net.key",
   }
 
   apache::vhost {"mapfish-local":
