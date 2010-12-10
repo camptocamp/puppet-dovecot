@@ -1,6 +1,6 @@
 class geste::webapp {
 
-  package {["imagemagick", "php-apc"]:
+  package {["imagemagick", "php-apc", "python-ldap"]:
     ensure => present,
   }
 
@@ -10,8 +10,24 @@ class geste::webapp {
   }
 
   apache::vhost-ssl {"intranet":
-    ensure => present,
+    ensure  => present,
     aliases => ["intranet.geste.ch", "intranet.geste"],
+    group   => "apache-admin",
+    mode    => 2570,
+  }
+
+  apache::directive {"proxypass-xapian":
+    ensure => present,
+    vhost  => "intranet",
+    directive => "<Proxy http://localhost:8000/xapian*>
+    Order deny,allow
+    Allow from all
+</Proxy>
+
+ProxyPass /xapian http://localhost:8000/xapian
+ProxyPassReverse /xapian http://localhost:8000/xapian
+ProxyPreserveHost On
+",
   }
 
   apache::vhost-ssl {"openerp":
