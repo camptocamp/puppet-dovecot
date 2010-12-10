@@ -20,7 +20,7 @@ class app-c2c-sig {
     ensure      => present,
     groups      => ["www-data", "sigdev"],
     managehome  => true,
-    require     => Package["deploy"],
+    require     => [ Package["deploy"], File["/etc/adduser.conf"] ],
   }
 
   file {"/home/deploy/.ssh":
