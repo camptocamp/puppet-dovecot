@@ -14,6 +14,7 @@ class srv-c2c-sig-alpgis-mapfish {
   ### MW #########################################
   include mw-sig
   include mw-apache
+  include generic-tmpl::mw-git
   include generic-tmpl::mw-tomcat
   include generic-tmpl::mw-postgis-8-4
   include generic-tmpl::mw-postgresql-8-4

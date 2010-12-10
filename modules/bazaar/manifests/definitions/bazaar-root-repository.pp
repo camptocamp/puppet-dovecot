@@ -1,8 +1,9 @@
-define bazaar::repository(
+define bazaar::rootrepository(
   $ensure = present,
   $owner  = 'root',
   $group  = 'root',
-  $mode   = '2775'
+  $mode   = '2775',
+  $rootpack = false
 ) {
 
   file {"/srv/bzr/${name}":
@@ -15,8 +16,11 @@ define bazaar::repository(
     mode   => $mode,
   }
 
-  exec {"init-repo ${name}":
-    command => "umask 0002; bzr init-repo --rich-root-pack /srv/bzr/${name}",
+  exec {"init ${name}":
+    command => $rootpack? {
+      true => "umask 0002; bzr init --rich-root-pack /srv/bzr/${name}",
+      default => "umask 0002; bzr init /srv/bzr/${name}",
+      },
     user    => $owner,
     creates => "/srv/bzr/${name}/.bzr",
     require => Package["bzr"],
@@ -27,6 +31,6 @@ define bazaar::repository(
     owner   => $owner,
     group   => $group,
     mode    => $mode,
-    require => Exec["init-repo ${name}"],
+    require => Exec["init ${name}"],
   }
 }

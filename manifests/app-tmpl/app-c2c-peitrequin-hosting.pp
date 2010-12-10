@@ -33,16 +33,18 @@ class app-c2c-peitrequin-hosting {
 
   apt::sources_list {"mapserver-5.6":
     ensure => present,
-    content => "deb http://pkg.camptocamp.net/stable lenny mapserver-5.6\n"
+    content => "deb http://pkg.camptocamp.net/legacy lenny mapserver-5.6\n"
   }
 
   apt::preferences {
-    "libgdal1-1.7.0":   priority => 1100, pin => "release o=Camptocamp";
-    "mapserver-bin":    priority => 1100, pin => "release o=Camptocamp";
-    "cgi-mapserver":    priority => 1100, pin => "release o=Camptocamp";
-    "perl-mapscript":   priority => 1100, pin => "release o=Camptocamp";
-    "php5-mapscript":   priority => 1100, pin => "release o=Camptocamp";
-    "python-mapscript": priority => 1100, pin => "release o=Camptocamp";
+    #"libgdal1-1.7.0":   priority => 1100, pin => "release o=ptocamp";
+    "gdal-bin":         priority => 1100, pin => "release o=c2c";
+    "python-gdal":      priority => 1100, pin => "release o=c2c";
+    "mapserver-bin":    priority => 1100, pin => "release o=c2c";
+    "cgi-mapserver":    priority => 1100, pin => "release o=c2c";
+    "perl-mapscript":   priority => 1100, pin => "release o=c2c";
+    "php5-mapscript":   priority => 1100, pin => "release o=c2c";
+    "python-mapscript": priority => 1100, pin => "release o=c2c";
   }
 
   cron {"update carto":

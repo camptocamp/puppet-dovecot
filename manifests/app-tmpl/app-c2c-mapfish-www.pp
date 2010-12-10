@@ -92,8 +92,8 @@ class app-c2c-mapfish-www {
         Allow from all
 </Proxy>
 
-ProxyPass /svn http://svn.mapfish.org/svn/
-ProxyPassReverse /svn http://svn.mapfish.org/svn/
+ProxyPass /svn http://svn.mapfish.org/svn
+ProxyPassReverse /svn http://svn.mapfish.org/svn
 
 <Location /svn >
   <Limit OPTIONS PROPFIND GET REPORT MKACTIVITY PROPPATCH PUT CHECKOUT MKCOL MOVE COPY DELETE LOCK UNLOCK MERGE>

@@ -1,5 +1,12 @@
 class app-c2c-sig-alpgis-mapfish {
 
+  include python::dev
+
+  tomcat::instance {"tomcat1":
+    ensure => present,
+    group  => sigdev,
+  }
+
   group {"admin":
     ensure  => present,
     require => User["admin"],

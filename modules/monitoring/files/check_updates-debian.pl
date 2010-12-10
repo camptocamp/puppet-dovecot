@@ -9,13 +9,16 @@ my $updates = `aptitude -sy safe-upgrade` ;
 my $status;
 my $output;
 
-if ( $updates =~ /No packages will be installed, upgraded, or removed./i ) {
-  $output = 'OK: System is up-to-date';
-  $status = "OK";
-} else {
-  $output = 'Warning: System needs updates';
-  $status = "WARNING";
-}
+# 0 packages upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+$updates =~ /([0-9]+) packages upgraded, ([0-9]+) newly installed, ([0-9]+) to remove and ([0-9])+ not upgraded/i ;
 
-print $output."\n";
+if (($1,$2,$3,$4) == 0) {
+  $status = 'OK';
+  $output = "OK: system is up to date\n";
+} else {
+  $status = 'WARNING';
+  $output = "WARNING: need $1 upgrade, $2 new, $3 remove, $4 not upgraded\n";
+}
+print $output;
 exit $ERRORS{$status};
+

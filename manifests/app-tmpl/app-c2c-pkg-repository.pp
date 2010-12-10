@@ -174,6 +174,7 @@ DocumentRoot /var/packages
       "postgresql-client-common install",
       "postgresql-common install",
       "postgresql-contrib-8.4 install",
+      "postgresql-server-dev-8.4 install",
       "postgis install",
       "postgresql-8.4-postgis install",
       "proj install",

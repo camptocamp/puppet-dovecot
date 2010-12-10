@@ -43,6 +43,10 @@ class app-c2c-sadb {
     owner  => "sadb",
   }  
 
+  package {"python-migrate":
+    ensure => present,
+  }
+
   # Enable after switch to production
   #c2c::externalbackups {"external backups for $fqdn":
   #  ensure   => present,
