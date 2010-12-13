@@ -60,6 +60,19 @@ class geste::partitions {
     require => Logical_volume["xapian"],
   }
 
+  logical_volume {"opt":
+    ensure  => present,
+    size    => "5G",
+    require => Volume_group["vg1"],
+    volume_group => "vg1",
+  }
+
+  filesystem {"/dev/vg1/opt":
+    ensure  => present,
+    fs_type => "ext4",
+    require => Logical_volume["xapian"],
+  }
+
   file {
     "/srv/misc":         ensure => directory, owner => root, group => root, mode => 0755;
     "/srv/computations": ensure => directory, owner => root, group => root, mode => 0755;
@@ -67,6 +80,7 @@ class geste::partitions {
   }
 
   mount {
+    "/opt":              ensure => mounted, device => "/dev/vg1/opt",    require => Filesystem["/dev/vg1/opt"],    fstype => "ext4", options => "auto,defaults";
     "/home":             ensure => mounted, device => "/dev/vg1/home",   require => Filesystem["/dev/vg1/home"],   fstype => "ext4", options => "auto,defaults";
     "/srv/misc":         ensure => mounted, device => "/dev/vg1/misc",   require => Filesystem["/dev/vg1/misc"],   fstype => "ext4", options => "auto,defaults";
     "/srv/xapian":       ensure => mounted, device => "/dev/vg1/xapian", require => Filesystem["/dev/vg1/xapian"], fstype => "ext4", options => "auto,defaults";
