@@ -104,5 +104,6 @@ RewriteRule ^/(.)*$ https://%{HTTP_HOST}/$1
       "debonix_openerp": ro_pwd => "Gihau1Ie";
       "toradex_openerp": ;
       "modec_openerp": ;
+      "tipi_openerp": ro_pwd => "Yeb8vieX";
   }
 }
