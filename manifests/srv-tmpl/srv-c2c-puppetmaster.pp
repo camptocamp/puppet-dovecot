@@ -7,7 +7,7 @@ class srv-c2c-puppetmaster {
   $server_group = "prod" #(one of dev, demo or prod)
   $ps1label = "new puppetmaster"
 
-  $puppetmaster_confdir = "/srv/puppetmaster/prod/"
+  $puppetmaster_confdir = "/srv/puppetmaster/stable/"
   $puppetmaster_ssldir = "/var/lib/puppetmaster/ssl"
   $wwwroot = "/var/www/"
 
