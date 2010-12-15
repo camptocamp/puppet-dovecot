@@ -182,7 +182,6 @@ DocumentRoot /var/packages
       "proj-data install",
       "python-support install",
       "syslog-ng install",
-      "trac-accountmanager install",
       "varnish install",
     ],
   }
