@@ -2,6 +2,7 @@ class wrk-c2c {
 
   ### Global attributes ##########################
   $ps1label = "wrk-c2c"
+  $repository = "staging"
 
   ### OS #########################################
   include os-base
