@@ -13,15 +13,15 @@ class geste::dns {
   bind::zone {"geste":
     ensure => present,
     zone_contact => "contact.geste",
-    zone_ns      => "gestepc1.geste",
+    zone_ns      => "gestepc4.geste",
     zone_serial  => "2010122602",
     zone_ttl     => "604800",
   }
 
-  bind::a {"ns gestepc1":
+  bind::a {"ns gestepc4":
     ensure => present,
     zone   => "geste",
-    owner  => "gestepc1",
+    owner  => "gestepc4",
     host   => "192.168.12.5",
   }
   bind::a {"ns gestepc3":
