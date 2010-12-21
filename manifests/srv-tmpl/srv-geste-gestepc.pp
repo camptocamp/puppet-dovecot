@@ -42,5 +42,6 @@ class srv-geste-gestepc {
   include geste::mail
   include geste::webapp
   include geste::search
+  include geste::iptables
 
 }
