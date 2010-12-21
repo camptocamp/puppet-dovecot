@@ -7,6 +7,16 @@ class geste::baseconfig {
     notify => Service["ssh"],
   }
 
+  augeas {"enable password only for molteni and mossi":
+    context => "/files/etc/ssh/sshd_config",
+    changes => [
+      "set Match/Condition/User mossi,molteni",
+      "set Match/Settings/PasswordAuthentication yes",
+      "set Match/Settings/KbdInteractiveAuthentication yes",
+      ],
+    notify  => Service["ssh"],
+  }
+
   file {"/root/.ssh/id_rsa-ldapsync":
     ensure => present,
     owner  => root,
