@@ -15,7 +15,8 @@ options {
         // };
 
         auth-nxdomain no;    # conform to RFC1035
-        listen-on-v6 { none; };
         listen-on { 127.0.0.1; 192.168.12.5; };
+        listen-on-v6 { none; };
+        forwarders { 128.178.15.8; 128.178.15.7; };
 };
 

@@ -7,6 +7,16 @@ class geste::baseconfig {
     notify => Service["ssh"],
   }
 
+  augeas {"enable password only for molteni and mossi":
+    context => "/files/etc/ssh/sshd_config",
+    changes => [
+      "set Match/Condition/User mossi,molteni",
+      "set Match/Settings/PasswordAuthentication yes",
+      "set Match/Settings/KbdInteractiveAuthentication yes",
+      ],
+    notify  => Service["ssh"],
+  }
+
   file {"/root/.ssh/id_rsa-ldapsync":
     ensure => present,
     owner  => root,
@@ -29,4 +39,6 @@ class geste::baseconfig {
     type   => "ssh-rsa",
     key    => "AAAAB3NzaC1yc2EAAAABIwAAAQEAu85Wq5+LKR6yLMyvb617ckAUg/wSlab8zCKL0dKG0PdsX6fKVvnrxtPHJT0Jw3zjgL7eXNMF6u3HBpiovtxawXtN0iTso+k20GsYmh63i6xU/KgN27PHsZnBKu5FexypOvlLsl0H78g52IPjgNuhBsLXeG3NVsg1lXkjqt4C/vz7jLiINB5AIxDou2wZYdX7cnJoNESg9LpFEPyRmGjNid2dZeYulfRBKhBmWxu1+apfPMa/lyt7mFpRNUNapFd74bqj04K/ITQUsimjSuc5PwMIwwanvcV6uekSNoGCvo7NXxUj18sj7KIbaCmj0F41mijXGPyVmTzprfwfuQdcbQ==",
   }
+
+  include dell::openmanage
 }

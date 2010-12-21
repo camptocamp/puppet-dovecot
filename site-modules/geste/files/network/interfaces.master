@@ -12,4 +12,5 @@ auto eth1
 iface eth1 inet static
   address 128.179.67.132
   netmask 255.255.255.0
-  gateway 128.179.67.1
+  post-up /sbin/route add 128.179.67.1 dev eth1
+  post-up /sbin/route add -net 128.0.0.0 gw 128.179.67.1 dev eth1 netmask 255.0.0.0
