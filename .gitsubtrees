@@ -7,6 +7,7 @@ c2c: modules/c2c git@github.com:camptocamp/puppet-c2c.git master
 cartoweb3: modules/cartoweb3 git@github.com:camptocamp/puppet-cartoweb3.git master
 common: modules/common git@github.com:camptocamp/puppet-common.git master
 git-subtree: modules/git-subtree git@github.com:camptocamp/puppet-git-subtree.git master
+iptables: modules/iptables git@github.com:camptocamp/puppet-iptables.git master
 java: modules/java git@github.com:camptocamp/puppet-java.git master
 lighttpd: modules/lighttpd git@github.com:camptocamp/puppet-lighttpd.git master
 mapfish: modules/mapfish git@github.com:camptocamp/puppet-mapfish.git master
@@ -19,6 +20,7 @@ openerp: modules/openerp git@github.com:camptocamp/puppet-openerp.git master
 openssl: modules/openssl git@github.com:camptocamp/puppet-openssl.git master
 openvz: modules/openvz git@github.com:camptocamp/puppet-openvz.git master
 os: modules/os git@github.com:camptocamp/puppet-os.git master
+pacemaker: modules/pacemaker git@github.com:camptocamp/puppet-pacemaker.git master
 postfix: modules/postfix git@github.com:camptocamp/puppet-postfix.git master
 postgis: modules/postgis git@github.com:camptocamp/puppet-postgis.git master
 postgresql: modules/postgresql git@github.com:camptocamp/puppet-postgresql.git master
