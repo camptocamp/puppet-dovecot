@@ -43,5 +43,6 @@ class srv-geste-gestepc {
   include geste::webapp
   include geste::search
   include geste::iptables
+  include geste::pacemaker
 
 }
