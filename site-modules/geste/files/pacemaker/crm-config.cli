@@ -1,0 +1,7 @@
+# file managed by puppet
+primitive ip_gestepc1 ocf:heartbeat:IPaddr2 \
+        params ip="128.179.67.100" nic="eth1" \
+        op monitor interval="30s"
+location gestepc4-is-preferred ip_gestepc1 10: gestepc4.epfl.ch
+property cluster-infrastructure="Heartbeat" \
+        stonith-enabled="false"
