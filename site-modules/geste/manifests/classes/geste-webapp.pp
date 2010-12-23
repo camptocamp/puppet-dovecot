@@ -77,4 +77,10 @@ ProxyPreserveHost On
     require => Common::Archive["openupload-0.4.2.tar.gz"],
   }
 
+  file {"/var/www/share/private/userfiles":
+    ensure => directory,
+    group  => "www-data",
+    mode   => 2775,
+  }
+
 }
