@@ -74,9 +74,9 @@ class geste::partitions {
   }
 
   file {
-    "/srv/misc":         ensure => directory, owner => root, group => root, mode => 0755;
-    "/srv/computations": ensure => directory, owner => root, group => root, mode => 0755;
-    "/srv/xapian":       ensure => directory, owner => root, group => root, mode => 0755;
+    "/srv/misc":         ensure => directory, owner => root, group => root,   mode => 0755;
+    "/srv/computations": ensure => directory, owner => root, group => "aero", mode => 0775;
+    "/srv/xapian":       ensure => directory, owner => root, group => root,   mode => 0755;
   }
 
   mount {
