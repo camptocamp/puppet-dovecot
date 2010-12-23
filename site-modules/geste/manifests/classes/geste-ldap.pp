@@ -47,6 +47,7 @@ class geste::ldap {
   user {"molteni":
     ensure => present,
     groups => "apache-admin",
+    require => Service["slapd"],
   }
 
   if $geste_master {
