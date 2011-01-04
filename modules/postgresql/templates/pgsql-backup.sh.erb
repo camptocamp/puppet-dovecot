@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 <% if has_variable?("postgresql_backupdir") -%>
 BKPDIR="<%= postgresql_backupdir %>"
@@ -9,6 +9,7 @@ TODAY=$(date +%F)
 DAY=$(date +%A |tr 'A-Z' 'a-z')
 MONTH=$(date +%B |tr 'A-Z' 'a-z')
 TMPDIR=$(mktemp -d -p $BKPDIR) || exit 1
+export PGOPTIONS='-c statement_timeout=0'
 
 pg_dumpall -U postgres --globals-only |bzip2 > $TMPDIR/ACCOUNT-OBJECTS.$TODAY.dump.bz
 
