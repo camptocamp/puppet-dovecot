@@ -1,5 +1,10 @@
 class geste::datas-sync {
   if $geste_master {
+
+    package {"lockfile-progs":
+      ensure => latest,
+    }
+
     file {"/usr/local/sbin/sync-datas":
       ensure => present,
       owner  => root,
