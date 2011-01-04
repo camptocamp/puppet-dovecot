@@ -57,6 +57,12 @@ class geste::iptables {
       destination  => "128.179.67.100",
       dport   => [80,443],
       jump    => "ACCEPT";
+    "006 openvpn on eth1:gestepc1":
+      iniface => "eth1",
+      proto   => "udp",
+      destination  => "128.179.67.100",
+      dport   => 1194,
+      jump    => "ACCEPT";
     "007 ssh from gestepc3":
       iniface => "eth1",
       proto   => "tcp",
