@@ -20,6 +20,7 @@ define openvpn::server::config($ensure=present,
     owner  => root,
     group  => root,
     mode   => 0644,
+    require => Package["openvpn"],
   }
 
   if $content {
