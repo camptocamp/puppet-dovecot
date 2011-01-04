@@ -20,6 +20,12 @@ class geste::datas-sync {
       mode   => 0755,
     }
 
+    tidy {"/var/log/sync-datas/":
+      age     => "30d",
+      recurse => true,
+      matches => 'sync-*.log',
+    }
+
     cron {"sync datas to slave":
       ensure => present,
       command => "/usr/local/sbin/sync-datas",
