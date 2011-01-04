@@ -43,6 +43,8 @@ class srv-geste-gestepc {
   include geste::webapp
   include geste::search
   include geste::iptables
-  include geste::pacemaker
+  include geste::openvpn
+# as we don't have direct link between both server, we cannot use pacemaker
+#  include geste::pacemaker
 
 }
