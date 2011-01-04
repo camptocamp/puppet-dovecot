@@ -1,0 +1,10 @@
+# File managed by puppet
+auth default {
+## AUTH PROCESS
+<% if has_variable?('dovecot_ldap') and dovecot_ldap -%>
+!include auth-ldap.ext
+<% end -%>
+<% if has_variable?('dovecot_pam') and dovecot_pam -%>
+!include auth-pam.ext
+<% end -%>
+}

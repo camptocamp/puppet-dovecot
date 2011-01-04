@@ -1,0 +1,42 @@
+# File managed by puppet
+protocol lda {
+  # Address to use when sending rejection mails (e.g. postmaster@example.com).
+  postmaster_address = <%= dovecot_lda_postmaster%>
+
+  # Hostname to use in various parts of sent mails, eg. in Message-Id.
+  # Default is the system's real hostname.
+  <% if has_variable?('dovecot_lda_hostname') -%>
+  hostname = <%= dovecot_lda_hostname %>
+  <% end -%>
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+  <% if has_variable?('dovecot_lda_plugins') -%>
+  mail_plugins = <%= dovecot_lda_plugins %>
+  <% end -%>
+
+  # If user is over quota, return with temporary failure instead of
+  # bouncing the mail.
+  #quota_full_tempfail = no
+
+  # Format to use for logging mail deliveries. You can use variables:
+  #  %$ - Delivery status message (e.g. "saved to INBOX")
+  #  %m - Message-ID
+  #  %s - Subject
+  #  %f - From address
+  #deliver_log_format = msgid=%m: %$
+
+  # Binary to use for sending mails.
+  #sendmail_path = /usr/sbin/sendmail
+
+  # Subject: header to use for rejection mails. You can use the same variables
+  # as for rejection_reason below.
+  #rejection_subject = Rejected: %s
+
+  # Human readable error message for rejection mails. You can use variables:
+  #  %n = CRLF, %r = reason, %s = original subject, %t = recipient
+  #rejection_reason = Your message to <\%t> was automatically rejected:%n%r
+
+  # UNIX socket path to master authentication server to find users.
+  #auth_socket_path = /var/run/dovecot/auth-master
+}
