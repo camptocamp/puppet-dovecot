@@ -1,0 +1,70 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4 (0x4)
+        Signature Algorithm: md5WithRSAEncryption
+        Issuer: C=CH, ST=VD, L=Lausanne, O=VPN GESTE engineering, CN=hephaistos/emailAddress=geste@camptocamp.com
+        Validity
+            Not Before: Sep  4 10:41:25 2006 GMT
+            Not After : Sep  1 10:41:25 2016 GMT
+        Subject: C=CH, ST=VD, O=VPN GESTE engineering, OU=VPN, CN=gestepc2.epfl.ch/emailAddress=geste@camptocamp.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:e7:04:8a:66:e3:13:e7:30:72:f4:03:09:7d:7c:
+                    62:0f:76:31:40:47:76:e3:04:e9:b2:4f:40:de:07:
+                    c7:84:08:82:ae:e8:5e:51:ae:37:06:ed:a8:5c:55:
+                    0d:9e:57:7f:df:bf:a2:74:0d:6a:e5:00:29:3c:5d:
+                    ab:12:86:98:cb:f7:22:7e:0b:9c:fc:bc:c4:38:8d:
+                    2e:a7:bc:fe:2e:d9:4b:db:1f:24:47:39:d4:26:c8:
+                    45:d1:4e:1d:79:4c:75:9f:ea:72:74:0f:a4:e6:95:
+                    1e:66:b1:c9:f3:0e:55:17:5c:fd:aa:37:f1:56:dd:
+                    ec:be:7a:45:f2:58:09:af:33
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Cert Type: 
+                SSL Server
+            Netscape Comment: 
+                OpenSSL Generated Server Certificate
+            X509v3 Subject Key Identifier: 
+                B6:FB:82:E9:28:79:47:F7:1C:12:7C:76:3E:ED:94:04:FC:FC:28:1A
+            X509v3 Authority Key Identifier: 
+                keyid:00:5B:29:E8:24:85:E7:20:E0:51:11:CA:99:1E:FE:13:05:74:FC:42
+                DirName:/C=CH/ST=VD/L=Lausanne/O=VPN GESTE engineering/CN=hephaistos/emailAddress=geste@camptocamp.com
+                serial:91:07:CA:CA:CB:A1:FC:24
+
+    Signature Algorithm: md5WithRSAEncryption
+        7f:90:b2:e6:b8:f9:c5:ae:9a:e4:15:85:b5:ce:45:8d:1b:60:
+        bb:ab:01:14:10:1a:5a:80:41:dd:3c:29:a2:d9:92:0f:fe:21:
+        13:78:fa:27:27:49:1c:07:b6:44:b0:9d:42:36:c7:3e:61:8a:
+        8a:91:ce:ae:6c:f3:d1:87:2d:c8:f3:d0:91:85:ff:ec:c6:3f:
+        87:64:8c:6b:47:9f:0f:a0:b5:f0:11:d4:42:a8:b6:c3:36:aa:
+        d2:c6:eb:cf:f3:b9:26:66:09:af:3c:3f:3c:f8:6b:20:e8:df:
+        db:5a:98:59:0f:2a:b3:ef:b9:26:89:ca:f0:db:b7:e6:38:d0:
+        ee:8d
+-----BEGIN CERTIFICATE-----
+MIIDvjCCAyegAwIBAgIBBDANBgkqhkiG9w0BAQQFADCBhzELMAkGA1UEBhMCQ0gx
+CzAJBgNVBAgTAlZEMREwDwYDVQQHEwhMYXVzYW5uZTEeMBwGA1UEChMVVlBOIEdF
+U1RFIGVuZ2luZWVyaW5nMRMwEQYDVQQDEwpoZXBoYWlzdG9zMSMwIQYJKoZIhvcN
+AQkBFhRnZXN0ZUBjYW1wdG9jYW1wLmNvbTAeFw0wNjA5MDQxMDQxMjVaFw0xNjA5
+MDExMDQxMjVaMIGIMQswCQYDVQQGEwJDSDELMAkGA1UECBMCVkQxHjAcBgNVBAoT
+FVZQTiBHRVNURSBlbmdpbmVlcmluZzEMMAoGA1UECxMDVlBOMRkwFwYDVQQDExBn
+ZXN0ZXBjMi5lcGZsLmNoMSMwIQYJKoZIhvcNAQkBFhRnZXN0ZUBjYW1wdG9jYW1w
+LmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA5wSKZuMT5zBy9AMJfXxi
+D3YxQEd24wTpsk9A3gfHhAiCruheUa43Bu2oXFUNnld/37+idA1q5QApPF2rEoaY
+y/cifguc/LzEOI0up7z+LtlL2x8kRznUJshF0U4deUx1n+pydA+k5pUeZrHJ8w5V
+F1z9qjfxVt3svnpF8lgJrzMCAwEAAaOCATUwggExMAkGA1UdEwQCMAAwEQYJYIZI
+AYb4QgEBBAQDAgZAMDMGCWCGSAGG+EIBDQQmFiRPcGVuU1NMIEdlbmVyYXRlZCBT
+ZXJ2ZXIgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFLb7gukoeUf3HBJ8dj7tlAT8/Cga
+MIG8BgNVHSMEgbQwgbGAFABbKegkhecg4FERypke/hMFdPxCoYGNpIGKMIGHMQsw
+CQYDVQQGEwJDSDELMAkGA1UECBMCVkQxETAPBgNVBAcTCExhdXNhbm5lMR4wHAYD
+VQQKExVWUE4gR0VTVEUgZW5naW5lZXJpbmcxEzARBgNVBAMTCmhlcGhhaXN0b3Mx
+IzAhBgkqhkiG9w0BCQEWFGdlc3RlQGNhbXB0b2NhbXAuY29tggkAkQfKysuh/CQw
+DQYJKoZIhvcNAQEEBQADgYEAf5Cy5rj5xa6a5BWFtc5FjRtgu6sBFBAaWoBB3Twp
+otmSD/4hE3j6JydJHAe2RLCdQjbHPmGKipHOrmzz0YctyPPQkYX/7MY/h2SMa0ef
+D6C18BHUQqi2wzaq0sbrz/O5JmYJrzw/PPhrIOjf21qYWQ8qs++5JonK8Nu35jjQ
+7o0=
+-----END CERTIFICATE-----
