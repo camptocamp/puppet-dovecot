@@ -75,6 +75,12 @@ class geste::iptables {
       dport   => 22,
       jump    => "ACCEPT",
       source  => "128.179.67.132";
+    "007 ssh from gestepc1":
+      iniface => "eth1",
+      proto   => "tcp",
+      dport   => 22,
+      jump    => "ACCEPT",
+      source  => "128.179.67.100";
   }
 
 }
