@@ -39,6 +39,7 @@ class app-nimag-sqdf2 {
   }
 
   package {[
+    "ldap-utils",
     "libapache2-mod-php5",
     "php5-common",
     "php5-gd",
