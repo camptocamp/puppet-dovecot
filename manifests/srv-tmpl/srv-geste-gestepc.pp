@@ -36,7 +36,6 @@ class srv-geste-gestepc {
   include geste::pam
   include geste::network
   include geste::dns
-#  include geste::dhcp
   include geste::ldap
   include geste::samba
   include geste::mail
@@ -45,6 +44,10 @@ class srv-geste-gestepc {
   include geste::iptables
   include geste::openvpn
   include geste::datas-sync
+
+# not activated for now
+#  include geste::dhcp
+
 # as we don't have direct link between both server, we cannot use pacemaker
 #  include geste::pacemaker
 
