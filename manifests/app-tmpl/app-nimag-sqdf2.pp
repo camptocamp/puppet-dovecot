@@ -206,4 +206,21 @@ class app-nimag-sqdf2 {
     mode   => 0755,
   }
 
+  # sshd configuration
+  augeas {"disable password for all":
+    context => "/files/etc/ssh/sshd_config",
+    changes => ["set PasswordAuthentication no", "set KbdInteractiveAuthentication no"],
+    notify  => Service["ssh"],
+  }
+
+  augeas {"enable password login for some users":
+    context => "/files/etc/ssh/sshd_config",
+    changes => [
+      "set Match/Condition/User 'rdaf,omb,abrege'",
+      "set Match/Settings/PasswordAuthentication yes",
+      "set Match/Settings/KbdInteractiveAuthentication yes",
+      ],
+    notify  => Service["ssh"],
+  }
+
 }
