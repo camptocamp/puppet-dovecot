@@ -403,8 +403,8 @@ echo "Copying necessary library-files to jail (may take some time)"
 # the old method with $HOME/ldlist[2] (so I don't have to check the existence
 # of the mktemp package / binary at the beginning
 #
-TMPFILE1=`mktemp` &> /dev/null ||  TMPFILE1="${HOME}/ldlist"; if [ -x ${TMPFILE1} ]; then mv ${TMPFILE1} ${TMPFILE1}.bak;fi
-TMPFILE2=`mktemp` &> /dev/null ||  TMPFILE2="${HOME}/ldlist2"; if [ -x ${TMPFILE2} ]; then mv ${TMPFILE2} ${TMPFILE2}.bak;fi
+TMPFILE1=`mktemp`; if [ -x ${TMPFILE1} ]; then mv ${TMPFILE1} ${TMPFILE1}.bak;fi
+TMPFILE2=`mktemp`; if [ -x ${TMPFILE2} ]; then mv ${TMPFILE2} ${TMPFILE2}.bak;fi
 
 for app in $APPS;  do
     # First of all, check that this application exists
