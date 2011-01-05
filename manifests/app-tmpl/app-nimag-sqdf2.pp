@@ -44,6 +44,10 @@ class app-nimag-sqdf2 {
     "php5-gd",
     "php5-mysql",
     "php5-mcrypt",
+    "php5-imagick",
+    "phpbb3",
+    "phpbb3-l10n",
+    "phpmyadmin",
     ]:
     ensure => present,
   }
