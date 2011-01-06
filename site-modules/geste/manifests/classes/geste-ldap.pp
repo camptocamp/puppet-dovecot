@@ -44,12 +44,6 @@ class geste::ldap {
     require => Package["slapd"],
   }
 
-  user {"molteni":
-    ensure => present,
-    groups => "apache-admin",
-    require => Service["slapd"],
-  }
-
   if $geste_master {
     file {"/usr/local/sbin/ldap-sync":
       ensure => present,
