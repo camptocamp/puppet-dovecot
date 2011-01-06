@@ -90,7 +90,7 @@ ProxyPreserveHost On
     mode   => 0644,
     notify => Exec["apache-graceful"],
     content => '; File managed by puppet
-upload_max_filesize = 10M
+upload_max_filesize = 2048M
 ',
   }
 
