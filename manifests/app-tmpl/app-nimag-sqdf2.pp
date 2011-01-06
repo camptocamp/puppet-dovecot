@@ -39,11 +39,16 @@ class app-nimag-sqdf2 {
   }
 
   package {[
+    "ldap-utils",
     "libapache2-mod-php5",
     "php5-common",
     "php5-gd",
     "php5-mysql",
     "php5-mcrypt",
+    "php5-imagick",
+    "phpbb3",
+    "phpbb3-l10n",
+    "phpmyadmin",
     ]:
     ensure => present,
   }
@@ -170,6 +175,39 @@ class app-nimag-sqdf2 {
     managehome => true,
   }
 
+  user {"abrege":
+    ensure     => present,
+    managehome => false,
+    allowdupe  => false,
+    uid        => 1000,
+    gid        => 1001,
+    home       => "/chroots/abrege/home/abrege",
+    shell      => "/bin/chroot-shell.abrege",
+    password   => '$6$Q8XaerkH$3oAhevILCy6geB7PjzC245Qx1CRa3gHBTBRdAfdKatKKZzV2Ph8tv8tA9dQZst1i9qkzvFX2mJ1JiwrhZgdLa/',
+  }
+
+  user {"rdaf":
+    ensure     => present,
+    managehome => false,
+    allowdupe  => false,
+    uid        => 1001,
+    gid        => 1002,
+    home       => "/chroots/rdaf/home/rdaf",
+    shell      => "/bin/chroot-shell.rdaf",
+    password   => '$6$qHtDEIdy$Oh.Z.AMDLGJmfn7y1/4fFSHtxgWjmvi9DtbzRZbj5nFHHrAwcK2827E2KzwpS/Y.HTwfE/YuVIIQN4.1CLsBH0',
+  }
+
+  user {"omb":
+    ensure     => present,
+    managehome => false,
+    allowdupe  => false,
+    uid        => 1002,
+    gid        => 1003,
+    home       => "/chroots/omb/home/omb",
+    shell      => "/bin/chroot-shell.omb",
+    password   => '$6$Y9ZuHOV4$dBYWVSCf4.HZaBayrggsYs3UkWaURZB.KcOA8rr9K2WXR6y9sBIvSWhIkY.feYu4N6emj7kxer87/KOvOlaZs1',
+  }
+
   file {"/home/subilia/.my.cnf":
     ensure  => present,
     owner   => subilia,
@@ -204,6 +242,23 @@ class app-nimag-sqdf2 {
     owner  => subilia,
     group  => www-data,
     mode   => 0755,
+  }
+
+  # sshd configuration
+  augeas {"disable password for all":
+    context => "/files/etc/ssh/sshd_config",
+    changes => ["set PasswordAuthentication no", "set KbdInteractiveAuthentication no"],
+    notify  => Service["ssh"],
+  }
+
+  augeas {"enable password login for some users":
+    context => "/files/etc/ssh/sshd_config",
+    changes => [
+      "set Match/Condition/User 'rdaf,omb,abrege'",
+      "set Match/Settings/PasswordAuthentication yes",
+      "set Match/Settings/KbdInteractiveAuthentication yes",
+      ],
+    notify  => Service["ssh"],
   }
 
 }

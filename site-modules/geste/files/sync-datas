@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# File managed by puppet
+
+if [ -f $0.lock ]; then
+  echo "$0 is already running!"
+  exit 1
+fi
+lockfile-create $0
+lockfile-touch $0 &
+LOCKER="$!"
+
+
+src='/etc/openvpn/ca/distrib /etc/openvpn/ca/keys /srv/computations /srv/misc /srv/xapian'
+dst='gestepc3.epfl.ch'
+day=$(date +'%Y-%m-%d')
+
+for i in $src; do
+  rsync -e "ssh -i /root/.ssh/id_rsa-ldapsync" -ah --delete --log-file /var/log/sync-datas/sync-${day}.log $i root@${dst}:$(dirname $i)/
+done
+
+kill "$LOCKER" &>/dev/null
+lockfile-remove $0 &>/dev/null
+

@@ -68,8 +68,8 @@ class geste::dns {
   bind::cname {
     "fileserver": zone => "geste", host => "hephaistos";
     "intranet":   zone => "geste", host => "hephaistos";
-    "geste-openerp.geste.com": zone => "geste", host => "openerp";
-    "openerp.geste.ch": zone => "geste", host => "openerp";
+    "geste-openerp": zone => "geste", host => "openerp";
+    "openerp.geste.ch.": zone => "geste", host => "openerp";
   }
 
 }
