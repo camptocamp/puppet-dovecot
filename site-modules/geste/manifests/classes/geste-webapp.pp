@@ -83,4 +83,15 @@ ProxyPreserveHost On
     mode   => 2775,
   }
 
+  file {"/etc/php5/apache2/conf.d/upload.ini":
+    ensure => present,
+    owner  => root,
+    group  => root,
+    mode   => 0644,
+    notify => Exec["apache-graceful"],
+    content => '; File managed by puppet
+upload_max_filesize = 10M
+',
+  }
+
 }
