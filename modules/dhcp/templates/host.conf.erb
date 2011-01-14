@@ -1,8 +1,0 @@
-host <%=name%> {
-  hardware ethernet <%=mac%>;
-<% if fixed_address -%>
-  fixed-address <%=fixed_address%>;
-<% else -%>
-  fixed-address <%=name%>;
-<% end -%>
-}

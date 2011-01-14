@@ -1,7 +1,0 @@
-To use this module, you must explicitly declare some variables :
-
-$samba_domain_name
-$samba_netbios_name
-$ldap_uri
-$ldap_base
-$ldap_admin_password

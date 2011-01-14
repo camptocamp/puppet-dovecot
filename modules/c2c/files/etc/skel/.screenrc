@@ -1,8 +1,0 @@
-vbell off
-autodetach on
-defscrollback 1000
-startup_message off
-shell -$SHELL
-shelltitle ""
-caption always " %d%M%y %c -- %-Lw%{=b kY}%n%f*%{-}%+Lw %=%{=b kW}%l "
-

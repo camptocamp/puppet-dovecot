@@ -1,4 +1,0 @@
-# file managed by puppet
-PORT=8140
-START="yes"
-DAEMON_OPTS='--confdir /etc/puppetmaster'

@@ -1,3 +1,0 @@
-# file managed by puppet
-deb http://dev.camptocamp.com/packages etch puppet sysadmin ocsinventory
-deb-src http://dev.camptocamp.com/packages etch puppet sysadmin ocsinventory
