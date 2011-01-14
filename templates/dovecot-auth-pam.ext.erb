@@ -1,0 +1,8 @@
+# File managed by puppet
+
+# 1MB auth cache size
+auth_cache_size = 1024
+passdb pam {
+  # username, remote IP and local IP
+  args = cache_key=%u%r%l dovecot
+}

@@ -1,0 +1,18 @@
+# File managed by puppet
+
+<% if has_variable?('dovecot_auth_database') and dovecot_auth_database -%>
+driver = <%=dovecot_auth_database%>
+<% else -%>
+driver = mysql
+<% end -%>
+connect = host=<%=dovecot_sql_host%> dbname=<%=dovecot_sql_dbname%> user=<%=dovecot_sql_user%> password=<%=dovecot_sql_password%>
+<% if has_variable?('dovecot_sql_user_query') -%>
+user_query = <%=dovecot_sql_user_query%>
+<% else -%>
+user_query = SELECT concat('/var/vmail/', maildir) as home, concat('maildir:/var/vmail/', maildir) as mail, 101 AS uid, 12 AS gid, concat('maildir:storage=', quota) AS quota FROM mailbox WHERE username = '%u' AND active = '1'
+<% end -%>
+<% if has_variable?('dovecot_sql_password_query') -%>
+password_query = <%=dovecot_sql_password_query%>
+<% else -%>
+password_query = SELECT username as user, password, concat('/var/vmail/', maildir) as userdb_home, concat('maildir:/var/vmail/', maildir) as userdb_mail, 101 as userdb_uid, 12 as userdb_gid FROM mailbox WHERE username = '%u' AND active = '1'
+<% end -%>

@@ -1,0 +1,26 @@
+# File managed by puppet
+## SSL CONFIG
+ssl = yes
+<% if has_variable?('dovecot_ssl_listen') -%>
+ssl_listen = <%= dovecot_ssl_listen %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_cert') -%>
+ssl_cert_file = <%= dovecot_ssl_cert %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_key') -%>
+ssl_key_file = <%= dovecot_ssl_key %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_key_password') -%>
+ssl_key_password = <%= dovecot_ssl_key_password %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_ca') -%>
+ssl_key_ca = <%= dovecot_ssl_ca %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_verif_cli_cert') -%>
+ssl_verify_client_cert = <%= dovecot_ssl_verif_cli_cert %>
+<% end -%>
+<% if has_variable?('dovecot_ssl_cipher_list') -%>
+ssl_cipher_list = <%= dovecot_ssl_cipher_list %>
+<% else -%>
+ssl_cipher_list = ALL:!LOW:!SSLv2
+<% end -%>

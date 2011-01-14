@@ -1,0 +1,24 @@
+##
+## IMAP specific settings
+##
+protocol imap {
+  # Login executable location.
+  <% if has_variable?('dovecot_imap_login_executable') -%>
+  login_executable = <%= dovecot_imap_login_executable %>
+  <% end -%>
+
+  <% if has_variable?('dovecot_imap_mail_executable') -%>
+  mail_executable = <%= dovecot_imap_mail_executable %>
+  <% end -%>
+
+  <% if has_variable?('dovecot_imap_mail_max_userip_connections') -%>
+  mail_max_userip_connections = <%= dovecot_imap_mail_max_userip_connections %>
+  <% end -%>
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+  <% if has_variable?('dovecot_imap_plugins') -%>
+  mail_plugins = <%= dovecot_imap_plugins %>
+  <% end -%>
+}
+

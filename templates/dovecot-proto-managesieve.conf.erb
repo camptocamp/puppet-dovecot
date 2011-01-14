@@ -1,0 +1,15 @@
+# File managed by puppet
+protocol managesieve {
+  # Login executable location.
+  <% if has_variable?('dovecot_sieve_login_executable') -%>
+  login_executable = <%= dovecot_sieve_login_executable %>
+  <% end -%>
+
+  <% if has_variable?('dovecot_sieve_mail_executable') -%>
+  mail_executable = <%= dovecot_sieve_mail_executable %>
+  <% end -%>
+
+  <% if has_variable?('dovecot_sieve_mail_location') -%>
+  mail_location = <%= dovecot_sieve_mail_location %>
+  <% end -%>
+}
