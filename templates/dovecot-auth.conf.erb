@@ -13,18 +13,27 @@ auth default {
       path = /var/spool/postfix/private/auth
       mode = 0660
       user = postfix
-      group = postfix
+      group = mail
+    }
+    master {
+      path = /var/run/dovecot/auth-master
+      mode = 0660
+      user = postfix
+      group = mail
     }
   }
 <% end -%>
 ## AUTH PROCESS
 <% if has_variable?('dovecot_auth_ldap') and dovecot_auth_ldap -%>
-  !include auth-ldap.ext
+  !include_try auth-ldap.ext
+  !include_try conf.d/auth-ldap.ext
 <% end -%>
 <% if has_variable?('dovecot_auth_pam') and dovecot_auth_pam -%>
-  !include auth-pam.ext
+  !include_try auth-pam.ext
+  !include_try conf.d/auth-pam.ext
 <% end -%>
 <% if has_variable?('dovecot_auth_database') and dovecot_auth_database -%>
-  !include auth-mysql.ext
+  !include_try auth-mysql.ext
+  !include_try conf.d/auth-mysql.ext
 <% end -%>
 }
