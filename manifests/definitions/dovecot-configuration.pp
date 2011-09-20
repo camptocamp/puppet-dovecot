@@ -18,21 +18,44 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
     fail 'Please provide either $source OR $content'
   }
 
-  file {"/etc/dovecot/conf.d/${name}.conf":
-    ensure => $ensure,
-    mode   => 0644,
-    owner  => root,
-    group  => root,
-    notify => Exec["reload dovecot"],
-  }
+  include dovecot::params
 
-  if $content {
-    File["/etc/dovecot/conf.d/${name}.conf"] {
-      content => $content,
+  case $dovecot::params::version {
+    1: {
+      common::concatfilepart {"${name}":
+        ensure => $ensure,
+        file   => "/etc/dovecot/dovecot.conf",
+        notify => Exec["reload dovecot"],
+      }
+
+      if $content {
+        Common::Concatfilepart["${name}"] {
+          content => $content,
+        }
+      } else {
+        Common::Concatfilepart["${name}"] {
+          source => $source,
+        }
+      }
     }
-  } else {
-    File["/etc/dovecot/conf.d/${name}.conf"] {
-      source => $source,
+    2: {
+      file {"/etc/dovecot/conf.d/${name}.conf":
+        ensure => $ensure,
+        mode   => 0644,
+        owner  => root,
+        group  => root,
+        notify => Exec["reload dovecot"],
+      }
+
+      if $content {
+        File["/etc/dovecot/conf.d/${name}.conf"] {
+          content => $content,
+        }
+      } else {
+        File["/etc/dovecot/conf.d/${name}.conf"] {
+          source => $source,
+        }
+      }
     }
   }
 }
