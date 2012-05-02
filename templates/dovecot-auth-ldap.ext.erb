@@ -22,3 +22,6 @@ userdb {
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
 <% end -%>
+<% if has_variable?('dovecot_ldap_otherSchems') -%>
+<%= dovecot_ldap_otherSchems.collect! {|i| "  !include_try #{i}\n  !include_try conf.d/#{i}" } -%>
+<% end -%>
