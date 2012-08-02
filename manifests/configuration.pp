@@ -22,18 +22,18 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
 
   case $dovecot::params::version {
     1: {
-      common::concatfilepart {"${name}":
+      concat::fragment {"${name}":
         ensure => $ensure,
-        file   => "/etc/dovecot/dovecot.conf",
+        target => "/etc/dovecot/dovecot.conf",
         notify => Exec["reload dovecot"],
       }
 
       if $content {
-        Common::Concatfilepart["${name}"] {
+        Concat::Fragment["${name}"] {
           content => $content,
         }
       } else {
-        Common::Concatfilepart["${name}"] {
+        Concat::Fragment["${name}"] {
           source => $source,
         }
       }

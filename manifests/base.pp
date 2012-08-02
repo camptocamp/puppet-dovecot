@@ -1,9 +1,7 @@
-/*
-
-== class: dovecot::base
-Please do not include this class as is, it won't work!
-
-*/
+# == class: dovecot::base
+#
+# Please do not include this class as is, it won't work!
+#
 class dovecot::base {
   if ($dovecot_auth_ldap and $dovecot_auth_pam and $dovecot_auth_database) {
     fail 'Please provide either $dovecot_auth_ldap OR $dovecot_auth_pam OR $dovecot_auth_database'
@@ -17,6 +15,7 @@ class dovecot::base {
     fail 'Please provide either $dovecot_ldap_host or $dovecot_ldap_uri'
   }
 
+  include concat::setup
   include dovecot::params
 
   group {"dovecot":
@@ -75,10 +74,16 @@ class dovecot::base {
     force   => true,
   }
 
+  concat {'/etc/dovecot/dovecot.conf':
+    owner => root,
+    group => root,
+    mode  => '0644',
+  }
+
   case $dovecot::params::version {
     1: {
-      common::concatfilepart {"000-dovecot-init":
-        file    => "/etc/dovecot/dovecot.conf",
+      concat::fragment {"000-dovecot-init":
+        target  => "/etc/dovecot/dovecot.conf",
         content => template("dovecot/dovecot-base-1.x.conf.erb"),
       }
       file {"/etc/dovecot/dovecot.conf.d":
