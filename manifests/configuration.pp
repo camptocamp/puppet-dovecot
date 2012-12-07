@@ -22,18 +22,18 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
 
   case $dovecot::params::version {
     1: {
-      concat::fragment {"${name}":
+      concat::fragment {$name:
         ensure => $ensure,
-        target => "/etc/dovecot/dovecot.conf",
-        notify => Exec["reload dovecot"],
+        target => '/etc/dovecot/dovecot.conf',
+        notify => Exec['reload dovecot'],
       }
 
       if $content {
-        Concat::Fragment["${name}"] {
+        Concat::Fragment[$name] {
           content => $content,
         }
       } else {
-        Concat::Fragment["${name}"] {
+        Concat::Fragment[$name] {
           source => $source,
         }
       }
@@ -41,10 +41,10 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
     2: {
       file {"/etc/dovecot/conf.d/${name}.conf":
         ensure => $ensure,
-        mode   => 0644,
+        mode   => '0644',
         owner  => root,
         group  => root,
-        notify => Exec["reload dovecot"],
+        notify => Exec['reload dovecot'],
       }
 
       if $content {
@@ -56,6 +56,9 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
           source => $source,
         }
       }
+    }
+    default: {
+      fail ("Version ${dovecot::params::version} is not supported")
     }
   }
 }
