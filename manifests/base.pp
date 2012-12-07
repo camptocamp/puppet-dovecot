@@ -18,57 +18,57 @@ class dovecot::base {
   include concat::setup
   include dovecot::params
 
-  group {"dovecot":
-    allowdupe => false,
+  group {'dovecot':
     ensure    => present,
+    allowdupe => false,
     gid       => 201,
   }
 
-  user {"dovecot":
-    allowdupe => false,
-    comment   => "Dovecot mail server",
+  user {'dovecot':
     ensure    => present,
+    allowdupe => false,
+    comment   => 'Dovecot mail server',
     gid       => 201,
     uid       => 201,
-    home      => "/usr/lib/dovecot",
-    shell     => "/bin/false",
-    require   => Group["dovecot"],
+    home      => '/usr/lib/dovecot',
+    shell     => '/bin/false',
+    require   => Group['dovecot'],
   }
 
-  package {"Dovecot":
-    ensure => present,
-    require => [ User["dovecot"], Group["dovecot"] ], 
+  package {'Dovecot':
+    ensure  => present,
+    require => [ User['dovecot'], Group['dovecot'] ],
   }
 
-  package {"Dovecot IMAP":
-    ensure => present,
-    require => [ User["dovecot"], Group["dovecot"] ], 
+  package {'Dovecot IMAP':
+    ensure  => present,
+    require => [ User['dovecot'], Group['dovecot'] ],
   }
 
-  package {"Dovecot POP3":
-    ensure => present,
-    require => [ User["dovecot"], Group["dovecot"] ], 
+  package {'Dovecot POP3':
+    ensure  => present,
+    require => [ User['dovecot'], Group['dovecot'] ],
   }
 
-  service {"dovecot":
-    enable  => true,
+  service {'dovecot':
     ensure  => running,
-    require => Package["Dovecot"],
+    enable  => true,
+    require => Package['Dovecot'],
   }
 
-  exec {"reload dovecot":
-    command => "/etc/init.d/dovecot reload",
-    onlyif  => "dovecot -n &>/dev/null",
+  exec {'reload dovecot':
+    command     => '/etc/init.d/dovecot reload',
+    onlyif      => 'dovecot -n &>/dev/null',
     refreshonly => true,
   }
 
 
-  file {"/etc/dovecot":
-    ensure => directory,
-    mode   => 0755,
-    owner  => root,
-    group  => root,
-    require => Package["Dovecot"],
+  file {'/etc/dovecot':
+    ensure  => directory,
+    mode    => '0755',
+    owner   => root,
+    group   => root,
+    require => Package['Dovecot'],
     purge   => true,
     recurse => true,
     force   => true,
@@ -82,11 +82,11 @@ class dovecot::base {
 
   case $dovecot::params::version {
     1: {
-      concat::fragment {"000-dovecot-init":
-        target  => "/etc/dovecot/dovecot.conf",
-        content => template("dovecot/dovecot-base-1.x.conf.erb"),
+      concat::fragment {'000-dovecot-init':
+        target  => '/etc/dovecot/dovecot.conf',
+        content => template('dovecot/dovecot-base-1.x.conf.erb'),
       }
-      file {"/etc/dovecot/dovecot.conf.d":
+      file {'/etc/dovecot/dovecot.conf.d':
         purge   => true,
         recurse => true,
         force   => true,
@@ -94,106 +94,109 @@ class dovecot::base {
       }
     }
     2: {
-      file {"/etc/dovecot/dovecot.conf":
+      file {'/etc/dovecot/dovecot.conf':
         ensure  => present,
         owner   => root,
         group   => root,
-        mode    => 0644,
-        notify  => Exec["reload dovecot"],
-        content => template("dovecot/dovecot-base-2.x.conf.erb"),
+        mode    => '0644',
+        notify  => Exec['reload dovecot'],
+        content => template('dovecot/dovecot-base-2.x.conf.erb'),
       }
+    }
+    default: {
+      fail("Version ${dovecot::params::version} is not supported")
     }
   }
 
-  file {"/etc/dovecot/conf.d":
-    ensure => directory,
-    mode   => 0755,
-    owner  => root,
-    group  => root,
-    require => Package["Dovecot"],
+  file {'/etc/dovecot/conf.d':
+    ensure  => directory,
+    mode    => '0755',
+    owner   => root,
+    group   => root,
+    require => Package['Dovecot'],
     purge   => true,
     recurse => true,
     force   => true,
   }
 
-  dovecot::configuration {"auth":
+  dovecot::configuration {'auth':
     ensure  => present,
-    content => template("dovecot/dovecot-auth.conf.erb"),
+    content => template('dovecot/dovecot-auth.conf.erb'),
   }
 
-  dovecot::configuration {"mbox":
+  dovecot::configuration {'mbox':
     ensure  => present,
-    content => template("dovecot/dovecot-mbox.conf.erb"),
+    content => template('dovecot/dovecot-mbox.conf.erb'),
   }
 
   if $dovecot_ssl_enabled {
-    dovecot::configuration {"ssl":
+    dovecot::configuration {'ssl':
       ensure  => present,
-      content => template("dovecot/dovecot-ssl.conf.erb"),
+      content => template('dovecot/dovecot-ssl.conf.erb'),
     }
   }
 
-  dovecot::configuration{"protocol-imap":
+  dovecot::configuration{'protocol-imap':
     ensure  => present,
-    content => template("dovecot/dovecot-proto-imap.conf.erb"),
+    content => template('dovecot/dovecot-proto-imap.conf.erb'),
   }
 
-  dovecot::configuration {"protocol-pop3":
+  dovecot::configuration {'protocol-pop3':
     ensure  => present,
-    content => template("dovecot/dovecot-proto-pop3.conf.erb"),
+    content => template('dovecot/dovecot-proto-pop3.conf.erb'),
   }
 
   if $dovecot_auth_pam {
-    file {"/etc/dovecot/conf.d/auth-pam.ext":
+    file {'/etc/dovecot/conf.d/auth-pam.ext':
       ensure  => present,
       owner   => root,
       group   => root,
-      mode    => 0644,
-      notify  => Exec["reload dovecot"],
-      require => File["/etc/dovecot/conf.d"],
-      content => template("dovecot/dovecot-auth-pam.ext.erb"),
+      mode    => '0644',
+      notify  => Exec['reload dovecot'],
+      require => File['/etc/dovecot/conf.d'],
+      content => template('dovecot/dovecot-auth-pam.ext.erb'),
     }
   }
 
   if $dovecot_auth_ldap {
-    file {"/etc/dovecot/conf.d/auth-ldap.ext":
+    file {'/etc/dovecot/conf.d/auth-ldap.ext':
       ensure  => present,
       owner   => root,
       group   => root,
-      mode    => 0644,
-      notify  => Exec["reload dovecot"],
-      require => File["/etc/dovecot/conf.d"],
-      content => template("dovecot/dovecot-auth-ldap.ext.erb"),
+      mode    => '0644',
+      notify  => Exec['reload dovecot'],
+      require => File['/etc/dovecot/conf.d'],
+      content => template('dovecot/dovecot-auth-ldap.ext.erb'),
     }
-    file {"/etc/dovecot/dovecot-ldap.conf.ext":
+    file {'/etc/dovecot/dovecot-ldap.conf.ext':
       ensure  => present,
       owner   => root,
       group   => root,
-      mode    => 0600,
-      notify  => Exec["reload dovecot"],
-      content => template("dovecot/dovecot-ldap.conf.ext.erb"),
+      mode    => '0600',
+      notify  => Exec['reload dovecot'],
+      content => template('dovecot/dovecot-ldap.conf.ext.erb'),
     }
   }
 
   if $dovecot_auth_database {
-    file {"/etc/dovecot/conf.d/auth-database.ext":
+    file {'/etc/dovecot/conf.d/auth-database.ext':
       ensure  => present,
       owner   => root,
       group   => root,
-      mode    => 0644,
-      notify  => Exec["reload dovecot"],
-      require => File["/etc/dovecot/conf.d"],
-      content => template("dovecot/dovecot-auth-database.ext.erb"),
+      mode    => '0644',
+      notify  => Exec['reload dovecot'],
+      require => File['/etc/dovecot/conf.d'],
+      content => template('dovecot/dovecot-auth-database.ext.erb'),
     }
 
-    file {"/etc/dovecot/sql.conf.ext":
+    file {'/etc/dovecot/sql.conf.ext':
       ensure  => present,
       owner   => root,
       group   => root,
-      mode    => 0644,
-      notify  => Exec["reload dovecot"],
-      require => File["/etc/dovecot/conf.d"],
-      content => template("dovecot/dovecot-sql.conf.ext.erb"),
+      mode    => '0644',
+      notify  => Exec['reload dovecot'],
+      require => File['/etc/dovecot/conf.d'],
+      content => template('dovecot/dovecot-sql.conf.ext.erb'),
     }
   }
 
