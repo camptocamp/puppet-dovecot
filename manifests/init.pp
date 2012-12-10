@@ -73,8 +73,8 @@ AUTH:
 
 */
 class dovecot {
-  case $operatingsystem {
+  case $::operatingsystem {
     Debian : { include dovecot::debian }
-    default: { fail "Nothing to do for $operatingsystem" }
+    default: { fail "Nothing to do for ${::operatingsystem}" }
   }
 }
