@@ -9,6 +9,7 @@ BASE:
   *$dovecot_basedir*    dovecot base directory (optional, string)
   *$dovecot_protocols*  dovecot protocols (optional, space separated values)
   *$dovecot_listen*     which IP address should dovecot listen on (optional, IP)
+  *$dovecot_login_mode* login process mode ('security' or 'performance', optional, defaut: 'security')
 
 MAILBOX:
   *$dovecot_mail_location*               mailbox location (optional, string)
@@ -19,6 +20,8 @@ MAILBOX:
 IMAP proto:
   *$dovecot_imap_login_executable*       imap login executable full path (optional, string)
   *$dovecot_imap_mail_executable*        imap mail executable full path (optional, string)
+  *$dovecot_imap_mail_max_userip_connections* imap max connections from single IP address (optional, int)
+  *$dovecot_imap_login_max_processes_count* imap max number of login processes (optional, int)
   *$dovecot_imap_plugins*                imap special plugins we want to load (optioan, string)
 
 POP3 proto:
