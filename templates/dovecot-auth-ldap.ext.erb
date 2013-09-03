@@ -23,5 +23,8 @@ userdb {
 }
 <% end -%>
 <% if has_variable?('dovecot_ldap_otherSchems') -%>
-<%= dovecot_ldap_otherSchems.collect! {|i| "  !include_try #{i}\n  !include_try conf.d/#{i}" } -%>
+<% dovecot_ldap_otherSchems.each do |schem| -%>
+  !include_try <%= schem %>
+  !include_try conf.d/<%= schem %>
+<% end -%>
 <% end -%>
