@@ -15,7 +15,6 @@ class dovecot::base {
     fail 'Please provide either $dovecot_ldap_host or $dovecot_ldap_uri'
   }
 
-  include concat::setup
   include dovecot::params
 
   group {'dovecot':
