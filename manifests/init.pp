@@ -9,7 +9,7 @@ BASE:
   *$dovecot_basedir*    dovecot base directory (optional, string)
   *$dovecot_protocols*  dovecot protocols (optional, space separated values)
   *$dovecot_listen*     which IP address should dovecot listen on (optional, IP)
-  *$dovecot_login_mode* login process mode ('security' or 'performance', optional, defaut: 'security')
+  *$dovecot_login_mode* login process mode ('security' or 'performance', optional, default: 'security')
 
 MAILBOX:
   *$dovecot_mail_location*               mailbox location (optional, string)
@@ -22,12 +22,12 @@ IMAP proto:
   *$dovecot_imap_mail_executable*        imap mail executable full path (optional, string)
   *$dovecot_imap_mail_max_userip_connections* imap max connections from single IP address (optional, int)
   *$dovecot_imap_login_max_processes_count* imap max number of login processes (optional, int)
-  *$dovecot_imap_plugins*                imap special plugins we want to load (optioan, string)
+  *$dovecot_imap_plugins*                imap special plugins we want to load (optional, string)
 
 POP3 proto:
   *$dovecot_pop3_login_executable*       pop3 login executable full path (optional, string)
   *$dovecot_pop3_mail_executable*        pop3 mail executable full path (optional, string)
-  *$dovecot_pop3_plugins*                pop3 special plugins we want to load (optioan, string)
+  *$dovecot_pop3_plugins*                pop3 special plugins we want to load (optional, string)
 
 LDA proto:
   *$dovecot_lda_postmaster%*             Address to use when sending rejection mails (mandatory, string)
@@ -37,7 +37,7 @@ LDA proto:
 SIEVE proto:
   *$dovecot_sieve_login_executable*      sieve login executable full path (optional, string)
   *$dovecot_sieve_mail_executable*       sieve mail executable full path (optional, string)
-  *$dovecot_sieve_plugins*               sieve special plugins we want to load (optioan, string)
+  *$dovecot_sieve_plugins*               sieve special plugins we want to load (optional, string)
 
 SSL:
   *$dovecot_ssl_enabled*        activate or not SSL (optional, boolean)
@@ -55,7 +55,7 @@ AUTH:
 
   IF you decide to use ldap, you can provide those informations:
     *$slapd_domain*                  ldap domain (mandatory, string)
-    *$slapd_allow_v2*                do you want to use ldap v2 proto? (optionnal, boolean)
+    *$slapd_allow_v2*                do you want to use ldap v2 proto? (optional, boolean)
     *$dovecot_ldap_uri*              LDAP access uri (optional, string)
     *$dovecot_ldap_bind_userdn*      bind DN (optional, string)
     *$dovecot_ldap_userdb_prefetch*  do you want to use dovecot prefetch feature? (optional, boolean)
@@ -64,7 +64,7 @@ AUTH:
     *$dovecot_ldap_user_attrs*       user attributes in ldap (optional, string)
     *$dovecot_ldap_pass_attrs*       password attribute in ldap (optional, string)
 
-  IF you decide to use a database, you cant provide thos informations:
+  IF you decide to use a database, you cant provide those informations:
     *$dovecot_sql_host*              database host (mandatory, string)
     *$dovecot_sql_dbname*            database name (mandatory, string)
     *$dovecot_sql_user*              database username (mandatory, string)
