@@ -1,5 +1,5 @@
 class dovecot::params {
-  if !$dovecot_version {
+  if !$::dovecot::dovecot_version {
     case $::operatingsystem {
       Debian: {
         case $::lsbdistcodename {
@@ -12,6 +12,6 @@ class dovecot::params {
       default: { $version = 1 }
     }
   } else {
-    $version = $dovecot_version
+    $version = $::dovecot::dovecot_version
   }
 }

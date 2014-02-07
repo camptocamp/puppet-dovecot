@@ -1,18 +1,18 @@
 # File managed by puppet
 protocol lda {
   # Address to use when sending rejection mails (e.g. postmaster@example.com).
-  postmaster_address = <%= dovecot_lda_postmaster%>
+  postmaster_address = <%= scope.lookupvar('dovecot::dovecot_lda_postmaster') %>
 
   # Hostname to use in various parts of sent mails, eg. in Message-Id.
   # Default is the system's real hostname.
-  <% if has_variable?('dovecot_lda_hostname') -%>
-  hostname = <%= dovecot_lda_hostname %>
+  <% if has_variable?('dovecot::dovecot_lda_hostname') -%>
+  hostname = <%= scope.lookupvar('dovecot::dovecot_lda_hostname') %>
   <% end -%>
 
   # Support for dynamically loadable plugins. mail_plugins is a space separated
   # list of plugins to load.
-  <% if has_variable?('dovecot_lda_plugins') -%>
-  mail_plugins = <%= dovecot_lda_plugins %>
+  <% if has_variable?('dovecot::dovecot_lda_plugins') -%>
+  mail_plugins = <%= scope.lookupvar('dovecot::dovecot_lda_plugins') %>
   <% end -%>
 
   # If user is over quota, return with temporary failure instead of
