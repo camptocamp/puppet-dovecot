@@ -4,10 +4,10 @@ mail_gid = mail
 
 auth default {
   user = mail
-<% if has_variable?('dovecot_auth_mechanisms') -%>
-  mechanisms = <%= dovecot_auth_mechanisms %>
+<% if has_variable?('dovecot::dovecot_auth_mechanisms') -%>
+  mechanisms = <%= scope.lookupvar('dovecot::dovecot_auth_mechanisms') %>
 <% end -%>
-<% if has_variable?('dovecot_auth_sasl_postfix') and dovecot_auth_sasl_postfix -%>
+<% if has_variable?('dovecot::dovecot_auth_sasl_postfix') and has_variable?('dovecot::dovecot_auth_sasl_postfix') -%>
   socket listen {
     client {
       path = /var/spool/postfix/private/auth
@@ -24,15 +24,15 @@ auth default {
   }
 <% end -%>
 ## AUTH PROCESS
-<% if has_variable?('dovecot_auth_ldap') and dovecot_auth_ldap -%>
+<% if has_variable?('dovecot::dovecot_auth_ldap') and has_variable?('dovecot::dovecot_auth_ldap') -%>
   !include_try auth-ldap.ext
   !include_try conf.d/auth-ldap.ext
 <% end -%>
-<% if has_variable?('dovecot_auth_pam') and dovecot_auth_pam -%>
+<% if has_variable?('dovecot::dovecot_auth_pam') and has_variable?('dovecot::dovecot_auth_pam') -%>
   !include_try auth-pam.ext
   !include_try conf.d/auth-pam.ext
 <% end -%>
-<% if has_variable?('dovecot_auth_database') and dovecot_auth_database -%>
+<% if has_variable?('dovecot::dovecot_auth_database') and has_variable?('dovecot::dovecot_auth_database') -%>
   !include_try auth-mysql.ext
   !include_try conf.d/auth-mysql.ext
 <% end -%>

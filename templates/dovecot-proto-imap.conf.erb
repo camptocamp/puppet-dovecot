@@ -3,26 +3,26 @@
 ##
 protocol imap {
   # Login executable location.
-  <% if has_variable?('dovecot_imap_login_executable') -%>
-  login_executable = <%= dovecot_imap_login_executable %>
+  <% if has_variable?('dovecot::dovecot_imap_login_executable') -%>
+  login_executable = <%= scope.lookupvar('dovecot::dovecot_imap_login_executable') %>
   <% end -%>
 
-  <% if has_variable?('dovecot_imap_mail_executable') -%>
-  mail_executable = <%= dovecot_imap_mail_executable %>
+  <% if has_variable?('dovecot::dovecot_imap_mail_executable') -%>
+  mail_executable = <%= scope.lookupvar('dovecot::dovecot_imap_mail_executable') %>
   <% end -%>
 
-  <% if has_variable?('dovecot_imap_mail_max_userip_connections') -%>
-  mail_max_userip_connections = <%= dovecot_imap_mail_max_userip_connections %>
+  <% if has_variable?('dovecot::dovecot_imap_mail_max_userip_connections') -%>
+  mail_max_userip_connections = <%= scope.lookupvar('dovecot::dovecot_imap_mail_max_userip_connections') %>
   <% end -%>
 
-  <% if has_variable?('dovecot_imap_login_max_processes_count') -%>
-  login_max_processes_count = <%= dovecot_imap_login_max_processes_count %>
+  <% if has_variable?('dovecot::dovecot_imap_login_max_processes_count') -%>
+  login_max_processes_count = <%= scope.lookupvar('dovecot::dovecot_imap_login_max_processes_count') %>
   <% end -%>
 
   # Support for dynamically loadable plugins. mail_plugins is a space separated
   # list of plugins to load.
-  <% if has_variable?('dovecot_imap_plugins') -%>
-  mail_plugins = <%= dovecot_imap_plugins %>
+  <% if has_variable?('dovecot::dovecot_imap_plugins') -%>
+  mail_plugins = <%= scope.lookupvar('dovecot::dovecot_imap_plugins') %>
   <% end -%>
 }
 

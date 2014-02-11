@@ -1,14 +1,14 @@
 ## BASE CONFIG
-<% if has_variable?('dovecot_basedir') -%>
-base_dir = <%= dovecot_basedir %>
+<% if has_variable?('dovecot::dovecot_basedir') -%>
+base_dir = <%= scope.lookupvar('dovecot::dovecot_basedir') %>
 <% end -%>
-<% if has_variable?('dovecot_protocols') -%>
-protocols = <%= dovecot_protocols %>
+<% if has_variable?('dovecot::dovecot_protocols') -%>
+protocols = <%= scope.lookupvar('dovecot::dovecot_protocols') %>
 <% else -%>
 protocols = imap imaps pop3 pop3s
 <% end -%>
-<% if has_variable?('dovecot_listen') -%>
-listen = <%= dovecot_listen %>
+<% if has_variable?('dovecot::dovecot_listen') -%>
+listen = <%= scope.lookupvar('dovecot::dovecot_listen') %>
 <% else -%>
 listen = *
 <% end -%>
