@@ -10,7 +10,7 @@ auth_bind = yes
 <% if has_variable?('dovecot_ldap_bind_userdn') -%>
 auth_bind_userdn = <%= dovecot_ldap_bind_userdn %>
 <% else -%>
-auth_bind_userdn = uid=%u,ou=Users,dc=<%= slapd_domain %>
+auth_bind_userdn = uid=%u,ou=Users,dc=<%= scope.lookupvar('dovecot::slapd_domain') %>
 <% end -%>
 <% if has_variable?('slapd_allow_v2') and slapd_allow_v2 -%>
 ldap_version = 2
@@ -20,7 +20,7 @@ ldap_version = 3
 <% if has_variable?('dovecot_ldap_base') -%>
 base = <%= dovecot_ldap_base %>
 <% else -%>
-base = ou=Users,dc=<%= slapd_domain %>
+base = ou=Users,dc=<%= scope.lookupvar('dovecot::slapd_domain') %>
 <% end -%>
 <% if has_variable?('dovecot_ldap_user_attrs') -%>
 user_attrs = <%= dovecot_ldap_user_attrs %>

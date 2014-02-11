@@ -88,6 +88,7 @@ class dovecot(
   $dovecot_ldap_pass_attrs,
   $dovecot_ldap_base,
   $dovecot_ldap_options,
+  $slapd_domain,
   $dovecot_version = undef,
 ) {
   case $::operatingsystem {
