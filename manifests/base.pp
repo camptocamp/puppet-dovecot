@@ -3,17 +3,6 @@
 # Please do not include this class as is, it won't work!
 #
 class dovecot::base {
-  if ($::dovecot::dovecot_auth_ldap and $::dovecot::dovecot_auth_pam and $::dovecot::dovecot_auth_database) {
-    fail 'Please provide either $::dovecot::dovecot_auth_ldap OR $::dovecot::dovecot_auth_pam OR $::dovecot::dovecot_auth_database'
-  }
-
-  if !( $::dovecot::dovecot_auth_ldap or $::dovecot::dovecot_auth_pam or $::dovecot::dovecot_auth_database) {
-    fail 'Please provide either $::dovecot::dovecot_auth_ldap or $::dovecot::dovecot_auth_pam or $::dovecot::dovecot_auth_database'
-  }
-
-  if ($::dovecot::dovecot_auth_ldap and ! ($::dovecot::dovecot_ldap_host or $::dovecot::dovecot_ldap_uri )) {
-    fail 'Please provide either $::dovecot::dovecot_ldap_host or $::dovecot::dovecot_ldap_uri'
-  }
 
   include dovecot::params
 
@@ -145,18 +134,6 @@ class dovecot::base {
     content => template('dovecot/dovecot-proto-pop3.conf.erb'),
   }
 
-  if $::dovecot::dovecot_auth_pam {
-    file {'/etc/dovecot/conf.d/auth-pam.ext':
-      ensure  => present,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      notify  => Exec['reload dovecot'],
-      require => File['/etc/dovecot/conf.d'],
-      content => template('dovecot/dovecot-auth-pam.ext.erb'),
-    }
-  }
-
   if $::dovecot::dovecot_auth_ldap {
     file {'/etc/dovecot/conf.d/auth-ldap.ext':
       ensure  => present,
@@ -174,28 +151,6 @@ class dovecot::base {
       mode    => '0600',
       notify  => Exec['reload dovecot'],
       content => template('dovecot/dovecot-ldap.conf.ext.erb'),
-    }
-  }
-
-  if $::dovecot::dovecot_auth_database {
-    file {'/etc/dovecot/conf.d/auth-database.ext':
-      ensure  => present,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      notify  => Exec['reload dovecot'],
-      require => File['/etc/dovecot/conf.d'],
-      content => template('dovecot/dovecot-auth-database.ext.erb'),
-    }
-
-    file {'/etc/dovecot/sql.conf.ext':
-      ensure  => present,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      notify  => Exec['reload dovecot'],
-      require => File['/etc/dovecot/conf.d'],
-      content => template('dovecot/dovecot-sql.conf.ext.erb'),
     }
   }
 

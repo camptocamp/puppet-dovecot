@@ -28,12 +28,4 @@ auth default {
   !include_try auth-ldap.ext
   !include_try conf.d/auth-ldap.ext
 <% end -%>
-<% if has_variable?('dovecot::dovecot_auth_pam') and has_variable?('dovecot::dovecot_auth_pam') -%>
-  !include_try auth-pam.ext
-  !include_try conf.d/auth-pam.ext
-<% end -%>
-<% if has_variable?('dovecot::dovecot_auth_database') and has_variable?('dovecot::dovecot_auth_database') -%>
-  !include_try auth-mysql.ext
-  !include_try conf.d/auth-mysql.ext
-<% end -%>
 }

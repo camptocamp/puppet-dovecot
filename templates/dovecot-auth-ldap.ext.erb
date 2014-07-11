@@ -12,16 +12,10 @@ passdb {
 # "prefetch" user database means that the passdb already provided the
 # needed information and there's no need to do a separate userdb lookup.
 # <doc/wiki/UserDatabase.Prefetch.txt>
-<% if has_variable?('dovecot::dovecot_ldap_userdb_prefetch') -%>
-userdb {
-  driver = prefetch
-}
-<% else -%>
 userdb {
   driver = ldap
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
-<% end -%>
 <% if has_variable?('dovecot::dovecot_ldap_otherSchems') -%>
 <% scope.lookupvar('dovecot::dovecot_ldap_otherSchems').each do |schem| -%>
   !include_try <%= schem %>
