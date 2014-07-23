@@ -7,7 +7,7 @@ Args:
   *$source*     source file, like puppet:///modules/foo/bar.conf
   *$content*    either inline content, or template
 
-Note: you an only provide $content OR $source, not both of them!
+Note: you can only provide $content OR $source, not both of them!
 
 */
 define dovecot::configuration($ensure=present,$source=false,$content=false) {
