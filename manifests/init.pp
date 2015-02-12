@@ -53,7 +53,7 @@ class dovecot(
   $dovecot_lda_plugins,
   $dovecot_ssl_enabled,
   $dovecot_auth_ldap,
-  $dovecot_ldap_otherSchems,
+  $dovecot_ldap_other_schems,
   $dovecot_auth_mechanisms,
   $dovecot_auth_sasl_postfix,
   $dovecot_ldap_uri,

@@ -16,8 +16,8 @@ userdb {
   driver = ldap
   args = /etc/dovecot/dovecot-ldap.conf.ext
 }
-<% if has_variable?('dovecot::dovecot_ldap_otherSchems') -%>
-<% scope.lookupvar('dovecot::dovecot_ldap_otherSchems').each do |schem| -%>
+<% if has_variable?('dovecot::dovecot_ldap_other_schems') -%>
+<% scope.lookupvar('dovecot::dovecot_ldap_other_schems').each do |schem| -%>
   !include_try <%= schem %>
   !include_try conf.d/<%= schem %>
 <% end -%>
