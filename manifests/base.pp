@@ -48,6 +48,7 @@ class dovecot::base {
     command     => '/etc/init.d/dovecot reload',
     onlyif      => 'dovecot -n &>/dev/null',
     refreshonly => true,
+    path        => $::path,
   }
 
 
