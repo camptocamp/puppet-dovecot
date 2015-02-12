@@ -1,15 +1,11 @@
-/*
-
-= Definition: dovecot::configuration
-Allow you to add new dovecot configuration.
-
-Args:
-  *$source*     source file, like puppet:///modules/foo/bar.conf
-  *$content*    either inline content, or template
-
-Note: you can only provide $content OR $source, not both of them!
-
-*/
+# = Definition: dovecot::configuration
+# Allow you to add new dovecot configuration.
+#
+# Args:
+# $source    source file, like puppet:///modules/foo/bar.conf
+# $content   either inline content, or template
+#
+# Note: you can only provide $content OR $source, not both of them!
 define dovecot::configuration($ensure=present,$source=false,$content=false) {
   if !($content or $source) {
     fail 'Please provide either $source or $content'
@@ -18,7 +14,7 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
     fail 'Please provide either $source OR $content'
   }
 
-  include dovecot::params
+  include ::dovecot::params
 
   case $dovecot::params::version {
     1: {

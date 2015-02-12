@@ -67,7 +67,7 @@ class dovecot(
   $dovecot_version = undef,
 ) {
   case $::operatingsystem {
-    Debian : { include dovecot::debian }
+    'Debian' : { include ::dovecot::debian }
     default: { fail "Nothing to do for ${::operatingsystem}" }
   }
 }

@@ -4,7 +4,7 @@
 #
 class dovecot::base {
 
-  include dovecot::params
+  include ::dovecot::params
 
   group {'dovecot':
     ensure    => present,
@@ -83,7 +83,7 @@ class dovecot::base {
     }
     2: {
       file {'/etc/dovecot/dovecot.conf':
-        ensure  => present,
+        ensure  => file,
         owner   => root,
         group   => root,
         mode    => '0644',
@@ -136,7 +136,7 @@ class dovecot::base {
 
   if $::dovecot::dovecot_auth_ldap {
     file {'/etc/dovecot/conf.d/auth-ldap.ext':
-      ensure  => present,
+      ensure  => file,
       owner   => root,
       group   => root,
       mode    => '0644',
@@ -145,7 +145,7 @@ class dovecot::base {
       content => template('dovecot/dovecot-auth-ldap.ext.erb'),
     }
     file {'/etc/dovecot/dovecot-ldap.conf.ext':
-      ensure  => present,
+      ensure  => file,
       owner   => root,
       group   => root,
       mode    => '0600',
