@@ -1,0 +1,31 @@
+# File managed by puppet
+mail_uid = mail
+mail_gid = mail
+
+auth default {
+  user = mail
+<% if has_variable?('dovecot::dovecot_auth_mechanisms') -%>
+  mechanisms = <%= scope.lookupvar('dovecot::dovecot_auth_mechanisms') %>
+<% end -%>
+<% if has_variable?('dovecot::dovecot_auth_sasl_postfix') and has_variable?('dovecot::dovecot_auth_sasl_postfix') -%>
+  socket listen {
+    client {
+      path = /var/spool/postfix/private/auth
+      mode = 0660
+      user = postfix
+      group = mail
+    }
+    master {
+      path = /var/run/dovecot/auth-master
+      mode = 0660
+      user = postfix
+      group = mail
+    }
+  }
+<% end -%>
+## AUTH PROCESS
+<% if has_variable?('dovecot::dovecot_auth_ldap') and has_variable?('dovecot::dovecot_auth_ldap') -%>
+  !include_try auth-ldap.ext
+  !include_try conf.d/auth-ldap.ext
+<% end -%>
+}

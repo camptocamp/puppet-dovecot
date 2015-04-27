@@ -1,0 +1,14 @@
+## BASE CONFIG
+<% if has_variable?('dovecot::dovecot_protocols') -%>
+protocols = <%= scope.lookupvar('dovecot::dovecot_protocols') %>
+<% else -%>
+protocols = imap imaps pop3 pop3s
+<% end -%>
+listen = *
+
+disable_plaintext_auth = yes
+shutdown_clients = yes
+log_timestamp = "%Y-%m-%d %H:%M:%S "
+syslog_facility = mail
+##### END of 000-dovecot-init
+

@@ -1,0 +1,14 @@
+## BASE CONFIG
+<% if has_variable?('dovecot_protocols') -%>
+protocols = <%= dovecot_protocols %>
+<% else -%>
+protocols = imap imaps pop3 pop3s
+<% end -%>
+listen = *
+
+disable_plaintext_auth = yes
+shutdown_clients = yes
+log_timestamp = "%Y-%m-%d %H:%M:%S "
+syslog_facility = mail
+
+!include /etc/dovecot/conf.d/*.conf

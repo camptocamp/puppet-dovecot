@@ -1,0 +1,30 @@
+# File managed by puppet
+
+<% if has_variable?('dovecot::dovecot_ldap_uri') -%>
+uris = <%= scope.lookupvar('dovecot::dovecot_ldap_uri') %>
+<% end -%>
+auth_bind = yes
+<% if has_variable?('dovecot::dovecot_ldap_bind_userdn') -%>
+auth_bind_userdn = <%= scope.lookupvar('dovecot::dovecot_ldap_bind_userdn') %>
+<% else -%>
+auth_bind_userdn = uid=%u,ou=Users,dc=<%= scope.lookupvar('dovecot::slapd_domain') %>
+<% end -%>
+ldap_version = 3
+<% if has_variable?('dovecot::dovecot_ldap_base') -%>
+base = <%= scope.lookupvar('dovecot::dovecot_ldap_base') %>
+<% else -%>
+base = ou=Users,dc=<%= scope.lookupvar('dovecot::slapd_domain') %>
+<% end -%>
+<% if has_variable?('dovecot::dovecot_ldap_user_attrs') -%>
+user_attrs = <%= scope.lookupvar('dovecot::dovecot_ldap_user_attrs') %>
+<% else -%>
+user_attrs = homeDirectory=home,uidNumber=uid,gidNumber=gid
+<% end -%>
+<% if has_variable?('dovecot::dovecot_ldap_pass_attrs') -%>
+pass_attrs = <%= scope.lookupvar('dovecot::dovecot_ldap_pass_attrs') %>
+<% else -%>
+pass_attrs = uid=user,userPassword=password,homeDirectory=userdb_home,uidNumber=userdb_uid,gidNumber=userdb_gid
+<% end -%>
+<% if has_variable?('dovecot::dovecot_ldap_options') -%>
+<%= scope.lookupvar('dovecot::dovecot_ldap_options') %>
+<%end -%>

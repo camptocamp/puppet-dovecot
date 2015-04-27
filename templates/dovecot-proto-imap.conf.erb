@@ -1,0 +1,19 @@
+##
+## IMAP specific settings
+##
+protocol imap {
+  # Login executable location.
+
+
+  <% if has_variable?('dovecot::dovecot_imap_mail_max_userip_connections') -%>
+  mail_max_userip_connections = <%= scope.lookupvar('dovecot::dovecot_imap_mail_max_userip_connections') %>
+  <% end -%>
+
+  <% if has_variable?('dovecot::dovecot_imap_login_max_processes_count') -%>
+  login_max_processes_count = <%= scope.lookupvar('dovecot::dovecot_imap_login_max_processes_count') %>
+  <% end -%>
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+}
+

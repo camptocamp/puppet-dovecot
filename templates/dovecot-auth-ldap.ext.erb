@@ -1,0 +1,24 @@
+# File managed by puppet
+
+# Authentication for LDAP users. Included from auth.conf.
+
+passdb {
+  driver = ldap
+
+  # Path for LDAP configuration file
+  args = /etc/dovecot/dovecot-ldap.conf.ext
+}
+
+# "prefetch" user database means that the passdb already provided the
+# needed information and there's no need to do a separate userdb lookup.
+# <doc/wiki/UserDatabase.Prefetch.txt>
+userdb {
+  driver = ldap
+  args = /etc/dovecot/dovecot-ldap.conf.ext
+}
+<% if has_variable?('dovecot::dovecot_ldap_other_schems') -%>
+<% scope.lookupvar('dovecot::dovecot_ldap_other_schems').each do |schem| -%>
+  !include_try <%= schem %>
+  !include_try conf.d/<%= schem %>
+<% end -%>
+<% end -%>
