@@ -14,7 +14,7 @@ describe 'dovecot' do
         let (:params) { { } }
 
         it 'should fail' do
-          expect { is_expected.to compile }.to raise_error(/Must pass/)
+          expect { is_expected.to compile }.to raise_error(/slapd_domain/)
         end
       end
 
