@@ -19,7 +19,6 @@ define dovecot::configuration($ensure=present,$source=false,$content=false) {
   case $dovecot::params::version {
     1: {
       concat::fragment {$name:
-        ensure => $ensure,
         target => '/etc/dovecot/dovecot.conf',
         notify => Exec['reload dovecot'],
       }
